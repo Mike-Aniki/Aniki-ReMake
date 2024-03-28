@@ -3,6 +3,7 @@ Fullscreen Theme for Playnite
 
 ![screenshot01](screenshot01.png)
 ![screenshot02](screenshot02.png)
+![screenshot03](screenshot03.png)
 __________________________________________________________________________
 
 To fully enjoy this theme, please follow the configuration instructions in Playnite:
