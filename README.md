@@ -14,15 +14,15 @@ To fully enjoy this theme, please follow the configuration instructions in Playn
 
 For filter icons to appear correctly, the filter name and icon.png name must match !
 
-	- To modify the icons (those located at the bottom of the screen), open: [Aniki ReMake\Icons\Filter], choose and rename (or add) any .png with the name 	corresponding to your filters ( Filter: "my games" = "my games.png"). 
+- To modify the icons (those located at the bottom of the screen), open: [Aniki ReMake\Icons\Filter], choose and rename (or add) any .png with the name 	corresponding to your filters ( Filter: "my games" = "my games.png"). 
 
-	- For source icons (those located at the Top of the screen), the folder is [Aniki ReMake\Icons\Source].
+- For source icons (those located at the Top of the screen), the folder is [Aniki ReMake\Icons\Source].
 
-	- To modify your avatar, go to the [Aniki Theme\Theme OptionAvatar] folder, select the avatar you want (or import one of your own), rename it "Avatar.png", 	then replace the file of the same name in the [Aniki ReMake\Images] folder. 
+- To modify your avatar, go to the [Aniki Theme\Theme OptionAvatar] folder, select the avatar you want (or import one of your own), rename it "Avatar.png", 	then replace the file of the same name in the [Aniki ReMake\Images] folder. 
 
-	- To change the username, open the Constants.xaml file in the theme's main folder. Look for the line starting with <!-- Here Change your Name --> at the 	beginning of the file, then replace the name "Aniki ReMake" with your own.
+- To change the username, open the Constants.xaml file in the theme's main folder. Look for the line starting with <!-- Here Change your Name --> at the 	beginning of the file, then replace the name "Aniki ReMake" with your own.
 
-	- To modify menu navigation audio files, access the [Aniki ReMake\Audio] folder. You must rename your file exactly as the file you wish to replace. To disable these sounds, rename or delete the audio files.
+- To modify menu navigation audio files, access the [Aniki ReMake\Audio] folder. You must rename your file exactly as the file you wish to replace. To disable these sounds, rename or delete the audio files.
 
 ___________________________________________________________________________
 
