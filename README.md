@@ -8,9 +8,9 @@ __________________________________________________________________________
 
 To fully enjoy this theme, please follow the configuration instructions in Playnite:
 
-	- To change the theme layout: In the theme folder, you'll find a folder called "Theme Option". Simply copy the "view" folder (from the corresponding zip file) into the main theme folder.
+- To change the theme layout: In the theme folder, you'll find a folder called "Theme Option". Simply copy the "view" folder (from the corresponding zip file) into the main theme folder.
 
-	- To change the interface style (top and bottom bars) : Go to the [Aniki ThemeTheme Option\Interface] folder. Choose the style you like and copy and paste the corresponding "interface.png" file into the [Aniki ReMake\Images] folder.
+- To change the interface style (top and bottom bars) : Go to the [Aniki Theme\Theme Option\Interface] folder. Choose the style you like and copy and paste the corresponding "interface.png" file into the [Aniki ReMake\Images] folder.
 
 For filter icons to appear correctly, the filter name and icon.png name must match !
 
