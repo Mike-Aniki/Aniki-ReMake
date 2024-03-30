@@ -50,7 +50,7 @@ ___________________________________________________________________________
 
 Recommended settings:
 
-	In Desktop Mode:
+In Desktop Mode:
 
     	-For wallpapers and covers:
 
@@ -79,7 +79,7 @@ Recommended settings:
 	Access the settings by clicking on the Playnite joystick icon in the top left-hand corner.
 	Go to "Add-on/Generic/Extra Metadata Loader/Video settings" and uncheck the "Show video preview when video is not playing".
 
-	In Full-Screen Mode:
+In Full-Screen Mode:
 
 	Access the settings by clicking on the gear-shaped icon at the top right.
 	In the "Layout" section, choose "8" for the number of columns and "25" for spacing to achieve a balanced appearance.
