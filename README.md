@@ -24,6 +24,8 @@ For filter icons to appear correctly, the filter name and icon.png name must mat
 
 - To modify menu navigation audio files, access the [Aniki ReMake\Audio] folder. You must rename your file exactly as the file you wish to replace. To disable these sounds, rename or delete the audio files.
 
+- To modify the size of the covers as you wish, there is a "Main" file in Theme Option without the warning message that obliges you to be in column size 7. 
+
 ___________________________________________________________________________
 
 Before you begin, make sure to have the following Add-on installed for an optimal theme experience.
