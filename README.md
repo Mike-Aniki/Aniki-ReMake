@@ -8,29 +8,36 @@ __________________________________________________________________________
 
 To fully utilize this theme, follow these setup instructions :
 
-- Remove the startup warning message:
-	1.Open the zip file from the folder [Aniki Theme\Theme Option\4.Main No Warning Message].
-	2.Extract its contents into the main theme folder.
-	3.You can now adjust the cover size as you like.
+Remove the startup warning message:
 
+    1.Open the zip file from the folder [Aniki Theme\Theme Option\4.Main No Warning Message].
+    2.Extract its contents into the main theme folder.
+    3.You can now adjust the cover size as you like.
 
-- To change the theme layout: In the theme folder, you'll find a folder called "Theme Option". Simply copy the "view" folder (from the corresponding zip file) into the main theme folder.
+Customize the interface:
 
-- To change the interface style (top and bottom bars): Go to the [Aniki Theme\Theme Option\Interface] folder. Choose the style you want from the "Preview" folder and copy and paste the contents of the corresponding zip file into the main Theme folder [Aniki ReMake\].
+    1.In the folder [Aniki Theme\Theme Option\2.Interface], choose the style you like from the "Preview" folder.
+    2.Open the corresponding Zip file, then copy and paste its contents into the main theme folder.
+  
+Customize filter icons (those located at the bottom of the screen):
 
-For filter icons to appear correctly, the filter name and icon.png name must match !
+    1.Open the folder [Aniki ReMake\Icons\Filter].
+    2.Choose (or add) a .png file, then rename this .png file with the name corresponding to your filters (for example, "My Games.png" for the filter "My Games").
 
-- To modify the icons filter (those located at the bottom of the screen), open: [Aniki ReMake\Icons\Filter], choose and rename (or add) any .png with the name corresponding to your filters ( Filter: "my games" = "my games.png"). 
+Customize source icons (those located at the top of the screen):
 
-- For source icons (those located at the Top of the screen), the folder is [Aniki ReMake\Icons\Source].
+    1.Open the folder [Aniki ReMake\Icons\Source] and follow the same instructions as for the filter icons.
 
-- To modify your avatar, go to the folder [Aniki Theme\Theme Option\Avatar] , select the avatar you want (or import one of your own), rename it "Avatar.png", then replace the file of the same name in the [Aniki ReMake\Images] folder. 
+Change your avatar:
 
-- To change the username, open the Constants.xaml file in the theme's main folder. Look for the line starting with <!-- Here Change your Name --> at the beginning of the file, then replace the name "Aniki ReMake" with your own.
+    1.Go to the folder [Aniki ReMake\Theme Option\Avatar].
+    2.Select the desired avatar or import your own.
+    3.Rename it "Avatar.png" and replace the file of the same name in the folder [Aniki ReMake\Images].
 
-- To modify menu navigation audio files, access the [Aniki ReMake\Audio] folder. You must rename your file exactly as the file you wish to replace. To disable these sounds, rename or delete the audio files.
+Modify navigation audio files:
 
-- To modify the size of the covers as you wish, there is a "Main" file in Theme Option without the warning message that obliges you to be in column size 7. 
+    1.Go to the folder [Aniki ReMake\Audio].
+    2.Rename your file exactly like the one you want to replace. To disable these sounds, rename or delete the audio files. 
 
 ___________________________________________________________________________
 
@@ -60,7 +67,7 @@ Recommended settings:
 
 In Desktop Mode:
 
-    	-For wallpapers and covers:
+-For wallpapers and covers:
 
 	Access the settings by clicking on the Playnite icon shaped like a controller, at the top left.
 	Select "Settings."
@@ -71,7 +78,7 @@ In Desktop Mode:
 
 	Save the changes using the "Save" button at the bottom of the window.
 
-    	-For logos:
+-For logos:
 
 	Access the settings by clicking on the Playnite icon shaped like a controller, at the top left.
 
@@ -81,7 +88,7 @@ In Desktop Mode:
     		Maximum Width: 600
    		Maximum Height: 320
 
-	-For Trailer :
+-For Trailer :
 
 	For the "Trailer" button to work, video preview must be deactivated.
 	Access the settings by clicking on the Playnite joystick icon in the top left-hand corner.
