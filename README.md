@@ -6,7 +6,13 @@ Fullscreen Theme for Playnite
 ![screenshot03](screenshot03.png)
 __________________________________________________________________________
 
-To fully enjoy this theme, please follow the configuration instructions :
+To fully utilize this theme, follow these setup instructions :
+
+- Remove the startup warning message:
+	1.Open the zip file from the folder [Aniki Theme\Theme Option\4.Main No Warning Message].
+	2.Extract its contents into the main theme folder.
+	3.You can now adjust the cover size as you like.
+
 
 - To change the theme layout: In the theme folder, you'll find a folder called "Theme Option". Simply copy the "view" folder (from the corresponding zip file) into the main theme folder.
 
