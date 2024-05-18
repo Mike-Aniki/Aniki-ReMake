@@ -102,4 +102,4 @@ ___________________________________________________________________________
 Enjoy your gaming experience!
 ___________________________________________________________________________
 
-If you want to buy me a strong coffee : https://ko-fi.com/mikeaniki
+If you want to buy me a coffee : https://ko-fi.com/mikeaniki
