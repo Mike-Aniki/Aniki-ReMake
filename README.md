@@ -99,5 +99,7 @@ In Full-Screen Mode:
 	Access the settings by clicking on the gear-shaped icon at the top right.
 	In the "Layout" section, choose "8" for the number of columns and "25" for spacing to achieve a balanced appearance.
 ___________________________________________________________________________
-
 Enjoy your gaming experience!
+___________________________________________________________________________
+
+If you want to buy me a strong coffee : https://ko-fi.com/mikeaniki
