@@ -107,5 +107,4 @@ In Full-Screen Mode:
 ___________________________________________________________________________
 Enjoy your gaming experience!
 ___________________________________________________________________________
-[
-buy me a coffee](https://ko-fi.com/mikeaniki)
+[buy me a coffee](https://ko-fi.com/mikeaniki)
