@@ -44,6 +44,7 @@ Modify or Delete Status on Game Cover:
 	1.In desktop mode, click on playnite's icone in the top left-hand corner, then on library/Lybrary Manager (or with CTRL+W).
  	In the list that appears, choose "completion statuses". 
  	2.Here you can add or modify game statuses; if you don't want to display any statuses, simply delete all the statuses.
+ 	3.I advise you to create your own status, then you can modify the status of a game from fullscreen.
 ___________________________________________________________________________
 
 Before you begin, make sure to have the following Add-on installed for an optimal theme experience.
