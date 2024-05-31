@@ -37,8 +37,13 @@ Change your avatar:
 Modify navigation audio files:
 
     1.Go to the folder [Aniki ReMake\Audio].
-    2.Rename your file exactly like the one you want to replace. To disable these sounds, rename or delete the audio files. 
+    2.Rename your file exactly like the one you want to replace. To disable these sounds, rename or delete the audio files.
 
+Modify or Delete Status on Game Cover:
+
+	1.In desktop mode, click on playnite's icone in the top left-hand corner, then on library/Lybrary Manager (or with CTRL+W).
+ 	In the list that appears, choose "completion statuses". 
+ 	2.Here you can add or modify game statuses; if you don't want to display any statuses, simply delete all the statuses.
 ___________________________________________________________________________
 
 Before you begin, make sure to have the following Add-on installed for an optimal theme experience.
@@ -50,12 +55,12 @@ Recommended extensions:
 
 	Generic:
 
-    		ExtraMetadataLoader (For Game Trailer and Logo)
-    		ExtraMetadataLoader Fullscreen Helper (For ExtraMetada Works in Fullscreen mode)
-    		How Long To Beat (To have enough time to finish the game)
-    		SuccessStory (To get the game's achievements)
-    		Splash Screen (To launch the game with a full-screen image)
-    		PlayniteSound Mod by Ashpynov (To have personalized interface sounds + different music for each game)
+    		-ExtraMetadataLoader (For Game Trailer and Logo).
+    		-ExtraMetadataLoader Fullscreen Helper (For ExtraMetada Works in Fullscreen mode).
+    		-How Long To Beat (To have enough time to finish the game).
+    		-SuccessStory (To get the game's achievements).
+    		-PlayniteSound Mod by Ashpynov (To have personalized interface sounds + different music for each game + Pause the music when a trailer is playing and during the 		theme intro video).
+      		-BackToGame (Provides a button that returns focus to the game when it loses focus).
 
 	Metadata Source:
 
