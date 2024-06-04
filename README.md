@@ -22,7 +22,8 @@ Customize the interface:
 Customize filter icons (those located at the bottom of the screen):
 
     1.Open the folder [Aniki ReMake\Icons\Filter].
-    2.Choose (or add) a .png file, then rename this .png file with the name corresponding to your filters (for example, "My Games.png" for the filter "My Games").
+    2.Choose (or add) a .png file, then rename this .png file with the name corresponding to your filters
+    (for example, "My Games.png" for the filter "My Games").
 
 Customize source icons (those located at the top of the screen):
 
@@ -60,12 +61,14 @@ Recommended extensions:
     		-ExtraMetadataLoader Fullscreen Helper (For ExtraMetada Works in Fullscreen mode).
     		-How Long To Beat (To have enough time to finish the game).
     		-SuccessStory (To get the game's achievements).
-    		-PlayniteSound Mod by Ashpynov (To have personalized interface sounds + different music for each game + Pause the music when a trailer is playing and during the 		theme intro video).
+    		-PlayniteSound Mod by Ashpynov (To have personalized interface sounds + different music
+      			for each game + Pause the music when a trailer is playing and during the theme intro video).
       		-BackToGame (Provides a button that returns focus to the game when it loses focus).
 
 	Metadata Source:
 
-   		Universal PSN Metadata (To automatically download game covers in square format and wallpapers adapted to the theme with characters on the right of the screen)
+   		Universal PSN Metadata (To automatically download game covers in square format 
+     			and wallpapers adapted to the theme with characters on the right of the screen)
 
 ___________________________________________________________________________
 
@@ -78,7 +81,8 @@ In Desktop Mode:
 	Access the settings by clicking on the Playnite icon shaped like a controller, at the top left.
 	Select "Settings."
 
-	Go to the "Metadata" tab and choose "PSN Store" in the settings for "Covers" and "Background Image." For other elements, choose the metadata source that suits you.
+	Go to the "Metadata" tab and choose "PSN Store" in the settings for "Covers" and "Background Image."
+ 	For other elements, choose the metadata source that suits you.
 
 	Next, go to the "Appearance/Grid view" and set the "Target aspect ratio" to 1:1.
 
