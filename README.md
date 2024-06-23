@@ -10,7 +10,7 @@ To fully utilize this theme, follow these setup instructions :
 
 To modify the theme :
 
-	- It is essential to download the "Theme Options" addon by Ashpynov.
+	- It is essential to download the "Theme Options" addon by Artem Shpynov.
  	A huge thank you to him for developing this addon.
   	He has done an exceptional job, and I encourage you to thank him on his GitHub page.
    
