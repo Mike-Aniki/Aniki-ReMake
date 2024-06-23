@@ -8,17 +8,10 @@ __________________________________________________________________________
 
 To fully utilize this theme, follow these setup instructions :
 
-Remove the startup warning message:
-
-    1.Open the zip file from the folder [Aniki Theme\Theme Option\4.Main No Warning Message].
-    2.Extract its contents into the main theme folder.
-    3.You can now adjust the cover size as you like.
-
-Customize the interface:
-
-    1.In the folder [Aniki Theme\Theme Option\2.Interface], choose the style you like from the "Preview" folder.
-    2.Open the corresponding Zip file, then copy and paste its contents into the main theme folder.
-  
+To modify the theme :
+	- it is essential to download the "Theme Options" addon by Ashpynov. A huge thank you to him for developing this addon. He has done an exceptional job, and I encourage you to thank him on his GitHub page.
+	-"Theme Options" allows you to customize fullscreen theme options on Playnite. The options integrated by the theme developer are directly accessible through the addon, avoiding the need to manually modify theme files. Enjoy a Playnite interface that effortlessly adapts to your tastes with the extensive customization possibilities offered by Theme Options.
+ 
 Customize filter icons (those located at the bottom of the screen):
 
     1.Open the folder [Aniki ReMake\Icons\Filter].
@@ -62,7 +55,7 @@ To download them, go to settings by clicking on the Playnite icon shaped like a 
 Recommended extensions:
 
 	Generic:
-
+		-Theme Options (For theme customization, thanks to Ashpynov)
     		-ExtraMetadataLoader (For Game Trailer and Logo).
     		-ExtraMetadataLoader Fullscreen Helper (For ExtraMetada Works in Fullscreen mode).
     		-How Long To Beat (To have enough time to finish the game).
