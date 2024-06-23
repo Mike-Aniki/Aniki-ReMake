@@ -61,6 +61,7 @@ To download them, go to settings by clicking on the Playnite icon shaped like a 
 Recommended extensions:
 
 	Generic:
+ 
 		-Theme Options (For theme customization, thanks to Ashpynov)
     		-ExtraMetadataLoader (For Game Trailer and Logo).
     		-ExtraMetadataLoader Fullscreen Helper (For ExtraMetada Works in Fullscreen mode).
