@@ -33,12 +33,6 @@ Customize source icons (those located at the top of the screen):
 
     1.Open the folder [Aniki ReMake\Icons\Source] and follow the same instructions as for the filter icons.
 
-Change your avatar:
-
-    1.Go to the folder [Aniki ReMake\Theme Option\Avatar].
-    2.Select the desired avatar or import your own.
-    3.Rename it "Avatar.png" and replace the file of the same name in the folder [Aniki ReMake\Images].
-
 Modify navigation audio files:
 
     1.Go to the folder [Aniki ReMake\Audio].
