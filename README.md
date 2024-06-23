@@ -17,7 +17,8 @@ To modify the theme :
 	-"Theme Options" allows you to customize fullscreen theme options on Playnite.
  	The options integrated by the theme developer are directly accessible through the addon, avoiding the need to manually modify theme files.
   	Enjoy a Playnite interface that effortlessly adapts to your tastes with the extensive customization possibilities offered by Theme Options.
- 
+![ThèmeOption01](ThèmeOption01.png )
+
 Customize filter icons (those located at the bottom of the screen):
 
     1.Open the folder [Aniki ReMake\Icons\Filter].
