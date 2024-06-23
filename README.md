@@ -9,6 +9,7 @@ __________________________________________________________________________
 To fully utilize this theme, follow these setup instructions :
 
 To modify the theme :
+
 	- it is essential to download the "Theme Options" addon by Ashpynov. A huge thank you to him for developing this addon. He has done an exceptional job, and I encourage you to thank him on his GitHub page.
 	-"Theme Options" allows you to customize fullscreen theme options on Playnite. The options integrated by the theme developer are directly accessible through the addon, avoiding the need to manually modify theme files. Enjoy a Playnite interface that effortlessly adapts to your tastes with the extensive customization possibilities offered by Theme Options.
  
