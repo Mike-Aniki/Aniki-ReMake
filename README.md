@@ -18,8 +18,10 @@ To modify the theme :
  	The options integrated by the theme developer are directly accessible through the addon, avoiding the need to manually modify theme files.
   	Enjoy a Playnite interface that effortlessly adapts to your tastes with the extensive customization possibilities offered by Theme Options.
 
-Preview Theme Options :
-![ThemeOption01](ThemeOption01.png)
+<p align="center">
+  <img src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/ThemeOption01.png?raw=true" alt="Sublime's custom image"/>
+</p>
+
 
 Customize filter icons (those located at the bottom of the screen):
 
