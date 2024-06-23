@@ -62,8 +62,8 @@ Recommended extensions:
 
 	Generic:
  
-		-Theme Options (For theme customization, thanks to Ashpynov)
-    		-ExtraMetadataLoader (For Game Trailer and Logo).
+    		-Theme Options (For theme customization, thanks to Ashpynov)
+      		-ExtraMetadataLoader (For Game Trailer and Logo).
     		-ExtraMetadataLoader Fullscreen Helper (For ExtraMetada Works in Fullscreen mode).
     		-How Long To Beat (To have enough time to finish the game).
     		-SuccessStory (To get the game's achievements).
