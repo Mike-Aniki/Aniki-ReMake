@@ -61,14 +61,14 @@ Recommended extensions:
 
 	Generic:
  
-    		-Theme Options (For theme customization, thanks to Ashpynov)
+    		-Theme Options (For theme customization, thanks to Artem Shpynov)
       		-ExtraMetadataLoader (For Game Trailer and Logo).
     		-ExtraMetadataLoader Fullscreen Helper (For ExtraMetada Works in Fullscreen mode).
     		-How Long To Beat (To have enough time to finish the game).
     		-SuccessStory (To get the game's achievements).
-    		-PlayniteSound Mod by Ashpynov (To have personalized interface sounds + different music
+    		-PlayniteSound Mod by Artem Shpynov (To have personalized interface sounds + different music
       			for each game + Pause the music when a trailer is playing and during the theme intro video).
-      		-BackToGame (Provides a button that returns focus to the game when it loses focus).
+      		-BackToGame by Artem Shpynov (Provides a button that returns focus to the game when it loses focus).
 
 	Metadata Source:
 
