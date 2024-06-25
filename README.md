@@ -13,13 +13,16 @@ To modify the theme :
 	- It is essential to download the "Theme Options" addon by Artem Shpynov.
  	A huge thank you to him for developing this addon.
   	He has done an exceptional job, and I encourage you to thank him on his GitHub page.
+   	
    
 	-"Theme Options" allows you to customize fullscreen theme options on Playnite.
- 	The options integrated by the theme developer are directly accessible through the addon, avoiding the need to manually modify theme files.
+ 	The options integrated by the theme developer are directly accessible through the addon in Fullscreen or Desktop, avoiding the need to manually modify theme files.
   	Enjoy a Playnite interface that effortlessly adapts to your tastes with the extensive customization possibilities offered by Theme Options.
 
-<p align="center">
-  <img src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/ThemeOption01.png?raw=true" alt="Sublime's custom image"/>
+Theme Options addon Github : https://github.com/ashpynov/ThemeOptions
+<p align="Center">
+  <img src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/ThemeOptionsFullscreen.png?raw=true" alt="Sublime's custom image"/>
+	<img src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/ThemeOptionsDesktop.png?raw=true" alt="Sublime's custom image"/>
 </p>
 
 
