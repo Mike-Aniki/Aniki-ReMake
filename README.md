@@ -30,20 +30,43 @@
 
 ---
 
+### **_This theme focuses on customization and animations._**
+
+With over 25 different interfaces and more than 25 animated login screens, it offers an unmatched level of personalization for your gaming setup.
+The goal is to recreate a console-style interface for your PC, especially for controller users.
+
+Each "interface" (I avoid calling them “themes” to avoid confusion with Playnite themes.) lets you fully change the look, similar to how the PS4 offered multiple theme options.
+
+Due to the rich graphics and animations, this theme may not be perfectly smooth on lower-end PCs. 
+However, even on modest setups, it still offers a fun, customizable experience that makes the interface unique to each user.
+
+---
+
+### **_This theme supports the following plugins :_**
+
+Theme Options, SuccessStory, BackToGame, BackgroundChanger, CheckDLC, Screenshot Visualizer.
+
+---
+
 ### **_Please follow these instructions before using a theme:_**
 
 First, make sure you've installed the following add-ons for an optimal theme experience. These add-ons enhance the look and feel of your Playnite setup, and some are essential for full functionality.
 
-To download them:
+To download them :
 
 1. Open **Playnite** in desktop mode.
 2. Click on the **Playnite icon** (controller-shaped) at the top left to access the settings.
 3. Select **Add-ons**, then go to the **Browse** tab at the bottom.
 4. Search for and install the following add-ons:
 
+Required : 
+
 >- **Theme Options** _(Customizes the theme, thanks to Artem Shpynov)_
 >- **ExtraMetadataLoader** _(Displays game trailers and logos)._
 >- **ExtraMetadataLoader Fullscreen Helper** _(Ensures ExtraMetadata works in fullscreen mode)._
+
+Optional :
+
 >- **SuccessStory** _(Shows in-game achievements)._
 >- **PlayniteSound Mod** by Artem Shpynov _(Plays different music for each game and manages audio during trailers and intros. Make sure you install the "Mod" version of this extension)._
 >- **BackToGame** _(Adds a button to refocus on the game when it loses focus)._
