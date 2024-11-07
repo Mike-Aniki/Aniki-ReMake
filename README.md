@@ -21,7 +21,7 @@
 </p>
 
 <p align="Center">
-    Trailer : https://www.youtube.com/watch?v=8rcCJW6uX1Y
+    Theme preview video : https://www.youtube.com/watch?v=ufdmxC72G-U&t
 </p>
 
 <p align="Center">
