@@ -11,6 +11,16 @@
 </p>
 
 <p align="Center">
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/ViewVertical.png?raw=true" alt="Sublime's custom image" width="40%" />
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/ViewVertical2.png?raw=true" alt="Sublime's custom image" width="40%" />
+</p>
+
+<p align="Center">
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/ViewSuccess.png?raw=true" alt="Sublime's custom image" width="40%" />
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/ViewDLC.png?raw=true" alt="Sublime's custom image" width="40%" />
+</p>
+
+<p align="Center">
     Trailer : https://www.youtube.com/watch?v=8rcCJW6uX1Y
 </p>
 
