@@ -42,9 +42,17 @@ However, even on modest setups, it still offers a fun, customizable experience t
 
 ---
 
+### **_For the theme to work correctly and without bugs, please set the number of columns to 9 or 10, and the spacing between elements to 30. This will allow the entire theme to be displayed correctly._**
+
+<p align="Center">
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/SettingLayout.png?raw=true" alt="Sublime's custom image" width="40%" />	
+</p>
+
+---
+
 ### **_This theme supports the following plugins :_**
 
-Theme Options, SuccessStory, BackToGame, BackgroundChanger, CheckDLC, Screenshot Visualizer.
+>- Theme Options / SuccessStory / BackToGame / BackgroundChanger / CheckDLC / Screenshot Visualizer
 
 ---
 
@@ -104,6 +112,10 @@ Icons allow you to visually differentiate between various filters like "My Games
 >- To access the theme folder: In desktop mode, click on the Playnite icon at the top left, go to **Add-ons**, and find the **Full Screen** tab under installed extensions. Click **Installation folder**.
 >- Add or replace any `.png` files with your own icons, then rename them to match your filters (e.g., "My Games.png" for the "My Games" filter).
 
+<p align="Center">
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/Filter.png?raw=true" alt="Sublime's custom image" width="40%" />
+</p>
+
 ---
 
 ### **Customize source icons:**
@@ -113,6 +125,10 @@ Source icons represent platforms like Steam or Epic Games. Here's how to update 
 >- Open the Theme folder and go to **[Icons\Source]**.
 >- Access the folder as described above.
 >- Add or replace the source icons (e.g., use "Steam.png" for Steam).
+
+<p align="Center">
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/Sourcesetting.png?raw=true" alt="Sublime's custom image" width="40%" />
+</p>
 
 ---
 
@@ -134,6 +150,30 @@ You can replace or disable the navigation sounds for a more personalized experie
 
 ---
 
+### **Playnite Sounds Mod :**
+
+ _If you want to integrate game music into the theme, it’s essential to download "Playnite Sound Mod" instead of "Playnite Sound".
+ Playnite Sound Mod by Artem Shpynov has replaced the older version with many improvements :_
+
+>- YouTube search integration: You can now search for and download music directly from YouTube.
+>- Music preview: Listen to music before downloading to make sure it’s what you want.
+>- Batch downloading: No need to download music tracks one by one; you can download them in batches.
+>- Automatic pause control: Music will automatically pause if a video, like a trailer, starts playing.
+>- Additional advanced features for a much smoother and more enjoyable user experience.
+
+**Important Setting for Using Playnite Sound Mod with Aniki Remake**
+
+For Playnite Sound Mod to work perfectly with my theme, you need to disable the “Pause music during video trailer” option in the plugin settings. When enabled, this option can mistake certain videos, such as intros and background videos, as trailers and mute the music. My theme already uses its own triggers to handle music pausing, so this plugin setting is unnecessary and can cause conflicts.
+
+Instructions :
+
+>- Go to the settings for Playnite Sound Mod.
+>- Disable the option “Pause music during video trailer.”
+
+<p align="Center">
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/PlayniteSoundMod.png?raw=true" alt="Sublime's custom image" width="40%" />	
+</p>
+
 # **Recommended Settings**
 
 ### **In Desktop Mode:**
@@ -148,11 +188,18 @@ Here’s how to set it up:
 >- Go to the **Metadata** tab and select **PSN Store** for both the **Cover** and **Background Image** options.
 >- If you use multiple metadata sources, ensure PSN is at the top to prioritize it.
 
+<p align="Center">
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/SettingMetadata.png?raw=true" alt="Sublime's custom image" width="40%" />	
+</p>
 
 ### **Convert game covers to square format:**
 
 >- Go to **Settings > Appearance > Grid View**.
 >- Set the **Target Aspect Ratio** to **1:1** for square covers.
+
+<p align="Center">
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/SquareCover.png?raw=true" alt="Sublime's custom image" width="40%" />	
+</p>
 
 
 ### **Update metadata for all games:**
@@ -163,6 +210,11 @@ If you want to update all existing games with new metadata:
 >- In the window that appears, select **All Games From Database** and uncheck **Only Missing Metadata**.
 >- Click **Next**, and follow the prompts to download metadata from your chosen sources.
 
+<p align="Center">
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/Allmetadata.png?raw=true" alt="Sublime's custom image" width="40%" />	
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/AllMetadata2.png?raw=true" alt="Sublime's custom image" width="40%" />
+</p>
+
 ---
 
 ### **For logos:**
@@ -172,12 +224,17 @@ Logos are an important part of the theme design. To set them up correctly:
 >- Go to **Add-ons > Generic > Extra Metadata Loader > Logo Settings**.
 >- Set the maximum width to **600** and the maximum height to **320**.
 
+<p align="Center">
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/SettingLogo.png?raw=true" alt="Sublime's custom image" width="40%" />
+</p>
+
 ### How to download logos :
 
 >- On Playnite desktop mode, select the games you want to download videos for via standard ways (Single right click, Ctrl+Click, Ctrl+A, Shift+Click), right click and select the menu item as shown in the image below.
 >- Follow the instructions and wait for the logo to download.
+
 <p align="Center">
-	<img align="top" src="https://github.com/Mike-Aniki/Aniki-Lite/blob/main/Images/HowToSetupLogo.png?raw=true" alt="Sublime's custom image" width="40%" />
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/SearchLogo.png?raw=true" alt="Sublime's custom image" width="40%" />
 </p>
 
 ---
