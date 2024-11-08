@@ -174,6 +174,20 @@ Instructions :
 	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/PlayniteSoundMod.png?raw=true" alt="Sublime's custom image" width="40%" />	
 </p>
 
+---
+### **ScreenshotsVisualizer :**
+
+ _Configure Screenshot Folders :_
+
+>- In the plugin settings, click on the small buttons (1) to let the plugin automatically configure the screenshot folders for each launcher.
+>- In Global screenshot path (2), specify the folder on your PC where your manual screenshots are stored. By adding {Name} at the end of the path, the plugin will search for folders named after each game.
+>- You can also add multiple folders for a single game. Press the Add button (3) to open a window with a list of your games in Playnite.
+>- Select your game, and it will appear in the main window. Then, click on Add Folder (4) as many times as needed and enter the path for each folder.
+
+<p align="Center">
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/ScreenshotsVisualizer.png?raw=true" alt="Sublime's custom image" width="40%" />	
+</p>
+
 # **Recommended Settings**
 
 ### **In Desktop Mode:**
