@@ -174,6 +174,18 @@ Instructions :
 	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/PlayniteSoundMod.png?raw=true" alt="Sublime's custom image" width="40%" />	
 </p>
 
+**How to Install FFMPEG NORMALIZE For PlayniteSoundsMod**
+
+_This automatically adjusts the sound level of the music to the same level for all song, to avoid one tune being too low and the next too high._
+
+>- Install the latest python release from python.org
+>- Open the Python installation folder and open "Scripts" folder (default path is C:\User\UserName\AppData\Local\Programs\Python\Python312\Scripts).
+>- In the file explorer address bar, type "PowerShell".
+>- In the window that opens, type ".\pip3 install ffmpeg-normalize" This will install ffmpeg_normalizer.exe in this folder.
+>- Now in Playnite, PlayniteSoundMod Settings enter the path to ffmpeg-normalize.exe.
+>- Check "Automatically normalize music when downloading".
+>- Your ears will thank you
+
 ---
 ### **ScreenshotsVisualizer :**
 
