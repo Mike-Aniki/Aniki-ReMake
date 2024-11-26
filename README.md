@@ -132,6 +132,15 @@ Source icons represent platforms like Steam or Epic Games. Here's how to update 
 
 ---
 
+### **Changing Avatars for your own:**
+
+To do this, you need to use images in ".PNG" format.
+
+>- Open the Theme folder and go to [Themes Option\3.Avatar folder].
+>- Replace .png files with your own .png files (you'll need to rename your images with exactly the same name to match the avatar you want to replace).
+
+---
+
 ### **Modify navigation audio files:**
 
 You can replace or disable the navigation sounds for a more personalized experience:
