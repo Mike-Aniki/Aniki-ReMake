@@ -150,6 +150,15 @@ You can replace or disable the navigation sounds for a more personalized experie
 
 ---
 
+### **Modify background music on login screen:**
+
+You can replace or disable background music on login screen :
+
+>- Open the Theme folder, and navigate to **[Audio]**.
+>- Rename your .mp3 file “AcceuilOST” and replace the “AcceuilOST.mp3” file in the folder, or delete it to remove the music completely.
+
+---
+
 ### **Modify Status on Game Cover:**
 
 >- In desktop mode, click on playnite's icone in the top left-hand corner, then on library/Lybrary Manager (or with CTRL+W).
