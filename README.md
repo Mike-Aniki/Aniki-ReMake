@@ -168,6 +168,12 @@ You can replace or disable background music on login screen :
 
 ---
 
+### **Platforms Banner on Game Cover:**
+
+>- Platform banners are linked to the first platform listed in the game's properties. If multiple platforms are specified, only the first one will be considered. 
+
+---
+
 ### **Playnite Sounds Mod :**
 
  _If you want to integrate game music into the theme, it’s essential to download "Playnite Sound Mod" instead of "Playnite Sound".
