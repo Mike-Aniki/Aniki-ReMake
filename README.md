@@ -84,7 +84,7 @@ Optional :
 
 Metadata Source:
 
->- **Universal PSN Metadata** _(To automatically download game covers in square format
+>- **IGN or Universal PSN Metadata** _(To automatically download game covers in square format
      			and wallpapers adapted to the theme with characters on the right of the screen)._
 
 ---
