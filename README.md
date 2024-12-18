@@ -273,6 +273,7 @@ Logos are an important part of the theme design. To set them up correctly:
 
 >- Go to **Add-ons > Generic > Extra Metadata Loader > Logo Settings**.
 >- Set the maximum width to **600** and the maximum height to **320**.
+>- Check option "Download logos of newly added games on library update".
 
 <p align="Center">
 	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/SettingLogo.png?raw=true" alt="Sublime's custom image" width="40%" />
