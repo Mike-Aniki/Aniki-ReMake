@@ -42,7 +42,7 @@ However, even on modest setups, it still offers a fun, customizable experience t
 
 ---
 
-### **_For the theme to work correctly and without bugs, please set the number of columns to 9 or 10, and the spacing between elements to 30. This will allow the entire theme to be displayed correctly._**
+### **_For the theme to work correctly and without bugs, please set the number of columns to 9 or 10, and the spacing between elements to Minimum 30. This will allow the entire theme to be displayed correctly._**
 
 <p align="Center">
 	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/SettingLayout.png?raw=true" alt="Sublime's custom image" width="40%" />	
