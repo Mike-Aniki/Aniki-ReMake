@@ -52,7 +52,7 @@ However, even on modest setups, it still offers a fun, customizable experience t
 
 ### **_This theme supports the following plugins :_**
 
->- Theme Options / SuccessStory / BackToGame / BackgroundChanger / CheckDLC / Screenshot Visualizer
+>- Theme Options / SuccessStory / BackToGame / BackgroundChanger(Animated Background & Covers  is supported by the theme) / CheckDLC / Screenshot Visualizer
 
 ---
 
@@ -78,7 +78,7 @@ Optional :
 >- **SuccessStory** _(Shows in-game achievements)._
 >- **PlayniteSound Mod** by Artem Shpynov _(Plays different music for each game and manages audio during trailers and intros. Make sure you install the "Mod" version of this extension)._
 >- **BackToGame** _(Adds a button to refocus on the game when it loses focus)._
->- **BackgroundChanger** _(Allows you to set multiple backgrounds per game)._
+>- **BackgroundChanger** _(Allows you to define multiple backgrounds/Covers per game that change randomly with each playnite launch)._
 >- **CheckDLC** _(To see the dlc of games and those owned)._
 >- **Screenshot Visualizer** _(To see your screenshot of games)._
 
