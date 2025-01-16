@@ -1,5 +1,17 @@
 <h1 align="center">Aniki-ReMake : Fullscreen Theme for Playnite</h1>
 
+⚠️ Warning
+
+For users still on a version earlier than 1.5.8, it is essential to uninstall and reinstall the theme.
+Versions prior to 1.5.8 had an issue that prevented theme updates through Playnite from working correctly.
+
+This issue has been fixed since version 1.5.8, but many users still appear to be using older versions. To ensure proper updates:
+
+Check your current theme version.
+If it’s older than 1.5.8:
+- Uninstall the theme.
+- Reinstall it to ensure future updates apply correctly.
+
 <p align="Center">
 	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/MainViewSquare.png?raw=true" alt="Sublime's custom image" width="40%" />
 	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/MainViewRounded.png?raw=true" alt="Sublime's custom image" width="40%" />
