@@ -6,7 +6,7 @@
 
 <div align="center">
 
-### **_Watch a Preview on youtube :_** ###
+### **_Watch a preview on youtube :_** ###
 	
 [![Watch the video](https://img.youtube.com/vi/ufdmxC72G-U/0.jpg)](https://www.youtube.com/watch?v=ufdmxC72G-U&t)
 
