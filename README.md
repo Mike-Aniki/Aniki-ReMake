@@ -1,16 +1,13 @@
 <h1 align="center">Aniki-ReMake : Fullscreen Theme for Playnite</h1>
+<div align="center">
 
-⚠️ Warning
+[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/Mike-Aniki/Aniki-Remake/total?style=for-the-badge&label=Total%20Downloads%20for%20All%20Releases)]()
 
-For users still on a version earlier than 1.5.8, it is essential to uninstall and reinstall the theme.
-Versions prior to 1.5.8 had an issue that prevented theme updates through Playnite from working correctly.
+[![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/Mike-Aniki/Aniki-Remake/latest/total?style=for-the-badge&label=Total%20Downloads%20for%20the%20Latest%20Release)]()
 
-This issue has been fixed since version 1.5.8, but many users still appear to be using older versions. To ensure proper updates:
 
-Check your current theme version.
-If it’s older than 1.5.8:
-- Uninstall the theme.
-- Reinstall it to ensure future updates apply correctly.
+
+</div>
 
 <p align="Center">
 	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/MainViewSquare.png?raw=true" alt="Sublime's custom image" width="40%" />
@@ -51,6 +48,20 @@ Each "interface" (I avoid calling them “themes” to avoid confusion with Play
 
 Due to the rich graphics and animations, this theme may not be perfectly smooth on lower-end PCs. 
 However, even on modest setups, it still offers a fun, customizable experience that makes the interface unique to each user.
+
+---
+
+⚠️ **_Warning_**
+
+For users still on a version earlier than 1.5.8, it is essential to uninstall and reinstall the theme.
+Versions prior to 1.5.8 had an issue that prevented theme updates through Playnite from working correctly.
+
+This issue has been fixed since version 1.5.8, but many users still appear to be using older versions. To ensure proper updates:
+
+Check your current theme version.
+If it’s older than 1.5.8:
+- Uninstall the theme.
+- Reinstall it to ensure future updates apply correctly.
 
 ---
 
