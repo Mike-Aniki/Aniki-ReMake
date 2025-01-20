@@ -1,40 +1,37 @@
 <h1 align="center">Aniki-ReMake : Fullscreen Theme for Playnite</h1>
 <div align="center">
 
-[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/Mike-Aniki/Aniki-Remake/total?style=for-the-badge&label=Total%20Downloads%20for%20All%20Releases)]()
+[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/Mike-Aniki/Aniki-Remake/total?style=for-the-badge&label=Total%20Downloads%20for%20All%20Releases)]() [![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/Mike-Aniki/Aniki-Remake/latest/total?style=for-the-badge&label=Total%20Downloads%20for%20the%20Latest%20Release)]()
 
-[![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/Mike-Aniki/Aniki-Remake/latest/total?style=for-the-badge&label=Total%20Downloads%20for%20the%20Latest%20Release)]()
 
+<div align="center">
+
+### **_Watch a Preview on youtube :_** ###
+	
+[![Watch the video](https://img.youtube.com/vi/ufdmxC72G-U/0.jpg)](https://www.youtube.com/watch?v=ufdmxC72G-U&t)
+
+<a href='https://ko-fi.com/W7W1Y9DRB' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi5.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
 
 </div>
 
+---
+
+</div>
+
+<div align="center">
+	
+### **_Screenshot :_** ###
+	
+</p>
 <p align="Center">
 	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/MainViewSquare.png?raw=true" alt="Sublime's custom image" width="40%" />
-	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/MainViewRounded.png?raw=true" alt="Sublime's custom image" width="40%" />
-</p>
-
-<p align="Center">
-	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/DetailsView.png?raw=true" alt="Sublime's custom image" width="40%" />
 	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/DetailsViewMiniTrailer.png?raw=true" alt="Sublime's custom image" width="40%" />
-</p>
+</Div>
 
 <p align="Center">
 	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/ViewVertical.png?raw=true" alt="Sublime's custom image" width="40%" />
-	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/ViewVertical2.png?raw=true" alt="Sublime's custom image" width="40%" />
-</p>
-
-<p align="Center">
 	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/ViewSuccess.png?raw=true" alt="Sublime's custom image" width="40%" />
-	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/ViewDLC.png?raw=true" alt="Sublime's custom image" width="40%" />
-</p>
-
-<p align="Center">
-    Theme preview video : https://www.youtube.com/watch?v=ufdmxC72G-U&t
-</p>
-
-<p align="Center">
-    <a href='https://ko-fi.com/W7W1Y9DRB' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi5.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 </p>
 
 ---
