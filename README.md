@@ -1,4 +1,3 @@
-
 <div align="center">
 
 [![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/Mike-Aniki/Aniki-Remake/total?style=for-the-badge&label=Total%20Downloads%20for%20All%20Releases&color=blue)]() [![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/Mike-Aniki/Aniki-Remake/latest/total?style=for-the-badge&label=Total%20Downloads%20for%20the%20Latest%20Release&color=blue)]()
@@ -10,7 +9,20 @@
 <h1 align="center">ANIKI REMAKE : FULLSCREEN THEME FOR PLAYNITE</h1>
 </div>
 
+## Sommaire
 
+- [Présentation du projet](#aniki-remake-fullscreen-theme-for-playnite)
+- [Aperçu vidéo](#watch-a-preview-on-youtube)
+- [Captures d'écran](#screenshot)
+- [Avertissement](#warning)
+- [Instructions de mise en page](#this-theme-supports-the-following-plugins)
+- [Plugins pris en charge](#this-theme-supports-the-following-plugins)
+- [Instructions avant utilisation](#please-follow-these-instructions-before-using-a-theme)
+- [Modification du thème](#to-modify-the-theme)
+- [Personnalisation des icônes de filtre](#customize-filter-icons)
+- [Personnalisation des icônes de source](#customize-source-icons)
+
+---
 
 <div align="center">
 
