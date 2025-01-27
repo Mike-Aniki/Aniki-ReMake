@@ -323,6 +323,8 @@ Logos are an important part of the theme design. To set them up correctly:
 	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/SettingLogo.png?raw=true" alt="Sublime's custom image" width="40%" />
 </p>
 
+Note: To ensure that game logos work, you will need the ExtraMetadata Loader add-on.
+
 ### How to download logos :
 
 >- On Playnite desktop mode, select the games you want to download videos for via standard ways (Single right click, Ctrl+Click, Ctrl+A, Shift+Click), right click and select the menu item as shown in the image below.
