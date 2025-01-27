@@ -9,21 +9,6 @@
 <h1 align="center">ANIKI REMAKE : FULLSCREEN THEME FOR PLAYNITE</h1>
 </div>
 
-## Sommaire
-
-- [Présentation du projet](#aniki-remake-fullscreen-theme-for-playnite)
-- [Aperçu vidéo](#watch-a-preview-on-youtube)
-- [Captures d'écran](#screenshot)
-- [Avertissement](#warning)
-- [Instructions de mise en page](#this-theme-supports-the-following-plugins)
-- [Plugins pris en charge](#this-theme-supports-the-following-plugins)
-- [Instructions avant utilisation](#please-follow-these-instructions-before-using-a-theme)
-- [Modification du thème](#to-modify-the-theme)
-- [Personnalisation des icônes de filtre](#customize-filter-icons)
-- [Personnalisation des icônes de source](#customize-source-icons)
-
----
-
 <div align="center">
 
 
@@ -38,6 +23,22 @@ Due to the rich graphics and animations, this theme may not be perfectly smooth 
 However, even on modest setups, it still offers a fun, customizable experience that makes the interface unique to each user.
 
 <a href='https://ko-fi.com/W7W1Y9DRB' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi5.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
+</div>
+
+---
+
+<div align="center">
+
+### Table of Contents
+
+| [Setting Layout](#layout-setting)                                                        | [Modify Navigation Audio Files](#modify-navigation-audio-files)                     | [Setting for Wallpapers and Covers](#for-wallpapers-and-covers)  |
+|------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|------------------------------------------------------------------|
+| [Supported Add-ons by the theme](#please-follow-these-instructions-before-using-a-theme) | [Modify Status on Game Cover](#modify-status-on-game-cover)                         | [Setting for Logos](#for-logos)                                  |
+| [Modifying the Theme](#to-modify-the-theme)                                              | [Modify Background Music on Login Screen](#modify-background-music-on-login-screen) | [Setting for Platforms Banner](#platforms-banner-on-game-cover)  |
+| [Customizing Filter Icons](#customize-filter-icons)                                      | [Setup Playnite Sounds Mod](#playnite-sounds-mod)                                   | [Setting for Trailers](#for-trailers)                            |
+| [Customizing Source Icons](#customize-source-icons)                                      | [Setup Screenshots Visualizer](#screenshotsvisualizer)                              | [Setup ExtraMetadata Loader](#setup-extrametadata-loader)        |
+| [Changing Avatars for Your Own](#changing-avatars-for-your-own)                          |                                                                                     | [Links to Playnite User Manuals](#links-to-playnite-user-manuals)|
 
 </div>
 
@@ -84,7 +85,7 @@ If it’s older than 1.5.8:
 - Reinstall it to ensure future updates apply correctly.
 
 ---
-
+## Layout Setting
 ### **_For the theme to work correctly and without bugs, please set the number of columns to 9 or 10, and the spacing between elements to Minimum 30. This will allow the entire theme to be displayed correctly._**
 
 <p align="Center">
@@ -93,7 +94,7 @@ If it’s older than 1.5.8:
 
 ---
 
-### **_This theme supports the following plugins :_**
+## **_This theme supports the following plugins:_**
 
 >- Theme Options / SuccessStory / BackToGame / BackgroundChanger / CheckDLC / Screenshot Visualizer
 
@@ -217,7 +218,7 @@ You can replace or disable background music on login screen :
 
 ---
 
-### **Playnite Sounds Mod :**
+### **Playnite Sounds Mod:**
 
  _If you want to integrate game music into the theme, it’s essential to download "Playnite Sound Mod" instead of "Playnite Sound".
  Playnite Sound Mod by Artem Shpynov has replaced the older version with many improvements :_
@@ -254,7 +255,7 @@ _This automatically adjusts the sound level of the music to the same level for a
 >- Your ears will thank you
 
 ---
-### **ScreenshotsVisualizer :**
+### **ScreenshotsVisualizer:**
 
  _Configure Screenshot Folders :_
 
@@ -367,7 +368,7 @@ To automatically mute trailers:
 
 ---
 
-### **Links to playnite user manuals :**
+### **Links to playnite user manuals:**
 
 >- [**Filters**](https://api.playnite.link/docs/manual/features/filtersAndFiltersPresets.html)
 >- [**Extensions**](https://api.playnite.link/docs/manual/features/extensionsSupport/installingExtensions.html)
