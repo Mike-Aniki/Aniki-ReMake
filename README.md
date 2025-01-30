@@ -6,21 +6,23 @@
 
 <div align="center">
 
-<h1 align="center">ANIKI REMAKE : FULLSCREEN THEME FOR PLAYNITE</h1>
+<h1 align="center">ANIKI REMAKE : The Ultimate Console-Like Experience for Playnite</h1>
 </div>
 
 <div align="center">
 
+### **This theme focuses on customization and animations**
 
-### **This theme focuses on customization and animations.**
+With 25+ customizable interfaces and 25+ animated login screens, Aniki Remake offers an unmatched level of personalization for a Fullscreen Playnite theme.
 
-With over 25 different interfaces and more than 25 animated login screens, it offers an unmatched level of personalization for your gaming setup.
-The goal is to recreate a console-style interface for your PC, especially for controller users.
+### **A True Console Interface for PC**
 
-Each "interface" (I avoid calling them “themes” to avoid confusion with Playnite themes.) lets you fully change the look, similar to how the PS4 offered multiple theme.
+Designed especially for controller users, this theme transforms your Playnite into an experience similar to modern consoles. Each interface (not "theme" to avoid confusion with Playnite themes) allows you to completely change the look, just like customizable themes on the PS4.
 
-Due to the rich graphics and animations, this theme may not be perfectly smooth on lower-end PCs. 
-However, even on modest setups, it still offers a fun, customizable experience that makes the interface unique to each user.
+### **Advanced and Unique Customization**
+
+Customize everything, choose cover shapes, enable/disable platform banners, show/hide trailers, browse trophies, view screenshots & videos, check Steam DLCs, and much more !
+
 
 <a href='https://ko-fi.com/W7W1Y9DRB' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi5.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
