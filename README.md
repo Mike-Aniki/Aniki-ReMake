@@ -17,7 +17,7 @@
 With over 25 different interfaces and more than 25 animated login screens, it offers an unmatched level of personalization for your gaming setup.
 The goal is to recreate a console-style interface for your PC, especially for controller users.
 
-Each "interface" (I avoid calling them “themes” to avoid confusion with Playnite themes.) lets you fully change the look, similar to how the PS4 offered multiple theme options.
+Each "interface" (I avoid calling them “themes” to avoid confusion with Playnite themes.) lets you fully change the look, similar to how the PS4 offered multiple theme.
 
 Due to the rich graphics and animations, this theme may not be perfectly smooth on lower-end PCs. 
 However, even on modest setups, it still offers a fun, customizable experience that makes the interface unique to each user.
