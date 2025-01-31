@@ -6,14 +6,16 @@
 
 <div align="center">
 
-<h1 align="center">ANIKI REMAKE : The Ultimate Console-Like Experience for Playnite</h1>
+<h1 align="center">
+ANIKI REMAKE 
+
+The Ultimate Console-Like Experience for Playnite
+</h1>
 </div>
 
 <div align="center">
 
-### **This theme focuses on customization and animations**
-
-With 25+ customizable interfaces and 25+ animated login screens, Aniki Remake offers an unmatched level of personalization for a Fullscreen Playnite theme.
+With 25+ customizable interfaces and 25+ animated login screens, Aniki Remake offers an unmatched level of personalization for a Fullscreen Playnite theme
 
 ### **A True Console Interface for PC**
 
