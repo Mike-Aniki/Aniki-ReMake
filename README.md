@@ -9,7 +9,7 @@
 <h1 align="center">
 ANIKI REMAKE 
 
-The Ultimate Console-Like Experience for Playnite
+The Console-Like Experience for Playnite
 </h1>
 </div>
 
