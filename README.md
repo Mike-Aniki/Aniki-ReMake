@@ -34,7 +34,7 @@ Customize everything, choose cover shapes, enable/disable platform banners, show
 ---
 <div align="center">
 	
-# **For a complete guide on how to use this theme, please check out the [Theme wiki](https://github.com/Mike-Aniki/Aniki-ReMake/wiki)**
+# **For a complete guide on how to use this theme, please check out the [Theme wiki](https://github.com/Mike-Aniki/Aniki-ReMake/wiki/Guide)**
 
 </div>
 
@@ -68,7 +68,7 @@ Customize everything, choose cover shapes, enable/disable platform banners, show
 
 <div align="center">
 	
-# **For a complete guide on how to use this theme, please check out the [Theme wiki](https://github.com/Mike-Aniki/Aniki-ReMake/wiki)**
+# **For a complete guide on how to use this theme, please check out the [Theme wiki](https://github.com/Mike-Aniki/Aniki-ReMake/wiki/Guide)**
 
 </div>
 
