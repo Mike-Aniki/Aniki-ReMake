@@ -60,8 +60,8 @@ Customize everything, choose cover shapes, enable/disable platform banners, show
 </Div>
 
 <p align="Center">
-	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/ViewVertical.png?raw=true" alt="Sublime's custom image" width="40%" />
-	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/ViewSuccess2.png?raw=true" alt="Sublime's custom image" width="40%" />
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/ViewVertical2.png?raw=true" alt="Sublime's custom image" width="40%" />
+	<img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/ViewSuccess.png?raw=true" alt="Sublime's custom image" width="40%" />
 </p>
 
 ---
