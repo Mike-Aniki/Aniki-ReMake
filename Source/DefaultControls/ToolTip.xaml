@@ -1,0 +1,57 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    mc:Ignorable="d">
+
+  <Style TargetType="{x:Type ToolTip}">
+    <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="Background" Value="{DynamicResource OverlayMenu}" />
+    <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+    <Setter Property="FontSize" Value="{DynamicResource FontSize}" />
+    <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Padding" Value="10" />
+    <Setter Property="BorderBrush" Value="{DynamicResource SelectionLightBrush}" />
+    <Setter Property="Margin" Value="0,5,0,0" />
+    <Setter Property="Opacity" Value="0" /> <!-- Opacité initiale -->
+<Setter Property="ToolTipService.Placement" Value="Bottom" />
+    <Setter Property="ToolTipService.HorizontalOffset" Value="0" />
+    <Setter Property="ToolTipService.VerticalOffset" Value="10" />
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="ToolTip">
+                <Border Background="{TemplateBinding Background}"
+                        CornerRadius="{DynamicResource Corner}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="{TemplateBinding Padding}">
+                    <TextBlock Foreground="{TemplateBinding Foreground}"
+                               FontSize="18"
+                               Text="{TemplateBinding Content}"
+                               TextWrapping="Wrap"/>
+                </Border>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+
+    <!-- Triggers pour gérer l'apparition -->
+    <Style.Triggers>
+        <!-- Apparition avec délai -->
+        <EventTrigger RoutedEvent="ToolTip.Opened">
+            <BeginStoryboard>
+                <Storyboard>
+                    <!-- Apparition en fondu au bout de 1 seconde -->
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                     BeginTime="0:0:0.5" Duration="0:0:1" From="0" To="0.9" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Style.Triggers>
+</Style>
+
+
+
+</ResourceDictionary>

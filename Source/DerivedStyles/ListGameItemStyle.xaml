@@ -1,0 +1,239 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                    mc:Ignorable="d">
+
+    <!-- Définition du style pour les éléments de la liste de jeux -->
+    <Style x:Key="ListGameItemStyle" TargetType="ListBoxItem">        
+        <!-- Définition des propriétés par défaut -->
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+        <!-- Définition du modèle de contrôle -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <ControlTemplate.Resources>
+
+                    </ControlTemplate.Resources>
+
+                    <!-- Contenu principal du modèle -->
+                    <Grid x:Name="ListBoxGrid" RenderTransformOrigin="0.5,0.5" Margin="{Settings FullscreenItemSpacingMargin}"
+                          d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameIntance}" >						
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform x:Name="ScaleTransform" ScaleX="1" ScaleY="1" />
+                                <TranslateTransform x:Name="FocusTransform" X="0" Y="0" />
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <ContentPresenter/>
+                        <!-- Éléments visuels supplémentaires -->
+						<Grid x:Name="FlashFocusGrid">
+							<Grid.Style>
+								<Style TargetType="Grid">
+									<Setter Property="Margin" Value="0,0,0,0" />
+									<Style.Triggers>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True" />
+												<Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="True" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Margin" Value="0,-20,0,0" />
+										</MultiDataTrigger>
+										<MultiDataTrigger>
+											<MultiDataTrigger.Conditions>
+												<Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True" />
+												<Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="False" />
+											</MultiDataTrigger.Conditions>
+											<Setter Property="Margin" Value="-20,0,0,0" />
+										</MultiDataTrigger>
+									</Style.Triggers>
+								</Style>
+							</Grid.Style>
+							<Border x:Name="FlashFocus"
+                                    Opacity="0"
+                                    CornerRadius="{DynamicResource Corner}"
+                                    Tag="False"
+                                    Visibility="Collapsed"/>
+								
+							
+						</Grid>
+
+
+
+						<Border x:Name="GameTitleBackground" CornerRadius="{DynamicResource Corner}" Margin="0" BorderThickness="0" Background="{DynamicResource GameTitleBrush}" Opacity="0.6" 
+                                VerticalAlignment="Bottom" Visibility="Collapsed" />
+                        <Border x:Name="NonFocus" Opacity="0" CornerRadius="{DynamicResource Corner}" Margin="0" BorderThickness="0" Background="#7000" />
+
+                        <!-- Éléments visuels pour le focus -->
+
+                        <Grid x:Name="MainGrid">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Margin" Value="-2,-2,-2,-2" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True" />
+                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Margin" Value="-2,-20,-2,-2" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True" />
+                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Margin" Value="-18,-2,-2,-2" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <Border x:Name="MainBorder" Opacity="0" BorderThickness="3.5" CornerRadius="{DynamicResource Corner}" BorderBrush="{StaticResource FocusGameBorderBrush}" Tag="False" Visibility="Collapsed" />                                                                
+                        </Grid>
+
+                       
+                        <TextBlock x:Name="InstallFont" Visibility="Collapsed" Text="&#xef08;" 
+                                   FontFamily="{StaticResource FontIcoFont}" Opacity="0"
+                                   FontSize="30" Foreground="White"
+                                   VerticalAlignment="Top" HorizontalAlignment="Right"
+                                   TextAlignment="Center" Margin="12,16"  />
+                        <StackPanel x:Name="DetailsStack" VerticalAlignment="Bottom" Margin="12,15" Panel.ZIndex="1" >
+                            <TextBlock x:Name="GameTitle" Visibility="Collapsed" Text="{Binding DisplayName}" 
+                                       TextTrimming="WordEllipsis"
+                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                       FontSize="{DynamicResource FontSizeSmall}"
+                                       VerticalAlignment="Bottom"
+                                       TextAlignment="Left" Margin="0,6,0,0"  />
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Déclenchement des changements visuels en fonction des états -->
+                    <ControlTemplate.Triggers>
+
+                        <!-- Focus -->
+						<Trigger Property="IsFocused" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="FocusTransform"
+                                                             Storyboard.TargetProperty="Y"
+                                                             To="-20" Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="FocusTransform"
+                                                             Storyboard.TargetProperty="Y"
+                                                             To="0" Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+							<Setter Property="Tag" Value="True" TargetName="FlashFocus" />
+							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
+							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+							<Setter Property="Opacity" Value="1" TargetName="MainBorder" />
+							<Setter Property="Visibility" Value="Visible" TargetName="FlashFocus" />
+							<Setter Property="Canvas.ZIndex" Value="90" />
+						</Trigger>
+                        <Trigger Property="IsFocused" Value="False">
+                            <Setter Property="Tag" Value="False" TargetName="FlashFocus" />
+                            <Setter Property="Tag" Value="False" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="FlashFocus" />
+                            <Setter Property="Opacity" Value="0.3" TargetName="GameTitleBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="GameTitleBackground" />
+                            <Setter Property="Opacity" Value="0.9" TargetName="InstallFont" />
+                        </Trigger>
+                        <!-- Sélection -->
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="GameTitleBackground" />
+                        </Trigger>
+                        <!-- Survole de la souris -->
+                        <Trigger Property="IsMouseOver" Value="True">
+							<Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="FocusTransform"
+                                                             Storyboard.TargetProperty="Y"
+                                                             To="-30" Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="FocusTransform"
+                                                             Storyboard.TargetProperty="Y"
+                                                             To="0" Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="GameTitleBackground" />
+                        </Trigger>
+                        <!-- Affichage du titre du jeu -->
+                        <DataTrigger Binding="{Settings Fullscreen.ShowGameTitles}" Value="True">
+                            <Setter Property="Opacity" Value="0.9" TargetName="GameTitleBackground" />
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="GameTitleBackground" />
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="GameTitle" />
+                        </DataTrigger>
+
+                        <!-- Affichage de l'icône d'installation -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsInstalled}" Value="False" />
+                                <Condition Binding="{Settings Fullscreen.DarkenUninstalledGamesGrid}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" Value="Visible" TargetName="InstallFont" />
+                            <Setter Property="Opacity" Value="1" TargetName="InstallFont" />
+                        </MultiDataTrigger>
+
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[EnableFocusFlashCover]}" Value="True"/>
+								<Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PerformanceMode]}" Value="False"/>
+							</MultiDataTrigger.Conditions>
+							<Setter Property="Style" TargetName="FlashFocus" Value="{DynamicResource AnimatedFlashFocus}" />
+							<Setter Property="Opacity" Value="1" TargetName="InstallFont" />
+						</MultiDataTrigger>
+						
+				
+						
+						
+																	
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+ <Style x:Key="PlatineLogicStyle" TargetType="ListBoxItem">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Visibility" Value="Visible"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Grid Margin="{Settings FullscreenItemSpacingMargin}"
+                          RenderTransformOrigin="0.5,0.5"
+                          d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameIntance}">
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding CompletionStatus.Name}" Value="Completed">
+                            <Setter Property="IsSelected" Value="True"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

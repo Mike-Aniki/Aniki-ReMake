@@ -1,0 +1,64 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Style du bouton de texte -->
+    <Style x:Key="TextInputButton" BasedOn="{StaticResource {x:Type ButtonEx}}" TargetType="ButtonEx">
+        <Setter Property="Padding" Value="25,15,25,15" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="Background" Value="{DynamicResource OverlayMenu}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="MinWidth" Value="70" />
+        <Setter Property="MinHeight" Value="70" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid Background="{TemplateBinding Background}">                        
+                        <Border x:Name="MainBorder" CornerRadius="5" Margin="-3" BorderThickness="3" Opacity="1" BorderBrush="#BFEAD3CF" Visibility="Collapsed" />
+                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                   Margin="15,0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   Foreground="{TemplateBinding Foreground}" FontSize="24"  >                            
+                            <ContentPresenter />
+                        </TextBlock>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource SelectionLightBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Style de la case à cocher de texte -->
+    <Style x:Key="TextInputCheckbox" BasedOn="{StaticResource {x:Type CheckBoxEx}}" TargetType="CheckBoxEx">
+        <Setter Property="Margin" Value="0" />
+    </Style>
+
+    <!-- Style de la zone de texte de texte -->
+    <Style x:Key="TextInputTextbox" BasedOn="{StaticResource {x:Type TextBox}}" TargetType="TextBox">
+        <Setter Property="Margin" Value="0,0,0,20" />
+        <Setter Property="FontSize" Value="36" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <!-- Style du conteneur des options de texte -->
+    <Style x:Key="TextInputOptionsBorder" TargetType="Border">
+        <Setter Property="Background" Value="#90ffff00" />
+        <Setter Property="CornerRadius" Value="5" />
+    </Style>
+    
+    <!-- Style du conteneur des touches de texte -->
+    <Style x:Key="TextInputKeysBorder" TargetType="Border">
+        <Setter Property="Background" Value="{DynamicResource StaticBorderBrushAlt}" />
+        <Setter Property="Margin" Value="-3" />
+        <Setter Property="CornerRadius" Value="5" />
+    </Style>
+</ResourceDictionary>

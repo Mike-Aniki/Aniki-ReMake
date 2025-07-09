@@ -1,0 +1,43 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Définition du style pour les éléments de sélection d'éléments de la base de données de filtre -->
+    <Style TargetType="{x:Type FilterDbItemtSelection}">
+        <!-- Définition des propriétés par défaut -->
+        <Setter Property="Focusable" Value="False" />
+        <!-- Définition du modèle de contrôle -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type FilterDbItemtSelection}">
+                    <!-- Contenu principal du modèle -->
+					<Border CornerRadius="{DynamicResource Corner}" Background="{DynamicResource OverlayMenu}">
+						<DockPanel Width="500" Height="{StaticResource DesignHeight}" Panel.ZIndex="1"
+								   Background="{DynamicResource OverlayMenu}"  HorizontalAlignment="Left" VerticalAlignment="Center"
+								   x:Name="PART_MenuHost">
+							<!-- Bouton de retour -->
+							<ButtonEx DockPanel.Dock="Top" Margin="30,40,30,10" Height="50"
+									  Style="{DynamicResource FilterPanelButtonEx}" x:Name="PART_ButtonBack">
+								<Button.Content>
+									<StackPanel Orientation="Horizontal">
+										<!-- Titre -->
+										<TextBlock Text="{Binding Title}" Margin="10,0,10,10" TextTrimming="CharacterEllipsis" TextWrapping="Wrap"
+												   VerticalAlignment="Center" FontWeight="SemiBold"
+												   FontSize="24" />
+									</StackPanel>
+								</Button.Content>
+							</ButtonEx>
+							<!-- Bouton de suppression -->
+							<ButtonEx Content="{DynamicResource LOCClearLabel}" DockPanel.Dock="Top"
+									  Margin="30,20,30,10" Height="50"
+									  Style="{DynamicResource FilterPanelButtonEx}" x:Name="PART_ButtonClear"/>
+							<!-- Conteneur des éléments -->
+							<ItemsControlEx x:Name="PART_ItemsHost"
+											Margin="0,20,0,0" DockPanel.Dock="Top" Focusable="False"
+											KeyboardNavigation.DirectionalNavigation="Once" />
+						</DockPanel>
+					</Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

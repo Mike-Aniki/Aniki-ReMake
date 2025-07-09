@@ -1,0 +1,46 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:popt="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+
+
+
+<Style x:Key="ConnexionVideo" TargetType="ContentControl">
+		<Setter Property="Focusable" Value="False" />
+		<Setter Property="Tag" Value="True" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="ContentControl">
+					<MediaElement LoadedBehavior="Play"  UnloadedBehavior="Close" Source="{ThemeFile 'Startup Video/AcceuilTLOU.mp4'}">
+						<MediaElement.CacheMode>
+							<BitmapCache RenderAtScale="1"/>
+						</MediaElement.CacheMode>
+						<MediaElement.Style>
+							<Style TargetType="MediaElement">
+								<Setter Property="MediaElementBehaviors.Repeat" Value="True"/>
+								<Setter Property="Opacity" Value="{DynamicResource MediaElementOpacity}"/>
+								<Style.Triggers>
+									<DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="False">
+										<Setter Property="MediaElement.Source" Value="" />
+									</DataTrigger>
+									<DataTrigger Binding="{Binding ElementName=AcceuilSettings, Path=Visibility}" Value="Collapsed">
+										<Setter Property="Visibility" Value="Collapsed"/>
+										<Setter Property="MediaElementBehaviors.Repeat" Value="False"/>
+										<Setter Property="LoadedBehavior" Value="Stop"/>
+										<Setter Property="MediaElement.Source" Value=""/>
+									</DataTrigger>
+									<Trigger Property="Visibility" Value="Collapsed">
+										<Setter Property="MediaElement.Source" Value=""/>
+										<Setter Property="MediaElementBehaviors.Repeat" Value="False"/>
+										<Setter Property="LoadedBehavior" Value="Stop"/>
+									</Trigger>
+								</Style.Triggers>
+							</Style>
+						</MediaElement.Style>
+					</MediaElement>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+
+</ResourceDictionary>
