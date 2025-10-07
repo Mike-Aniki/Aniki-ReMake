@@ -1,160 +1,160 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-	<!-- Style pour le bouton de menu de jeu -->
-	<Style x:Key="GameMenuButton" BasedOn="{StaticResource {x:Type ButtonEx}}" TargetType="ButtonEx">
-		<Setter Property="Margin" Value="10,10,10,10" />
-		<Setter Property="Height" Value="70" />
-		<Setter Property="Width" Value="400" />
-		<Setter Property="HorizontalAlignment" Value="Center" />
-		<Setter Property="HorizontalContentAlignment" Value="Left" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="Button">
-					<Grid Background="{TemplateBinding Background}">
-						<Border CornerRadius="{DynamicResource Corner}" Opacity="0.4" Background="Transparent"
+    <!-- Style pour le bouton de menu de jeu -->
+    <Style x:Key="GameMenuButton" BasedOn="{StaticResource {x:Type ButtonEx}}" TargetType="ButtonEx">
+        <Setter Property="Margin" Value="10,10,10,10" />
+        <Setter Property="Height" Value="70" />
+        <Setter Property="Width" Value="400" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Border CornerRadius="{DynamicResource Corner}" Opacity="0.4" Background="Transparent"
                                 x:Name="MainBackground"/>
-						<Border x:Name="MainBorder" Margin="-3"
+                        <Border x:Name="MainBorder" Margin="-3"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
-						<TextBlock x:Name="Text" Style="{DynamicResource ButtonTextBlockBaseStyle}"
+                        <TextBlock x:Name="Text" Style="{DynamicResource ButtonTextBlockBaseStyle}"
                                    Foreground="{TemplateBinding Foreground}" FontWeight="SemiBold"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                    Margin="25,0" FontSize="24">
-							<ContentPresenter />
-						</TextBlock>
-					</Grid>
-					<ControlTemplate.Triggers>
-						<Trigger Property="IsEnabled" Value="False">
-							<Setter Property="Opacity" Value="0.5" />
-						</Trigger>
+                            <ContentPresenter />
+                        </TextBlock>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
 
-						<Trigger Property="IsFocused" Value="True">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Background" Value="White" TargetName="MainBackground" />
-						</Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="White" TargetName="MainBackground" />
+                        </Trigger>
 
-						<Trigger Property="IsMouseOver" Value="True">
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Background" Value="White" TargetName="MainBackground" />
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-						</Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Background" Value="White" TargetName="MainBackground" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                        </Trigger>
 
-						<Trigger Property="IsEnabled" Value="False">
-							<Setter Property="Foreground" Value="Transparent" />
-						</Trigger>
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="Transparent" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-	<!-- Style pour le cadre de menu de jeu -->
-	<Style x:Key="GameMenuBorder" TargetType="Border">
-		<Setter Property="CornerRadius" Value="{DynamicResource Corner}" />
-		<Setter Property="Width" Value="400" />
-		<Setter Property="Padding" Value="10" />
-		<Setter Property="Background" Value="{DynamicResource OverlayMenu}" />
-	</Style>
+    <!-- Style pour le cadre de menu de jeu -->
+    <Style x:Key="GameMenuBorder" TargetType="Border">
+        <Setter Property="CornerRadius" Value="{DynamicResource Corner}" />
+        <Setter Property="Width" Value="400" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="Background" Value="{DynamicResource OverlayMenu}" />
+    </Style>
 
-	<!-- Style pour le texte d'en-tête du menu de jeu -->
-	<Style x:Key="GameMenuHeaderText" BasedOn="{StaticResource TextBlockBaseStyle}" TargetType="TextBlock">
-		<Setter Property="VerticalAlignment" Value="Bottom" />
-		<Setter Property="HorizontalAlignment" Value="Center" />
-		<Setter Property="TextWrapping" Value="Wrap" />
-		<Setter Property="Padding" Value="15,15,15,10" />
-		<Setter Property="Margin" Value="0,0,0,10" />
-		<Setter Property="Background" Value="Transparent" />
-	</Style>
+    <!-- Style pour le texte d'en-tête du menu de jeu -->
+    <Style x:Key="GameMenuHeaderText" BasedOn="{StaticResource TextBlockBaseStyle}" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="Padding" Value="15,15,15,10" />
+        <Setter Property="Margin" Value="0,0,0,10" />
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
 
-	<!-- Modèle de données pour l'en-tête du menu de jeu -->
-	<DataTemplate x:Key="GameMenuHeaderTemplate">
-		<TextBlock Text="O P T I O N S" Style="{DynamicResource GameMenuHeaderText}" FontSize="24" />
-	</DataTemplate>
+    <!-- Modèle de données pour l'en-tête du menu de jeu -->
+    <DataTemplate x:Key="GameMenuHeaderTemplate">
+        <TextBlock Text="O P T I O N S" Style="{DynamicResource GameMenuHeaderText}" FontSize="24" />
+    </DataTemplate>
 
-	<!-- Modèle de données pour le bouton de lecture du menu de jeu -->
+    <!-- Modèle de données pour le bouton de lecture du menu de jeu -->
 
-	<DataTemplate x:Key="GameMenuPlayButtonTemplate">
-		<StackPanel Orientation="Horizontal">
-			<TextBlock x:Name="PlayItemIcon" Text="&#xec74;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24"
-                Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0" />
-			<TextBlock x:Name="PlayItemText" Text="{Binding}" VerticalAlignment="Center" />
-		</StackPanel>
-		<DataTemplate.Triggers>
-			<DataTrigger Binding="{PluginSettings Plugin=BackToGame, Path=IsRunning}" Value="True">
-				<Setter Property="Text" Value="&#xec75;" TargetName="PlayItemIcon"/>
-				<Setter Property="Text" Value="{DynamicResource LOCBackToGame}" TargetName="PlayItemText"/>
-			</DataTrigger>
-		</DataTemplate.Triggers>
-	</DataTemplate>
+    <DataTemplate x:Key="GameMenuPlayButtonTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock x:Name="PlayItemIcon" Text="&#xec74;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24"
+                       Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0" />
+            <TextBlock x:Name="PlayItemText" Text="{Binding}" VerticalAlignment="Center" />
+        </StackPanel>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{PluginSettings Plugin=BackToGame, Path=IsRunning}" Value="True">
+                <Setter Property="Text" Value="&#xec75;" TargetName="PlayItemIcon"/>
+                <Setter Property="Text" Value="{DynamicResource LOCBackToGame}" TargetName="PlayItemText"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
 
-	<!-- Modèle de données pour le bouton d'installation du menu de jeu -->
-	<DataTemplate x:Key="GameMenuInstallButtonTemplate">
-		<StackPanel Orientation="Horizontal">
-			<TextBlock Text="&#xef08;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0"/>
-			<TextBlock Text="{Binding}" VerticalAlignment="Center" />
-		</StackPanel>
-	</DataTemplate>
+    <!-- Modèle de données pour le bouton d'installation du menu de jeu -->
+    <DataTemplate x:Key="GameMenuInstallButtonTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xef08;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0"/>
+            <TextBlock Text="{Binding}" VerticalAlignment="Center" />
+        </StackPanel>
+    </DataTemplate>
 
-	<!-- Modèle de données pour le bouton de favoris du menu de jeu -->
-	<DataTemplate x:Key="GameMenuFavoriesButtonTemplate">
-		<StackPanel Orientation="Horizontal">
-			<TextBlock Text="&#xf000;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0"/>
-			<TextBlock Text="{Binding}" VerticalAlignment="Center" />
-		</StackPanel>
-	</DataTemplate>
+    <!-- Modèle de données pour le bouton de favoris du menu de jeu -->
+    <DataTemplate x:Key="GameMenuFavoriesButtonTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xf000;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0"/>
+            <TextBlock Text="{Binding}" VerticalAlignment="Center" />
+        </StackPanel>
+    </DataTemplate>
 
-	<!-- Modèle de données pour le bouton d'en-tête du menu de jeu -->
-	<DataTemplate x:Key="GameMenuHdrButtonTemplate">
-		<StackPanel Orientation="Horizontal">
-			<TextBlock Text="&#xea48;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,5,10,0"/>
-			<TextBlock Text="{Binding}" VerticalAlignment="Center" />
-		</StackPanel>
-	</DataTemplate>
+    <!-- Modèle de données pour le bouton d'en-tête du menu de jeu -->
+    <DataTemplate x:Key="GameMenuHdrButtonTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xea48;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,5,10,0"/>
+            <TextBlock Text="{Binding}" VerticalAlignment="Center" />
+        </StackPanel>
+    </DataTemplate>
 
-	<DataTemplate x:Key="GameMenuExtensionsTemplate">
-		<StackPanel Orientation="Horizontal">
-			<TextBlock Text="&#xefc7;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0"/>
-			<TextBlock Text="{Binding}" VerticalAlignment="Center" />
-		</StackPanel>
-	</DataTemplate>
+    <DataTemplate x:Key="GameMenuExtensionsTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xefc7;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0"/>
+            <TextBlock Text="{Binding}" VerticalAlignment="Center" />
+        </StackPanel>
+    </DataTemplate>
 
-	<!-- Modèle de données pour le bouton de visibilité du menu de jeu -->
-	<DataTemplate x:Key="GameMenuVisibilityButtonTemplate">
-		<StackPanel Orientation="Horizontal">
-			<TextBlock Text="&#xef21;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0"/>
-			<TextBlock Text="{Binding}" VerticalAlignment="Center" />
-		</StackPanel>
-	</DataTemplate>
+    <!-- Modèle de données pour le bouton de visibilité du menu de jeu -->
+    <DataTemplate x:Key="GameMenuVisibilityButtonTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xef21;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0"/>
+            <TextBlock Text="{Binding}" VerticalAlignment="Center" />
+        </StackPanel>
+    </DataTemplate>
 
-	<!-- Modèle de données pour le bouton de suppression du menu de jeu -->
-	<DataTemplate x:Key="GameMenuRemoveButtonTemplate">
-		<StackPanel Orientation="Horizontal">
-			<TextBlock Text="&#xeee4;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,5,10,0"/>
-			<TextBlock Text="{Binding}" VerticalAlignment="Center" />
-		</StackPanel>
-	</DataTemplate>
+    <!-- Modèle de données pour le bouton de suppression du menu de jeu -->
+    <DataTemplate x:Key="GameMenuRemoveButtonTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xeee4;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,5,10,0"/>
+            <TextBlock Text="{Binding}" VerticalAlignment="Center" />
+        </StackPanel>
+    </DataTemplate>
 
-	<!-- Modèle de données pour le bouton de désinstallation du menu de jeu -->
-	<DataTemplate x:Key="GameMenuUninstallButtonTemplate">
-		<StackPanel Orientation="Horizontal">
-			<TextBlock Text="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0"/>
-			<TextBlock Text="{Binding}" VerticalAlignment="Center" />
-		</StackPanel>
-	</DataTemplate>
+    <!-- Modèle de données pour le bouton de désinstallation du menu de jeu -->
+    <DataTemplate x:Key="GameMenuUninstallButtonTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xec53;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24" Width="25" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0"/>
+            <TextBlock Text="{Binding}" VerticalAlignment="Center" />
+        </StackPanel>
+    </DataTemplate>
 
-	<!-- Modèle de données pour le bouton d'action personnalisé du menu de jeu -->
-	<DataTemplate x:Key="GameMenuCustomActionButtonTemplate">
-		<StackPanel Orientation="Horizontal">
-			<TextBlock Width="25" Margin="0,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-			<TextBlock Text="{Binding}" VerticalAlignment="Center"/>
-		</StackPanel>
-	</DataTemplate>
+    <!-- Modèle de données pour le bouton d'action personnalisé du menu de jeu -->
+    <DataTemplate x:Key="GameMenuCustomActionButtonTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Width="25" Margin="0,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
 </ResourceDictionary>

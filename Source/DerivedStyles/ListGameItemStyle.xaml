@@ -1,69 +1,108 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     mc:Ignorable="d">
 
     <!-- Définition du style pour les éléments de la liste de jeux -->
-    <Style x:Key="ListGameItemStyle" TargetType="ListBoxItem">        
+    <Style x:Key="ListGameItemStyle" TargetType="ListBoxItem">
         <!-- Définition des propriétés par défaut -->
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
-		<Setter Property="SnapsToDevicePixels" Value="True" />
-		<Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <!-- espacement horizontal -->
+        <Setter Property="VerticalAlignment" Value="Stretch" />
         <!-- Définition du modèle de contrôle -->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
                     <ControlTemplate.Resources>
+                        <Storyboard x:Key="SB_ToNone">
+                            <DoubleAnimation Storyboard.TargetName="FocusTransform"
+                                             Storyboard.TargetProperty="Y"
+                                             To="0" Duration="0:0:0.12"/>
+                        </Storyboard>
 
+                        <Storyboard x:Key="SB_ToHover">
+                            <DoubleAnimation Storyboard.TargetName="FocusTransform"
+                                             Storyboard.TargetProperty="Y"
+                                             To="-10" Duration="0:0:0.12"/>
+                        </Storyboard>
+
+                        <Storyboard x:Key="SB_ToFocus">
+                            <DoubleAnimation Storyboard.TargetName="FocusTransform"
+                                             Storyboard.TargetProperty="Y"
+                                             To="-20" Duration="0:0:0.15"/>
+                        </Storyboard>
+
+                        <Storyboard x:Key="SB_ToFocusHover">
+                            <DoubleAnimation Storyboard.TargetName="FocusTransform"
+                                             Storyboard.TargetProperty="Y"
+                                             To="-30" Duration="0:0:0.15"/>
+                        </Storyboard>
                     </ControlTemplate.Resources>
+
+
 
                     <!-- Contenu principal du modèle -->
                     <Grid x:Name="ListBoxGrid" RenderTransformOrigin="0.5,0.5" Margin="{Settings FullscreenItemSpacingMargin}"
-                          d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameIntance}" >						
+                          d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameIntance}" >
                         <Grid.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform x:Name="ScaleTransform" ScaleX="1" ScaleY="1" />
                                 <TranslateTransform x:Name="FocusTransform" X="0" Y="0" />
                             </TransformGroup>
                         </Grid.RenderTransform>
+
+                        <Border x:Name="FocusGlow"
+                                CornerRadius="{DynamicResource Corner}"
+                                Background="{DynamicResource GlyphBrush}"
+                                Opacity="0"
+                                Margin="0"
+                                CacheMode="BitmapCache">
+                            <Border.Effect>
+                                <BlurEffect Radius="22" RenderingBias="Performance"/>
+                            </Border.Effect>
+                        </Border>
+
+
                         <ContentPresenter/>
                         <!-- Éléments visuels supplémentaires -->
-						<Grid x:Name="FlashFocusGrid">
-							<Grid.Style>
-								<Style TargetType="Grid">
-									<Setter Property="Margin" Value="0,0,0,0" />
-									<Style.Triggers>
-										<MultiDataTrigger>
-											<MultiDataTrigger.Conditions>
-												<Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True" />
-												<Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="True" />
-											</MultiDataTrigger.Conditions>
-											<Setter Property="Margin" Value="0,-20,0,0" />
-										</MultiDataTrigger>
-										<MultiDataTrigger>
-											<MultiDataTrigger.Conditions>
-												<Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True" />
-												<Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="False" />
-											</MultiDataTrigger.Conditions>
-											<Setter Property="Margin" Value="-20,0,0,0" />
-										</MultiDataTrigger>
-									</Style.Triggers>
-								</Style>
-							</Grid.Style>
-							<Border x:Name="FlashFocus"
+                        <Grid x:Name="FlashFocusGrid">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Margin" Value="0,0,0,0" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True" />
+                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Margin" Value="0,-20,0,0" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True" />
+                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="False" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Margin" Value="-20,0,0,0" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <Border x:Name="FlashFocus"
                                     Opacity="0"
                                     CornerRadius="{DynamicResource Corner}"
                                     Tag="False"
                                     Visibility="Collapsed"/>
-								
-							
-						</Grid>
+
+
+                        </Grid>
 
 
 
-						<Border x:Name="GameTitleBackground" CornerRadius="{DynamicResource Corner}" Margin="0" BorderThickness="0" Background="{DynamicResource GameTitleBrush}" Opacity="0.6" 
+
+                        <Border x:Name="GameTitleBackground" CornerRadius="{DynamicResource Corner}" Margin="0" BorderThickness="0" Background="{DynamicResource GameTitleBrush}" Opacity="0.6"
                                 VerticalAlignment="Bottom" Visibility="Collapsed" />
                         <Border x:Name="NonFocus" Opacity="0" CornerRadius="{DynamicResource Corner}" Margin="0" BorderThickness="0" Background="#7000" />
 
@@ -91,17 +130,19 @@
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
-                            <Border x:Name="MainBorder" Opacity="0" BorderThickness="3.5" CornerRadius="{DynamicResource Corner}" BorderBrush="{StaticResource FocusGameBorderBrush}" Tag="False" Visibility="Collapsed" />                                                                
+                            <Border x:Name="MainBorder" Opacity="0" BorderThickness="3.5" CornerRadius="{DynamicResource Corner}" BorderBrush="{StaticResource FocusGameBorderBrush}" Tag="False" Visibility="Collapsed" />
                         </Grid>
 
-                       
-                        <TextBlock x:Name="InstallFont" Visibility="Collapsed" Text="&#xef08;" 
+
+
+
+                        <TextBlock x:Name="InstallFont" Visibility="Collapsed" Text="&#xef08;"
                                    FontFamily="{StaticResource FontIcoFont}" Opacity="0"
                                    FontSize="30" Foreground="White"
                                    VerticalAlignment="Top" HorizontalAlignment="Right"
                                    TextAlignment="Center" Margin="12,16"  />
                         <StackPanel x:Name="DetailsStack" VerticalAlignment="Bottom" Margin="12,15" Panel.ZIndex="1" >
-                            <TextBlock x:Name="GameTitle" Visibility="Collapsed" Text="{Binding DisplayName}" 
+                            <TextBlock x:Name="GameTitle" Visibility="Collapsed" Text="{Binding DisplayName}"
                                        TextTrimming="WordEllipsis"
                                        Style="{DynamicResource TextBlockBaseStyle}"
                                        FontSize="{DynamicResource FontSizeSmall}"
@@ -114,40 +155,22 @@
                     <ControlTemplate.Triggers>
 
                         <!-- Focus -->
-						<Trigger Property="IsFocused" Value="True">
-                                <Trigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="FocusTransform"
-                                                             Storyboard.TargetProperty="Y"
-                                                             To="-20" Duration="0:0:0.2" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.EnterActions>
-                                <Trigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="FocusTransform"
-                                                             Storyboard.TargetProperty="Y"
-                                                             To="0" Duration="0:0:0.2" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.ExitActions>
-							<Setter Property="Tag" Value="True" TargetName="FlashFocus" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBorder" />
-							<Setter Property="Visibility" Value="Visible" TargetName="FlashFocus" />
-							<Setter Property="Canvas.ZIndex" Value="90" />
-						</Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Tag" Value="True" TargetName="FlashFocus" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashFocus" />
+                            <Setter Property="Canvas.ZIndex" Value="90" />
+                            <Setter TargetName="FocusGlow" Property="Opacity" Value="0.6"/>
+                        </Trigger>
                         <Trigger Property="IsFocused" Value="False">
                             <Setter Property="Tag" Value="False" TargetName="FlashFocus" />
                             <Setter Property="Tag" Value="False" TargetName="MainBorder" />
                             <Setter Property="Visibility" Value="Collapsed" TargetName="MainBorder" />
                             <Setter Property="Visibility" Value="Collapsed" TargetName="FlashFocus" />
-                            <Setter Property="Opacity" Value="0.3" TargetName="GameTitleBackground" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="GameTitleBackground" />
                             <Setter Property="Opacity" Value="0.9" TargetName="InstallFont" />
+                            <Setter TargetName="FocusGlow" Property="Opacity" Value="0"/>
                         </Trigger>
                         <!-- Sélection -->
                         <Trigger Property="IsSelected" Value="True">
@@ -155,31 +178,13 @@
                         </Trigger>
                         <!-- Survole de la souris -->
                         <Trigger Property="IsMouseOver" Value="True">
-							<Trigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="FocusTransform"
-                                                             Storyboard.TargetProperty="Y"
-                                                             To="-30" Duration="0:0:0.2" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.EnterActions>
-                                <Trigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="FocusTransform"
-                                                             Storyboard.TargetProperty="Y"
-                                                             To="0" Duration="0:0:0.2" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.ExitActions>
                             <Setter Property="Visibility" Value="Collapsed" TargetName="GameTitleBackground" />
                         </Trigger>
                         <!-- Affichage du titre du jeu -->
                         <DataTrigger Binding="{Settings Fullscreen.ShowGameTitles}" Value="True">
                             <Setter Property="Opacity" Value="0.9" TargetName="GameTitleBackground" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="GameTitleBackground" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="GameTitle" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="GameTitleBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="GameTitle" />
                         </DataTrigger>
 
                         <!-- Affichage de l'icône d'installation -->
@@ -192,19 +197,78 @@
                             <Setter Property="Opacity" Value="1" TargetName="InstallFont" />
                         </MultiDataTrigger>
 
-						<MultiDataTrigger>
-							<MultiDataTrigger.Conditions>
-								<Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[EnableFocusFlashCover]}" Value="True"/>
-								<Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PerformanceMode]}" Value="False"/>
-							</MultiDataTrigger.Conditions>
-							<Setter Property="Style" TargetName="FlashFocus" Value="{DynamicResource AnimatedFlashFocus}" />
-							<Setter Property="Opacity" Value="1" TargetName="InstallFont" />
-						</MultiDataTrigger>
-						
-				
-						
-						
-																	
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[EnableFocusFlashCover]}" Value="True"/>
+                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PerformanceMode]}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Style" TargetName="FlashFocus" Value="{DynamicResource AnimatedFlashFocus}" />
+                            <Setter Property="Opacity" Value="1" TargetName="InstallFont" />
+                        </MultiDataTrigger>
+
+
+                        <!-- Etat 1 : Focus + Hover -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFocused" Value="True"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <RemoveStoryboard BeginStoryboardName="BS_None"/>
+                                <RemoveStoryboard BeginStoryboardName="BS_Hover"/>
+                                <RemoveStoryboard BeginStoryboardName="BS_Focus"/>
+                                <BeginStoryboard x:Name="BS_FocusHover" Storyboard="{StaticResource SB_ToFocusHover}" HandoffBehavior="SnapshotAndReplace"/>
+                            </MultiTrigger.EnterActions>
+                        </MultiTrigger>
+
+                        <!-- Etat 2 : Focus seul -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFocused" Value="True"/>
+                                <Condition Property="IsMouseOver" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <RemoveStoryboard BeginStoryboardName="BS_None"/>
+                                <RemoveStoryboard BeginStoryboardName="BS_Hover"/>
+                                <RemoveStoryboard BeginStoryboardName="BS_FocusHover"/>
+                                <BeginStoryboard x:Name="BS_Focus" Storyboard="{StaticResource SB_ToFocus}" HandoffBehavior="SnapshotAndReplace"/>
+                            </MultiTrigger.EnterActions>
+                        </MultiTrigger>
+
+                        <!-- Etat 3 : Hover seul -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFocused" Value="False"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <RemoveStoryboard BeginStoryboardName="BS_None"/>
+                                <RemoveStoryboard BeginStoryboardName="BS_Focus"/>
+                                <RemoveStoryboard BeginStoryboardName="BS_FocusHover"/>
+                                <BeginStoryboard x:Name="BS_Hover" Storyboard="{StaticResource SB_ToHover}" HandoffBehavior="SnapshotAndReplace"/>
+                            </MultiTrigger.EnterActions>
+                        </MultiTrigger>
+
+                        <!-- Etat 4 : Ni focus ni hover -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFocused" Value="False"/>
+                                <Condition Property="IsMouseOver" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <RemoveStoryboard BeginStoryboardName="BS_Hover"/>
+                                <RemoveStoryboard BeginStoryboardName="BS_Focus"/>
+                                <RemoveStoryboard BeginStoryboardName="BS_FocusHover"/>
+                                <BeginStoryboard x:Name="BS_None" Storyboard="{StaticResource SB_ToNone}" HandoffBehavior="SnapshotAndReplace"/>
+                            </MultiTrigger.EnterActions>
+                        </MultiTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PerformanceMode]}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="FocusGlow" Property="Opacity" Value="0"/>
+                        </MultiDataTrigger>
 
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -212,7 +276,7 @@
         </Setter>
     </Style>
 
- <Style x:Key="PlatineLogicStyle" TargetType="ListBoxItem">
+    <Style x:Key="PlatineLogicStyle" TargetType="ListBoxItem">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

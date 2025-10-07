@@ -8,37 +8,37 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="MinHeight" Value="50" />
         <Setter Property="MinWidth" Value="350" />
-	<Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
                     <Grid Background="{TemplateBinding Background}">
-		    <Border x:Name="MainBorder" Margin="0" CornerRadius="{DynamicResource Corner}" BorderThickness="3" Opacity="0" Style="{DynamicResource AnimatedBorderBrush}" Tag="False" Visibility="Collapsed" >
-		    </Border>
-		    <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}" Tag="False" Visibility="Collapsed">
-		    </Border>		
-		    <Grid Margin="{TemplateBinding Padding}">
+                        <Border x:Name="MainBorder" Margin="0" CornerRadius="{DynamicResource Corner}" BorderThickness="3" Opacity="0" BorderBrush="{DynamicResource SelectionLightBrush}" Tag="False" Visibility="Collapsed" >
+                        </Border>
+                        <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}" Tag="False" Visibility="Collapsed">
+                        </Border>
+                        <Grid Margin="{TemplateBinding Padding}">
 
-                    	<Grid.ColumnDefinitions>
-                        	<ColumnDefinition Width="Auto" />
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                            </Grid.ColumnDefinitions>
 
-		    <Border Background="Transparent" VerticalAlignment="Center" Grid.Column="0" Margin="10,0" Width="30" Height="30">
-                    <Viewbox x:Name="CheckIcon">
-                    <TextBlock Text="&#xeffc;" FontFamily="{DynamicResource FontIcoFont}" Foreground="{TemplateBinding Foreground}"
-                    	x:Name="IconText" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" />
-                    </Viewbox>
-                    </Border>
-                    <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
-                    	Foreground="{TemplateBinding Foreground}" Margin="0,10,15,10" 
-                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                        Grid.Column="1" TextTrimming="WordEllipsis" >
-                    <ContentPresenter RecognizesAccessKey="True" />
-                    </TextBlock>
-                    </Grid>
+                            <Border Background="Transparent" VerticalAlignment="Center" Grid.Column="0" Margin="10,0" Width="30" Height="30">
+                                <Viewbox x:Name="CheckIcon">
+                                    <TextBlock Text="&#xeffc;" FontFamily="{DynamicResource FontIcoFont}" Foreground="{TemplateBinding Foreground}"
+                                               x:Name="IconText" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.4" />
+                                </Viewbox>
+                            </Border>
+                            <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                       Foreground="{TemplateBinding Foreground}" Margin="0,10,15,10"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       Grid.Column="1" TextTrimming="WordEllipsis" >
+                                <ContentPresenter RecognizesAccessKey="True" />
+                            </TextBlock>
+                        </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
@@ -62,855 +62,949 @@
         </Setter>
     </Style>
 
-<Style x:Key="ControllerButtonMain" TargetType="CheckBox">
-		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
-		<Setter Property="Foreground" Value="Transparent" />
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="Height" Value="60" />
-		<Setter Property="Width" Value="60" />
-		<Setter Property="Margin" Value="0" />
-		<Setter Property="SnapsToDevicePixels" Value="True" />
-		<Setter Property="HorizontalContentAlignment" Value="Center" />
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="CheckBox">
-					<Grid x:Name="MainGrid" Background="Transparent" >
-						<Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
-						<Border x:Name="MainBorder" Opacity="0" Margin="-6"
-										SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-											Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
-											BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-							<StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-										Source="{ThemeFile 'Images/Buttons/Controller.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-													Source="{ThemeFile 'Images/Buttons/NoController.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/NoController.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/Controller.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel.Style>
-								<Style TargetType="StackPanel">
-									<Style.Triggers>
+    <Style x:Key="ControllerButtonMain" TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid x:Name="MainGrid" Background="Transparent" >
+                        <Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
+                        <Border x:Name="MainBorder" Opacity="0" Margin="-6"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Controller.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/NoController.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/NoController.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Controller.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Style.Triggers>
 
-									</Style.Triggers>
-								</Style>
-							</StackPanel.Style>
-						</StackPanel>
-					</Grid>
-					<ControlTemplate.Triggers>
-						<Trigger Property="IsFocused" Value="True">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsMouseOver" Value="True">
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsEnabled" Value="False">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-						</Trigger>
-						<Trigger Property="IsChecked" Value="True">
-							<Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsChecked" Value="False">
-							<Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="True">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="False">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="False">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
 
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-<Style x:Key="CompletedBannerButtonMain" TargetType="CheckBox">
-		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
-		<Setter Property="Foreground" Value="Transparent" />
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="Height" Value="60" />
-		<Setter Property="Width" Value="60" />
-		<Setter Property="Margin" Value="0" />
-		<Setter Property="SnapsToDevicePixels" Value="True" />
-		<Setter Property="HorizontalContentAlignment" Value="Center" />
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="CheckBox">
-					<Grid x:Name="MainGrid" Background="Transparent" >
-						<Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
-						<Border x:Name="MainBorder" Opacity="0" Margin="-6"
-										SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-											Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
-											BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-							<StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-										Source="{ThemeFile 'Images/Buttons/CompletedBanner.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-													Source="{ThemeFile 'Images/Buttons/NoCompletedBanner.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/NoCompletedBanner.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/CompletedBanner.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel.Style>
-								<Style TargetType="StackPanel">
-									<Style.Triggers>
+    <Style x:Key="CompletedBannerButtonMain" TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid x:Name="MainGrid" Background="Transparent" >
+                        <Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
+                        <Border x:Name="MainBorder" Opacity="0" Margin="-6"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/CompletedBanner.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/NoCompletedBanner.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/NoCompletedBanner.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/CompletedBanner.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Style.Triggers>
 
-									</Style.Triggers>
-								</Style>
-							</StackPanel.Style>
-						</StackPanel>
-					</Grid>
-					<ControlTemplate.Triggers>
-						<Trigger Property="IsFocused" Value="True">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsMouseOver" Value="True">
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsEnabled" Value="False">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-						</Trigger>
-						<Trigger Property="IsChecked" Value="True">
-							<Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsChecked" Value="False">
-							<Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="True">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="False">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="False">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
 
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-<Style x:Key="TrailerButtonMain" TargetType="CheckBox">
-		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
-		<Setter Property="Foreground" Value="Transparent" />
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="Height" Value="60" />
-		<Setter Property="Width" Value="60" />
-		<Setter Property="Margin" Value="0" />
-		<Setter Property="SnapsToDevicePixels" Value="True" />
-		<Setter Property="HorizontalContentAlignment" Value="Center" />
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="CheckBox">
-					<Grid x:Name="MainGrid" Background="Transparent" >
-						<Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
-						<Border x:Name="MainBorder" Opacity="0" Margin="-6"
-										SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-											Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
-											BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-							<StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-										Source="{ThemeFile 'Images/Buttons/Trailer.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-													Source="{ThemeFile 'Images/Buttons/Trailer.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/Trailer.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/Trailer.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel.Style>
-								<Style TargetType="StackPanel">
-									<Style.Triggers>
+    <Style x:Key="TrailerButtonMain" TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid x:Name="MainGrid" Background="Transparent" >
+                        <Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
+                        <Border x:Name="MainBorder" Opacity="0" Margin="-6"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Trailer.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Trailer.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Trailer.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Trailer.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Style.Triggers>
 
-									</Style.Triggers>
-								</Style>
-							</StackPanel.Style>
-						</StackPanel>
-					</Grid>
-					<ControlTemplate.Triggers>
-						<Trigger Property="IsFocused" Value="True">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsMouseOver" Value="True">
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsEnabled" Value="False">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-						</Trigger>
-						<Trigger Property="IsChecked" Value="True">
-							<Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsChecked" Value="False">
-							<Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="True">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="False">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="False">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
 
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-	
-	<Style x:Key="ControlCenterStyle" TargetType="CheckBox">
-		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
-		<Setter Property="Foreground" Value="Transparent" />
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="Height" Value="60" />
-		<Setter Property="Width" Value="60" />
-		<Setter Property="Margin" Value="0" />
-		<Setter Property="SnapsToDevicePixels" Value="True" />
-		<Setter Property="HorizontalContentAlignment" Value="Center" />
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="CheckBox">
-					<Grid x:Name="MainGrid" Background="Transparent" >
-						<Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
-						<Border x:Name="MainBorder" Opacity="0" Margin="-6"
-										SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-											Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
-											BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-							<StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-										Source="{ThemeFile 'Images/Buttons/ControlCenter.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-													Source="{ThemeFile 'Images/Buttons/NoControlCenter.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/NoControlCenter.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/ControlCenter.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel.Style>
-								<Style TargetType="StackPanel">
-									<Style.Triggers>
 
-									</Style.Triggers>
-								</Style>
-							</StackPanel.Style>
-						</StackPanel>
-					</Grid>
-					<ControlTemplate.Triggers>
-						<Trigger Property="IsFocused" Value="True">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsMouseOver" Value="True">
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsEnabled" Value="False">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-						</Trigger>
-						<Trigger Property="IsChecked" Value="True">
-							<Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsChecked" Value="False">
-							<Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="True">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="False">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
+    <Style x:Key="ControlCenterStyle" TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid x:Name="MainGrid" Background="Transparent" >
+                        <Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
+                        <Border x:Name="MainBorder" Opacity="0" Margin="-6"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/ControlCenter.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/NoControlCenter.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/NoControlCenter.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/ControlCenter.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Style.Triggers>
 
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="False">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
 
-	<Style x:Key="VolumerButtonMain" TargetType="CheckBox">
-		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
-		<Setter Property="Foreground" Value="Transparent" />
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="Height" Value="60" />
-		<Setter Property="Width" Value="60" />
-		<Setter Property="Margin" Value="0" />
-		<Setter Property="SnapsToDevicePixels" Value="True" />
-		<Setter Property="HorizontalContentAlignment" Value="Center" />
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="CheckBox">
-					<Grid x:Name="MainGrid" Background="Transparent" >
-						<Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
-						<Border x:Name="MainBorder" Opacity="0" Margin="-6"
-										SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-											Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
-											BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-							<StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-										Source="{ThemeFile 'Images/Buttons/Volume.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-													Source="{ThemeFile 'Images/Buttons/Volume.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/Volume.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/Volume.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel.Style>
-								<Style TargetType="StackPanel">
-									<Style.Triggers>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-									</Style.Triggers>
-								</Style>
-							</StackPanel.Style>
-						</StackPanel>
-					</Grid>
-					<ControlTemplate.Triggers>
-						<Trigger Property="IsFocused" Value="True">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsMouseOver" Value="True">
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsEnabled" Value="False">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-						</Trigger>
-						<Trigger Property="IsChecked" Value="True">
-							<Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsChecked" Value="False">
-							<Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="True">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="False">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
+    <Style x:Key="VolumerButtonMain" TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid x:Name="MainGrid" Background="Transparent" >
+                        <Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
+                        <Border x:Name="MainBorder" Opacity="0" Margin="-6"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Volume.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Volume.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Volume.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Volume.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Style.Triggers>
 
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="False">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
 
-	<Style x:Key="OptionButtonMain" TargetType="CheckBox">
-		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
-		<Setter Property="Foreground" Value="Transparent" />
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="Height" Value="60" />
-		<Setter Property="Width" Value="60" />
-		<Setter Property="Margin" Value="0" />
-		<Setter Property="SnapsToDevicePixels" Value="True" />
-		<Setter Property="HorizontalContentAlignment" Value="Center" />
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="CheckBox">
-					<Grid x:Name="MainGrid" Background="Transparent" >
-						<Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
-						<Border x:Name="MainBorder" Opacity="0" Margin="-6"
-										SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-											Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
-											BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-							<StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-										Source="{ThemeFile 'Images/Buttons/MainOption.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-													Source="{ThemeFile 'Images/Buttons/MainOption.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/MainOption.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/MainOption.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel.Style>
-								<Style TargetType="StackPanel">
-									<Style.Triggers>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-									</Style.Triggers>
-								</Style>
-							</StackPanel.Style>
-						</StackPanel>
-					</Grid>
-					<ControlTemplate.Triggers>
-						<Trigger Property="IsFocused" Value="True">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsMouseOver" Value="True">
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsEnabled" Value="False">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-						</Trigger>
-						<Trigger Property="IsChecked" Value="True">
-							<Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsChecked" Value="False">
-							<Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="True">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="False">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
+    <Style x:Key="OptionButtonMain" TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid x:Name="MainGrid" Background="Transparent" >
+                        <Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
+                        <Border x:Name="MainBorder" Opacity="0" Margin="-6"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/MainOption.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/MainOption.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/MainOption.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/MainOption.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Style.Triggers>
 
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
-	
-		<Style x:Key="LayoutButtonMain" TargetType="CheckBox">
-		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
-		<Setter Property="Foreground" Value="Transparent" />
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="Height" Value="60" />
-		<Setter Property="Width" Value="60" />
-		<Setter Property="Margin" Value="0" />
-		<Setter Property="SnapsToDevicePixels" Value="True" />
-		<Setter Property="HorizontalContentAlignment" Value="Center" />
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="CheckBox">
-					<Grid x:Name="MainGrid" Background="Transparent" >
-						<Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
-						<Border x:Name="MainBorder" Opacity="0" Margin="-6"
-										SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-											Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
-											BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-							<StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-										Source="{ThemeFile 'Images/Buttons/Layout.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-													Source="{ThemeFile 'Images/Buttons/Layout.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/Layout.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/Layout.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel.Style>
-								<Style TargetType="StackPanel">
-									<Style.Triggers>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="False">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
 
-									</Style.Triggers>
-								</Style>
-							</StackPanel.Style>
-						</StackPanel>
-					</Grid>
-					<ControlTemplate.Triggers>
-						<Trigger Property="IsFocused" Value="True">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsMouseOver" Value="True">
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsEnabled" Value="False">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-						</Trigger>
-						<Trigger Property="IsChecked" Value="True">
-							<Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsChecked" Value="False">
-							<Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="True">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="False">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
-	
-		
-		<Style x:Key="ThemOptButtonDet" TargetType="CheckBox">
-		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
-		<Setter Property="Foreground" Value="Transparent" />
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="Height" Value="60" />
-		<Setter Property="Width" Value="60" />
-		<Setter Property="Margin" Value="0" />
-		<Setter Property="SnapsToDevicePixels" Value="True" />
-		<Setter Property="HorizontalContentAlignment" Value="Center" />
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="CheckBox">
-					<Grid x:Name="MainGrid" Background="Transparent" >
-						<Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
-						<Border x:Name="MainBorder" Opacity="0" Margin="-6"
-										SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-											Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
-											BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-							<StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-										Source="{ThemeFile 'Images/Buttons/DetailsOption.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-													Source="{ThemeFile 'Images/Buttons/DetailsOption.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/DetailsOption.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/DetailsOption.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel.Style>
-								<Style TargetType="StackPanel">
-									<Style.Triggers>
+    <Style x:Key="LayoutButtonMain" TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid x:Name="MainGrid" Background="Transparent" >
+                        <Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
+                        <Border x:Name="MainBorder" Opacity="0" Margin="-6"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Layout.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Layout.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Layout.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Layout.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Style.Triggers>
 
-									</Style.Triggers>
-								</Style>
-							</StackPanel.Style>
-						</StackPanel>
-					</Grid>
-					<ControlTemplate.Triggers>
-						<Trigger Property="IsFocused" Value="True">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsMouseOver" Value="True">
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsEnabled" Value="False">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-						</Trigger>
-						<Trigger Property="IsChecked" Value="True">
-							<Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsChecked" Value="False">
-							<Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="True">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="False">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="False">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
 
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-	<Style x:Key="PowerButtonMain" TargetType="CheckBox">
-		<Setter Property="FocusVisualStyle" Value="{x:Null}" />
-		<Setter Property="Foreground" Value="Transparent" />
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="Height" Value="60" />
-		<Setter Property="Width" Value="60" />
-		<Setter Property="Margin" Value="0" />
-		<Setter Property="SnapsToDevicePixels" Value="True" />
-		<Setter Property="HorizontalContentAlignment" Value="Center" />
-		<Setter Property="VerticalContentAlignment" Value="Center" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="CheckBox">
-					<Grid x:Name="MainGrid" Background="Transparent" >
-						<Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
-						<Border x:Name="MainBorder" Opacity="0" Margin="-6"
-										SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-											Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
-											BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
-						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-							<StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-										Source="{ThemeFile 'Images/Buttons/Power.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-													Source="{ThemeFile 'Images/Buttons/Power.png'}">
-									</Image>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/Power.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
-								<StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-									<Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
-									   Source="{ThemeFile 'Images/Buttons/Power.png'}">
-									</Image>
-								</StackPanel>
-							</StackPanel>
-							<StackPanel.Style>
-								<Style TargetType="StackPanel">
-									<Style.Triggers>
 
-									</Style.Triggers>
-								</Style>
-							</StackPanel.Style>
-						</StackPanel>
-					</Grid>
-					<ControlTemplate.Triggers>
-						<Trigger Property="IsFocused" Value="True">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsMouseOver" Value="True">
-							<Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-							<Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-							<Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-							<Setter Property="Tag" Value="True" TargetName="MainBorder" />
-							<Setter Property="Opacity" Value="1" TargetName="OFF" />
-							<Setter Property="Opacity" Value="1" TargetName="ON" />
-						</Trigger>
-						<Trigger Property="IsEnabled" Value="False">
-							<Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-						</Trigger>
-						<Trigger Property="IsChecked" Value="True">
-							<Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsChecked" Value="False">
-							<Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="True">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
-						<Trigger Property="IsPressed" Value="False">
-							<Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
-						</Trigger>
+    <Style x:Key="ThemOptButtonDet" TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid x:Name="MainGrid" Background="Transparent" >
+                        <Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
+                        <Border x:Name="MainBorder" Opacity="0" Margin="-6"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/DetailsOption.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/DetailsOption.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/DetailsOption.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/DetailsOption.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Style.Triggers>
 
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
-	
-    <Style TargetType="CheckBoxEx" BasedOn="{StaticResource {x:Type CheckBox}}">    
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="False">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PowerButtonMain" TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid x:Name="MainGrid" Background="Transparent" >
+                        <Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
+                        <Border x:Name="MainBorder" Opacity="0" Margin="-6"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Power.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Power.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Power.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Power.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Style.Triggers>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="False">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SuccessMainButton" TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid x:Name="MainGrid" Background="Transparent" >
+                        <Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
+                        <Border x:Name="MainBorder" Opacity="0" Margin="-6"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="70" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Trophy.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="70" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Trophy.png'}">
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="70" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Trophy.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="70" Stretch="UniformToFill"
+                                           Source="{ThemeFile 'Images/Buttons/Trophy.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Style.Triggers>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="False">
+                            <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="CheckBoxEx" BasedOn="{StaticResource {x:Type CheckBox}}">
     </Style>
 
 </ResourceDictionary>
