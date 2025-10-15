@@ -2,154 +2,175 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:popt="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
-	<!-- Définition des ressources d'images par défaut -->
-	<BitmapImage x:Key="DefaultGameIcon" UriSource="{ThemeFile 'Images/applogo_clean.png'}" popt:Freeze="True" />
-	<BitmapImage x:Key="DefaultGameCover" UriSource="{ThemeFile 'Images/custom_cover_background.png'}" popt:Freeze="True" />
+    <!-- Définition des ressources d'images par défaut -->
+    <BitmapImage x:Key="DefaultGameIcon" UriSource="{ThemeFile 'Images/applogo_clean.png'}" popt:Freeze="True" />
+    <BitmapImage x:Key="DefaultGameCover" UriSource="{ThemeFile 'Images/custom_cover_background.png'}" popt:Freeze="True" />
 
-	<!-- Définition des icônes de statut de batterie -->
-	<TextBlock x:Key="BatteryStatusCritical" Text="&#xeeb1;" FontFamily="{StaticResource FontIcoFont}" />
-	<TextBlock x:Key="BatteryStatusLow" Text="&#xeeb4;" FontFamily="{StaticResource FontIcoFont}" />
-	<TextBlock x:Key="BatteryStatusMedium" Text="&#xeeb3;" FontFamily="{StaticResource FontIcoFont}" />
-	<TextBlock x:Key="BatteryStatusHigh" Text="&#xeeb2;" FontFamily="{StaticResource FontIcoFont}" />
-	<TextBlock x:Key="BatteryStatusCharging" Text="&#xeed4;" FontFamily="{StaticResource FontIcoFont}" />
+    <!-- Définition des icônes de statut de batterie -->
+    <TextBlock x:Key="BatteryStatusCritical" Text="&#xeeb1;" FontFamily="{StaticResource FontIcoFont}" />
+    <TextBlock x:Key="BatteryStatusLow" Text="&#xeeb4;" FontFamily="{StaticResource FontIcoFont}" />
+    <TextBlock x:Key="BatteryStatusMedium" Text="&#xeeb3;" FontFamily="{StaticResource FontIcoFont}" />
+    <TextBlock x:Key="BatteryStatusHigh" Text="&#xeeb2;" FontFamily="{StaticResource FontIcoFont}" />
+    <TextBlock x:Key="BatteryStatusCharging" Text="&#xeed4;" FontFamily="{StaticResource FontIcoFont}" />
 
-	<Style x:Key="IntroVideo1" TargetType="ContentControl">
+    <Style x:Key="IntroVideo1" TargetType="ContentControl">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Tag" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContentControl">
-                   <MediaElement x:Name="IntroVideoElement" Source="{ThemeFile 'Startup Video/Introvideo1080.mp4'}" LoadedBehavior="Play" UnloadedBehavior="Stop" SnapsToDevicePixels="True">
-								<!-- Style de l'élément multimédia -->
-								<MediaElement.Style>
-									<Style TargetType="MediaElement">
-										<Setter Property="Opacity" Value="1"/>
-										<!-- Déclencheurs de style pour l'élément multimédia -->
-										<Style.Triggers>
-											<!-- Déclencheur déclenché à la fin de la vidéo -->
-											<EventTrigger RoutedEvent="MediaElement.MediaEnded">
-												<!-- Début de l'animation -->
-												<BeginStoryboard>
-													<!-- Storyboard pour l'animation de disparition -->
-													<Storyboard>
-														<!-- Animation de l'opacité -->
-														<DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:1.5" FillBehavior="HoldEnd"/>
-														<!-- Animation de la visibilité -->
-														<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(UIElement.Visibility)">
-															<!-- Image visible -->
-															<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
-															<!-- Image cachée -->
-															<DiscreteObjectKeyFrame KeyTime="00:00:0.5" Value="{x:Static Visibility.Collapsed}"/>
-														</ObjectAnimationUsingKeyFrames>
-													</Storyboard>
-												</BeginStoryboard>
-											</EventTrigger>
-										</Style.Triggers>
-									</Style>
-								</MediaElement.Style>
-							</MediaElement>
+                    <MediaElement x:Name="IntroVideoElement" Source="{ThemeFile 'Startup Video/Introvideo1080.mp4'}" LoadedBehavior="Play" UnloadedBehavior="Stop" SnapsToDevicePixels="True">
+                        <!-- Style de l'élément multimédia -->
+                        <MediaElement.Style>
+                            <Style TargetType="MediaElement">
+                                <Setter Property="Opacity" Value="1"/>
+                                <!-- Déclencheurs de style pour l'élément multimédia -->
+                                <Style.Triggers>
+                                    <!-- Déclencheur déclenché à la fin de la vidéo -->
+                                    <EventTrigger RoutedEvent="MediaElement.MediaEnded">
+                                        <!-- Début de l'animation -->
+                                        <BeginStoryboard>
+                                            <!-- Storyboard pour l'animation de disparition -->
+                                            <Storyboard>
+                                                <!-- Animation de l'opacité -->
+                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:1.5" FillBehavior="HoldEnd"/>
+                                                <!-- Animation de la visibilité -->
+                                                <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                                    <!-- Image visible -->
+                                                    <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+                                                    <!-- Image cachée -->
+                                                    <DiscreteObjectKeyFrame KeyTime="00:00:0.5" Value="{x:Static Visibility.Collapsed}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MediaElement.Style>
+                    </MediaElement>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-	<Style x:Key="ConnexionVideo" TargetType="ContentControl">
-		<Setter Property="Focusable" Value="False" />
-		<Setter Property="Tag" Value="True" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="ContentControl">
-					<MediaElement LoadedBehavior="Play"  UnloadedBehavior="Close" Source="{ThemeFile 'Startup Video/Acceuil.mp4'}">
-						<MediaElement.CacheMode>
-							<BitmapCache RenderAtScale="1"/>
-						</MediaElement.CacheMode>
-						<MediaElement.Style>
-							<Style TargetType="MediaElement">
-								<Setter Property="MediaElementBehaviors.Repeat" Value="True"/>
-								<Setter Property="Opacity" Value="{DynamicResource MediaElementOpacity}"/>
-								<Style.Triggers>
-									<DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="False">
-										<Setter Property="MediaElement.Source" Value="" />
-									</DataTrigger>
-									<DataTrigger Binding="{Binding ElementName=AcceuilSettings, Path=Visibility}" Value="Collapsed">
-										<Setter Property="Visibility" Value="Collapsed"/>
-										<Setter Property="MediaElementBehaviors.Repeat" Value="False"/>
-										<Setter Property="LoadedBehavior" Value="Stop"/>
-										<Setter Property="MediaElement.Source" Value=""/>
-									</DataTrigger>
-									<Trigger Property="Visibility" Value="Collapsed">
-										<Setter Property="MediaElement.Source" Value=""/>
-										<Setter Property="MediaElementBehaviors.Repeat" Value="False"/>
-										<Setter Property="LoadedBehavior" Value="Stop"/>
-									</Trigger>
-								</Style.Triggers>
-							</Style>
-						</MediaElement.Style>
-					</MediaElement>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+    <!-- 1) Template qui héberge réellement le MediaElement -->
+    <ControlTemplate x:Key="ConnexionVideo_Template" TargetType="ContentControl">
+        <MediaElement x:Name="Trailer"
+                      LoadedBehavior="Play"
+                      UnloadedBehavior="Close"
+                      Source="{ThemeFile 'Startup Video/Acceuil.mp4'}">
+            <MediaElement.Style>
+                <Style TargetType="MediaElement">
+                    <Setter Property="Opacity" Value="{DynamicResource MediaElementOpacity}"/>
+                    <!-- si tu as ce behavior -->
+                    <Setter Property="MediaElementBehaviors.Repeat" Value="True"/>
+                    <Style.Triggers>
+                        <!-- Fenêtre inactive => stop net -->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="False">
+                            <Setter Property="LoadedBehavior" Value="Stop"/>
+                            <Setter Property="MediaElementBehaviors.Repeat" Value="False"/>
+                            <Setter Property="Source" Value=""/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </MediaElement.Style>
+        </MediaElement>
+    </ControlTemplate>
+
+    <!-- 2) Style qui applique/retire le template selon l’état -->
+    <Style x:Key="ConnexionVideo" TargetType="ContentControl">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Tag" Value="True"/>
+        <Setter Property="Template" Value="{StaticResource ConnexionVideo_Template}"/>
+
+        <Style.Triggers>
+            <!-- Si la fenêtre n’est pas active => retire le template (unload du MediaElement) -->
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="False">
+                <Setter Property="Template" Value="{x:Null}"/>
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </DataTrigger>
+
+            <!-- Si le contrôle est Collapsed => retire aussi le template -->
+            <Trigger Property="Visibility" Value="Collapsed">
+                <Setter Property="Template" Value="{x:Null}"/>
+            </Trigger>
+
+            <!-- Si AcceuilSettings est Collapsed => idem -->
+            <DataTrigger Binding="{Binding ElementName=AcceuilSettings, Path=Visibility}" Value="Collapsed">
+                <Setter Property="Template" Value="{x:Null}"/>
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </DataTrigger>
+
+            <!-- Quand c’est de nouveau visible & fenêtre active => on réapplique le template -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="True"/>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Visibility}" Value="Visible"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource ConnexionVideo_Template}"/>
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
 
 
-	<!-- Définition du style pour l'indicateur de progression -->
-	<Style x:Key="ProgressIndicator" TargetType="ContentControl">
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="ContentControl">
-					<Grid>
-						<!-- Cercle extérieur -->
-						<Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+    <!-- Définition du style pour l'indicateur de progression -->
+    <Style x:Key="ProgressIndicator" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid>
+                        <!-- Cercle extérieur -->
+                        <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                  Fill="Transparent"
                                  StrokeThickness="4"
                                  Stroke="{DynamicResource ControlBackgroundBrush}"/>
 
-						<!-- Cercle intérieur animé -->
-						<Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        <!-- Cercle intérieur animé -->
+                        <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                  Fill="Transparent" RenderTransformOrigin="0.5,0.5"
                                  StrokeThickness="4"
                                  Stroke="{DynamicResource GlyphBrush}">
-							<Ellipse.Resources>
-								<!-- Définition des animations -->
-								<Storyboard x:Key="VisibleOn">
-									<DoubleAnimation Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)"
+                            <Ellipse.Resources>
+                                <!-- Définition des animations -->
+                                <Storyboard x:Key="VisibleOn">
+                                    <DoubleAnimation Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)"
                                                      To="360" Duration="0:0:05" RepeatBehavior="Forever" />
-								</Storyboard>
-								<Storyboard x:Key="VisibleOff">
-									<DoubleAnimation Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)"
+                                </Storyboard>
+                                <Storyboard x:Key="VisibleOff">
+                                    <DoubleAnimation Storyboard.TargetProperty="(Rectangle.RenderTransform).(RotateTransform.Angle)"
                                                      To="0" Duration="0:0:0"/>
-								</Storyboard>
-							</Ellipse.Resources>
-							<Ellipse.RenderTransform>
-								<RotateTransform />
-							</Ellipse.RenderTransform>
-							<!-- Définition des déclencheurs de l'animation -->
-							<Ellipse.Style>
-								<Style TargetType="Ellipse">
-									<Style.Triggers>
-										<MultiTrigger>
-											<MultiTrigger.Conditions>
-												<Condition Property="IsVisible" Value="True"/>
-											</MultiTrigger.Conditions>
-											<MultiTrigger.EnterActions>
-												<BeginStoryboard Storyboard="{StaticResource VisibleOn}"/>
-											</MultiTrigger.EnterActions>
-											<MultiTrigger.ExitActions>
-												<BeginStoryboard Storyboard="{StaticResource VisibleOff}"/>
-											</MultiTrigger.ExitActions>
-										</MultiTrigger>
-									</Style.Triggers>
-								</Style>
-							</Ellipse.Style>
-							<!-- Masquage du cercle intérieur -->
-							<Ellipse.Clip>
-								<RectangleGeometry Rect="0,0,10,20"/>
-							</Ellipse.Clip>
-						</Ellipse>
-					</Grid>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+                                </Storyboard>
+                            </Ellipse.Resources>
+                            <Ellipse.RenderTransform>
+                                <RotateTransform />
+                            </Ellipse.RenderTransform>
+                            <!-- Définition des déclencheurs de l'animation -->
+                            <Ellipse.Style>
+                                <Style TargetType="Ellipse">
+                                    <Style.Triggers>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsVisible" Value="True"/>
+                                            </MultiTrigger.Conditions>
+                                            <MultiTrigger.EnterActions>
+                                                <BeginStoryboard Storyboard="{StaticResource VisibleOn}"/>
+                                            </MultiTrigger.EnterActions>
+                                            <MultiTrigger.ExitActions>
+                                                <BeginStoryboard Storyboard="{StaticResource VisibleOff}"/>
+                                            </MultiTrigger.ExitActions>
+                                        </MultiTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Ellipse.Style>
+                            <!-- Masquage du cercle intérieur -->
+                            <Ellipse.Clip>
+                                <RectangleGeometry Rect="0,0,10,20"/>
+                            </Ellipse.Clip>
+                        </Ellipse>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

@@ -54,18 +54,18 @@
                                               Command="Slider.IncreaseLarge" />
                             </Track.IncreaseRepeatButton>
                         </Track>
-                        <Border x:Name="MainBorder" Margin="0" BorderThickness="3" Opacity="0" CornerRadius="{DynamicResource Corner}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False" Visibility="Collapsed" >
+                        <Border x:Name="MainBorder" Margin="0" BorderThickness="3" CornerRadius="{DynamicResource Corner}"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False" Visibility="Collapsed" >
                         </Border>
                         <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
-                                Tag="False" Visibility="Collapsed">
-                        </Border>
+                                Tag="False" Visibility="Collapsed"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource OverlayMenu}" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
-                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">

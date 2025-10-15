@@ -134,8 +134,8 @@
 
     <!-- Bas -> Haut (un chouïa plus court) -->
     <LinearGradientBrush x:Key="ShadeBottom" StartPoint="0,1" EndPoint="0,0">
-        <GradientStop Color="#BF000000" Offset="0.00"/>  <!-- 75% -->
-        <GradientStop Color="#59000000" Offset="0.10"/>  <!-- 35% -->
+        <GradientStop Color="#FF000000" Offset="0.00"/>  <!-- 75% -->
+        <GradientStop Color="#80000000" Offset="0.15"/>  <!-- 35% -->
         <GradientStop Color="#00000000" Offset="0.26"/>  <!-- 0% -->
     </LinearGradientBrush>
 
@@ -145,6 +145,31 @@
         <GradientStop Color="#66000000" Offset="0.20"/>  <!-- 40% -->
         <GradientStop Color="#22000000" Offset="0.30"/>  <!-- 13% -->
         <GradientStop Color="#00000000" Offset="0.40"/>  <!-- 0% -->
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BackgroundPlatinumBorderBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#D0E4FFFF" Offset="0"/>
+        <GradientStop Color="#90C8F8FF" Offset="0.25"/>
+        <GradientStop Color="#A080D0FF" Offset="0.7"/>
+        <GradientStop Color="#50B0FFFF" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ShadeBottomPlatinum" StartPoint="0,1" EndPoint="0,0">
+        <GradientStop Color="#601F0026" Offset="0.00"/>
+        <!-- halo bleuté doux -->
+        <GradientStop Color="#66000000" Offset="0.15"/>
+        <!-- argent froid -->
+        <GradientStop Color="#22000000" Offset="0.30"/>
+        <!-- reflets discrets -->
+        <GradientStop Color="#00000000" Offset="0.40"/>
+        <!-- disparition naturelle -->
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ShadeLeftPlatinum" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Color="#601F0026" Offset="0.0"/>
+        <GradientStop Color="#66000000" Offset="0.15"/>
+        <GradientStop Color="#22000000" Offset="0.30"/>
+        <GradientStop Color="#00000000" Offset="0.40"/>
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="ShadeBackgroundDetails" StartPoint="0,0" EndPoint="1,0">
@@ -461,44 +486,8 @@
         <GradientStop Color="#999999" Offset="1"/>
     </LinearGradientBrush>
 
-    <Style x:Key="AnimatedBorderBrush" TargetType="Border">
-        <Setter Property="BorderBrush">
-            <Setter.Value>
-                <LinearGradientBrush>
-                    <GradientStop Color="#4c4c4c" Offset="0"/>
-                    <GradientStop Color="{DynamicResource BorderLight}" Offset="1"/>
-                    <LinearGradientBrush.RelativeTransform>
-                        <RotateTransform CenterX="0.5" CenterY="0.5" x:Name="RotateBrush" />
-                    </LinearGradientBrush.RelativeTransform>
-                </LinearGradientBrush>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-                <DataTrigger.EnterActions>
-                    <BeginStoryboard Name="StartBorderBrush">
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" BeginTime="0:0:0.1" Duration="0:0:0.3" />
-                            <DoubleAnimation Storyboard.TargetProperty="(Border.BorderBrush).(Brush.RelativeTransform).(RotateTransform.Angle)"
-                                             From="0" To="359" Duration="00:00:4" RepeatBehavior="Forever" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </DataTrigger.EnterActions>
-                <DataTrigger.ExitActions>
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                    <StopStoryboard BeginStoryboardName="StartBorderBrush" />
-                </DataTrigger.ExitActions>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-
     <Style x:Key="AnimatedFlashConnexion" TargetType="Border">
         <Setter Property="Visibility" Value="Collapsed"/>
-
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush>
@@ -533,13 +522,26 @@
     </Style>
 
     <Style x:Key="AnimatedFlashFocus" TargetType="Border">
+        <Setter Property="Opacity" Value="0"/>
+        <Setter Property="Visibility" Value="Collapsed"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
         <Setter Property="Background">
             <Setter.Value>
-                <LinearGradientBrush>
-                    <GradientStop Color="#00000000" Offset="0.0"/>
-                    <GradientStop Color="#80FFFFFF" Offset="0.0"/>
-                    <GradientStop Color="#40FFFFFF" Offset="1.0"/>
-
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0" MappingMode="RelativeToBoundingBox">
+                    <!-- large bande : 0 → 1 avec cœur doux -->
+                    <GradientStop Color="#00FFFFFF" Offset="0.00"/>
+                    <GradientStop Color="#40FFFFFF" Offset="0.30"/>
+                    <GradientStop Color="#FFFFFF" Offset="0.50"/>
+                    <GradientStop Color="#40FFFFFF" Offset="0.70"/>
+                    <GradientStop Color="#00FFFFFF" Offset="1.00"/>
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="35" CenterX="0.5" CenterY="0.5"/>
+                            <!-- élargit la bande (évite l'effet ligne) -->
+                            <ScaleTransform ScaleX="1.8" ScaleY="1" CenterX="0.5" CenterY="0.5"/>
+                            <TranslateTransform X="-1.4"/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
@@ -548,60 +550,44 @@
                 <BitmapCache/>
             </Setter.Value>
         </Setter>
+
         <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsFocused}" Value="True">
+                <Setter Property="Visibility" Value="Visible"/>
                 <DataTrigger.EnterActions>
-                    <BeginStoryboard Name="StartCoverFlash">
-                        <Storyboard RepeatBehavior="1x">
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2" />
-                            <DoubleAnimation Storyboard.TargetProperty="Background.(GradientBrush.GradientStops)[1].(GradientStop.Offset)"
-                                             From="0" To="1" BeginTime="0:0:0" Duration="0:0:0.6" />
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" BeginTime="0:0:0.6" Duration="0:0:0.3" />
+                    <BeginStoryboard Name="SheenRun">
+                        <Storyboard FillBehavior="Stop">
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                             From="0" To="0.22" BeginTime="0:0:0.20" Duration="0:0:0.12"/>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="(Background).(LinearGradientBrush.RelativeTransform).(TransformGroup.Children)[2].(TranslateTransform.X)"
+                                From="-1.4" To="1.4" BeginTime="0:0:0.20" Duration="0:0:1.4">
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseInOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                             To="0" BeginTime="0:0:1.45" Duration="0:0:0.2"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </DataTrigger.EnterActions>
                 <DataTrigger.ExitActions>
-                    <StopStoryboard BeginStoryboardName="StartCoverFlash" />
+                    <StopStoryboard BeginStoryboardName="SheenRun"/>
                 </DataTrigger.ExitActions>
             </DataTrigger>
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="FalshFlashCover" TargetType="Border">
-        <Setter Property="Background">
-            <Setter.Value>
-                <LinearGradientBrush>
-                    <GradientStop Color="#00000000" Offset="0.0"/>
-                    <GradientStop Color="#00000000" Offset="0.0"/>
-                    <GradientStop Color="#00000000" Offset="1.0"/>
-                </LinearGradientBrush>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-                <DataTrigger.EnterActions>
-                    <BeginStoryboard Name="StartCoverFlashRepeat">
-                        <Storyboard RepeatBehavior="3x" BeginTime="0:0:4.5" Duration="0:0:4.5">
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5" />
-                            <DoubleAnimation Storyboard.TargetProperty="Background.(GradientBrush.GradientStops)[1].(GradientStop.Offset)"
-                                             From="0" To="1" BeginTime="0:0:0.5" Duration="0:0:0.6" />
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" BeginTime="0:0:1.1" Duration="0:0:0.3" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </DataTrigger.EnterActions>
-                <DataTrigger.ExitActions>
-                    <StopStoryboard BeginStoryboardName="StartCoverFlashRepeat" />
-                </DataTrigger.ExitActions>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
+
+
+
 
     <Style x:Key="AnimatedFlashMenu" TargetType="Border">
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush>
-                    <GradientStop Color="#00000000 " Offset="0"/>
-                    <GradientStop Color="#E5E4E2" Offset="1"/>
+                    <GradientStop Color="#10FFFFFF " Offset="0"/>
+                    <GradientStop Color="#60FFFFFF" Offset="1"/>
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>

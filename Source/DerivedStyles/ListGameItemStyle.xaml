@@ -66,30 +66,11 @@
                         </Border>
 
 
+
                         <ContentPresenter/>
                         <!-- Éléments visuels supplémentaires -->
                         <Grid x:Name="FlashFocusGrid">
-                            <Grid.Style>
-                                <Style TargetType="Grid">
-                                    <Setter Property="Margin" Value="0,0,0,0" />
-                                    <Style.Triggers>
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True" />
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="True" />
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="Margin" Value="0,-20,0,0" />
-                                        </MultiDataTrigger>
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True" />
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="False" />
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="Margin" Value="-20,0,0,0" />
-                                        </MultiDataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Grid.Style>
+
                             <Border x:Name="FlashFocus"
                                     Opacity="0"
                                     CornerRadius="{DynamicResource Corner}"
@@ -99,8 +80,50 @@
 
                         </Grid>
 
+                        <Border x:Name="PlatinumIcon"
+                                Width="50" Height="50"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                CornerRadius="12,0,0,12"
+                                Opacity="0"
+                                BorderThickness="1.5,1.5,0,1.5">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#202040" Offset="0"/>
+                                    <GradientStop Color="#90404060" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
 
-
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#FFFFFFFF" Offset="0.0"/>
+                                    <!-- reflet -->
+                                    <GradientStop Color="#90C0E0FF" Offset="0.5"/>
+                                    <!-- halo -->
+                                    <GradientStop Color="#00000000" Offset="1.0"/>
+                                    <!-- fondu -->
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                            <Image
+                                Source="{ThemeFile 'Images/platinum.png'}"
+                                Width="30" Height="30"
+                                Margin="2"
+                                RenderOptions.BitmapScalingMode="Fant">
+                                <Image.Effect>
+                                    <DropShadowEffect BlurRadius="8" Opacity="0.4" Color="Black" Direction="0" ShadowDepth="0"/>
+                                </Image.Effect>
+                            </Image>
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{PluginSettings Plugin=SuccessStory, Path=Percent}" Value="100">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border>
 
                         <Border x:Name="GameTitleBackground" CornerRadius="{DynamicResource Corner}" Margin="0" BorderThickness="0" Background="{DynamicResource GameTitleBrush}" Opacity="0.6"
                                 VerticalAlignment="Bottom" Visibility="Collapsed" />
@@ -109,28 +132,42 @@
                         <!-- Éléments visuels pour le focus -->
 
                         <Grid x:Name="MainGrid">
+
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Margin" Value="-2,-2,-2,-2" />
                                     <Style.Triggers>
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True" />
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="True" />
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="Margin" Value="-2,-20,-2,-2" />
-                                        </MultiDataTrigger>
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True" />
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="False" />
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="Margin" Value="-18,-2,-2,-2" />
-                                        </MultiDataTrigger>
+
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
-                            <Border x:Name="MainBorder" Opacity="0" BorderThickness="3.5" CornerRadius="{DynamicResource Corner}" BorderBrush="{StaticResource FocusGameBorderBrush}" Tag="False" Visibility="Collapsed" />
+
+                            <Border x:Name="MainBorder" Opacity="0" BorderThickness="3.5" CornerRadius="{DynamicResource Corner}" Tag="False" >
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderThickness" Value="3.5"/>
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Setter Property="BorderBrush" Value="{StaticResource FocusGameBorderBrush}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{PluginSettings Plugin=SuccessStory, Path=Percent}" Value="100">
+                                                <Setter Property="BorderThickness" Value="4"/>
+
+                                                <Setter Property="BorderBrush">
+                                                    <Setter.Value>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                            <GradientStop Color="#C0E8FF" Offset="0"/>
+                                                            <GradientStop Color="#202040" Offset="0.5"/>
+                                                            <GradientStop Color="#00E6FF" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+
+
                         </Grid>
 
 
@@ -149,6 +186,7 @@
                                        VerticalAlignment="Bottom"
                                        TextAlignment="Left" Margin="0,6,0,0"  />
                         </StackPanel>
+
                     </Grid>
 
                     <!-- Déclenchement des changements visuels en fonction des états -->
@@ -161,6 +199,8 @@
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
                             <Setter Property="Opacity" Value="1" TargetName="MainBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="FlashFocus" />
+                            <Setter Property="Opacity" Value="1" TargetName="PlatinumIcon" />
+
                             <Setter Property="Canvas.ZIndex" Value="90" />
                             <Setter TargetName="FocusGlow" Property="Opacity" Value="0.6"/>
                         </Trigger>
@@ -180,6 +220,7 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" TargetName="GameTitleBackground" />
                         </Trigger>
+
                         <!-- Affichage du titre du jeu -->
                         <DataTrigger Binding="{Settings Fullscreen.ShowGameTitles}" Value="True">
                             <Setter Property="Opacity" Value="0.9" TargetName="GameTitleBackground" />
@@ -205,6 +246,7 @@
                             <Setter Property="Style" TargetName="FlashFocus" Value="{DynamicResource AnimatedFlashFocus}" />
                             <Setter Property="Opacity" Value="1" TargetName="InstallFont" />
                         </MultiDataTrigger>
+
 
 
                         <!-- Etat 1 : Focus + Hover -->

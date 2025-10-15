@@ -8,6 +8,7 @@
     <Style x:Key="ListGameItemTemplate" TargetType="{x:Type GameListItem}">
         <!-- Définition des propriétés par défaut -->
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Focusable" Value="False" />
         <!-- Définition du modèle de contrôle -->
         <Setter Property="Template">
             <Setter.Value>
@@ -138,12 +139,11 @@
 
 
                         <!--Banner Platforms-->
-                        <Grid x:Name="Banner" Margin="0,0,0,0" Panel.ZIndex="2" IsHitTestVisible="False">
+                        <Grid x:Name="Banner" Margin="0" Panel.ZIndex="2" IsHitTestVisible="False">
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
-
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True"/>
@@ -151,47 +151,74 @@
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </MultiDataTrigger>
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True"/>
-                                                <Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True"/>
-                                            </MultiDataTrigger.Conditions>
-
-                                        </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
-                            <Border BorderBrush="Transparent" CornerRadius="{DynamicResource Corner}" >
-                                <Grid>
-                                    <Image x:Name="Platform" RenderOptions.BitmapScalingMode="Fant" Height="Auto" Width="22" Stretch="Fill" Margin="-15,0,0,-1"
-                                           VerticalAlignment="Bottom" HorizontalAlignment="Left" Visibility="Visible"
-                                           Source="{ThemeFileBinding Game.Platforms[0].Name, PathFormat='Icons/Banner/{0}.png'}" />
 
-                                    <Image x:Name="Source" RenderOptions.BitmapScalingMode="Fant" Height="Auto" Width="22" Stretch="Fill" Margin="-15,0,0,-1"
-                                           VerticalAlignment="Bottom" HorizontalAlignment="Left" Visibility="Collapsed"
-                                           Source="{ThemeFileBinding Game.Source.Name, PathFormat='Icons/Banner/{0}.png'}" />
+                            <!-- Pas de ColumnDefinitions : on colle la bannière à gauche, hauteur = cover -->
+                            <Grid ClipToBounds="True" SnapsToDevicePixels="True" UseLayoutRounding="True">
+                                <Border x:Name="BannerStrip"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Stretch"
+                                        Background="Transparent"
+                                        SnapsToDevicePixels="True"
+                                        MaxWidth="25"
+                                        UseLayoutRounding="True">
 
-                                    <Image RenderOptions.BitmapScalingMode="Fant" Height="Auto" Width="22" Stretch="Fill" Margin="-15,0,0,-1" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-                                        <Image.Source>
-                                            <PriorityBinding>
-                                                <Binding ElementName="Source" Path="Source" />
-                                                <Binding ElementName="Platform" Path="Source" />
-                                            </PriorityBinding>
-                                        </Image.Source>
-                                    </Image>
 
-                                </Grid>
 
-                            </Border>
+                                    <Grid IsHitTestVisible="False">
+                                        <!-- SOURCE -->
+                                        <Image x:Name="SourceBanner"
+                                               RenderOptions.BitmapScalingMode="Fant"
+                                               Stretch="Fill"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Stretch"
+                                               Height="{Binding ElementName=CoverImage, Path=ActualHeight}"
+                                               Source="{ThemeFileBinding Game.Source.Name, PathFormat='Icons/Banner/{0}.png', FallbackValue={x:Null}}">
+                                            <Image.Style>
+                                                <Style TargetType="Image">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="Source" Value="{x:Null}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
 
+                                        <!-- PLATFORM (s'affiche si pas de Source) -->
+                                        <Image x:Name="PlatformBanner"
+                                               RenderOptions.BitmapScalingMode="Fant"
+                                               Stretch="Fill"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Stretch"
+                                               Height="{Binding ElementName=CoverImage, Path=ActualHeight}"
+                                               Source="{ThemeFileBinding Game.Platforms[0].Name, PathFormat='Icons/Banner/{0}.png', FallbackValue={x:Null}}">
+                                            <Image.Style>
+                                                <Style TargetType="Image">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=SourceBanner, Path=Source}" Value="{x:Null}">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+                                    </Grid>
+                                </Border>
+                            </Grid>
                         </Grid>
 
-                        <Grid x:Name="BannerTop" IsHitTestVisible="False" Panel.ZIndex="2" Margin="0,0,0,0">
+
+
+                        <Grid x:Name="BannerTop" IsHitTestVisible="False" Panel.ZIndex="2" Margin="0">
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
-
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True"/>
@@ -202,35 +229,63 @@
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
-                            <Border BorderBrush="Transparent" CornerRadius="{DynamicResource Corner}" >
-                                <Grid>
-                                    <Image x:Name="PlatformHorizontal" RenderOptions.BitmapScalingMode="Fant" Height="25" Width="Auto" Stretch="Fill" Margin="0,-18,0,0"
-                                           VerticalAlignment="Top" HorizontalAlignment="Right"
-                                           Source="{ThemeFileBinding Game.Platforms[0].Name, PathFormat='Icons/Banner/Horizontal/{0}.png'}" />
+                            <Grid ClipToBounds="True" SnapsToDevicePixels="True" UseLayoutRounding="True"
+                                  Width="{Binding ActualWidth, ElementName=CoverImage}"
+                                  Height="{Binding ActualHeight, ElementName=CoverImage}">
 
-                                    <Image x:Name="SourceHorizontal" RenderOptions.BitmapScalingMode="Fant" Height="25" Width="Auto" Stretch="Fill" Margin="0,-18,0,0"
-                                           VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed"
-                                           Source="{ThemeFileBinding Game.Source.Name, PathFormat='Icons/Banner/Horizontal/{0}.png'}" />
-
-                                    <Image RenderOptions.BitmapScalingMode="Fant" Height="25" Width="Auto" Stretch="Fill" Margin="0,-18,0,0"
-                                           VerticalAlignment="Top" HorizontalAlignment="Right">
-                                        <Image.Source>
-                                            <PriorityBinding>
-                                                <Binding ElementName="SourceHorizontal" Path="Source" />
-                                                <Binding ElementName="PlatformHorizontal" Path="Source" />
-                                            </PriorityBinding>
-                                        </Image.Source>
-                                    </Image>
-                                </Grid>
-
-                            </Border>
-
+                                <Border HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Top"
+                                        Background="Transparent"
+                                        SnapsToDevicePixels="True"
+                                        Height="25"
+                                        UseLayoutRounding="True">
+                                    <Grid IsHitTestVisible="False">
+                                        <Image x:Name="SourceHorizontal"
+                                               RenderOptions.BitmapScalingMode="Fant"
+                                               Stretch="Fill"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Center"
+                                               Source="{ThemeFileBinding Game.Source.Name, PathFormat='Icons/Banner/Horizontal/{0}.png', FallbackValue={x:Null}}">
+                                            <Image.Style>
+                                                <Style TargetType="Image">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="Source" Value="{x:Null}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+                                        <Image x:Name="PlatformHorizontal"
+                                               RenderOptions.BitmapScalingMode="Fant"
+                                               Stretch="Fill"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Center"
+                                               Source="{ThemeFileBinding Game.Platforms[0].Name, PathFormat='Icons/Banner/Horizontal/{0}.png', FallbackValue={x:Null}}">
+                                            <Image.Style>
+                                                <Style TargetType="Image">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=SourceHorizontal, Path=Source}" Value="{x:Null}">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+                                    </Grid>
+                                </Border>
+                                <Grid Grid.Row="1"/>
+                            </Grid>
                         </Grid>
 
 
 
+
+
                         <!--Back To Game-->
-                        <ContentControl x:Name="BackToGame_Control" />
+                        <ContentControl x:Name="BackToGame_Control" FocusVisualStyle="{x:Null}" Focusable="False"/>
                         <TextBlock x:Name="GameIsRunningBadge"
                                    Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}"
                                    Background="{DynamicResource OverlayMenu}"
@@ -243,22 +298,13 @@
                                    FontFamily="Segoe UI SemiBold"
                                    HorizontalAlignment="Stretch"
                                    TextTrimming="CharacterEllipsis"
-
-
-
                                    Style="{DynamicResource TextBlockBaseStyle}" />
 
-
-
-
-                        <!-- Masque pour l'opacité de l'image -->
                         <Grid.OpacityMask>
                             <VisualBrush Visual="{Binding ElementName=Mask}" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill"/>
                         </Grid.OpacityMask>
                     </Grid>
-                    <!-- Déclenchement des changements visuels en fonction des états -->
                     <ControlTemplate.Triggers>
-                        <!-- Assombrissement de la grille pour les jeux non installés -->
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding IsInstalled}" Value="False" />
@@ -266,16 +312,11 @@
                             </MultiDataTrigger.Conditions>
                             <Setter Property="Visibility" Value="Visible" TargetName="BorderDarken" />
                         </MultiDataTrigger>
-                        <!-- Affichage de l'indicateur de jeu en cours de lecture -->
-
                         <DataTrigger Binding="{Binding ElementName=BackToGame_Control, Path=Content.IsRunning}" Value="True" >
                             <Setter Property="Text" Value="{DynamicResource LOCBackToGame}" TargetName="GameIsRunningBadge" />
                         </DataTrigger>
 
-
-
                     </ControlTemplate.Triggers>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

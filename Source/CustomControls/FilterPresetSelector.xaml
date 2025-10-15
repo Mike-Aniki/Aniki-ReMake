@@ -26,13 +26,12 @@
                             </Style>
                         </Grid.Style>
                         <!-- Bordure principale -->
-                        <Border x:Name="MainBorder" Margin="0" BorderThickness="3" Opacity="0" CornerRadius="{DynamicResource Corner}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"  Visibility="Collapsed" >
+                        <Border x:Name="MainBorder" Margin="0" BorderThickness="3" CornerRadius="{DynamicResource Corner}"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"  Visibility="Collapsed" >
                         </Border>
                         <!-- Bordure clignotante pour le menu -->
-                        <Border x:Name="FlashMenuBorder" Margin="5" CornerRadius="{DynamicResource Corner}" Background="{DynamicResource ControlBackgroundBrush}" Opacity="0.4"
-                                Visibility="Collapsed">
-                        </Border>
+                        <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
+                                Tag="False" Visibility="Collapsed"/>
                         <!-- Icône de filtre -->
                         <Image x:Name="Filter" RenderOptions.BitmapScalingMode="Fant" RenderTransformOrigin="0.5,0.5"
                                Source="{ThemeFileBinding Name, PathFormat='Icons/Filter/{0}.png'}" Stretch="Uniform" Height="40" MaxWidth="180" MaxHeight="40"
@@ -107,6 +106,8 @@
                             <Setter Property="Opacity" Value="1" TargetName="FilterIconText" />
                             <Setter Property="Opacity" Value="1" TargetName="Filter" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
                         </Trigger>
                         <!-- Déclencheur lorsque le contrôle perd le focus -->
                         <Trigger Property="IsFocused" Value="False">
@@ -120,6 +121,8 @@
                             <Setter Property="Opacity" Value="1" TargetName="TextContent" />
                             <Setter Property="Opacity" Value="1" TargetName="FilterIconText" />
                             <Setter Property="Opacity" Value="1" TargetName="Filter" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
                         </Trigger>
                         <!-- Déclencheur lorsque la souris survole le contrôle -->
                         <Trigger Property="IsMouseOver" Value="True">
@@ -146,7 +149,9 @@
                 <ControlTemplate TargetType="{x:Type FilterPresetSelector}">
                     <!-- Contenu principal du modèle -->
                     <ItemsControlEx x:Name="PART_ItemsFilterPresets" Focusable="False"
-                                    KeyboardNavigation.DirectionalNavigation="Once" >
+                                    KeyboardNavigation.DirectionalNavigation="Once"
+                                    KeyboardNavigation.TabNavigation="Cycle"
+                                    KeyboardNavigation.ControlTabNavigation="Cycle">
                         <ItemsControlEx.Style>
                             <Style TargetType="ItemsControlEx">
                                 <Setter Property="HorizontalLayout" Value="True"/>

@@ -40,6 +40,12 @@
                                 <Setter Property="Focusable" Value="True" />
                                 <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=PART_ButtonContext}" />
                                 <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="False">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_ElemGameStatus, Path=Visibility}" Value="Visible">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
                                     <DataTrigger Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible">
                                         <DataTrigger.EnterActions>
                                             <BeginStoryboard>
@@ -496,7 +502,7 @@
                                         <Setter Property="Opacity" Value="1"/>
                                         <Setter Property="Visibility" Value="Visible"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoBarMode]}" Value="True">
+                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoBottomBar]}" Value="True">
                                                 <Setter Property="Opacity" Value="0"/>
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
@@ -504,8 +510,8 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible" />
-                                                    <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="True" />
-                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoBarMode]}" Value="False"/>
+                                                    <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoBottomBar]}" Value="False"/>
                                                     <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[BottomBarVisible]}" Value="True"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.EnterActions>
@@ -544,6 +550,11 @@
                                                     </BeginStoryboard>
                                                 </MultiDataTrigger.ExitActions>
                                             </MultiDataTrigger>
+
+
+
+
+
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
@@ -575,7 +586,7 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible" />
-                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoBarMode]}" Value="False"/>
+                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoTopBar]}" Value="False"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.EnterActions>
                                                     <BeginStoryboard>
@@ -686,7 +697,7 @@
                                         <Setter.Value>
                                             <TransformGroup>
                                                 <ScaleTransform/>
-                                                <TranslateTransform X="-300" Y="0"/>
+                                                <TranslateTransform X="-400" Y="0"/>
                                             </TransformGroup>
                                         </Setter.Value>
                                     </Setter>
@@ -703,13 +714,13 @@
                                                     <Storyboard>
                                                         <DoubleAnimation
                                                             Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"
-                                                            To="0" BeginTime="0:0:0.5" Duration="0:0:1">
+                                                            To="0" BeginTime="0:0:1" Duration="0:0:1">
                                                             <DoubleAnimation.EasingFunction>
                                                                 <CubicEase EasingMode="EaseOut"/>
                                                             </DoubleAnimation.EasingFunction>
                                                         </DoubleAnimation>
                                                         <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                         From="0" To="1" BeginTime="0:0:0.5" Duration="0:0:0.45"/>
+                                                                         From="0" To="1" BeginTime="0:0:1" Duration="0:0:0.45"/>
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </DataTrigger.EnterActions>
@@ -722,7 +733,7 @@
                                                     <Storyboard FillBehavior="Stop">
                                                         <DoubleAnimation
                                                             Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"
-                                                            To="-300" Duration="0:0:0.25">
+                                                            To="-400" Duration="0:0:0.25">
                                                             <DoubleAnimation.EasingFunction>
                                                                 <CubicEase EasingMode="EaseIn"/>
                                                             </DoubleAnimation.EasingFunction>
@@ -1048,6 +1059,8 @@
                                                Style="{StaticResource InfoValueStyle}"/>
                                 </StackPanel>
 
+                                <!-- Completed -->
+
                                 <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                                     <StackPanel.Style>
                                         <Style TargetType="StackPanel">
@@ -1066,27 +1079,61 @@
                                         </Style>
                                     </StackPanel.Style>
 
-                                    <!-- trophée générique -->
-                                    <TextBlock x:Name="TrophyGlyph" Text="&#xec4c;" Style="{StaticResource InfoGlyphStyle}"/>
+                                    <TextBlock  Text="&#xec4c;" Style="{StaticResource InfoGlyphStyle}"/>
                                     <TextBlock x:Name="Completed"   Text="{Binding CompletionStatus, Converter={StaticResource ListToStringConverter}}" Style="{StaticResource InfoValueStyle}"/>
-                                    <Image Width="22" Height="22" Margin="0,2,8,0" VerticalAlignment="Center" Source="{ThemeFile 'Images/platinum.png'}">
+
+                                </StackPanel>
+
+                                <!-- Trophée -->
+
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                                    <StackPanel.Style>
+                                        <Style TargetType="StackPanel">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[Alternativ]}" Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{PluginSettings Plugin=SuccessStory, Path=HasData}" Value="False">
+                                                    <Setter  Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
+
+                                    <TextBlock Text="&#xedd7;">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource InfoGlyphStyle}">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=SuccessStory, Path=Percent}" Value="100">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <Image Width="28" Height="28" Margin="0,0,8,0" VerticalAlignment="Center" Source="{ThemeFile 'Images/platinum.png'}">
                                         <Image.Style>
                                             <Style TargetType="Image">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding CompletionStatus, Converter={StaticResource ListToStringConverter}}" Value="Platinumed">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=SuccessStory, Path=Percent}" Value="100">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Image.Style>
                                     </Image>
+                                    <TextBlock Margin="2,0,2,2" Text="{PluginSettings Plugin=SuccessStory, Path=Unlocked, FallbackValue='-'}" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{DynamicResource InfoValueStyle}" />
+                                    <TextBlock Margin="2,0,2,2" Text="/" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{DynamicResource InfoValueStyle}" />
+                                    <TextBlock Margin="2,0,2,2" Text="{PluginSettings Plugin=SuccessStory, Path=Total, FallbackValue='-'}" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{DynamicResource InfoValueStyle}" />
 
                                 </StackPanel>
 
                                 <!--Stars-->
 
-                                <StackPanel Orientation="Horizontal" Margin="-20,-1,0,11"  HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <StackPanel Orientation="Horizontal" Margin="0,-1,0,11"  HorizontalAlignment="Left" VerticalAlignment="Top">
                                     <StackPanel.Style>
                                         <Style TargetType="StackPanel">
                                             <Setter Property="Visibility" Value="Visible"/>
@@ -1101,121 +1148,262 @@
                                         </Style>
                                     </StackPanel.Style>
 
-                                    <TextBlock  Text="{Binding CriticScore}" Visibility="Hidden" />
-                                    <Grid x:Name="StarRaings" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,13,0,0">
-
-                                        <Image x:Name="Unrated" Source="{ThemeFile 'Icons/Score/Unrated.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant"  VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="ZeroStarImage" Source="{ThemeFile 'Icons/Score/00StarReview.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant"  VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="OneStarImage" Source="{ThemeFile 'Icons/Score/01StarReview.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant"  VerticalAlignment="Top" HorizontalAlignment="Left" />
-
-                                        <Image x:Name="OneStarImagePLUS" Source="{ThemeFile 'Icons/Score/01StarReview+.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant"  VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="TwoStarsImage" Source="{ThemeFile 'Icons/Score/02StarReview.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant"  VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="TwoStarsImagePLUS" Source="{ThemeFile 'Icons/Score/02StarReview+.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant"  VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="ThreeStarsImage" Source="{ThemeFile 'Icons/Score/03StarReview.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant"  VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="ThreeStarsImagePLUS" Source="{ThemeFile 'Icons/Score/03StarReview+.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant"  VerticalAlignment="Top" HorizontalAlignment="Left" />
-
-                                        <Image x:Name="FourStarsImage" Source="{ThemeFile 'Icons/Score/04StarReview.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="FourStarsImagePLUS" Source="{ThemeFile 'Icons/Score/04StarReview+.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant"  VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="FiveStarsImage" Source="{ThemeFile 'Icons/Score/05StarReview.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant"  VerticalAlignment="Top" HorizontalAlignment="Left"  />
-                                    </Grid>
-
-                                    <TextBlock Text="{Binding CommunityScore}" Visibility="Hidden" />
-                                    <Grid x:Name="StarRaingsCommunity" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,13,0,0">
-
-                                        <Image x:Name="UnratedCommunity" Source="{ThemeFile 'Icons/Score/UnratedCommunity.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="ZeroStarImageCommunity" Source="{ThemeFile 'Icons/Score/00StarReviewCommunity.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="OneStarImageCommunity" Source="{ThemeFile 'Icons/Score/01StarReviewCommunity.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="OneStarImagePLUSCommunity" Source="{ThemeFile 'Icons/Score/01StarReview+Community.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="TwoStarsImageCommunity" Source="{ThemeFile 'Icons/Score/02StarReviewCommunity.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="TwoStarsImagePLUSCommunity" Source="{ThemeFile 'Icons/Score/02StarReview+Community.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left" />
-
-                                        <Image x:Name="ThreeStarsImageCommunity" Source="{ThemeFile 'Icons/Score/03StarReviewCommunity.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="ThreeStarsImagePLUSCommunity" Source="{ThemeFile 'Icons/Score/03StarReview+Community.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="FourStarsImageCommunity" Source="{ThemeFile 'Icons/Score/04StarReviewCommunity.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="FourStarsImagePLUSCommunity" Source="{ThemeFile 'Icons/Score/04StarReview+Community.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant"  VerticalAlignment="Top" HorizontalAlignment="Left"  />
-
-                                        <Image x:Name="FiveStarsImageCommunity" Source="{ThemeFile 'Icons/Score/05StarReviewCommunity.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant"  VerticalAlignment="Top" HorizontalAlignment="Left"   />
-
-                                    </Grid>
+                                    <!-- BANNIÈRE CRITIC SCORE -->
+                                    <Border CornerRadius="8" Margin="0,0,10,0"
+                                            Padding="10,6"
+                                            Background="{DynamicResource OverlayMenu}"
+                                            SnapsToDevicePixels="True"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Game.CriticScore}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <Grid>
+                                            <!-- Fond flouté -->
+                                            <Rectangle Fill="#80FFFFFF" VerticalAlignment="Top" Margin="0,22,0,0" Height="2"  Opacity="0.5" />
 
 
-                                    <TextBlock Text="{Binding UserScore}" Visibility="Hidden" />
-                                    <Grid x:Name="StarRaingsUser" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,13,0,0">
+                                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                                <!-- Titre (loc) -->
+                                                <TextBlock FontFamily="Segoe UI Semibold"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="16"
+                                                           HorizontalAlignment="Center" VerticalAlignment="Top"
+                                                           Foreground="#CCFFFFFF"
+                                                           Text="{DynamicResource LOCCriticScore}"
+                                                           Margin="0,0,0,4"/>
 
-                                        <Image x:Name="UnratedUser" Source="{ThemeFile 'Icons/Score/UnratedUser.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
+                                                <!-- Ligne note + étoiles -->
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <!-- Note numérique -->
+                                                    <TextBlock VerticalAlignment="Center"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="20"
+                                                               Foreground="White"
+                                                               Text="{Binding Game.CriticScore}"
+                                                               Margin="0,0,15,0"/>
 
-                                        <Image x:Name="ZeroStarImageUser" Source="{ThemeFile 'Icons/Score/00StarReviewUser.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
+                                                    <!-- Étoiles -->
+                                                    <Grid Width="100" Height="20" ClipToBounds="True" VerticalAlignment="Center">
+                                                        <Grid.LayoutTransform>
+                                                            <ScaleTransform ScaleX="1.6" ScaleY="1.6"/>
+                                                        </Grid.LayoutTransform>
 
-                                        <Image x:Name="OneStarImageUser" Source="{ThemeFile 'Icons/Score/01StarReviewUser.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
+                                                        <!-- Étoiles vides -->
+                                                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                   FontFamily="{DynamicResource FontIcoFont}"
+                                                                   FontSize="13" Foreground="#40FFFFFF"
+                                                                   Text="&#xec7a;&#x2002;&#xec7a;&#x2002;&#xec7a;&#x2002;&#xec7a;&#x2002;&#xec7a;"/>
 
-                                        <Image x:Name="OneStarImagePLUSUser" Source="{ThemeFile 'Icons/Score/01StarReview+User.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
+                                                        <!-- Étoiles pleines (width liée à la note) -->
+                                                        <Border HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                Width="{Binding Game.CriticScore, FallbackValue=0}"
+                                                                ClipToBounds="True">
+                                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                       FontFamily="{DynamicResource FontIcoFont}"
+                                                                       FontSize="13"
+                                                                       Text="&#xec7c;&#x2002;&#xec7c;&#x2002;&#xec7c;&#x2002;&#xec7c;&#x2002;&#xec7c;">
+                                                                <TextBlock.Foreground>
+                                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                        <GradientStop Color="#FFFFEFA3" Offset="0.00"/>
+                                                                        <GradientStop Color="#FFF9D648" Offset="0.40"/>
+                                                                        <GradientStop Color="#FFE6B930" Offset="0.70"/>
+                                                                        <GradientStop Color="#FFB07C12" Offset="1.00"/>
+                                                                    </LinearGradientBrush>
+                                                                </TextBlock.Foreground>
+                                                                <TextBlock.Effect>
+                                                                    <DropShadowEffect Color="#FFD9A441"
+                                                                                      BlurRadius="6"
+                                                                                      ShadowDepth="0"
+                                                                                      Opacity="0.30"/>
+                                                                </TextBlock.Effect>
+                                                            </TextBlock>
+                                                        </Border>
+                                                    </Grid>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
 
-                                        <Image x:Name="TwoStarsImageUser" Source="{ThemeFile 'Icons/Score/02StarReviewUser.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
 
-                                        <Image x:Name="TwoStarsImagePLUSUser" Source="{ThemeFile 'Icons/Score/02StarReview+User.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                    <!-- BANNIÈRE Community SCORE -->
 
-                                        <Image x:Name="ThreeStarsImageUser" Source="{ThemeFile 'Icons/Score/03StarReviewUser.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
 
-                                        <Image x:Name="ThreeStarsImagePLUSUser" Source="{ThemeFile 'Icons/Score/03StarReview+User.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
+                                    <Border CornerRadius="8" Margin="0,0,10,0"
+                                            Padding="10,6"
+                                            Background="{DynamicResource OverlayMenu}"
+                                            SnapsToDevicePixels="True"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Game.CommunityScore}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <Grid>
+                                            <!-- Fond flouté -->
+                                            <Rectangle Fill="#80FFFFFF" VerticalAlignment="Top" Margin="0,22,0,0" Height="2"  Opacity="0.5" />
 
-                                        <Image x:Name="FourStarsImageUser" Source="{ThemeFile 'Icons/Score/04StarReviewUser.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top" HorizontalAlignment="Left"  />
 
-                                        <Image x:Name="FourStarsImagePLUSUser" Source="{ThemeFile 'Icons/Score/04StarReview+User.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant"  VerticalAlignment="Top" HorizontalAlignment="Left"  />
+                                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                                <!-- Titre (loc) -->
+                                                <TextBlock FontFamily="Segoe UI Semibold"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="16"
+                                                           HorizontalAlignment="Center" VerticalAlignment="Top"
+                                                           Foreground="#CCFFFFFF"
+                                                           Text="{DynamicResource LOCCommunityScore}"
+                                                           Margin="0,0,0,4"/>
 
-                                        <Image x:Name="FiveStarsImageUser" Source="{ThemeFile 'Icons/Score/05StarReviewUser.png'}" Visibility="Collapsed"
-                                               RenderOptions.BitmapScalingMode="Fant"  VerticalAlignment="Top" HorizontalAlignment="Left"   />
+                                                <!-- Ligne note + étoiles -->
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <!-- Note numérique -->
+                                                    <TextBlock VerticalAlignment="Center"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="20"
+                                                               Foreground="White"
+                                                               Text="{Binding Game.CommunityScore}"
+                                                               Margin="0,0,15,0"/>
 
-                                    </Grid>
+                                                    <!-- Étoiles -->
+                                                    <Grid Width="100" Height="20" ClipToBounds="True" VerticalAlignment="Center">
+                                                        <Grid.LayoutTransform>
+                                                            <ScaleTransform ScaleX="1.6" ScaleY="1.6"/>
+                                                        </Grid.LayoutTransform>
+
+                                                        <!-- Étoiles vides -->
+                                                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                   FontFamily="{DynamicResource FontIcoFont}"
+                                                                   FontSize="13" Foreground="#40FFFFFF"
+                                                                   Text="&#xec7a;&#x2002;&#xec7a;&#x2002;&#xec7a;&#x2002;&#xec7a;&#x2002;&#xec7a;"/>
+
+                                                        <!-- Étoiles pleines (width liée à la note) -->
+                                                        <Border HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                Width="{Binding Game.CommunityScore, FallbackValue=0}"
+                                                                ClipToBounds="True">
+                                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                       FontFamily="{DynamicResource FontIcoFont}"
+                                                                       FontSize="13"
+                                                                       Text="&#xec7c;&#x2002;&#xec7c;&#x2002;&#xec7c;&#x2002;&#xec7c;&#x2002;&#xec7c;">
+                                                                <TextBlock.Foreground>
+                                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                        <GradientStop Color="#FFFFEFA3" Offset="0.00"/>
+                                                                        <GradientStop Color="#FFF9D648" Offset="0.40"/>
+                                                                        <GradientStop Color="#FFE6B930" Offset="0.70"/>
+                                                                        <GradientStop Color="#FFB07C12" Offset="1.00"/>
+                                                                    </LinearGradientBrush>
+                                                                </TextBlock.Foreground>
+                                                                <TextBlock.Effect>
+                                                                    <DropShadowEffect Color="#FFD9A441"
+                                                                                      BlurRadius="6"
+                                                                                      ShadowDepth="0"
+                                                                                      Opacity="0.30"/>
+                                                                </TextBlock.Effect>
+                                                            </TextBlock>
+                                                        </Border>
+                                                    </Grid>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- BANNIÈRE USER SCORE -->
+                                    <Border CornerRadius="8" Margin="0,0,10,0"
+                                            Padding="10,6"
+                                            Background="{DynamicResource OverlayMenu}"
+                                            SnapsToDevicePixels="True"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Game.UserScore}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <Grid>
+                                            <!-- Fond flouté -->
+                                            <Rectangle Fill="#80FFFFFF" VerticalAlignment="Top" Margin="0,22,0,0" Height="2"  Opacity="0.5" />
+
+
+                                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                                <!-- Titre (loc) -->
+                                                <TextBlock FontFamily="Segoe UI Semibold"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="16"
+                                                           HorizontalAlignment="Center" VerticalAlignment="Top"
+                                                           Foreground="#CCFFFFFF"
+                                                           Text="{DynamicResource LOCUserScore}"
+                                                           Margin="0,0,0,4"/>
+
+                                                <!-- Ligne note + étoiles -->
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <!-- Note numérique -->
+                                                    <TextBlock VerticalAlignment="Center"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="20"
+                                                               Foreground="White"
+                                                               Text="{Binding Game.UserScore}"
+                                                               Margin="0,0,15,0"/>
+
+                                                    <!-- Étoiles -->
+                                                    <Grid Width="100" Height="20" ClipToBounds="True" VerticalAlignment="Center">
+                                                        <Grid.LayoutTransform>
+                                                            <ScaleTransform ScaleX="1.6" ScaleY="1.6"/>
+                                                        </Grid.LayoutTransform>
+
+                                                        <!-- Étoiles vides -->
+                                                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                   FontFamily="{DynamicResource FontIcoFont}"
+                                                                   FontSize="13" Foreground="#40FFFFFF"
+                                                                   Text="&#xec7a;&#x2002;&#xec7a;&#x2002;&#xec7a;&#x2002;&#xec7a;&#x2002;&#xec7a;"/>
+
+                                                        <!-- Étoiles pleines (width liée à la note) -->
+                                                        <Border HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                Width="{Binding Game.UserScore, FallbackValue=0}"
+                                                                ClipToBounds="True">
+                                                            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                       FontFamily="{DynamicResource FontIcoFont}"
+                                                                       FontSize="13"
+                                                                       Text="&#xec7c;&#x2002;&#xec7c;&#x2002;&#xec7c;&#x2002;&#xec7c;&#x2002;&#xec7c;">
+                                                                <TextBlock.Foreground>
+                                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                        <GradientStop Color="#FFFFEFA3" Offset="0.00"/>
+                                                                        <GradientStop Color="#FFF9D648" Offset="0.40"/>
+                                                                        <GradientStop Color="#FFE6B930" Offset="0.70"/>
+                                                                        <GradientStop Color="#FFB07C12" Offset="1.00"/>
+                                                                    </LinearGradientBrush>
+                                                                </TextBlock.Foreground>
+                                                                <TextBlock.Effect>
+                                                                    <DropShadowEffect Color="#FFD9A441"
+                                                                                      BlurRadius="6"
+                                                                                      ShadowDepth="0"
+                                                                                      Opacity="0.30"/>
+                                                                </TextBlock.Effect>
+                                                            </TextBlock>
+                                                        </Border>
+                                                    </Grid>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+
                                 </StackPanel>
-
                             </StackPanel>
                         </Grid>
 
@@ -1259,7 +1447,7 @@
                                                 PanningMode="VerticalOnly"
                                                 ScrollViewer.CanContentScroll="False"
                                                 VerticalAlignment="Top"
-                                                MaxHeight="800"
+                                                MaxHeight="850"
                                                 ScrollViewer.VerticalScrollBarVisibility="Auto">
                                     <Grid MaxWidth="960" HorizontalAlignment="Left">
                                         <HtmlTextView x:Name="PART_HtmlDescription"
@@ -1892,6 +2080,20 @@
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ElementName=Id, Path=Opacity}" Value="1"/>
                                                     <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnDetailsView]}" Value="True"/>
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="ItemsControl.Visibility" Value="Visible" />
+                                            </MultiDataTrigger>
+
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=Id, Path=Opacity}" Value="1"/>
+                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnDetailsView]}" Value="True"/>
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
+                                                    <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.EnterActions>
                                                     <BeginStoryboard>
@@ -1900,15 +2102,12 @@
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </MultiDataTrigger.EnterActions>
-                                                <MultiDataTrigger.ExitActions>
-                                                    <BeginStoryboard>
-                                                        <Storyboard>
-                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:0" To="0"/>
-                                                        </Storyboard>
-                                                    </BeginStoryboard>
-                                                </MultiDataTrigger.ExitActions>
+
                                             </MultiDataTrigger>
                                             <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnDetailsView]}" Value="True">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="False">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1">
@@ -2337,1532 +2536,6 @@
                         <DataTrigger Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="0">
                             <Setter Property="IsChecked" Value="False" TargetName="TrailerZoom"/>
                         </DataTrigger>
-
-                        <!-- Critic Score-->
-
-                        <DataTrigger Binding="{Binding CriticScore, TargetNullValue=''}" Value="">
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="StarRaings" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="01">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="02">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="03">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="04">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="05">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="06">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="07">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="08">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="09">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="10">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="11">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="12">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="13">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="14">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="15">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="16">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="17">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="18">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="19">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="20">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="21">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="22">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="23">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="24">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="25">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="26">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="27">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="28">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="29">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="30">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="31">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="32">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="33">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="34">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="35">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="36">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="37">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="38">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="39">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="40">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="41">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="42">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="43">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="44">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="45">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="46">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="47">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="48">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="49">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="50">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="51">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="52">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="53">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="54">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="55">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="56">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="57">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="58">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="59">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="60">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="61">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="62">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="63">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="64">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="65">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="66">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="67">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="68">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="69">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="70">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="71">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="72">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="73">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="74">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="75">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="76">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="77">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="78">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="79">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="80">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="81">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="82">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="83">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="84">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="85">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="86">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="87">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="88">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="89">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="90">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="91">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="92">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="93">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="94">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="95">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="96">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="97">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="98">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="99">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CriticScore}" Value="100">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-
-                        <!-- Community Score -->
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="01">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="02">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="03">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="04">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="05">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="06">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="07">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="08">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="09">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="10">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="11">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="12">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="13">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="14">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="15">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="16">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="17">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="18">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="19">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="20">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="21">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="22">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="23">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="24">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="25">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="26">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="27">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="28">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="29">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="30">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="31">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="32">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="33">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="34">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="35">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="36">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="37">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="38">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="39">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="40">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="41">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="42">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="43">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="44">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="45">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="46">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="47">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="48">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="49">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="50">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="51">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="52">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="53">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="54">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="55">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="56">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="57">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="58">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="59">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="60">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="61">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="62">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="63">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="64">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="65">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="66">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="67">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="68">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="69">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="70">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="71">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="72">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="73">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="74">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="75">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="76">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="77">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="78">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="79">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="80">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="81">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="82">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="83">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="84">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="85">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="86">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="87">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="88">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="89">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="90">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="91">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="92">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="93">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="94">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImagePLUSCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="95">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="96">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="97">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="98">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="99">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore}" Value="100">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImageCommunity" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding CommunityScore, TargetNullValue=''}" Value="">
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="StarRaingsCommunity" />
-                        </DataTrigger>
-
-
-                        <!-- User Score -->
-
-                        <DataTrigger Binding="{Binding UserScore, TargetNullValue=''}" Value="">
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="StarRaingsUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="01">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="02">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="03">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="04">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="05">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="06">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="07">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="08">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="09">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="10">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="11">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="12">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="13">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="14">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="15">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="16">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="17">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="18">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="19">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="20">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="21">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="22">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="23">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="24">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="25">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="26">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="27">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="28">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="29">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="30">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="31">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="32">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="33">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="34">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="35">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="36">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="37">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="38">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="39">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="40">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ZeroStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="41">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="42">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="43">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="44">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="45">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="46">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="47">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="48">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImage" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="49">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUS" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Unrated" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="50">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="51">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="52">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="53">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="54">
-                            <Setter Property="Visibility" Value="Visible" TargetName="OneStarImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="55">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="56">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="57">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="58">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="59">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="60">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="61">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="62">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="63">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="64">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="65">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="66">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="67">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="68">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="69">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="70">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="71">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="72">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="73">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="74">
-                            <Setter Property="Visibility" Value="Visible" TargetName="TwoStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="75">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="76">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="77">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="78">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="79">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="80">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="81">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="82">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="83">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="84">
-                            <Setter Property="Visibility" Value="Visible" TargetName="ThreeStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="85">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="86">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="87">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="88">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="89">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="90">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="91">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="92">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="93">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="94">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FourStarsImagePLUSUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="95">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="96">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="97">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="98">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="99">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding UserScore}" Value="100">
-                            <Setter Property="Visibility" Value="Visible" TargetName="FiveStarsImageUser" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="UnratedUser" />
-                        </DataTrigger>
-
-
-
-
-
 
                     </ControlTemplate.Triggers>
 

@@ -132,9 +132,11 @@
                     <Grid Background="{TemplateBinding Background}">
                         <Border CornerRadius="{DynamicResource Corner}" Opacity="0.4" Background="Transparent"
                                 x:Name="MainBackground"/>
-                        <Border x:Name="MainBorder" Margin="-6"
+                        <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
+                                Tag="False" Visibility="Collapsed"/>
+                        <Border x:Name="MainBorder" Margin="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
                         <TextBlock x:Name="Text" Style="{DynamicResource ButtonTextBlockBaseStyle}"
                                    Foreground="{TemplateBinding Foreground}" FontWeight="SemiBold" FontSize="24"
@@ -171,19 +173,17 @@
                         </Trigger>
 
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
                             <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-                            <Setter Property="Background" Value="White" TargetName="MainBackground" />
                         </Trigger>
 
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-                            <Setter Property="Background" Value="White" TargetName="MainBackground" />
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">

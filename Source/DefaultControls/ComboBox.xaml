@@ -16,9 +16,8 @@
                     <Grid Background="{TemplateBinding Background}">
                         <Border x:Name="StaticBorder" Margin="0,0,0,0" BorderThickness="2" Opacity="0.5" CornerRadius="{DynamicResource Corner}"
                                 BorderBrush="{DynamicResource GlyphBrush}" />
-                        <Border x:Name="MainBorder" Margin="0,0,0,0" BorderThickness="3" Opacity="0" CornerRadius="{DynamicResource Corner}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Background="White" Tag="False" Visibility="Collapsed" >
-                        </Border>
+                        <Border x:Name="MainBorder" Margin="0" BorderThickness="3" CornerRadius="{DynamicResource Corner}" BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                Tag="False" Visibility="Collapsed" />
                         <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
                                 Tag="False" Visibility="Collapsed">
                         </Border>
@@ -76,11 +75,13 @@
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                             <Setter Property="Visibility" Value="Collapsed" TargetName="StaticBorder" />
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" TargetName="TextContent" />
-
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource SelectionLightBrush}" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="StaticBorder" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -101,9 +102,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                     <Grid Background="{TemplateBinding Background}" >
-                        <Border x:Name="MainBorder" Margin="0" BorderThickness="3" Opacity="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedBorderBrush}"
-                                Tag="False" Visibility="Collapsed" >
-                        </Border>
+                        <Border x:Name="MainBorder" Margin="0" BorderThickness="3" CornerRadius="{DynamicResource Corner}" BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                Tag="False" Visibility="Collapsed" />
                         <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
                                 Tag="False" Visibility="Collapsed">
                         </Border>
@@ -123,7 +123,10 @@
                             <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource GlyphBrush}"  />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

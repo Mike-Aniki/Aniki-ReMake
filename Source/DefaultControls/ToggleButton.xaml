@@ -72,10 +72,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
                     <Grid x:Name="MainGrid" Background="{TemplateBinding Background}" >
-                        <Border CornerRadius="{DynamicResource Corner}" Opacity="0.8" Background="{DynamicResource OverlayMenu}" x:Name="MainBackground"/>
-                        <Border x:Name="MainBorder" Opacity="0" Margin="-10"
+                        <Border CornerRadius="{DynamicResource Corner}" Opacity="0.8" Background="Transparent" x:Name="MainBackground"/>
+                        <Border x:Name="MainBorder" Margin="-10"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
@@ -106,8 +106,6 @@
 
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-                            <Setter Property="Background" Value="{DynamicResource OverlayMenu}" TargetName="MainBackground" />
                             <Setter Property="Opacity" Value="1" TargetName="OFF" />
                             <Setter Property="Opacity" Value="1" TargetName="ON" />
                         </Trigger>
@@ -118,7 +116,6 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
                             <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
                             <Setter Property="Opacity" Value="1" TargetName="OFF" />
                             <Setter Property="Opacity" Value="1" TargetName="ON" />
@@ -212,9 +209,11 @@
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid x:Name="MainGrid" Background="Transparent" >
                         <Border CornerRadius="60" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
-                        <Border x:Name="MainBorder" Opacity="0" Margin="-6"
+                        <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
+                                Tag="False" Visibility="Collapsed"/>
+                        <Border x:Name="MainBorder" Margin="-4"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
@@ -252,20 +251,20 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
                             <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
                             <Setter Property="Opacity" Value="1" TargetName="OFF" />
                             <Setter Property="Opacity" Value="1" TargetName="ON" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
                             <Setter Property="Opacity" Value="1" TargetName="OFF" />
                             <Setter Property="Opacity" Value="1" TargetName="ON" />
                         </Trigger>
@@ -300,7 +299,7 @@
                     <Grid Background="{TemplateBinding Background}">
                         <Border CornerRadius="30" Opacity="0.4" Background="{DynamicResource ControlBackgroundBrush}" x:Name="MainBackground"/>
                         <Border x:Name="MainBorder" Opacity="0" Margin="-6"  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="35" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="Minus" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Opacity="1">
@@ -394,7 +393,7 @@
                     <Grid Background="{TemplateBinding Background}">
                         <Border CornerRadius="30" Opacity="0.4" Background="{DynamicResource ControlBackgroundBrush}" x:Name="MainBackground"/>
                         <Border x:Name="MainBorder" Opacity="0" Margin="-6"  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="35" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="Minus" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Opacity="1">
@@ -494,7 +493,7 @@
                     <Grid Background="{TemplateBinding Background}">
                         <Border CornerRadius="5" Opacity="0.4" Background="{DynamicResource ControlBackgroundBrush}" x:Name="MainBackground"/>
                         <Border x:Name="MainBorder" Opacity="0" Margin="-6"  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="10" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="Minus" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Opacity="1">
@@ -560,7 +559,7 @@
                         <Border CornerRadius="5" Opacity="0.4" Background="{DynamicResource AlternativeButtonBrush}" x:Name="MainBackground"/>
                         <Border x:Name="MainBorder" Opacity="0" Margin="-6"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="10" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="Mute" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Opacity="1">
@@ -627,7 +626,7 @@
                         <Border CornerRadius="30" Opacity="0.8" Background="{DynamicResource OverlayMenu}" x:Name="MainBackground"/>
                         <Border x:Name="MainBorder" Opacity="0" Margin="-5"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="35" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" >
@@ -705,7 +704,7 @@
                         <Border CornerRadius="{DynamicResource Corner}" Opacity="0.1" Background="Transparent" x:Name="MainBackground"/>
                         <Border x:Name="MainBorder" Opacity="0" Margin="-3"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" >
@@ -780,7 +779,7 @@
                         <Border CornerRadius="{DynamicResource Corner}" Opacity="0.1" Background="Transparent" x:Name="MainBackground"/>
                         <Border x:Name="MainBorder" Opacity="0" Margin="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" >
@@ -863,16 +862,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
                     <Grid x:Name="MainGrid" Background="{TemplateBinding Background}" >
-                        <Border CornerRadius="{DynamicResource Corner}" Opacity="0.8" Background="{DynamicResource OverlayMenu}" x:Name="MainBackground"/>
-                        <Border x:Name="MainBorder" Opacity="0" Margin="0"
+                        <Border CornerRadius="{DynamicResource Corner}" Opacity="0.8" Background="{DynamicResource OverlayMenu}"
+                                x:Name="MainBackground"/>
+                        <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
+                                Tag="False" Visibility="Collapsed"/>
+                        <Border x:Name="MainBorder" Margin="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                BorderBrush="{DynamicResource SelectionLightBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
-                        <Border x:Name="GlowBorder" CornerRadius="10" Background="{DynamicResource GlyphBrush}" Opacity="0" Margin="0">
-                            <Border.Effect>
-                                <BlurEffect Radius="18"/>
-                            </Border.Effect>
-                        </Border>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" >
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
@@ -897,7 +894,8 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
                             <Setter Property="Opacity" Value="1" TargetName="MainBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
@@ -905,21 +903,21 @@
                             <Setter Property="Background" Value="{DynamicResource OverlayMenu}" TargetName="MainBackground" />
                             <Setter Property="Opacity" Value="1" TargetName="OFF" />
                             <Setter Property="Opacity" Value="1" TargetName="ON" />
-                            <Setter TargetName="GlowBorder" Property="Opacity" Value="0.2"/>
                         </Trigger>
                         <Trigger Property="IsFocused" Value="False">
                             <Setter Property="Opacity" Value="1" TargetName="OFF" />
                             <Setter Property="Opacity" Value="1" TargetName="ON" />
-                            <Setter TargetName="GlowBorder" Property="Opacity" Value="0"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="{DynamicResource OverlayMenu}" TargetName="MainBackground" />
                             <Setter Property="Opacity" Value="1" TargetName="OFF" />
                             <Setter Property="Opacity" Value="1" TargetName="ON" />
-                            <Setter TargetName="GlowBorder" Property="Opacity" Value="0.2"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
@@ -988,8 +986,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid Background="{TemplateBinding Background}">
-                        <Border CornerRadius="{DynamicResource Corner}" Opacity="0.8" Background="{DynamicResource OverlayMenu}" x:Name="MainBackground"/>
-
+                        <Border CornerRadius="{DynamicResource Corner}" Opacity="0.8" Background="{DynamicResource OverlayMenu}"
+                                x:Name="MainBackground"/>
+                        <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
+                                Tag="False" Visibility="Collapsed"/>
+                        <Border x:Name="MainBorder" Margin="0"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
+                                BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
                         <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
                                    Foreground="{TemplateBinding Foreground}"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -997,35 +1001,23 @@
                                    Margin="{TemplateBinding Padding}">
                             <ContentPresenter />
                         </TextBlock>
-
-                        <Border BorderThickness="{TemplateBinding BorderThickness}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                x:Name="BorderStandard" />
-
-                        <Border x:Name="BorderFocus" Margin="-3" CornerRadius="{DynamicResource Corner}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                BorderBrush="{DynamicResource SelectionLightBrush}"
-                                BorderThickness="3" Visibility="Hidden"/>
-                        <Border x:Name="GlowBorder" CornerRadius="10" Background="{DynamicResource GlyphBrush}" Opacity="0" Margin="0">
-                            <Border.Effect>
-                                <BlurEffect Radius="18"/>
-                            </Border.Effect>
-                        </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource ControlBackgroundDarkBrush}" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="BorderFocus" />
-                            <Setter Property="Visibility" Value="Hidden" TargetName="BorderStandard" />
-                            <Setter TargetName="GlowBorder" Property="Opacity" Value="0.2"/>
-
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="{DynamicResource OverlayMenu}" TargetName="MainBackground" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource ControlBackgroundDarkBrush}" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="BorderFocus" />
-                            <Setter Property="Visibility" Value="Hidden" TargetName="BorderStandard" />
-                            <Setter TargetName="GlowBorder" Property="Opacity" Value="0.2"/>
-
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="{DynamicResource OverlayMenu}" TargetName="MainBackground" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5" />
@@ -1088,7 +1080,7 @@
                         <Border CornerRadius="{DynamicResource Corner}" Opacity="0.8" Background="{DynamicResource OverlayMenu}" x:Name="MainBackground"/>
                         <Border x:Name="MainBorder" Opacity="0" Margin="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" >
@@ -1181,7 +1173,7 @@
                         <Border CornerRadius="{DynamicResource Corner}" Opacity="0.8" Background="{DynamicResource OverlayMenu}" x:Name="MainBackground"/>
                         <Border x:Name="MainBorder" Opacity="0" Margin="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" >
@@ -1274,7 +1266,7 @@
                         <Border CornerRadius="{DynamicResource Corner}" Opacity="0.8" Background="{DynamicResource OverlayMenu}" x:Name="MainBackground"/>
                         <Border x:Name="MainBorder" Opacity="0" Margin="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" >
@@ -1365,7 +1357,7 @@
                         <Border CornerRadius="30" Opacity="0.8" Background="Transparent" x:Name="MainBackground"/>
                         <Border x:Name="MainBorder" Opacity="0" Margin="-5"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="35" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" >
@@ -1445,7 +1437,7 @@
                         <Border CornerRadius="30" Opacity="0.8" Background="White" x:Name="MainBackground"/>
                         <Border x:Name="MainBorder" Opacity="0" Margin="-5"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="35" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" >
@@ -1524,9 +1516,11 @@
                 <ControlTemplate TargetType="CheckBox">
                     <Grid x:Name="MainGrid" Background="{TemplateBinding Background}" >
                         <Border CornerRadius="{DynamicResource Corner}" Opacity="0.8" Background="{DynamicResource OverlayMenu}" x:Name="MainBackground"/>
-                        <Border x:Name="MainBorder" Opacity="0" Margin="-3"
+                        <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
+                                Tag="False" Visibility="Collapsed"/>
+                        <Border x:Name="MainBorder" Margin="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" >
@@ -1551,6 +1545,8 @@
                             <Setter Property="Background" Value="{DynamicResource OverlayMenu}" TargetName="MainBackground" />
                             <Setter Property="Opacity" Value="1" TargetName="OFF" />
                             <Setter Property="Opacity" Value="1" TargetName="ON" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="False">
                             <Setter Property="Opacity" Value="1" TargetName="OFF" />
@@ -1563,6 +1559,8 @@
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
                             <Setter Property="Opacity" Value="1" TargetName="OFF" />
                             <Setter Property="Opacity" Value="1" TargetName="ON" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
@@ -1599,9 +1597,11 @@
                 <ControlTemplate TargetType="CheckBox">
                     <Grid x:Name="MainGrid" Background="{TemplateBinding Background}" >
                         <Border CornerRadius="{DynamicResource Corner}" Opacity="0.8" Background="{DynamicResource OverlayMenu}" x:Name="MainBackground"/>
-                        <Border x:Name="MainBorder" Opacity="0" Margin="-3"
+                        <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
+                                Tag="False" Visibility="Collapsed"/>
+                        <Border x:Name="MainBorder" Margin="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" >
@@ -1630,6 +1630,8 @@
                             <Setter Property="Background" Value="{DynamicResource OverlayMenu}" TargetName="MainBackground" />
                             <Setter Property="Opacity" Value="1" TargetName="OFF" />
                             <Setter Property="Opacity" Value="1" TargetName="ON" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="False">
                             <Setter Property="Opacity" Value="1" TargetName="OFF" />
@@ -1642,6 +1644,8 @@
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
                             <Setter Property="Opacity" Value="1" TargetName="OFF" />
                             <Setter Property="Opacity" Value="1" TargetName="ON" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
@@ -1680,7 +1684,7 @@
                         <Border CornerRadius="0" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
                         <Border x:Name="MainBorder" Opacity="0" Margin="-6"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
