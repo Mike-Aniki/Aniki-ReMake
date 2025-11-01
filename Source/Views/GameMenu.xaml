@@ -12,11 +12,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid Background="{TemplateBinding Background}">
-                        <Border CornerRadius="{DynamicResource Corner}" Opacity="0.4" Background="Transparent"
+                        <Border CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" Background="{DynamicResource ButtonBackgroundFocus}"
                                 x:Name="MainBackground"/>
-                        <Border x:Name="MainBorder" Margin="-3"
+                        <Border x:Name="MainBorder" Margin="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}"
                                 BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
                         <TextBlock x:Name="Text" Style="{DynamicResource ButtonTextBlockBaseStyle}"
                                    Foreground="{TemplateBinding Foreground}" FontWeight="SemiBold"
@@ -32,19 +32,13 @@
                         </Trigger>
 
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-                            <Setter Property="Background" Value="White" TargetName="MainBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground"  />
                         </Trigger>
 
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-                            <Setter Property="Background" Value="White" TargetName="MainBackground" />
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground"  />
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
@@ -58,10 +52,112 @@
 
     <!-- Style pour le cadre de menu de jeu -->
     <Style x:Key="GameMenuBorder" TargetType="Border">
+        <Setter Property="Tag" Value="{DynamicResource BackgroundImageIndex}" />
         <Setter Property="CornerRadius" Value="{DynamicResource Corner}" />
         <Setter Property="Width" Value="400" />
         <Setter Property="Padding" Value="10" />
         <Setter Property="Background" Value="{DynamicResource OverlayMenu}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}" />
+        <Setter Property="BorderThickness" Value="3" />
+        <Setter Property="Opacity" Value="0.85"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="19">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage19}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="20">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage20}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="21">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage21}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="22">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage22}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="23">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage23}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="24">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage24}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="25">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage25}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="26">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage26}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="27">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage27}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="28">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage28}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="29">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage29}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="30">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage30}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="31">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage31}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="32">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage32}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="33">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage33}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="34">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage34}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="35">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage35}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="36">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage36}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="37">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage37}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="38">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage38}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="39">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage39}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="40">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage40}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="41">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage41}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="42">
+                <Setter Property="Background" Value="{DynamicResource GameMenuImage42}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <!-- Style pour le texte d'en-tête du menu de jeu -->

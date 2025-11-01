@@ -4,16 +4,19 @@
     <!-- Style pour la bordure du menu de notifications -->
     <Style x:Key="NotificationsMenuBorder" TargetType="Border">
         <Setter Property="Background" Value="{DynamicResource OverlayMenu}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NoFocusBorderButtonBrush}"/>
         <Setter Property="Margin" Value="0,30,0,40" />
         <Setter Property="Width" Value="700" />
         <Setter Property="MinHeight" Value="350"/>
         <Setter Property="Grid.ColumnSpan" Value="4" />
-        <Setter Property="CornerRadius" Value="{DynamicResource Corner}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource SelectionLightBrush}" />
+        <Setter Property="CornerRadius" Value="16"/>
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="20,5,20,40" />
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Padding" Value="30,25,30,25"/>
+        <Setter Property="Opacity" Value="0.85"/>
         <Style.Triggers>
             <EventTrigger RoutedEvent="Window.Loaded">
                 <BeginStoryboard>
@@ -27,35 +30,55 @@
     </Style>
 
     <!-- Style pour le bouton d'élément de menu de notifications -->
-    <Style x:Key="NotificationsMenuItemButton" BasedOn="{StaticResource {x:Type ButtonEx}}" TargetType="ButtonEx">
-        <Setter Property="Margin" Value="20,5,20,30" />
-        <Setter Property="Height" Value="Auto" />
+    <Style x:Key="NotificationsMenuItemButton" TargetType="Button">
+        <Setter Property="MinWidth" Value="150"/>
+        <Setter Property="Height" Value="54"/>
+        <Setter Property="Margin" Value="6"/>
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundNoFocus}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NoFocusBorderButtonBrush}" />
+        <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Grid Background="{TemplateBinding Background}">
-                        <Border x:Name="MainBorder" Margin="0,0,0,0" CornerRadius="2" BorderThickness="3" Opacity="0" Style="{DynamicResource AnimatedBorderBrush}"
-                                Tag="False" Visibility="Collapsed" >
-                        </Border>
-                        <Border x:Name="FlashMenuBorder" Margin="5" Style="{DynamicResource AnimatedFlashMenu}" Tag="False" Visibility="Collapsed">
-                        </Border>
-                        <TextBlock x:Name="NotificationsText" Style="{DynamicResource TextBlockBaseStyle}"
-                                   Margin="10" FontSize="26"
-                                   Foreground="{DynamicResource TextBrush}"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                            <ContentPresenter />
-                        </TextBlock>
+                    <Grid>
+                        <Border x:Name="Card"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{DynamicResource Corner}"/>
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Margin="8,0,8,0"/>
                     </Grid>
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
-                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
+                            <Setter TargetName="Card" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                            <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource SelectionLightBrush}" TargetName="NotificationsText" />
+                            <Setter TargetName="Card" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                            <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Card" Property="Background" Value="#55FFFFFF"/>
+                            <Setter TargetName="Card" Property="BorderBrush" Value="#FFFFFFFF"/>
+                            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.96" ScaleY="0.96"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Card" Property="Opacity" Value="0.5"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -64,19 +87,74 @@
     </Style>
 
     <!-- Style pour le bouton de rejet du menu de notifications -->
-    <Style x:Key="NotificationsMenuDismissButton" BasedOn="{StaticResource {x:Type ButtonEx}}" TargetType="ButtonEx">
-        <Setter Property="Margin" Value="20,5,20,30" />
-        <Setter Property="Height" Value="50" />
-        <Setter Property="Opacity" Value="1" />
+    <Style x:Key="NotificationsMenuDismissButton"
+           TargetType="ButtonEx"
+           BasedOn="{StaticResource {x:Type ButtonEx}}">
+        <Setter Property="MinWidth" Value="150"/>
+        <Setter Property="Height" Value="54"/>
+        <Setter Property="Margin" Value="6"/>
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundNoFocus}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NoFocusBorderButtonBrush}" />
+        <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border x:Name="Card"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{DynamicResource Corner}"/>
+                        <!-- Tu forces ici ton propre TextBlock -->
+                        <TextBlock Text="{TemplateBinding Content}"
+                                   FontSize="24" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextBrush}"
+                                   TextWrapping="Wrap"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Card" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                            <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="Card" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                            <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Card" Property="Background" Value="#55FFFFFF"/>
+                            <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Card" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <!-- Style pour le texte d'en-tête du menu de notifications -->
-    <Style x:Key="NotificationsMenuHeaderText" BasedOn="{StaticResource TextBlockBaseStyle}" TargetType="TextBlock" >
-        <Setter Property="FontSize" Value="26" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="Visibility" Value="Collapsed" />
-
+    <Style x:Key="NotificationsMenuHeaderText"
+           BasedOn="{StaticResource TextBlockBaseStyle}"
+           TargetType="TextBlock">
+        <Setter Property="FontSize" Value="36"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Margin" Value="0,0,-100,16"/>
+        <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=ActualWidth}"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <!-- span jusqu’au bout -->
     </Style>
-
 
 </ResourceDictionary>

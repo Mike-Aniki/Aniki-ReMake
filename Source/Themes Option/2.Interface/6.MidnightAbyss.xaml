@@ -1,0 +1,120 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    mc:Ignorable="d">
+
+    <sys:Int32 x:Key="BackgroundImageIndex">6</sys:Int32>
+
+    <!-- Accents / textes -->
+    <Color x:Key="GlyphColor">#26B7FF</Color>
+    <Color x:Key="GlowFocusColor">#E5E4E2</Color>
+    <!-- neutre pour glow jaquette -->
+    <Color x:Key="BorderDark">#7A8392</Color>
+    <Color x:Key="BorderLight">#E6E9EF</Color>
+    <Color x:Key="SelectionLightColor">#E5E4E2</Color>
+
+    <Color x:Key="ControlBackgroundColor">#0E1A2C</Color>
+    <Color x:Key="ControlBackgroundColorDark">#000910</Color>
+
+    <Color x:Key="TextSecondaryColor">#E5E4E2</Color>
+    <Color x:Key="TextDetail">#8A96A6</Color>
+    <Color x:Key="TextAltDetail">#E5E4E2</Color>
+    <Color x:Key="HltbAlt">#7A8AA6</Color>
+
+    <Color x:Key="DynamicGlowBackgroundPrimary">#2C3E6E</Color>
+    <Color x:Key="TextHighlight">#C7D7FF</Color>
+
+    <!-- Brushes texte usuels -->
+    <SolidColorBrush x:Key="TextAltBrush"            Color="{DynamicResource TextSecondaryColor}" />
+    <SolidColorBrush x:Key="TextDetailBrush"         Color="{DynamicResource TextDetail}" />
+    <SolidColorBrush x:Key="TextDetailAltBrush"      Color="{DynamicResource TextAltDetail}" />
+    <SolidColorBrush x:Key="HltbAltBrush"            Color="{DynamicResource HltbAlt}" />
+    <SolidColorBrush x:Key="GlowFocusBrush"          Color="{DynamicResource GlowFocusColor}" />
+    <SolidColorBrush x:Key="TextHighlightBrush"      Color="{DynamicResource TextHighlight}" />
+    <SolidColorBrush x:Key="ControlBackgroundBrush"  Color="{DynamicResource ControlBackgroundColor}" />
+    <SolidColorBrush x:Key="ComboBoxBorderBrush"     Color="{DynamicResource TextSecondaryColor}" />
+
+    <!-- Bouton Play -->
+    <LinearGradientBrush x:Key="ButtonPlayColor" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="{DynamicResource DynamicGlowBackgroundPrimary}" Offset="0.10" />
+        <GradientStop Color="#0E1A2C" Offset="0.90" />
+    </LinearGradientBrush>
+
+    <!-- Focus global boutons (uni) -->
+    <LinearGradientBrush x:Key="FocusGameBorderBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#26B7FF" Offset="0.0" />
+        <GradientStop Color="#26B7FF" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <!-- Bordures non focus (légères) -->
+    <LinearGradientBrush x:Key="NoFocusBorderButtonBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#2026282B" Offset="0"/>
+        <GradientStop Color="#20151719" Offset="1"/>
+    </LinearGradientBrush>
+
+    <!-- Base du thème -->
+    <LinearGradientBrush x:Key="OverlayMenu" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#000817" Offset="0.0" />
+        <GradientStop Color="#0E1A2C" Offset="0.40" />
+        <GradientStop Color="#162238" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <!-- Bordures de menu -->
+    <LinearGradientBrush x:Key="MenuBorderBrush" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Color="#C7D7FF" Offset="0.0"/>
+        <GradientStop Color="#0E1A2C" Offset="1.0"/>
+    </LinearGradientBrush>
+
+    <!-- Shade général (garde tes stops) -->
+    <LinearGradientBrush x:Key="ShadeBackground" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#00000000" Offset="0.0" />
+        <GradientStop Color="#60101010" Offset="0.20" />
+        <GradientStop Color="#FF0E1A2C" Offset="0.45" />
+        <GradientStop Color="#FF000000" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <!-- Fenêtres non contrôlées (plus sombre que l’overlay) -->
+    <LinearGradientBrush x:Key="ControlBackgroundDarkBrush" StartPoint="0,1" EndPoint="1,0">
+        <GradientStop Color="#000910" Offset="0.10" />
+        <GradientStop Color="#000910" Offset="1.00" />
+    </LinearGradientBrush>
+
+    <!-- Trophées (vertical, légèrement + clair que l’overlay) -->
+    <LinearGradientBrush x:Key="SuccessMenu" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#132137" Offset="0.00"/>
+        <GradientStop Color="#0F1C30" Offset="1.00"/>
+    </LinearGradientBrush>
+
+    <!-- Glow radial trophées (pas trop lumineux) -->
+    <RadialGradientBrush x:Key="DynamicGlowBackgroundSuccess"
+                         Center="0.5,0.4" GradientOrigin="0.5,0.4" RadiusX="0.8" RadiusY="0.9">
+        <GradientStop Color="{DynamicResource DynamicGlowBackgroundPrimary}" Offset="0.00"/>
+        <GradientStop Color="#0E1A2C" Offset="0.40"/>
+        <GradientStop Color="#050A12" Offset="1.00"/>
+    </RadialGradientBrush>
+
+    <!-- Style titre options (inchangé) -->
+    <Style x:Key="TextThemeOptionStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+        <Setter Property="FontSize" Value="34" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="Segoe UI Black Italic" />
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#FFFFFF" Offset="0" />
+                    <GradientStop Color="#B0B3B8" Offset="1" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="2" Direction="320" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

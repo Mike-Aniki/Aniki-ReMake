@@ -56,7 +56,7 @@
 
                         <Border x:Name="FocusGlow"
                                 CornerRadius="{DynamicResource Corner}"
-                                Background="{DynamicResource GlyphBrush}"
+                                Background="{DynamicResource GlowFocusBrush}"
                                 Opacity="0"
                                 Margin="0"
                                 CacheMode="BitmapCache">
@@ -109,9 +109,6 @@
                                 Width="30" Height="30"
                                 Margin="2"
                                 RenderOptions.BitmapScalingMode="Fant">
-                                <Image.Effect>
-                                    <DropShadowEffect BlurRadius="8" Opacity="0.4" Color="Black" Direction="0" ShadowDepth="0"/>
-                                </Image.Effect>
                             </Image>
                             <Border.Style>
                                 <Style TargetType="Border">
@@ -147,7 +144,7 @@
                                     <Style TargetType="Border">
                                         <Setter Property="BorderThickness" Value="3.5"/>
                                         <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Setter Property="BorderBrush" Value="{StaticResource FocusGameBorderBrush}"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{PluginSettings Plugin=SuccessStory, Path=Percent}" Value="100">
                                                 <Setter Property="BorderThickness" Value="4"/>
@@ -200,7 +197,6 @@
                             <Setter Property="Opacity" Value="1" TargetName="MainBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="FlashFocus" />
                             <Setter Property="Opacity" Value="1" TargetName="PlatinumIcon" />
-
                             <Setter Property="Canvas.ZIndex" Value="90" />
                             <Setter TargetName="FocusGlow" Property="Opacity" Value="0.6"/>
                         </Trigger>

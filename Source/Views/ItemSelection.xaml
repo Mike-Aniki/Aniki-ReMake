@@ -10,17 +10,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid Background="{TemplateBinding Background}">
-                        <Border CornerRadius="{DynamicResource Corner}" Opacity="0.4" Background="Transparent"
+                        <Border CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" Background="{DynamicResource ButtonBackgroundFocus}"
                                 x:Name="MainBackground"/>
-                        <Border x:Name="MainBorder" Margin="-3"
+                        <Border x:Name="MainBorder" Margin="0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}"
                                 BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
                         <TextBlock x:Name="Text" Style="{DynamicResource ButtonTextBlockBaseStyle}"
                                    Foreground="{TemplateBinding Foreground}" FontWeight="SemiBold"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                   Margin="25,0" FontSize="23" >
+                                   Margin="25,0" FontSize="24" >
                             <ContentPresenter />
                         </TextBlock>
                     </Grid>
@@ -30,19 +30,13 @@
                         </Trigger>
 
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-                            <Setter Property="Background" Value="White" TargetName="MainBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground"  />
                         </Trigger>
 
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-                            <Setter Property="Background" Value="White" TargetName="MainBackground" />
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground"  />
                         </Trigger>
 
                         <Trigger Property="IsEnabled" Value="False">
@@ -67,13 +61,121 @@
     </Style>
 
     <Style x:Key="ItemSelectionBorder" TargetType="Border">
+        <Setter Property="Tag" Value="{DynamicResource BackgroundImageIndex}" />
         <Setter Property="CornerRadius" Value="{DynamicResource Corner}" />
         <Setter Property="Background" Value="{DynamicResource OverlayMenu}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}" />
+        <Setter Property="BorderThickness" Value="3" />
+        <Setter Property="Opacity" Value="0.85"/>
+        <Setter Property="Width" Value="400" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="19">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage19}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="20">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage20}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="21">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage21}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="22">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage22}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="23">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage23}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="24">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage24}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="25">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage25}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="26">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage26}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="27">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage27}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="28">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage28}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="29">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage29}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="30">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage30}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="31">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage31}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="32">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage32}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="33">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage33}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="34">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage34}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="35">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage35}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="36">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage36}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="37">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage37}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="38">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage38}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="39">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage39}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="40">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage40}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="41">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage41}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="42">
+                <Setter Property="Background" Value="{DynamicResource ItemMenuImage42}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="ItemSelectionFooterBorder" TargetType="Border">
-        <Setter Property="Background" Value="{DynamicResource OverlayMenu}" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Padding" Value="0,10,0,10" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}" />
+        <Setter Property="BorderThickness" Value="0,2,0,0" />
     </Style>
 
     <Style x:Key="ItemSelectionFooterButton" BasedOn="{StaticResource {x:Type ButtonEx}}" TargetType="ButtonEx">
@@ -90,7 +192,7 @@
                 <ControlTemplate TargetType="Button">
                     <Grid Background="{TemplateBinding Background}">
                         <TextBlock Style="{DynamicResource ButtonTextBlockBaseStyle}"
-                                   Foreground="{TemplateBinding Foreground}" FontWeight="SemiBold"
+                                   Foreground="{TemplateBinding Foreground}"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                    Margin="0,0">

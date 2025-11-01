@@ -2,32 +2,88 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Style du bouton de texte -->
-    <Style x:Key="TextInputButton" BasedOn="{StaticResource {x:Type ButtonEx}}" TargetType="ButtonEx">
-        <Setter Property="Padding" Value="25,15,25,15" />
-        <Setter Property="Margin" Value="2" />
-        <Setter Property="Background" Value="{DynamicResource OverlayMenu}" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="MinWidth" Value="70" />
-        <Setter Property="MinHeight" Value="70" />
-        <Setter Property="Height" Value="Auto" />
+    <Style x:Key="TextInputButton"
+           BasedOn="{StaticResource {x:Type ButtonEx}}"
+           TargetType="ButtonEx">
+        <Setter Property="Padding" Value="22,16"/>
+        <Setter Property="Margin" Value="4"/>
+        <Setter Property="MinWidth" Value="70"/>
+        <Setter Property="MinHeight" Value="70"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="#FFFFFFFF"/>
+        <Setter Property="Background" Value="#1AFFFFFF"/>
+        <Setter Property="BorderBrush" Value="#35FFFFFF"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Grid Background="{TemplateBinding Background}">
-                        <Border x:Name="MainBorder" CornerRadius="5" Margin="-3" BorderThickness="3" Opacity="1" BorderBrush="#BFEAD3CF" Visibility="Collapsed" />
-                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
-                                   Margin="15,0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                   Foreground="{TemplateBinding Foreground}" FontSize="24"  >
-                            <ContentPresenter />
-                        </TextBlock>
+                <ControlTemplate TargetType="ButtonEx">
+                    <Grid RenderOptions.BitmapScalingMode="LowQuality">
+                        <Border x:Name="Glow"
+                                CornerRadius="10"
+                                Background="#0034C759"
+                                Margin="0"
+                                Opacity="0"/>
+
+                        <Border x:Name="Card"
+                                CornerRadius="10"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <Border CornerRadius="8" Margin="1">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#14FFFFFF" Offset="0"/>
+                                        <GradientStop Color="#09000000" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+                        </Border>
+
+                        <ContentPresenter x:Name="content"
+                                          Margin="6,2,6,0"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Grid>
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter TargetName="Glow" Property="Background" Value="#8034C759"/>
+                            <Setter TargetName="Glow" Property="Opacity" Value="1"/>
+                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                            <Setter TargetName="Card" Property="BorderBrush" Value="#A0FFFFFF"/>
+                            <Setter TargetName="Card" Property="Background" Value="{DynamicResource OverlayMenu}"/>
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="1.0" ScaleY="1.0"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                         </Trigger>
+
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource SelectionLightBrush}" />
+                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                            <Setter TargetName="Card" Property="BorderBrush" Value="#80FFFFFF"/>
+                            <Setter TargetName="Card" Property="Background" Value="{DynamicResource OverlayMenu}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.97" ScaleY="0.97"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Card" Property="Background" Value="#33000000"/>
+                            <Setter TargetName="Card" Property="BorderBrush" Value="#FFFFFFFF"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Card" Property="Opacity" Value="0.5"/>
+                            <Setter Property="Foreground" Value="#88FFFFFF"/>
+                            <Setter TargetName="Glow" Property="Opacity" Value="0"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -41,24 +97,128 @@
     </Style>
 
     <!-- Style de la zone de texte de texte -->
-    <Style x:Key="TextInputTextbox" BasedOn="{StaticResource {x:Type TextBox}}" TargetType="TextBox">
-        <Setter Property="Margin" Value="0,0,0,20" />
-        <Setter Property="FontSize" Value="36" />
-        <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="Height" Value="60" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Style x:Key="TextInputTextbox"
+           TargetType="TextBox"
+           BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="Height" Value="64"/>
+        <Setter Property="FontSize" Value="34"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="#FFFFFFFF"/>
+        <Setter Property="CaretBrush" Value="#FFFFFFFF"/>
+        <Setter Property="Padding" Value="56,12,16,12"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="BorderBrush" Value="#70FFFFFF"/>
+        <Setter Property="Background" Value="{DynamicResource OverlayMenu}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid RenderOptions.BitmapScalingMode="LowQuality">
+                        <Border x:Name="Card"
+                                CornerRadius="12"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Opacity="0.8"/>
+
+                        <Viewbox x:Name="Loupe" Width="28" Height="28"
+                                 HorizontalAlignment="Left" VerticalAlignment="Center"
+                                 Margin="16,0,0,0" Opacity="0.85">
+                            <Canvas Width="24" Height="24">
+                                <Ellipse Width="14" Height="14" Stroke="#B0FFFFFF" StrokeThickness="2"
+                                         Canvas.Left="0" Canvas.Top="0"/>
+                                <Path Stroke="#B0FFFFFF" StrokeThickness="2" Data="M 11,11 L 20,20"/>
+                            </Canvas>
+                        </Viewbox>
+
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="0" Focusable="False"/>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Card" Property="Opacity" Value="1"/>
+                            <Setter TargetName="Card" Property="BorderBrush" Value="#A0FFFFFF"/>
+                            <Setter TargetName="Loupe" Property="Opacity" Value="0"/>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Card" Property="Opacity" Value="0.8"/>
+                            <Setter TargetName="Card" Property="BorderBrush" Value="#90FFFFFF"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Card" Property="Opacity" Value="0.4"/>
+                            <Setter Property="Foreground" Value="#88FFFFFF"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <!-- Style du conteneur des options de texte -->
     <Style x:Key="TextInputOptionsBorder" TargetType="Border">
-        <Setter Property="Background" Value="#90ffff00" />
-        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#25252525" Offset="0"/>
+                    <GradientStop Color="#15000000" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Margin" Value="12,20,12,8"/>
+        <Setter Property="Padding" Value="12"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="BorderBrush" Value="#40FFFFFF"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Style.Triggers>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="BorderBrush" Value="#90FFFFFF"/>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#30252525" Offset="0"/>
+                            <GradientStop Color="#1A000000" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="#70FFFFFF"/>
+            </Trigger>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.6"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- Style du conteneur des touches de texte -->
     <Style x:Key="TextInputKeysBorder" TargetType="Border">
-        <Setter Property="Background" Value="{DynamicResource StaticBorderBrushAlt}" />
-        <Setter Property="Margin" Value="-3" />
-        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="Background" Value="{DynamicResource OverlayMenu}"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Margin" Value="12,10,12,0"/>
+        <Setter Property="Padding" Value="8"/>
+        <Setter Property="BorderThickness" Value="1.5"/>
+        <Setter Property="BorderBrush" Value="#30FFFFFF"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Style.Triggers>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="BorderBrush" Value="#80FFFFFF"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="#60FFFFFF"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.6"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
+
+
 </ResourceDictionary>
