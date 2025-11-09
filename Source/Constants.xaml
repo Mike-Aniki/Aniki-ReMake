@@ -53,6 +53,8 @@
     <Color x:Key="TextVertical">#F0FFFF</Color>
     <Color x:Key="TextWhiteColor">#F6F6F6</Color>
     <Color x:Key="GlowFocusColor">#e5e4e2</Color>
+    <Color x:Key="TextHighlight">#888481</Color>
+
 
 
     <!-- ===== BRUSHES ===== -->
@@ -73,6 +75,8 @@
     <SolidColorBrush x:Key="TextVerticalBrush" Color="{DynamicResource TextVertical}" />
     <SolidColorBrush x:Key="TextWhiteBrush" Color="{DynamicResource TextWhiteColor}" />
     <SolidColorBrush x:Key="GlowFocusBrush" Color="{DynamicResource GlowFocusColor}" />
+    <SolidColorBrush x:Key="TextHighlightBrush" Color="{DynamicResource TextHighlight}" />
+
 
 
     <!-- ===== GRADIENTS ===== -->
@@ -187,6 +191,19 @@
         <!-- 12% -->
     </LinearGradientBrush>
 
+    <DropShadowEffect x:Key="SoftTextShadow" ShadowDepth="1" BlurRadius="6" Color="Black" Opacity="0.6"/>
+
+    <LinearGradientBrush x:Key="ShadeTop" StartPoint="1,0" EndPoint="0,0">
+        <GradientStop Color="#90000000" Offset="0.00"/>
+        <!-- 82% -->
+        <GradientStop Color="#50000000" Offset="0.05"/>
+        <!-- 56% -->
+        <GradientStop Color="#20000000" Offset="0.15"/>
+        <!-- 31% -->
+        <GradientStop Color="#00000000" Offset="0.25"/>
+        <!-- 12% -->
+    </LinearGradientBrush>
+
     <LinearGradientBrush x:Key="ShadeLeft" StartPoint="0,0" EndPoint="1,0">
         <!-- Zone proche du bord gauche : densité forte -->
         <GradientStop Color="#98000000" Offset="0.0"/>
@@ -215,6 +232,10 @@
         <GradientStop Color="#00000000" Offset="1.00"/>
     </LinearGradientBrush>
 
+    <RadialGradientBrush x:Key="ClockHalo" GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="1" RadiusY="1">
+        <GradientStop Color="#40000000" Offset="0.0"/>
+        <GradientStop Color="#00000000" Offset="1.0"/>
+    </RadialGradientBrush>
 
 
     <RadialGradientBrush x:Key="LogoHalo" Center="0.5,0.5" GradientOrigin="0.5,0.5" RadiusX="0.95" RadiusY="0.85">
@@ -357,55 +378,76 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
 
+    <!-- ThemeOptions -->
+
+    <!-- GROS TITRE -->
     <Style x:Key="TextThemeOptionStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-        <Setter Property="FontSize" Value="34" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="FontFamily" Value="Bahnschrift Bold, Bahnschrift, Segoe UI Variable Display Bold, Segoe UI Bold, Segoe UI" />
-        <Setter Property="Foreground">
-            <Setter.Value>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Color="#FFFFFF" Offset="0" />
-                    <GradientStop Color="#B0B3B8" Offset="1" />
-                </LinearGradientBrush>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="34"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}"/>
+        <Setter Property="Margin" Value="0,0,0,2"/>
+        <Setter Property="MaxWidth" Value="1200"/>
+        <!-- même largeur visuelle que la colonne d’options -->
+        <Setter Property="Padding" Value="0"/>
     </Style>
 
+    <!-- SOUS-TITRE (mini header “section”) -->
     <Style x:Key="TextThemeOptionStyleSousTitre" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-        <Setter Property="FontSize" Value="26" />
-        <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="FontFamily" Value="Segoe UI Italic" />
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextAltBrush}"/>
+        <Setter Property="Opacity" Value="0.8"/>
+        <Setter Property="LineHeight" Value="18"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="TextTrimming" Value="None"/>
+        <Setter Property="MaxWidth" Value="900"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
     </Style>
 
+    <!-- TEXTE MINI (notes/descr) -->
     <Style x:Key="TextThemeOptionStyleMini" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-        <Setter Property="FontSize" Value="18" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Top" />
-        <Setter Property="FontFamily" Value="Segoe UI Light Italic" />
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextAltBrush}"/>
+        <Setter Property="Opacity" Value="0.8"/>
+        <Setter Property="LineHeight" Value="18"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="TextTrimming" Value="None"/>
+        <Setter Property="MaxWidth" Value="900"/>
+        <Setter Property="Margin" Value="10,4,0,16"/>
     </Style>
-
 
     <Style x:Key="HeaderDockPanelStyle" TargetType="DockPanel">
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="LastChildFill" Value="False"/>
+        <Setter Property="Margin" Value="0,24,0,10"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
     </Style>
 
-    <Style x:Key="HeaderDockPanelStyleSoustitre" TargetType="DockPanel">
-        <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="VerticalAlignment" Value="Top" />
-        <Setter Property="Margin" Value="0,0,0,0" />
+    <Style x:Key="HeaderDockPanelStyleSousTitre" TargetType="DockPanel">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="LastChildFill" Value="False"/>
+        <Setter Property="Margin" Value="0,-10,0,0"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
     </Style>
-
 
     <Style x:Key="HeaderDockPanelStyleMini" TargetType="DockPanel">
-        <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="VerticalAlignment" Value="Top" />
-        <Setter Property="Margin" Value="20,-28,0,0" />
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="LastChildFill" Value="False"/>
+        <Setter Property="Margin" Value="0,-10,0,10"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
     </Style>
-
 
     <!-- Haut -->
     <Style x:Key="Aniki_AddonsUpdateWindowStyle_Top" TargetType="Border">

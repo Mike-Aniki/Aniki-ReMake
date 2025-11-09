@@ -2,112 +2,122 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
+    <!-- Image index -->
     <sys:Int32 x:Key="BackgroundImageIndex">40</sys:Int32>
 
-    <!-- Accent des liens html (Harley pink) -->
-    <Color x:Key="GlyphColor">#E5006D</Color>
+    <!-- ===== PALETTE (Joker Chaos) ===== -->
+    <!-- Icônes / liens -->
+    <Color x:Key="GlyphColor">#39FF14</Color>
+    <!-- Vert toxique -->
+    <!-- Halo focus -->
+    <Color x:Key="GlowFocusColor">#39FF14</Color>
+    <!-- Vert toxique -->
+    <!-- Texte -->
+    <Color x:Key="TextBaseColor">#F9FFF9</Color>
+    <!-- Blanc froid -->
+    <Color x:Key="TextSubtitleColor">#DAEEDA</Color>
+    <Color x:Key="TextMutedColor">#9EB59E</Color>
+    <!-- Surlignage “sourire sanglant” -->
+    <Color x:Key="TextHighlight">#E0112B</Color>
+    <!-- Rouge sang -->
 
-    <!-- Glow derrière les jaquettes focus (Harley blue) -->
-    <Color x:Key="GlowFocusColor">#00D2FF</Color>
+    <!-- Variante HLTB / petites icônes -->
+    <Color x:Key="HltbAlt">#C8FF9A</Color>
+    <!-- Vert acide clair -->
 
-    <!-- Textes -->
-    <Color x:Key="TextSecondaryColor">#D9E1EA</Color>
-    <Color x:Key="TextDetail">#A9B6C8</Color>
-    <Color x:Key="TextAltDetail">#F7FAFD</Color>
-    <Color x:Key="TextHighlight">#FF007F</Color>
+    <!-- Glow principal (fond / play / halos) -->
+    <Color x:Key="DynamicGlowBackgroundPrimary">#2B003F</Color>
+    <!-- Violet encré -->
 
-    <!-- Valeurs HLTB / petites icônes infos (rose clair pour varier) -->
-    <Color x:Key="HltbAlt">#FFA0E6</Color>
+    <!-- ===== BRUSHES CANON ===== -->
+    <SolidColorBrush x:Key="TextBrush"            Color="{DynamicResource TextBaseColor}" />
+    <SolidColorBrush x:Key="TextGlowBrush"        Color="{DynamicResource GlowFocusColor}" />
+    <SolidColorBrush x:Key="HighlightBrush"       Color="{DynamicResource TextHighlight}" />
+    <SolidColorBrush x:Key="ControlBrush"         Color="{DynamicResource GlowFocusColor}" />
 
-    <!-- Glow principal (Play & fonds des vues) : cyan néon -->
-    <Color x:Key="DynamicGlowBackgroundPrimary">#3A002A</Color>
+    <!-- Utilitaires -->
+    <SolidColorBrush x:Key="HltbAltBrush"         Color="{DynamicResource HltbAlt}" />
+    <SolidColorBrush x:Key="TextDetailBrush"      Color="{DynamicResource TextMutedColor}" />
+    <SolidColorBrush x:Key="TextDetailAltBrush"   Color="{DynamicResource TextBaseColor}" />
+    <SolidColorBrush x:Key="TextAltBrush"         Color="{DynamicResource TextSubtitleColor}" />
+    <SolidColorBrush x:Key="ComboBoxBorderBrush"  Color="{DynamicResource TextSubtitleColor}" />
+    <SolidColorBrush x:Key="GlowFocusBrush"       Color="{DynamicResource GlowFocusColor}" />
 
-    <!-- Brushes -->
-    <SolidColorBrush x:Key="HltbAltBrush"        Color="{DynamicResource HltbAlt}" />
-    <SolidColorBrush x:Key="TextDetailAltBrush"  Color="{DynamicResource TextAltDetail}" />
-    <SolidColorBrush x:Key="TextDetailBrush"     Color="{DynamicResource TextDetail}" />
-    <SolidColorBrush x:Key="TextAltBrush"        Color="{DynamicResource TextSecondaryColor}" />
-    <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="{DynamicResource TextSecondaryColor}" />
-    <SolidColorBrush x:Key="GlowFocusBrush"      Color="{DynamicResource GlowFocusColor}" />
-    <SolidColorBrush x:Key="TextHighlightBrush"  Color="{DynamicResource TextHighlight}" />
-
-    <!-- Bouton Play : cyan -> encre -->
+    <!-- ===== BOUTON PLAY (flash → abîme) ===== -->
     <LinearGradientBrush x:Key="ButtonPlayColor" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="{DynamicResource DynamicGlowBackgroundPrimary}" Offset="0.06"/>
-        <GradientStop Color="#171C23" Offset="0.84"/>
-        <GradientStop Color="#11161C" Offset="1.00"/>
+        <GradientStop Color="#3B103F" Offset="0.00"/>
+        <!-- flash vert -->
+        <GradientStop Color="#2B003F" Offset="0.48"/>
+        <!-- violet profond -->
+        <GradientStop Color="#070707" Offset="1.00"/>
+        <!-- noir -->
     </LinearGradientBrush>
 
-    <!-- Bordure de focus : néon bi-chromatique (magenta -> cyan) -->
+    <!-- ===== BORDURES ===== -->
+    <!-- Focus : violet → blanc “spark” → vert toxique (très agressif) -->
     <LinearGradientBrush x:Key="FocusGameBorderBrush" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#E5006D" Offset="0.00"/>
-        <GradientStop Color="#B3FFFFFF" Offset="0.38"/>
-        <GradientStop Color="#00D2FF" Offset="1.00"/>
+        <GradientStop Color="#E0112B" Offset="0.00"/>
+        <GradientStop Color="#39FF14" Offset="1.00"/>
     </LinearGradientBrush>
 
-    <!-- Bordure non focus : cyan doux -->
+    <!-- Non focus : vert pulsé plus visible -->
     <LinearGradientBrush x:Key="NoFocusBorderButtonBrush" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#3345EFFF" Offset="0"/>
-        <GradientStop Color="#1199FFFF" Offset="1"/>
+        <GradientStop Color="#5539FF14" Offset="0.00"/>
+        <GradientStop Color="#2239FF14" Offset="1.00"/>
     </LinearGradientBrush>
 
-    <!-- OverlayMenu : split Harley (magenta sombre -> cyan sombre), 100% opaque -->
+    <!-- ===== OVERLAYS / MENUS ===== -->
+    <!-- OverlayMenu : violet noir → neutre encré → vert très sombre -->
     <LinearGradientBrush x:Key="OverlayMenu" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#3A002A" Offset="0.0"/>
-        <!-- magenta sombre -->
-        <GradientStop Color="#1C0F1C" Offset="0.5"/>
-        <!-- centre neutre -->
-        <GradientStop Color="#00182A" Offset="1.0"/>
-        <!-- bleu Harley -->
+        <GradientStop Color="#2B003F" Offset="0.00"/>
+        <!-- violet noir -->
+        <GradientStop Color="#140A19" Offset="0.50"/>
+        <!-- encre -->
+        <GradientStop Color="#001B0A" Offset="1.00"/>
+        <!-- vert très sombre -->
     </LinearGradientBrush>
 
-    <!-- Bord des menus : dégradé magenta -> cyan (signature Harley) -->
+    <!-- Bord des menus : rouge sourire → vert toxique -->
     <LinearGradientBrush x:Key="MenuBorderBrush" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#FF2B91" Offset="0.0"/>
-        <GradientStop Color="#00D2FF" Offset="1.0"/>
+        <GradientStop Color="#E0112B" Offset="0.00"/>
+        <!-- rouge sang -->
+        <GradientStop Color="#39FF14" Offset="1.00"/>
+        <!-- vert toxique -->
     </LinearGradientBrush>
 
-    <!-- Shades de haut en bas (vue verticale) -->
+    <!-- ===== SHADES ===== -->
+    <!-- Shade vertical : contraste violent, lisibilité prioritaire -->
     <LinearGradientBrush x:Key="ShadeBackground" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="#00000000" Offset="0.00"/>
-        <GradientStop Color="#60101010" Offset="0.20"/>
-        <GradientStop Color="#FF151C24" Offset="0.45"/>
+        <GradientStop Color="#77101010" Offset="0.22"/>
+        <GradientStop Color="#DD0C0F14" Offset="0.55"/>
+        <!-- froid bleuté -->
         <GradientStop Color="#FF000000" Offset="1.00"/>
     </LinearGradientBrush>
 
-    <!-- Shade bas (vue horizontale) -->
-    <LinearGradientBrush x:Key="ShadeBottom" StartPoint="0,1" EndPoint="0,0">
-        <GradientStop Color="#BF000000" Offset="0.00"/>
-        <GradientStop Color="#59000000" Offset="0.10"/>
-        <GradientStop Color="#00000000" Offset="0.26"/>
-    </LinearGradientBrush>
-
-    <!-- Shade gauche (vue horizontale) -->
-    <LinearGradientBrush x:Key="ShadeLeft" StartPoint="0,0" EndPoint="1,0">
-        <GradientStop Color="#A6000000" Offset="0.00"/>
-        <GradientStop Color="#66000000" Offset="0.20"/>
-        <GradientStop Color="#22000000" Offset="0.30"/>
-        <GradientStop Color="#00000000" Offset="0.40"/>
-    </LinearGradientBrush>
-
-    <!-- Fenêtres non contrôlées (encre homogène) -->
+    <!-- ===== FONDS / CARTES ===== -->
+    <!-- Fenêtres non contrôlées (violet encré presque noir) -->
     <LinearGradientBrush x:Key="ControlBackgroundDarkBrush" StartPoint="0,1" EndPoint="1,0">
-        <GradientStop Color="#141A21" Offset="0.10"/>
-        <GradientStop Color="#141A21" Offset="1.00"/>
+        <GradientStop Color="#14101F" Offset="0.10"/>
+        <GradientStop Color="#14101F" Offset="1.00"/>
     </LinearGradientBrush>
 
-    <!-- Cartes Trophées (non focus) : encre froide -->
+    <!-- Cartes Trophées (non focus) : violet glacé dur -->
     <LinearGradientBrush x:Key="SuccessMenu" StartPoint="0,1" EndPoint="1,0">
-        <GradientStop Color="#151C23" Offset="0.00"/>
-        <GradientStop Color="#0F141B" Offset="1.00"/>
+        <GradientStop Color="#16122B" Offset="0.00"/>
+        <GradientStop Color="#0F0F23" Offset="1.00"/>
     </LinearGradientBrush>
 
-    <!-- Glow radial (Trophées, Screenshots, DLC, Stats) -->
+    <!-- Glow radial (Trophées/Screens/DLC/Stats) : cœur vert toxique + anneau rouge -->
     <RadialGradientBrush x:Key="DynamicGlowBackgroundSuccess"
-                         Center="0.5,0.4" GradientOrigin="0.5,0.4"
-                         RadiusX="0.8" RadiusY="0.9">
-        <GradientStop Color="{DynamicResource DynamicGlowBackgroundPrimary}" Offset="0.00"/>
-        <GradientStop Color="#00182A" Offset="0.70"/>
+                         Center="0.5,0.45" GradientOrigin="0.5,0.45"
+                         RadiusX="0.88" RadiusY="0.96">
+        <GradientStop Color="#14101F" Offset="0.00"/>
+        <!-- cœur vert -->
+        <GradientStop Color="#2B003F" Offset="0.52"/>
+        <!-- violet -->
+        <GradientStop Color="#001B0A" Offset="0.78"/>
+        <!-- anneau rouge translucide -->
         <GradientStop Color="#000000" Offset="1.00"/>
     </RadialGradientBrush>
 

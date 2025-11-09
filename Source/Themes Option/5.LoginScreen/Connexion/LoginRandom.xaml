@@ -1,0 +1,406 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ========= STYLE COMMUN MEDIAELEMENT (anti-leak / anti-GPU decode) ========= -->
+    <Style x:Key="LoginVideoMediaStyle" TargetType="MediaElement">
+        <Setter Property="IsMuted" Value="True"/>
+        <Setter Property="LoadedBehavior" Value="Play"/>
+        <Setter Property="UnloadedBehavior" Value="Close"/>
+        <Setter Property="Stretch" Value="UniformToFill"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
+        <Setter Property="Opacity" Value="1"/>
+        <Setter Property="MediaElementBehaviors.Repeat" Value="True"/>
+        <Style.Triggers>
+            <!-- Fenêtre inactive => coupe net -->
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="False">
+                <Setter Property="LoadedBehavior" Value="Stop"/>
+                <Setter Property="MediaElementBehaviors.Repeat" Value="False"/>
+            </DataTrigger>
+
+            <!-- Écran login masqué via Tag=False (sur le TemplatedParent) -->
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" Value="False">
+                <Setter Property="LoadedBehavior" Value="Close"/>
+                <Setter Property="MediaElementBehaviors.Repeat" Value="False"/>
+                <Setter Property="Source" Value=""/>
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </DataTrigger>
+
+            <!-- Garde locale : si le ContentControl est Collapsed -->
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Visibility}" Value="Collapsed">
+                <Setter Property="LoadedBehavior" Value="Close"/>
+                <Setter Property="MediaElementBehaviors.Repeat" Value="False"/>
+                <Setter Property="Source" Value=""/>
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- ========= DEFAULT (fallback) ========= -->
+    <ControlTemplate x:Key="VideoTpl_Default" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- ========= INDEXÉS 1..29 ========= -->
+
+    <!-- 1 Aerith -->
+    <ControlTemplate x:Key="VideoTpl_1" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil Aerith.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 2 Arcade -->
+    <ControlTemplate x:Key="VideoTpl_2" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil Arcade.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 3 Batman -->
+    <ControlTemplate x:Key="VideoTpl_3" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil Batman.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 4 BlackOps -->
+    <ControlTemplate x:Key="VideoTpl_4" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil BlackOps.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 5 CrisisCore -->
+    <ControlTemplate x:Key="VideoTpl_5" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil CrisisCore.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 6 EldenRing -->
+    <ControlTemplate x:Key="VideoTpl_6" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil EldenRing.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 7 forest Zelda -->
+    <ControlTemplate x:Key="VideoTpl_7" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil forest Zelda.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 8 Gaiden -->
+    <ControlTemplate x:Key="VideoTpl_8" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil Gaiden.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 9 Hokage -->
+    <ControlTemplate x:Key="VideoTpl_9" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil Hokage.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 10 Like A Dragon -->
+    <ControlTemplate x:Key="VideoTpl_10" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil LikeADragon.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 11 MGS -->
+    <ControlTemplate x:Key="VideoTpl_11" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil MGS.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 12 Naruto -->
+    <ControlTemplate x:Key="VideoTpl_12" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil Naruto.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 13 Persona5 -->
+    <ControlTemplate x:Key="VideoTpl_13" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil Persona5.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 14 RetroRoom -->
+    <ControlTemplate x:Key="VideoTpl_14" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil RetroRoom.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 15 RetroRoom2 -->
+    <ControlTemplate x:Key="VideoTpl_15" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil RetroRoom2.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 16 Sasuke -->
+    <ControlTemplate x:Key="VideoTpl_16" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil Sasuke.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 17 Tifa -->
+    <ControlTemplate x:Key="VideoTpl_17" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil Tifa.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 18 Yakuza6 -->
+    <ControlTemplate x:Key="VideoTpl_18" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil Yakuza6.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 19 Zelda Totk -->
+    <ControlTemplate x:Key="VideoTpl_19" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil Zelda Totk.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 20 DemonSlayer -->
+    <ControlTemplate x:Key="VideoTpl_20" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/DemonSlayer.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 21 Acceuil6 -->
+    <ControlTemplate x:Key="VideoTpl_21" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil6.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 22 Acceuil8 -->
+    <ControlTemplate x:Key="VideoTpl_22" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Acceuil8.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 23 Akatsuki -->
+    <ControlTemplate x:Key="VideoTpl_23" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/AcceuilAkatsuki.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 24 DS3 -->
+    <ControlTemplate x:Key="VideoTpl_24" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/AcceuilDS3.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 25 Goku -->
+    <ControlTemplate x:Key="VideoTpl_25" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/AcceuilGoku.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 26 Luffy -->
+    <ControlTemplate x:Key="VideoTpl_26" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/AcceuilLuffy.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 27 Quiet -->
+    <ControlTemplate x:Key="VideoTpl_27" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/AcceuilQuiet.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 28 TLOU -->
+    <ControlTemplate x:Key="VideoTpl_28" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/AcceuilTLOU.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- 29 Bleach -->
+    <ControlTemplate x:Key="VideoTpl_29" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/Bleach.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+    <!-- 30 Bleach -->
+    <ControlTemplate x:Key="VideoTpl_30" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/DemonSlayer.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+    <!-- 31 Bleach -->
+    <ControlTemplate x:Key="VideoTpl_31" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/MGS2.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+    <!-- 32 GITS -->
+    <ControlTemplate x:Key="VideoTpl_32" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{ThemeFile 'Startup Video/GITS.mp4'}"/>
+        </Grid>
+    </ControlTemplate>
+
+
+    <!-- ========= STYLE DE SÉLECTION ========= -->
+    <Style x:Key="ConnexionVideo" TargetType="ContentControl">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Tag" Value="True"/>
+        <Setter Property="Template" Value="{StaticResource VideoTpl_Default}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="1">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_1}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="2">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_2}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="3">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_3}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="4">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_4}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="5">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_5}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="6">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_6}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="7">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_7}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="8">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_8}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="9">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_9}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="10">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_10}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="11">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_11}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="12">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_12}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="13">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_13}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="14">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_14}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="15">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_15}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="16">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_16}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="17">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_17}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="18">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_18}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="19">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_19}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="20">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_20}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="21">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_21}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="22">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_22}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="23">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_23}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="24">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_24}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="25">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_25}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="26">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_26}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="27">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_27}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="28">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_28}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="30">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_30}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="31">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_31}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="32">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_32}"/>
+            </DataTrigger>
+
+
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

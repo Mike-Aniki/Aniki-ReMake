@@ -120,8 +120,11 @@
                         <Grid.Style>
                             <Style TargetType="Grid">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
-                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="True">
+                                        <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=GameStatusButton}" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoGameStatut]}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -344,15 +347,25 @@
                                     </Style>
                                 </ButtonEx.Style>
                             </ButtonEx>
-
-
                         </StackPanel>
-
-
-
-
-
                     </Grid>
+                    <ControlTemplate.Triggers>
+
+                        <!-- Ouvert : focus local + confinement nav + focus sur le bouton -->
+                        <Trigger Property="IsVisible" Value="True">
+                            <Setter TargetName="PART_ViewHost" Property="FocusManager.IsFocusScope" Value="True"/>
+                            <Setter TargetName="PART_ViewHost" Property="KeyboardNavigation.TabNavigation" Value="Cycle"/>
+                            <Setter TargetName="PART_ViewHost" Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle"/>
+                            <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=GameStatusButton}"/>
+                            <Setter TargetName="PART_ViewHost" Property="IsEnabled" Value="True"/>
+                        </Trigger>
+
+                        <!-- Fermé : coupe toute prise de focus dans le panneau -->
+                        <Trigger Property="IsVisible" Value="False">
+                            <Setter TargetName="PART_ViewHost" Property="IsEnabled" Value="False"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
