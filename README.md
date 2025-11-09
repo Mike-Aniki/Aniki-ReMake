@@ -42,7 +42,7 @@ Customize everything, choose cover shapes, enable/disable platform banners, show
 
 ### **Watch a preview on youtube :** ###
 	
-[![Watch the video](https://img.youtube.com/vi/4JBXqR0sa4Q/0.jpg)](https://youtu.be/4JBXqR0sa4Q))
+[![Watch the video](https://img.youtube.com/vi/4JBXqR0sa4Q/0.jpg)](https://youtu.be/4JBXqR0sa4Q)
 
 </div>
 
