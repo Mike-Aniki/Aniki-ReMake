@@ -1412,7 +1412,7 @@
                                                 </CheckBoxEx.Style>
                                             </CheckBoxEx>
 
-                                            <CheckBoxEx x:Name="ButtonPower" Command="{PluginSettings Plugin=ThemeOptions, Path=OpenWindow[PowerControlCenterWindowStyle]}" Focusable="True" VerticalAlignment="Center" Margin="20,0,20,0" Height="40"	Width="40" Style="{DynamicResource PowerButtonMain}" Grid.Column="6"  IsChecked="True">
+                                            <CheckBoxEx x:Name="ButtonPower" Focusable="True" VerticalAlignment="Center" Margin="20,0,20,0" Height="40"	Width="40" Style="{DynamicResource PowerButtonMain}" Grid.Column="6"  IsChecked="True">
                                                 <CheckBoxEx.Content>
                                                     <Grid>
                                                         <Border CornerRadius="5" Height="40" Width="40" VerticalAlignment="Center"
@@ -1595,6 +1595,8 @@
                                     </Grid.Style>
                                 </Grid>
                             </Grid>
+
+
 
                             <!--Wallpaper Grid-->
                             <Grid x:Name="BackgroundImageGrid"
@@ -1842,6 +1844,8 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Grid.Style>
+
+
 
                                 <!--No Background Changer-->
 
@@ -2159,30 +2163,22 @@
                                 <Grid x:Name="ShadowBackground" Grid.Row="0" Grid.RowSpan="5" Grid.ColumnSpan="3"  Panel.ZIndex="1" >
 
                                     <!-- Calque 1 : dégradé bas -> haut -->
-                                    <Rectangle IsHitTestVisible="False"  Fill="{DynamicResource ShadeBottom}" Opacity="1"/>
-
-                                    <Rectangle IsHitTestVisible="False" Fill="{DynamicResource ShadeLeft}" Opacity="1"/>
-
-                                    <!-- Calque 2 : image spéciale Steam banner  -->
-                                    <Rectangle x:Name="RSteam" IsHitTestVisible="False">
-                                        <Rectangle.Fill>
-                                            <ImageBrush ImageSource="{ThemeFile 'Images/ShadowBackground/ShadeSteamhero.png'}"
-                                                        RenderOptions.BitmapScalingMode="Fant"
-                                                        Stretch="Fill"/>
-                                        </Rectangle.Fill>
+                                    <Rectangle IsHitTestVisible="False"  Fill="{DynamicResource ShadeBottom}" Opacity="1">
                                         <Rectangle.Style>
                                             <Style TargetType="Rectangle">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-
+                                                <Setter Property="Visibility" Value="Visible"/>
                                                 <Style.Triggers>
-                                                    <!-- Active si SteamBanner -->
                                                     <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[SteamBanner]}" Value="True">
-                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Setter Property="Visibility" Value="Collapsed" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Rectangle.Style>
                                     </Rectangle>
+
+                                    <!-- Calque 2 : dégradé Left  -->
+
+                                    <Rectangle IsHitTestVisible="False" Fill="{DynamicResource ShadeLeft}" Opacity="1"/>
 
                                     <!-- Calque 3 : ShadeTrailer -->
                                     <Rectangle x:Name="RTrailer" IsHitTestVisible="False">
@@ -2325,10 +2321,42 @@
                                 </Grid>
 
 
+
                             </Grid>
 
                             <ContentControl x:Name="BackgroundChanger_PluginBackgroundImage" Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="3" Width="1" Height="1"
                                             HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Collapsed" Opacity="0"/>
+
+                            <!-- Calque 5 : ShadeSteambanner -->
+                            <Border Grid.Column="0"
+                                    Grid.ColumnSpan="5"
+                                    Grid.Row="0"
+                                    Grid.RowSpan="5"
+                                    Panel.ZIndex="-10"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="{ThemeFile 'Images/ShadowBackground/ShadeSteamhero.png'}"
+                                                            RenderOptions.BitmapScalingMode="Fant"
+                                                            Stretch="Fill" />
+                                            </Setter.Value>
+                                        </Setter>
+
+                                        <Style.Triggers>
+                                            <!-- Affiche l'image si l'option SteamBanner est activée -->
+                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[SteamBanner]}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+
+
 
 
                             <!--Trailer-->
@@ -3967,6 +3995,164 @@
                                     </TextBlock>
                                 </Grid>
                             </Grid>
+
+                            <!-- Power ControlCenter -->
+                            <Grid x:Name="Power" Panel.ZIndex="2" Focusable="True" KeyboardNavigation.TabNavigation="Cycle" KeyboardNavigation.ControlTabNavigation="Cycle" KeyboardNavigation.DirectionalNavigation="Cycle">
+                                <Grid.InputBindings>
+                                    <pin:GameControllerInputBinding Button="B" Command="{Binding Content.ChangeProperty, ElementName=ThemeOptions_Command}"	CommandParameter="[Setter ElementName=ButtonPower, Property=IsChecked, Value=True]" />
+                                    <KeyBinding Key="Esc" Command="{Binding Content.ChangeProperty, ElementName=ThemeOptions_Command}"	CommandParameter="[Setter ElementName=ButtonPower, Property=IsChecked, Value=True]" />
+                                </Grid.InputBindings>
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Setter Property="Opacity" Value="1"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="Grid.Row" Value="0"/>
+                                        <Setter Property="Grid.RowSpan" Value="5"/>
+                                        <Setter Property="Width" Value="550"/>
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Setter Property="Grid.ColumnSpan" Value="3"/>
+                                        <Setter Property="Margin" Value="0,0,0,0"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=ButtonPower, Path=IsChecked}" Value="False">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Grid>
+                                    <!-- Fond verre fumé -->
+                                    <Border Background="{DynamicResource OverlayMenu}"
+                                            CornerRadius="14"
+                                            Opacity="0.9"/>
+
+                                    <!-- Reflet vertical discret -->
+                                    <Border CornerRadius="14" Background="{DynamicResource GlassMainBrush}" IsHitTestVisible="False" />
+
+                                    <!-- Liseré interne fin -->
+                                    <Border CornerRadius="14"
+                                            BorderBrush="{DynamicResource GlassInnerLineBrush}"
+                                            Margin="1"
+                                            BorderThickness="1"
+                                            IsHitTestVisible="False"/>
+                                    <Grid>
+
+                                        <TextBlock Style="{DynamicResource TextBlockBoldBaseStyle}" Foreground="{DynamicResource TextHighlightBrush}" Margin="0,20,0,20" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" Opacity="0.9" Text="{DynamicResource LOCPowerControlCenter}"/>
+
+                                        <StackPanel Margin="20,90,20,50" Orientation="Vertical">
+
+                                            <ButtonEx x:Name="ExitCommand" HorizontalAlignment="Center" Width="500" Height="50" HorizontalContentAlignment="Left"
+                                                      pbeh:FocusBahaviors.OnVisibilityFocus="True"
+                                                      Margin="5,20,5,20"
+                                                      Command="{Binding Content.MainMenu.ExitCommand, ElementName=ThemeOptions_Command}"
+                                                      Content="{DynamicResource LOCExitPlaynite}"
+                                                      Style="{DynamicResource ButtonExit}" />
+
+                                            <ButtonEx x:Name="MinimizeCommand" HorizontalAlignment="Center" Width="500" Height="50" HorizontalContentAlignment="Left"
+                                                      Margin="5,20,5,20"
+                                                      Command="{Binding Content.MainMenu.MinimizeCommand, ElementName=ThemeOptions_Command}"
+                                                      Content="{DynamicResource LOCMinimize}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonMinimize}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowMinimizeButton]}" Value="False">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+
+                                            <ButtonEx x:Name="DesktopCommand" HorizontalAlignment="Center" Width="500" Height="50" HorizontalContentAlignment="Left"
+                                                      Margin="5,20,5,20"
+                                                      Command="{Binding SwitchToDesktopCommand}"
+                                                      Content="{DynamicResource LOCBackToDesktopMode}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonDesktop}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowDesktopButton]}" Value="False">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+
+                                            <ButtonEx x:Name="RestartCommand" HorizontalAlignment="Center" Width="500" Height="50" HorizontalContentAlignment="Left"
+                                                      Margin="5,20,5,20"
+                                                      Command="{Binding Content.MainMenu.RestartSystemCommand, ElementName=ThemeOptions_Command}"
+                                                      Content="{DynamicResource LOCMenuRestartSystem}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonRestart}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowRestartButton]}" Value="False">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+
+                                            <ButtonEx x:Name="ShutdownCommand" HorizontalAlignment="Center" Width="500" Height="50" HorizontalContentAlignment="Left"
+                                                      Margin="5,20,5,20"
+                                                      Command="{Binding Content.MainMenu.ShutdownSystemCommand, ElementName=ThemeOptions_Command}"
+                                                      Content="{DynamicResource LOCMenuShutdownSystem}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonShutdow}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowSleepButton]}" Value="False">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+
+                                            <ButtonEx x:Name="SleepCommand" HorizontalAlignment="Center" Height="50" Width="500" HorizontalContentAlignment="Left"
+                                                      Margin="5,20,5,20"
+                                                      Command="{Binding Content.MainMenu.SleepSystemCommand, ElementName=ThemeOptions_Command}"
+                                                      Content="{DynamicResource LOCMenuSuspendSystem}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonSleep}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowSleepButton]}" Value="False">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+
+                                            <ButtonEx x:Name="HibernateCommand" HorizontalAlignment="Left" Height="50" Width="500" HorizontalContentAlignment="Left"
+                                                      Margin="5,20,5,20"
+                                                      Command="{Binding Content.MainMenu.HibernateSystemCommand, ElementName=ThemeOptions_Command}"
+                                                      Content="{DynamicResource LOCMenuHibernateSystem}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonHibernate}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowHibernateButton]}" Value="False">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+                                        </StackPanel>
+                                        <ButtonEx x:Name="BackButton" Margin="0,-10,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{StaticResource IconBButton}" Content="{DynamicResource LOCBackLabel}" />
+                                    </Grid>
+
+
+                                </Grid>
+
+                            </Grid>
+
 
                             <!--  ProgressIndicator -->
                             <Border Background="{DynamicResource OverlayMenu}" CornerRadius="{DynamicResource Corner}"
@@ -8121,185 +8307,6 @@
 
                         <Border Background="{DynamicResource MainBackgourndBrush}" CornerRadius="0,0,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="50" Margin="0,0,0,0"/>
                         <ButtonEx x:Name="BackButton" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{StaticResource IconBButton}" Content="{DynamicResource LOCBackLabel}" />
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Power ControlCenter -->
-    <Style x:Key="PowerControlCenterWindowStyle" TargetType="ContentControl">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ContentControl">
-                    <Grid KeyboardNavigation.TabNavigation="Contained"
-                          FocusManager.FocusedElement="{Binding ElementName=ExitCommand}"
-                          HorizontalAlignment="Stretch"
-                          VerticalAlignment="Stretch"
-                          KeyboardNavigation.DirectionalNavigation="Contained"
-                          KeyboardNavigation.ControlTabNavigation="Contained">
-                        <Grid.RenderTransform>
-                            <TranslateTransform Y="0"/>
-                        </Grid.RenderTransform>
-
-                        <Grid.Triggers>
-                            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" From="-50" To="0" Duration="0:0:0.3"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </Grid.Triggers>
-
-                        <Grid x:Name="Power" Panel.ZIndex="2" Focusable="True" KeyboardNavigation.TabNavigation="Cycle" KeyboardNavigation.ControlTabNavigation="Cycle" KeyboardNavigation.DirectionalNavigation="Cycle">
-                            <Grid.Style>
-                                <Style TargetType="Grid">
-                                    <Setter Property="Opacity" Value="1"/>
-                                    <Setter Property="VerticalAlignment" Value="Center"/>
-                                    <Setter Property="HorizontalAlignment" Value="Center"/>
-                                    <Setter Property="Grid.Row" Value="0"/>
-                                    <Setter Property="Grid.RowSpan" Value="5"/>
-                                    <Setter Property="Width" Value="550"/>
-                                    <Setter Property="Grid.ColumnSpan" Value="3"/>
-                                    <Setter Property="Margin" Value="0,0,0,0"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=ButtonPower, Path=IsChecked}" Value="False">
-                                        </DataTrigger>
-
-                                    </Style.Triggers>
-                                </Style>
-                            </Grid.Style>
-                            <Grid>
-                                <!-- Fond verre fumé -->
-                                <Border Background="{DynamicResource OverlayMenu}"
-                                        CornerRadius="14"
-                                        Opacity="0.9"/>
-
-                                <!-- Reflet vertical discret -->
-                                <Border CornerRadius="14" Background="{DynamicResource GlassMainBrush}" IsHitTestVisible="False" />
-
-                                <!-- Liseré interne fin -->
-                                <Border CornerRadius="14"
-                                        BorderBrush="{DynamicResource GlassInnerLineBrush}"
-                                        Margin="1"
-                                        BorderThickness="1"
-                                        IsHitTestVisible="False"/>
-                                <Grid>
-                                    <TextBlock Style="{DynamicResource TextBlockBoldBaseStyle}" Foreground="{DynamicResource TextHighlightBrush}" Margin="0,20,0,20" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" Opacity="0.9" Text="{DynamicResource LOCPowerControlCenter}"/>
-
-                                    <StackPanel Margin="20,90,20,50" Orientation="Vertical">
-
-                                        <ButtonEx x:Name="ExitCommand" HorizontalAlignment="Center" Width="500" Height="50" HorizontalContentAlignment="Left"
-                                                  pbeh:FocusBahaviors.OnVisibilityFocus="True"
-                                                  Margin="5,20,5,20"
-                                                  Command="{Binding Content.MainMenu.ExitCommand, ElementName=ThemeOptions_Command}"
-                                                  Content="{DynamicResource LOCExitPlaynite}"
-                                                  Style="{DynamicResource ButtonExit}" />
-
-                                        <ButtonEx x:Name="MinimizeCommand" HorizontalAlignment="Center" Width="500" Height="50" HorizontalContentAlignment="Left"
-                                                  Margin="5,20,5,20"
-                                                  Command="{Binding Content.MainMenu.MinimizeCommand, ElementName=ThemeOptions_Command}"
-                                                  Content="{DynamicResource LOCMinimize}">
-                                            <ButtonEx.Style>
-                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonMinimize}">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowMinimizeButton]}" Value="False">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </ButtonEx.Style>
-                                        </ButtonEx>
-
-                                        <ButtonEx x:Name="DesktopCommand" HorizontalAlignment="Center" Width="500" Height="50" HorizontalContentAlignment="Left"
-                                                  Margin="5,20,5,20"
-                                                  Command="{Binding SwitchToDesktopCommand}"
-                                                  Content="{DynamicResource LOCBackToDesktopMode}">
-                                            <ButtonEx.Style>
-                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonDesktop}">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowDesktopButton]}" Value="False">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </ButtonEx.Style>
-                                        </ButtonEx>
-
-                                        <ButtonEx x:Name="RestartCommand" HorizontalAlignment="Center" Width="500" Height="50" HorizontalContentAlignment="Left"
-                                                  Margin="5,20,5,20"
-                                                  Command="{Binding Content.MainMenu.RestartSystemCommand, ElementName=ThemeOptions_Command}"
-                                                  Content="{DynamicResource LOCMenuRestartSystem}">
-                                            <ButtonEx.Style>
-                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonRestart}">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowRestartButton]}" Value="False">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </ButtonEx.Style>
-                                        </ButtonEx>
-
-                                        <ButtonEx x:Name="ShutdownCommand" HorizontalAlignment="Center" Width="500" Height="50" HorizontalContentAlignment="Left"
-                                                  Margin="5,20,5,20"
-                                                  Command="{Binding Content.MainMenu.ShutdownSystemCommand, ElementName=ThemeOptions_Command}"
-                                                  Content="{DynamicResource LOCMenuShutdownSystem}">
-                                            <ButtonEx.Style>
-                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonShutdow}">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowSleepButton]}" Value="False">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </ButtonEx.Style>
-                                        </ButtonEx>
-
-                                        <ButtonEx x:Name="SleepCommand" HorizontalAlignment="Center" Height="50" Width="500" HorizontalContentAlignment="Left"
-                                                  Margin="5,20,5,20"
-                                                  Command="{Binding Content.MainMenu.SleepSystemCommand, ElementName=ThemeOptions_Command}"
-                                                  Content="{DynamicResource LOCMenuSuspendSystem}">
-                                            <ButtonEx.Style>
-                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonSleep}">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowSleepButton]}" Value="False">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </ButtonEx.Style>
-                                        </ButtonEx>
-
-                                        <ButtonEx x:Name="HibernateCommand" HorizontalAlignment="Left" Height="50" Width="500" HorizontalContentAlignment="Left"
-                                                  Margin="5,20,5,20"
-                                                  Command="{Binding Content.MainMenu.HibernateSystemCommand, ElementName=ThemeOptions_Command}"
-                                                  Content="{DynamicResource LOCMenuHibernateSystem}">
-                                            <ButtonEx.Style>
-                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonHibernate}">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowHibernateButton]}" Value="False">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </ButtonEx.Style>
-                                        </ButtonEx>
-                                    </StackPanel>
-                                    <ButtonEx x:Name="BackButton" Margin="0,-10,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{StaticResource IconBButton}" Content="{DynamicResource LOCBackLabel}" />
-                                </Grid>
-
-
-                            </Grid>
-
-                        </Grid>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

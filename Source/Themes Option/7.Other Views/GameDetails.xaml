@@ -1188,18 +1188,49 @@
                                     </StackPanel.Style>
 
                                     <TextBlock Grid.Column="0" Text="&#xeec0;" Style="{StaticResource InfoGlyphStyle}"/>
-                                    <TextBlock Grid.Column="2"
-                                               Style="{StaticResource InfoValueStyle}"
-                                               FontSize="26"
-                                               MaxWidth="330"
-                                               TextTrimming="CharacterEllipsis">
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} / {1}">
-                                                <Binding Path="Game.Genres[0]" TargetNullValue="" FallbackValue=""/>
-                                                <Binding Path="Game.Genres[1]" TargetNullValue="" FallbackValue=""/>
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
+                                    <Grid Grid.Column="2" HorizontalAlignment="Left">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <!-- genre0 -->
+                                            <ColumnDefinition Width="Auto"/>
+                                            <!-- slash -->
+                                            <ColumnDefinition Width="*"/>
+                                            <!-- genre1 (trimmé) -->
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Genre 0 -->
+                                        <TextBlock Grid.Column="0"
+                                                   Style="{StaticResource InfoValueStyle}"
+                                                   FontSize="26"
+                                                   Text="{Binding Game.Genres.[0], TargetNullValue='', FallbackValue=''}"/>
+
+                                        <!-- Slash séparateur -->
+                                        <TextBlock Grid.Column="1"
+                                                   FontSize="26"
+                                                   Text=" &amp; ">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock" BasedOn="{StaticResource InfoValueStyle}">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Game.Genres.[1]}" Value="{x:Null}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Game.Genres.[0]}" Value="{x:Null}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+
+                                        <!-- Genre 1 (ellipsé) -->
+                                        <TextBlock Grid.Column="2"
+                                                   Style="{StaticResource InfoValueStyle}"
+                                                   FontSize="26"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   Text="{Binding Game.Genres.[1], TargetNullValue='', FallbackValue=''}"/>
+                                    </Grid>
+
                                 </StackPanel>
 
                                 <!-- HLTB -->
