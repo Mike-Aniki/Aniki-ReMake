@@ -513,13 +513,44 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </Border.Style>
-                                            <Image Source="{ThemeFileBinding Source.Name, PathFormat='Icons/Source/{0}.png'}"
-                                                   RenderOptions.BitmapScalingMode="Fant"
-                                                   VerticalAlignment="Center"
-                                                   HorizontalAlignment="Left"
-                                                   MaxHeight="50"
-                                                   MaxWidth="180"
-                                                   Margin="0,0,40,0"/>
+                                            <Grid>
+                                                <Image x:Name="SourceIcons" Source="{ThemeFileBinding Source.Name, PathFormat='Icons/Source/{0}.png'}"
+                                                       RenderOptions.BitmapScalingMode="Fant"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Left"
+                                                       MaxHeight="50"
+                                                       MaxWidth="180"
+                                                       Margin="0,0,40,0">
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="Source" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+                                                <Image x:Name="PlateformIcons" Source="{ThemeFileBinding Platforms[0].Name, PathFormat='Icons/Source/{0}.png'}"
+                                                       RenderOptions.BitmapScalingMode="Fant"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Left"
+                                                       MaxHeight="50"
+                                                       MaxWidth="180"
+                                                       Margin="0,0,40,0">
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ElementName=SourceIcons, Path=Source}" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+                                            </Grid>
                                         </Border>
                                     </Grid>
                                 </Grid>

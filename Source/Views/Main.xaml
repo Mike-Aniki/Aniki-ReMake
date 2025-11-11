@@ -3089,9 +3089,6 @@
                                                 <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[SourceLogoOnTopScreen]}" Value="False">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding SelectedGame.Source.Name}" Value="">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                </DataTrigger>
                                                 <DataTrigger Binding="{Binding ElementName=ControlCenter, Path=Visibility}" Value="Visible">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
@@ -3106,17 +3103,30 @@
                                            Source="{ThemeFileBinding SelectedGame.Source.Name, PathFormat='Icons/Source/{0}.png'}">
                                         <Image.Style>
                                             <Style TargetType="Image">
+                                                <Setter Property="Visibility" Value="Visible"/>
                                                 <Style.Triggers>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="False"/>
-                                                        </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </MultiDataTrigger>
+                                                    <Trigger Property="Source" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </Trigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Image.Style>
                                     </Image>
+                                    <Image x:Name="PlateformIcon" RenderOptions.BitmapScalingMode="Fant" MaxHeight="50" MaxWidth="180"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           Source="{ThemeFileBinding SelectedGame.Platforms[0].Name, PathFormat='Icons/Source/{0}.png'}">
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=LibraryIcon, Path=Source}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+
                                 </StackPanel>
                             </Grid>
 
