@@ -54,6 +54,8 @@
                                               Command="Slider.IncreaseLarge" />
                             </Track.IncreaseRepeatButton>
                         </Track>
+                        <Border x:Name="MainBackground" Margin="0" CornerRadius="{DynamicResource Corner}"
+                                Background="{DynamicResource ButtonBackgroundFocus}" Tag="False" Visibility="Collapsed" />
                         <Border x:Name="MainBorder" Margin="0" BorderThickness="3" CornerRadius="{DynamicResource Corner}"
                                 BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False" Visibility="Collapsed" >
                         </Border>
@@ -62,13 +64,16 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource OverlayMenu}" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
                             <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Tag" Value="True" TargetName="MainBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                         </Trigger>

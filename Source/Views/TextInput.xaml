@@ -7,8 +7,8 @@
            TargetType="ButtonEx">
         <Setter Property="Padding" Value="22,16"/>
         <Setter Property="Margin" Value="4"/>
-        <Setter Property="MinWidth" Value="70"/>
-        <Setter Property="MinHeight" Value="70"/>
+        <Setter Property="MinWidth" Value="100"/>
+        <Setter Property="MinHeight" Value="100"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="#FFFFFFFF"/>
@@ -42,10 +42,12 @@
                             </Border>
                         </Border>
 
-                        <ContentPresenter x:Name="content"
-                                          Margin="6,2,6,0"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   x:Name="TextContent" Margin="10,5,10,5" FontSize="26" >
+                            <ContentPresenter />
+                        </TextBlock>
                     </Grid>
 
                     <ControlTemplate.Triggers>
@@ -159,36 +161,20 @@
 
     <!-- Style du conteneur des options de texte -->
     <Style x:Key="TextInputOptionsBorder" TargetType="Border">
-        <Setter Property="Background">
-            <Setter.Value>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Color="#25252525" Offset="0"/>
-                    <GradientStop Color="#15000000" Offset="1"/>
-                </LinearGradientBrush>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="CornerRadius" Value="12"/>
         <Setter Property="Margin" Value="12,20,12,8"/>
         <Setter Property="Padding" Value="12"/>
+        <Setter Property="Width" Value="1264"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="BorderBrush" Value="#40FFFFFF"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Style.Triggers>
             <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                <Setter Property="BorderBrush" Value="#90FFFFFF"/>
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                            <GradientStop Color="#30252525" Offset="0"/>
-                            <GradientStop Color="#1A000000" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
             </Trigger>
 
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="BorderBrush" Value="#70FFFFFF"/>
             </Trigger>
 
             <Trigger Property="IsEnabled" Value="False">
@@ -204,10 +190,21 @@
         <Setter Property="Margin" Value="12,10,12,0"/>
         <Setter Property="Padding" Value="8"/>
         <Setter Property="BorderThickness" Value="1.5"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
         <Setter Property="BorderBrush" Value="#30FFFFFF"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Style.Triggers>
+            <EventTrigger RoutedEvent="Window.Loaded">
+                <BeginStoryboard>
+                    <Storyboard FillBehavior="HoldEnd">
+                        <Int32Animation Storyboard.TargetProperty="(Grid.Column)" Duration="0:0:0" To="0"/>
+                        <Int32Animation Storyboard.TargetProperty="(Grid.Row)" Duration="0:0:0" To="3"/>
+                        <Int32Animation Storyboard.TargetProperty="(Grid.ColumnSpan)" Duration="0:0:0" To="3"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
             <Trigger Property="IsKeyboardFocusWithin" Value="True">
                 <Setter Property="BorderBrush" Value="#80FFFFFF"/>
             </Trigger>

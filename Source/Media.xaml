@@ -15,149 +15,191 @@
 
 
     <Style x:Key="IntroVideo1" TargetType="ContentControl">
-        <Setter Property="Focusable" Value="False" />
+        <!-- IMPORTANT: visible au départ -->
+        <Setter Property="Tag" Value="Idle"/>
+        <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContentControl">
-                    <Grid>
-                        <!-- Default -->
-                        <MediaElement x:Name="Vid_Default"
+                    <!-- Fond noir intégré -->
+                    <Grid x:Name="Root" Background="Black" Opacity="0">
+                        <!-- AUCUN style/trigger interne ici -->
+                        <MediaElement x:Name="Vid_Default" Volume="{Settings Fullscreen.BackgroundVolume}"
                                       Source="{ThemeFile 'Startup Video/Introvideo.mp4'}"
                                       LoadedBehavior="Close" UnloadedBehavior="Stop"
-                                      Visibility="Collapsed" SnapsToDevicePixels="True">
-                            <MediaElement.Style>
-                                <Style TargetType="MediaElement">
-                                    <Setter Property="Opacity" Value="1"/>
-                                    <Style.Triggers>
-                                        <EventTrigger RoutedEvent="MediaElement.MediaEnded">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:1.5" FillBehavior="HoldEnd"/>
-                                                    <ObjectAnimationUsingKeyFrames BeginTime="0:0:0" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
-                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Collapsed}"/>
-                                                    </ObjectAnimationUsingKeyFrames>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                        <Trigger Property="Visibility" Value="Collapsed">
-                                            <Setter Property="LoadedBehavior" Value="Close"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </MediaElement.Style>
-                        </MediaElement>
+                                      Visibility="Collapsed" SnapsToDevicePixels="True"/>
 
-                        <!-- Modern -->
-                        <MediaElement x:Name="Vid_Modern"
+                        <MediaElement x:Name="Vid_Modern" Volume="{Settings Fullscreen.BackgroundVolume}"
                                       Source="{ThemeFile 'Startup Video/ModernIntroVideo.mp4'}"
                                       LoadedBehavior="Close" UnloadedBehavior="Stop"
-                                      Visibility="Collapsed" SnapsToDevicePixels="True">
-                            <MediaElement.Style>
-                                <Style TargetType="MediaElement">
-                                    <Setter Property="Opacity" Value="1"/>
-                                    <Style.Triggers>
-                                        <EventTrigger RoutedEvent="MediaElement.MediaEnded">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:1.5" FillBehavior="HoldEnd"/>
-                                                    <ObjectAnimationUsingKeyFrames BeginTime="0:0:0" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
-                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Collapsed}"/>
-                                                    </ObjectAnimationUsingKeyFrames>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                        <Trigger Property="Visibility" Value="Collapsed">
-                                            <Setter Property="LoadedBehavior" Value="Close"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </MediaElement.Style>
-                        </MediaElement>
+                                      Visibility="Collapsed" SnapsToDevicePixels="True"/>
 
-                        <!-- Classic -->
-                        <MediaElement x:Name="Vid_Classic"
+                        <MediaElement x:Name="Vid_Classic" Volume="{Settings Fullscreen.BackgroundVolume}"
                                       Source="{ThemeFile 'Startup Video/ClassicIntrovideo.mp4'}"
                                       LoadedBehavior="Close" UnloadedBehavior="Stop"
-                                      Visibility="Collapsed" SnapsToDevicePixels="True">
-                            <MediaElement.Style>
-                                <Style TargetType="MediaElement">
-                                    <Setter Property="Opacity" Value="1"/>
-                                    <Style.Triggers>
-                                        <EventTrigger RoutedEvent="MediaElement.MediaEnded">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:1.5" FillBehavior="HoldEnd"/>
-                                                    <ObjectAnimationUsingKeyFrames BeginTime="0:0:0" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
-                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.5" Value="{x:Static Visibility.Collapsed}"/>
-                                                    </ObjectAnimationUsingKeyFrames>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                        <Trigger Property="Visibility" Value="Collapsed">
-                                            <Setter Property="LoadedBehavior" Value="Close"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </MediaElement.Style>
-                        </MediaElement>
+                                      Visibility="Collapsed" SnapsToDevicePixels="True"/>
                     </Grid>
 
-                    <!-- Sélection UNIQUE : on rend Visible + on met Play pour UNE vidéo -->
                     <ControlTemplate.Triggers>
-                        <!-- NoIntro : masque tout -->
+                        <!-- OUVERTURE -> Tag = True (pas critique, déjà True) -->
+                        <EventTrigger RoutedEvent="MediaElement.MediaOpened" SourceName="Vid_Default">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="Root"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1" Duration="0:0:0"/>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Tag">
+                                        <DiscreteObjectKeyFrame Value="Playing"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MediaElement.MediaOpened" SourceName="Vid_Modern">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="Root"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1" Duration="0:0:0"/>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Tag">
+                                        <DiscreteObjectKeyFrame Value="Playing"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MediaElement.MediaOpened" SourceName="Vid_Classic">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="Root"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1" Duration="0:0:0"/>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Tag">
+                                        <DiscreteObjectKeyFrame Value="Playing"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                        <!-- FIN/ÉCHEC -> Tag = False -->
+                        <EventTrigger RoutedEvent="MediaElement.MediaEnded" SourceName="Vid_Default">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="Root"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0" Duration="0:0:0.20"/>
+                                    <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.20" Storyboard.TargetProperty="Tag">
+                                        <DiscreteObjectKeyFrame Value="Ended"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MediaElement.MediaEnded" SourceName="Vid_Modern">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="Root"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0" Duration="0:0:0.20"/>
+                                    <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.20" Storyboard.TargetProperty="Tag">
+                                        <DiscreteObjectKeyFrame Value="Ended"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MediaElement.MediaEnded" SourceName="Vid_Classic">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="Root"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0" Duration="0:0:0.20"/>
+                                    <ObjectAnimationUsingKeyFrames BeginTime="0:0:0.20" Storyboard.TargetProperty="Tag">
+                                        <DiscreteObjectKeyFrame Value="Ended"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                        <EventTrigger RoutedEvent="MediaElement.MediaFailed" SourceName="Vid_Default">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Tag">
+                                        <DiscreteObjectKeyFrame Value="Ended"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MediaElement.MediaFailed" SourceName="Vid_Modern">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Tag">
+                                        <DiscreteObjectKeyFrame Value="Ended"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MediaElement.MediaFailed" SourceName="Vid_Classic">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Tag">
+                                        <DiscreteObjectKeyFrame Value="Ended"/>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+
+                        <!-- NoIntro -->
                         <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[IntroVideo_None]}" Value="True">
-                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Setter Property="Tag" Value="Ended"/>
                         </DataTrigger>
 
-                        <!-- Modern -->
+
+
+                        <!-- Sélection de la source -->
                         <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[IntroVideo_Modern]}" Value="True">
                             <Setter TargetName="Vid_Default" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="Vid_Default" Property="LoadedBehavior" Value="Close"/>
-
                             <Setter TargetName="Vid_Modern"  Property="Visibility" Value="Visible"/>
                             <Setter TargetName="Vid_Modern"  Property="LoadedBehavior" Value="Play"/>
-
                             <Setter TargetName="Vid_Classic" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="Vid_Classic" Property="LoadedBehavior" Value="Close"/>
                         </DataTrigger>
 
-                        <!-- Classic -->
                         <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[IntroVideo_Classic]}" Value="True">
                             <Setter TargetName="Vid_Default" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="Vid_Default" Property="LoadedBehavior" Value="Close"/>
-
                             <Setter TargetName="Vid_Modern"  Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="Vid_Modern"  Property="LoadedBehavior" Value="Close"/>
-
                             <Setter TargetName="Vid_Classic" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="Vid_Classic" Property="LoadedBehavior" Value="Play"/>
                         </DataTrigger>
 
-                        <!-- Default (fallback si rien d'autre n'est coché) -->
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[IntroVideo_None]}" Value="False"/>
                                 <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[IntroVideo_Modern]}" Value="False"/>
                                 <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[IntroVideo_Classic]}" Value="False"/>
                             </MultiDataTrigger.Conditions>
-
                             <Setter TargetName="Vid_Default" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="Vid_Default" Property="LoadedBehavior" Value="Play"/>
-
                             <Setter TargetName="Vid_Modern"  Property="Visibility" Value="Collapsed"/>
-                            <Setter TargetName="Vid_Modern"  Property="LoadedBehavior" Value="Close"/>
-
                             <Setter TargetName="Vid_Classic" Property="Visibility" Value="Collapsed"/>
-                            <Setter TargetName="Vid_Classic" Property="LoadedBehavior" Value="Close"/>
                         </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+
+        <!-- Quand Tag passe à False (fin/échec/NoIntro) -> on coupe tout -->
+        <Style.Triggers>
+            <Trigger Property="Tag" Value="Ended">
+                <Setter Property="Visibility" Value="Collapsed"/>
+                <Setter Property="Template" Value="{x:Null}"/>
+            </Trigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[IntroVideo_None]}" Value="True">
+                <Setter Property="Tag" Value="Ended"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
+
 
 
 

@@ -16,6 +16,7 @@
                     <Grid Background="{TemplateBinding Background}">
                         <Border x:Name="StaticBorder" Margin="0,0,0,0" BorderThickness="2" Opacity="0.5" CornerRadius="{DynamicResource Corner}"
                                 BorderBrush="{DynamicResource NoFocusBorderButtonBrush}" />
+                        <Border x:Name="MainBackground" Margin="0" CornerRadius="{DynamicResource Corner}" Background="{DynamicResource ButtonBackgroundFocus}" Tag="False" Visibility="Collapsed" />
                         <Border x:Name="MainBorder" Margin="0" BorderThickness="3" CornerRadius="{DynamicResource Corner}" BorderBrush="{DynamicResource FocusGameBorderBrush}"
                                 Tag="False" Visibility="Collapsed" />
                         <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
@@ -70,6 +71,8 @@
                             <Setter Property="Opacity" Value="0.5" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Tag" Value="True" TargetName="MainBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
                             <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
@@ -77,6 +80,8 @@
                             <Setter Property="Visibility" Value="Collapsed" TargetName="StaticBorder" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Tag" Value="True" TargetName="MainBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
                             <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
@@ -102,6 +107,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                     <Grid Background="{TemplateBinding Background}" >
+                        <Border x:Name="MainBackground" Margin="0" CornerRadius="{DynamicResource Corner}" Background="{DynamicResource ButtonBackgroundFocus}" Tag="False" Visibility="Collapsed" />
                         <Border x:Name="MainBorder" Margin="0" BorderThickness="3" CornerRadius="{DynamicResource Corner}" BorderBrush="{DynamicResource FocusGameBorderBrush}"
                                 Tag="False" Visibility="Collapsed" />
                         <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
@@ -117,12 +123,16 @@
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Tag" Value="True" TargetName="MainBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
                             <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Tag" Value="True" TargetName="MainBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
                             <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />

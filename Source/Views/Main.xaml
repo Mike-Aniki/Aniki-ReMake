@@ -437,32 +437,7 @@
                             </Style>
                         </Grid.Style>
 
-                        <!-- Fond Noir pour la video d'intro -->
-                        <Grid Name="IntroVideoBackground" Panel.ZIndex="99" Background="Black" IsHitTestVisible="False">
-                            <Grid.Style>
-                                <Style TargetType="Grid">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Opacity, ElementName=IntroVideo}" Value="1">
-                                            <DataTrigger.EnterActions>
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <DoubleAnimation
-                                                            Storyboard.TargetProperty="Opacity"
-                                                            From="1.0" To="0.0"
-                                                            BeginTime="0:0:2"
-                                                            Duration="0:0:2" />
-                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" BeginTime="0:0:4">
-                                                            <DiscreteObjectKeyFrame Value="{x:Static Visibility.Collapsed}" />
-                                                        </ObjectAnimationUsingKeyFrames>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </DataTrigger.EnterActions>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Grid.Style>
-                        </Grid>
+
 
                         <ContentControl x:Name="ThemeOptions_GamepadAdd" >
                             <ContentControl.Style>
@@ -523,13 +498,39 @@
                             </ContentControl.InputBindings>
                         </ContentControl>
 
-
-
-
                         <!-- Vidéo d'introduction -->
+                        <Grid Name="IntroVideoBackground" Panel.ZIndex="99" Background="Black" IsHitTestVisible="False">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Opacity, ElementName=IntroVideo}" Value="1">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetProperty="Opacity"
+                                                            From="1.0" To="0.0" BeginTime="0:0:1" Duration="0:0:2"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                                            <DiscreteObjectKeyFrame KeyTime="0:0:2" Value="{x:Static Visibility.Collapsed}"/>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                        </Grid>
                         <Grid Name="IntroVideo" Panel.ZIndex="100">
                             <!-- Élément multimédia pour la vidéo -->
-                            <ContentControl Style="{DynamicResource IntroVideo1}" />
+                            <ContentControl x:Name="IntroHost" Style="{DynamicResource IntroVideo1}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </Grid>
 
                         <!-- Grille pour vue Hote -->
@@ -2895,6 +2896,16 @@
                                     </Style>
                                 </StackPanel.Style>
                                 <Grid>
+                                    <Grid.Style>
+                                        <Style TargetType="Grid" >
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+
                                     <TextBlock x:Name="GameTitleShadow" Text="{Binding SelectedGame.DisplayName, NotifyOnTargetUpdated=True}" FontFamily="Lato"
                                                Opacity="0.45" Foreground="Black" IsHitTestVisible="False" FontSize="50" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" MaxHeight="150" Margin="0,63,0,0"
                                                TextTrimming="CharacterEllipsis" FontWeight="SemiBold">
@@ -3709,6 +3720,9 @@
                                             <!--CoverListVertical-->
 
 
+
+
+
                                             <!--92:43-->
 
                                             <MultiDataTrigger>
@@ -3879,21 +3893,7 @@
                                             </MultiDataTrigger>
 
 
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="False" />
-                                                    <Condition Binding="{Binding ElementName=PART_ViewHost, Path=ActualWidth}" Value="1728" />
-                                                </MultiDataTrigger.Conditions>
-                                                <MultiDataTrigger.Setters>
-                                                    <Setter Property="Grid.Row" Value="1"/>
-                                                    <Setter Property="Grid.RowSpan" Value="3"/>
-                                                    <Setter Property="Height" Value="900"/>
-                                                    <Setter Property="Width" Value="1200"/>
-                                                    <Setter Property="Margin" Value="0,0,0,10"/>
-                                                    <Setter Property="HorizontalAlignment" Value="Right"/>
-                                                    <Setter Property="VerticalAlignment" Value="Bottom"/>
-                                                </MultiDataTrigger.Setters>
-                                            </MultiDataTrigger>
+
 
                                         </Style.Triggers>
                                     </Style>
@@ -3995,6 +3995,8 @@
                                     </TextBlock>
                                 </Grid>
                             </Grid>
+
+
 
                             <!-- Power ControlCenter -->
                             <Grid x:Name="Power" Panel.ZIndex="2" Focusable="True" KeyboardNavigation.TabNavigation="Cycle" KeyboardNavigation.ControlTabNavigation="Cycle" KeyboardNavigation.DirectionalNavigation="Cycle">
@@ -4969,10 +4971,9 @@
                                         <DataTrigger Binding="{Binding ElementName=AcceuilSettings, Path=Visibility}" Value="Visible">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding ElementName=IntroVideoBackground, Path=Visibility}" Value="Visible">
+                                        <DataTrigger Binding="{Binding ElementName=IntroVideoBackground, Path=Opacity}" Value="1">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
-
 
                                     </Style.Triggers>
                                 </Style>
@@ -5328,12 +5329,36 @@
 
 
                         <Grid>
-                            <ContentControl x:Name="Sounds_MusicControl" />
+                            <ContentControl x:Name="Sounds_MusicControl" >
+                                <ContentControl.Style>
+                                    <Style TargetType="ContentControl">
+                                        <Setter Property="Tag" Value="False"/>
+                                        <Style.Triggers>
+                                            <!-- Mute dès qu’on attend une intro (Idle) -->
+                                            <DataTrigger Binding="{Binding ElementName=IntroHost, Path=Tag}" Value="Idle">
+                                                <Setter Property="Tag" Value="True"/>
+                                            </DataTrigger>
+                                            <!-- Mute pendant la lecture -->
+                                            <DataTrigger Binding="{Binding ElementName=IntroHost, Path=Tag}" Value="Playing">
+                                                <Setter Property="Tag" Value="True"/>
+                                            </DataTrigger>
+                                            <!-- Rallume à la fin -->
+                                            <DataTrigger Binding="{Binding ElementName=IntroHost, Path=Tag}" Value="Ended">
+                                                <Setter Property="Tag" Value="False"/>
+                                            </DataTrigger>
+                                            <!-- Pas d’intro → ne mute pas -->
+                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[IntroVideo_None]}" Value="True">
+                                                <Setter Property="Tag" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ContentControl.Style>
+                            </ContentControl>
                         </Grid>
 
                         <!-- Sound -->
 
-                        <MediaElement x:Name="AcceuilOpen" Source="{ThemeFile 'audio/AcceuilOST.mp3'}" MediaElementBehaviors.Repeat="False" Volume="{Settings Fullscreen.BackgroundVolume}" >
+                        <MediaElement x:Name="AcceuilOpen" Source="{ThemeFile 'audio/AcceuilOST.mp3'}" MediaElementBehaviors.Repeat="False" Volume="{Settings Fullscreen.InterfaceVolume}" >
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -5361,7 +5386,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="WrongColumnsSound" Source="{ThemeFile 'audio/Warning.wav'}" MediaElementBehaviors.Repeat="False" >
+                        <MediaElement x:Name="WrongColumnsSound" Source="{ThemeFile 'audio/Warning.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -5376,7 +5401,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="AnikiHelperMessageSound" Source="{ThemeFile 'audio/Noti.wav'}" MediaElementBehaviors.Repeat="False" >
+                        <MediaElement x:Name="AnikiHelperMessageSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -5391,7 +5416,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="SessionSummaryPanelSound" Source="{ThemeFile 'audio/SessionSummary.wav'}" MediaElementBehaviors.Repeat="False" >
+                        <MediaElement x:Name="SessionSummaryPanelSound" Source="{ThemeFile 'audio/SessionSummary.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -5406,7 +5431,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="SSFHelperMessageSound" Source="{ThemeFile 'audio/Noti.wav'}" MediaElementBehaviors.Repeat="False" >
+                        <MediaElement x:Name="SSFHelperMessageSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -5421,7 +5446,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="SystemMessageSound" Source="{ThemeFile 'audio/Noti.wav'}" MediaElementBehaviors.Repeat="False" >
+                        <MediaElement x:Name="SystemMessageSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -5441,10 +5466,10 @@
                                       LoadedBehavior="Manual"
                                       UnloadedBehavior="Close"
                                       Visibility="Collapsed"
-                                      Volume="0.9"
+                                      Volume="{Settings Fullscreen.InterfaceVolume}"
                                       IsMuted="False"/>
 
-                        <MediaElement x:Name="CloseGameSound" Source="{ThemeFile 'audio/Noti.wav'}" MediaElementBehaviors.Repeat="False" >
+                        <MediaElement x:Name="CloseGameSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -5459,7 +5484,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="ConnexionClick" Source="{ThemeFile 'audio/Connexion.mp3'}" MediaElementBehaviors.Repeat="False" >
+                        <MediaElement x:Name="ConnexionClick" Source="{ThemeFile 'audio/Connexion.mp3'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -5488,6 +5513,8 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
+
+
 
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -8311,6 +8338,14 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp1610">
+                <Setter Property="Margin" Value="0,-60,0,-60"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp219">
+                <Setter Property="Margin" Value="-320,0,-320,0"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

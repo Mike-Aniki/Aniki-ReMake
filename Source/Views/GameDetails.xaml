@@ -1050,10 +1050,18 @@
                                                                     <CheckBoxEx.Style>
                                                                         <Style TargetType="CheckBoxEx" BasedOn="{StaticResource DescPanelToggleScale}">
                                                                             <Style.Triggers>
-                                                                                <!-- Quand la vue de détails se ferme, on décoche automatiquement -->
-                                                                                <DataTrigger Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed">
+
+
+                                                                                <MultiDataTrigger>
+                                                                                    <MultiDataTrigger.Conditions>
+                                                                                        <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[DescVisible]}" Value="False"/>
+                                                                                        <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed"/>
+                                                                                    </MultiDataTrigger.Conditions>
                                                                                     <Setter Property="IsChecked" Value="False"/>
-                                                                                </DataTrigger>
+                                                                                </MultiDataTrigger>
+
+
+
                                                                             </Style.Triggers>
                                                                         </Style>
                                                                     </CheckBoxEx.Style>
@@ -1586,6 +1594,7 @@
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Setter Property="Opacity" Value="0"/>
                                     <Style.Triggers>
+
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding ElementName=DescPanelToggle, Path=IsChecked}" Value="True"/>
@@ -1613,9 +1622,6 @@
                                 </Style>
                             </Grid.Style>
                         </Grid>
-
-
-
 
                         <!-- GameTrailer -->
 
@@ -2032,7 +2038,7 @@
 
                         <!-- Sound -->
 
-                        <MediaElement x:Name="CloseGameSound" Source="{ThemeFile 'audio/Noti.wav'}" MediaElementBehaviors.Repeat="False" >
+                        <MediaElement x:Name="CloseGameSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -2047,7 +2053,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="EnterGameDetailsChime" Source="{ThemeFile 'audio/EnterGameDetails.wav'}" MediaElementBehaviors.Repeat="False" >
+                        <MediaElement x:Name="EnterGameDetailsChime" Source="{ThemeFile 'audio/EnterGameDetails.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -2061,7 +2067,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="ExitGameDetailsChime" Source="{ThemeFile 'audio/ExitGameDetails.wav'}" MediaElementBehaviors.Repeat="False" >
+                        <MediaElement x:Name="ExitGameDetailsChime" Source="{ThemeFile 'audio/ExitGameDetails.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -2187,7 +2193,7 @@
                                       LoadedBehavior="Manual"
                                       UnloadedBehavior="Close"
                                       Visibility="Collapsed"
-                                      Volume="0.9"
+                                      Volume="{Settings Fullscreen.InterfaceVolume}"
                                       IsMuted="False"/>
 
                     </Grid>

@@ -14,38 +14,39 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid Background="{TemplateBinding Background}" Margin="0,0,20,0" >
-                        <Border CornerRadius="10" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
-                        <Border x:Name="MainBorder" Opacity="0" Margin="-6" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
-                                BorderThickness="3" CornerRadius="15" Visibility="Collapsed" />
-                        <TextBlock x:Name="Text" Style="{DynamicResource ButtonTextBlockBaseStyle}"
-                                   Foreground="{TemplateBinding Foreground}" FontWeight="SemiBold" FontSize="26"
+                        <Border x:Name="StaticBorder" Margin="0,0,0,0" BorderThickness="2" Opacity="0.5" CornerRadius="{DynamicResource Corner}"
+                                BorderBrush="{DynamicResource NoFocusBorderButtonBrush}" />
+                        <Border x:Name="MainBackground" Margin="0" CornerRadius="{DynamicResource Corner}" Background="{DynamicResource ButtonBackgroundFocus}" Tag="False" Visibility="Collapsed" />
+                        <Border x:Name="MainBorder" Margin="0" BorderThickness="3" CornerRadius="{DynamicResource Corner}" BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                Tag="False" Visibility="Collapsed" />
+                        <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
+                                Tag="False" Visibility="Collapsed">
+                        </Border>
+                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                   Margin="25,0">
+                                   x:Name="TextContent" Margin="10,5,10,5" FontSize="26" >
                             <ContentPresenter />
                         </TextBlock>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.5" />
-                        </Trigger>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-                            <Setter Property="Background" Value="White" TargetName="MainBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="StaticBorder" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-                            <Setter Property="Background" Value="Transparent" TargetName="MainBackground" />
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="StaticBorder" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -326,11 +327,23 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
-                        <TextBlock Text="{DynamicResource LOCInGameOptions}" Style="{DynamicResource TextBlockBaseStyle}"
-                                   Foreground="{TemplateBinding Foreground}" FontWeight="SemiBold" FontSize="24"
-                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                   Margin="10,0,10,0"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image Width="32"
+                                   Height="32"
+                                   RenderOptions.BitmapScalingMode="Fant"
+                                   Source="{PluginSettings Plugin=NowPlaying, Path=RunningGame.IconPath}"
+                                   Margin="10,3,10,3"/>
+                            <TextBlock Text="{DynamicResource LOCNowPlayingNP}" Style="{DynamicResource TextBlockBaseStyle}"
+                                       Foreground="{TemplateBinding Foreground}" FontWeight="SemiBold" FontSize="24"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       Margin="10,0,5,0"/>
+                            <TextBlock Text="{PluginSettings Plugin=NowPlaying, Path=SessionLength}" Style="{DynamicResource TextBlockBaseStyle}"
+                                       Foreground="{TemplateBinding Foreground}" FontWeight="SemiBold" FontSize="24"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       Margin="0,0,10,0"/>
+                        </StackPanel>
 
 
                         <ContentPresenter />
@@ -374,6 +387,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+
 
     <Style x:Key="GameOptionScaleStyle" TargetType="ButtonEx" BasedOn="{StaticResource GameDetailsGameOptionsButton}">
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
