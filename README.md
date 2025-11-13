@@ -1,9 +1,6 @@
 <div align="center">
 
- <a href="https://github.com/Mike-Aniki/Aniki-Remake/releases">
-      <img src="https://img.shields.io/github/downloads/Mike-Aniki/Aniki-Remake/total?style=for-the-badge&label=Total%20Downloads%20for%20All%20Releases&color=blue&cacheSeconds=3600" alt="All downloads">
-    </a>
-    <a href="https://github.com/Mike-Aniki/Aniki-Remake/releases/latest">
+<a href="https://github.com/Mike-Aniki/Aniki-Remake/releases/latest">
       <img src="https://img.shields.io/github/downloads/Mike-Aniki/Aniki-Remake/latest/total?style=for-the-badge&label=Total%20Downloads%20for%20the%20Latest%20Release&color=blue&cacheSeconds=3600" alt="Latest release downloads">
     </a>
 
