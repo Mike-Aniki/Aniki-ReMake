@@ -1,0 +1,48 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:popt="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+
+
+
+    <Style x:Key="ConnexionVideo" TargetType="ContentControl">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Tag" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <MediaElement Source="{ThemeFile 'Startup Video/Acceuil Berserk.mp4'}"
+                                  x:Name="LoginVideo"
+                                  Stretch="UniformToFill"
+                                  IsMuted="True"
+                                  UnloadedBehavior="Close"
+                                  Opacity="1">
+                        <MediaElement.Style>
+                            <Style TargetType="MediaElement">
+                                <Setter Property="MediaElementBehaviors.Repeat" Value="True"/>
+                                <Setter Property="LoadedBehavior" Value="Play"/>
+                                <Style.Triggers>
+
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="False">
+                                        <Setter Property="LoadedBehavior" Value="Stop"/>
+                                        <Setter Property="MediaElementBehaviors.Repeat" Value="False"/>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
+                                                 Value="False">
+                                        <Setter Property="LoadedBehavior" Value="Close"/>
+                                        <Setter Property="MediaElementBehaviors.Repeat" Value="False"/>
+                                        <Setter Property="Source" Value=""/>
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+
+                                </Style.Triggers>
+                            </Style>
+                        </MediaElement.Style>
+                    </MediaElement>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+</ResourceDictionary>

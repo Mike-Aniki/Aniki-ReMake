@@ -13,44 +13,70 @@
         <Setter Property="FontSize" Value="{DynamicResource FontSize}" />
         <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Padding" Value="10" />
+        <Setter Property="Padding" Value="10,8" />
         <Setter Property="BorderBrush" Value="{DynamicResource SelectionLightBrush}" />
         <Setter Property="Margin" Value="0,5,0,0" />
-        <Setter Property="Opacity" Value="0" /> <!-- Opacité initiale -->
+        <Setter Property="Opacity" Value="0" />
         <Setter Property="ToolTipService.Placement" Value="Bottom" />
         <Setter Property="ToolTipService.HorizontalOffset" Value="0" />
         <Setter Property="ToolTipService.VerticalOffset" Value="10" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToolTip">
-                    <Border Background="{TemplateBinding Background}"
-                            CornerRadius="{DynamicResource Corner}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Padding="{TemplateBinding Padding}">
-                        <TextBlock Foreground="{TemplateBinding Foreground}"
-                                   FontSize="18"
-                                   Text="{TemplateBinding Content}"
-                                   TextWrapping="Wrap"/>
-                    </Border>
+                    <Grid RenderTransformOrigin="0.5,0">
+                        <Grid.RenderTransform>
+                            <!-- Léger zoom à l’ouverture -->
+                            <ScaleTransform x:Name="Scale" ScaleX="0.9" ScaleY="0.9"/>
+                        </Grid.RenderTransform>
+
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="{DynamicResource Corner}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="10"
+                                                  ShadowDepth="2"
+                                                  Opacity="0.55"
+                                                  Color="Black" />
+                            </Border.Effect>
+
+                            <!-- Contenu -->
+                            <TextBlock Text="{TemplateBinding Content}"
+                                       FontSize="18"
+                                       TextWrapping="Wrap"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left" />
+                        </Border>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
 
-        <!-- Triggers pour gérer l'apparition -->
+        <!-- Anim d’apparition -->
         <Style.Triggers>
-            <!-- Apparition avec délai -->
             <EventTrigger RoutedEvent="ToolTip.Opened">
                 <BeginStoryboard>
                     <Storyboard>
-                        <!-- Apparition en fondu au bout de 1 seconde -->
-                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                         BeginTime="0:0:0.5" Duration="0:0:1" From="0" To="0.9" />
+                        <!-- Fade in -->
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity" BeginTime="0:0:0.5" Duration="0:0:0.5" From="0" To="0.9" />
+
+                        <!-- Petit zoom -->
+                        <DoubleAnimation Storyboard.TargetProperty="(ToolTip.RenderTransform).(ScaleTransform.ScaleX)"
+                                         BeginTime="0:0:0.5"
+                                         Duration="0:0:0.4"
+                                         From="0.9" To="1.0" />
+                        <DoubleAnimation Storyboard.TargetProperty="(ToolTip.RenderTransform).(ScaleTransform.ScaleY)"
+                                         BeginTime="0:0:0.5"
+                                         Duration="0:0:0.4"
+                                         From="0.9" To="1.0" />
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
         </Style.Triggers>
     </Style>
+
 
 
 

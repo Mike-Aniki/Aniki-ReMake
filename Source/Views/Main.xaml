@@ -212,6 +212,7 @@
                             CornerRadius="0"
                             BorderThickness="0"
                             BorderBrush="DarkRed"
+                            FocusManager.FocusedElement="{Binding ElementName=Wrong}"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch">
 
@@ -878,7 +879,27 @@
 
                                 </Grid>
 
+                                <!--UpdateIcon-->
 
+                                <Canvas Width="36" Height="36" Margin="8,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock
+                                        Text="&#xef19;"
+                                        FontFamily="{StaticResource FontIcoFont}"
+                                        HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red"
+                                        FontSize="30"
+                                        Canvas.Left="5" Canvas.Top="1" />
+
+                                    <Canvas.Style>
+                                        <Style TargetType="Canvas">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamUpdateIsNew}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Canvas.Style>
+                                </Canvas>
 
                                 <!-- Completed Game -->
                                 <Grid  Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" CacheMode="BitmapCache" >
@@ -2738,6 +2759,8 @@
 
                             </Grid>
 
+
+
                             <!-- Logo -->
                             <StackPanel x:Name="LogoContainer" RenderTransformOrigin="0.5,0.5" Orientation="Vertical" UseLayoutRounding="True" SnapsToDevicePixels="True">
                                 <StackPanel.Effect>
@@ -4530,6 +4553,69 @@
                                 </StackPanel>
                             </Border>
 
+                            <!--Update Notif-->
+                            <Border x:Name="UpdateMessagePanel"  Grid.RowSpan="3" Grid.ColumnSpan="3" FocusVisualStyle="{x:Null}"
+                                    Background="{DynamicResource OverlayMenu}"
+                                    CornerRadius="{DynamicResource Corner}"
+                                    Height="70"
+                                    BorderBrush="{DynamicResource MenuBorderBrush}"
+                                    BorderThickness="2"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Right"
+                                    Panel.ZIndex="1"
+                                    RenderTransformOrigin="1,0.5">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="8" ShadowDepth="2" Color="Black" Opacity="0.5"/>
+                                </Border.Effect>
+                                <Border.RenderTransform>
+                                    <TranslateTransform x:Name="UpdateMessageTransform" X="500" />
+                                </Border.RenderTransform>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Margin" Value="0,30,20,0"/>
+                                        <Setter Property="Grid.Row" Value="1"/>
+                                        <Setter Property="Grid.ColumnSpan" Value="3"/>
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Setter Property="Opacity" Value="0"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=UpdateMessagePanel, Path=Opacity}" Value="0">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=UpdateMessagePanel, Path=Opacity}" Value="1">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamUpdateIsNew}" Value="True"/>
+                                                    <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <MultiDataTrigger.EnterActions>
+                                                    <BeginStoryboard x:Name="BeginMsg">
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" BeginTime="0:0:1" Duration="0:0:0"/>
+                                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                             From="500" To="0" BeginTime="0:0:1.1" Duration="0:0:0.30"
+                                                                             AccelerationRatio="0.3" DecelerationRatio="0.7"/>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                             BeginTime="0:0:10" From="1" To="0" Duration="0:0:0.20"/>
+                                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                             BeginTime="0:0:09" From="0" To="500" Duration="0:0:0.30"
+                                                                             AccelerationRatio="0.3" DecelerationRatio="0.7"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </MultiDataTrigger.EnterActions>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <StackPanel Orientation="Vertical" Margin="10,0,10,0" VerticalAlignment="Center">
+                                    <TextBlock FontSize="18" Style="{DynamicResource TextBlockBaseStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{DynamicResource LOCUpdateAvailable}" />
+                                </StackPanel>
+
+                            </Border>
+
+
                             <!-- AnikiHelper MESSAGE -->
                             <Border x:Name="AnikiHelperMessagePanel"
                                     Background="{DynamicResource OverlayMenu}"
@@ -5250,7 +5336,7 @@
 
                                 <Border>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,0"  MaxWidth="400" >
-                                        <TextBlock Margin="0,0,10,0" Text="v2.0" HorizontalAlignment="Center" Style="{DynamicResource TextBlockBaseStyle}" FontSize="20" VerticalAlignment="Center"/>
+                                        <TextBlock Margin="0,0,10,0" Text="v2.1" HorizontalAlignment="Center" Style="{DynamicResource TextBlockBaseStyle}" FontSize="20" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Border>
                             </Grid>
@@ -5284,6 +5370,9 @@
                                     <Setter Property="Visibility" Value="Visible"/>
                                     <Setter Property="Opacity" Value="1"/>
                                     <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=TOMissing, Path=Visibility}" Value="Visible">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=IsInstalled}" Value="True" />
@@ -5404,6 +5493,21 @@
                                     <Style.Triggers>
 
                                         <DataTrigger Binding="{Binding ElementName=WrongColumns, Path=Visibility}" Value="Visible">
+                                            <Setter Property="LoadedBehavior" Value="Play"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </MediaElement.Style>
+                        </MediaElement>
+
+                        <MediaElement x:Name="UpdateMessagePanelSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
+                            <MediaElement.Style>
+                                <Style TargetType="MediaElement">
+                                    <Setter Property="LoadedBehavior" Value="Manual"/>
+                                    <Setter Property="UnloadedBehavior" Value="Close"/>
+                                    <Style.Triggers>
+
+                                        <DataTrigger Binding="{Binding ElementName=UpdateMessagePanel, Path=Opacity}" Value="1">
                                             <Setter Property="LoadedBehavior" Value="Play"/>
                                         </DataTrigger>
                                     </Style.Triggers>
