@@ -879,22 +879,41 @@
 
                                 </Grid>
 
-                                <!--UpdateIcon-->
+                                <!-- UpdateIcon -->
+                                <Canvas Width="36" Height="36" Margin="20,0,0,0" VerticalAlignment="Center">
+                                    <Grid Width="26" Height="26" Canvas.Left="5" Canvas.Top="5">
+                                        <!-- Cercle de fond -->
+                                        <Ellipse
+                                            Fill="#FFE53935"
+                                            Stroke="#80FFFFFF"
+                                            StrokeThickness="1.5"
+                                            Opacity="0.95" />
 
-                                <Canvas Width="36" Height="36" Margin="8,0,0,0" VerticalAlignment="Center">
-                                    <TextBlock
-                                        Text="&#xef19;"
-                                        FontFamily="{StaticResource FontIcoFont}"
-                                        HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red"
-                                        FontSize="30"
-                                        Canvas.Left="5" Canvas.Top="1" />
+                                        <!-- Légère “aura” interne (facultatif) -->
+                                        <Ellipse
+                                            Width="22"
+                                            Height="22"
+                                            Stroke="#40FFFFFF"
+                                            StrokeThickness="1"
+                                            Opacity="0.6" />
+
+                                        <!-- Icône "!" au centre -->
+                                        <TextBlock
+                                            Text="!"
+                                            FontFamily="Segoe UI"
+                                            FontWeight="Bold"
+                                            FontSize="18"
+                                            Foreground="White"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+                                    </Grid>
 
                                     <Canvas.Style>
                                         <Style TargetType="Canvas">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Setter Property="Visibility" Value="Collapsed" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamUpdateIsNew}" Value="True">
-                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Setter Property="Visibility" Value="Visible" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -1180,7 +1199,11 @@
                                                             <Border.Style>
                                                                 <Style TargetType="Border">
                                                                     <Setter Property="Background" Value="{DynamicResource Avatar1}"/>
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
                                                                     <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding ElementName=UserAvatar, Path=Source}" Value="{x:Null}">
+                                                                            <Setter Property="Visibility" Value="Visible" />
+                                                                        </DataTrigger>
                                                                         <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="1">
                                                                             <Setter Property="Background" Value="{DynamicResource Avatar1}"/>
                                                                         </DataTrigger>
@@ -1311,6 +1334,31 @@
                                                                 </Style>
                                                             </Border.Style>
                                                         </Border>
+
+                                                        <TextBlock x:Name="ProfilePicturePath"
+                                                                   Tag="{Api Paths.ConfigurationPath}"
+                                                                   Visibility="Collapsed">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="Text">
+                                                                        <Setter.Value>
+                                                                            <MultiBinding StringFormat="{}{0}\ExtraMetadata\Themes\Common\ProfilePicture.png">
+                                                                                <Binding Path="Tag" RelativeSource="{RelativeSource Self}"/>
+                                                                            </MultiBinding>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+
+                                                        <Image x:Name="UserAvatar"
+                                                               Source="{Binding ElementName=ProfilePicturePath, Path=Text}"
+                                                               Stretch="UniformToFill"
+                                                               RenderOptions.BitmapScalingMode="Fant"
+                                                               Width="40" Height="40"/>
+
+                                                        <Border BorderBrush="#eaeaea" BorderThickness="2" Margin="-1" Width="40" Height="40"/>
+
                                                     </Grid>
                                                 </ButtonEx.Content>
                                             </ButtonEx>
@@ -1388,7 +1436,38 @@
                                                 </Button.Style>
                                             </ButtonEx>
 
-                                            <ButtonEx x:Name="StatsButton" Command="{PluginSettings Plugin=ThemeOptions, Path=OpenWindow[StatsWindowStyle]}" VerticalAlignment="Center" Margin="20,0,20,0" Height="40" Width="40" Focusable="True" Grid.Column="5" HorizontalAlignment="Center">
+                                            <ButtonEx x:Name="LastUpdatesButton" Command="{PluginSettings Plugin=ThemeOptions, Path=OpenWindow[LastUpdatesWindowStyle]}"
+                                                      VerticalAlignment="Center" Margin="20,0,20,0" Height="40" Width="40" Focusable="True" Grid.Column="5" HorizontalAlignment="Center">
+                                                <ButtonEx.Content>
+                                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="34" Foreground="White"	FontFamily="{StaticResource FontIcoFont}" Text="&#xefa6;" />
+                                                </ButtonEx.Content>
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonAvatar}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginStatus Plugin=AnikiHelper_96a983a3-3f13-4dce-a474-4052b718bb52, Status=Installed}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                                <ButtonEx.Triggers>
+                                                    <EventTrigger RoutedEvent="ButtonBase.Click">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <ObjectAnimationUsingKeyFrames
+                                                                    Storyboard.TargetName="OpenViewSound"
+                                                                    Storyboard.TargetProperty="LoadedBehavior">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                </ButtonEx.Triggers>
+                                            </ButtonEx>
+
+                                            <ButtonEx x:Name="StatsButton" Command="{PluginSettings Plugin=ThemeOptions, Path=OpenWindow[StatsWindowStyle]}" VerticalAlignment="Center" Margin="20,0,20,0" Height="40" Width="40" Focusable="True" Grid.Column="6" HorizontalAlignment="Center">
                                                 <ButtonEx.Content>
                                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="34" Foreground="White"	FontFamily="{StaticResource FontIcoFont}" Text="&#xec57;" />
                                                 </ButtonEx.Content>
@@ -1418,7 +1497,7 @@
                                                 </ButtonEx.Triggers>
                                             </ButtonEx>
 
-                                            <CheckBoxEx x:Name="StatsButtonFalse" VerticalAlignment="Center" Margin="20,0,20,0" Height="40" Width="40" Focusable="True" Grid.Column="5" HorizontalAlignment="Center">
+                                            <CheckBoxEx x:Name="StatsButtonFalse" VerticalAlignment="Center" Margin="20,0,20,0" Height="40" Width="40" Focusable="True" Grid.Column="6" HorizontalAlignment="Center">
                                                 <CheckBoxEx.Content>
                                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="34" Foreground="White"	FontFamily="{StaticResource FontIcoFont}" Text="&#xec57;" />
                                                 </CheckBoxEx.Content>
@@ -1434,7 +1513,9 @@
                                                 </CheckBoxEx.Style>
                                             </CheckBoxEx>
 
-                                            <CheckBoxEx x:Name="ButtonPower" Focusable="True" VerticalAlignment="Center" Margin="20,0,20,0" Height="40"	Width="40" Style="{DynamicResource PowerButtonMain}" Grid.Column="6"  IsChecked="True">
+
+
+                                            <CheckBoxEx x:Name="ButtonPower" Focusable="True" VerticalAlignment="Center" Margin="20,0,20,0" Height="40"	Width="40" Style="{DynamicResource PowerButtonMain}" Grid.Column="7"  IsChecked="True">
                                                 <CheckBoxEx.Content>
                                                     <Grid>
                                                         <Border CornerRadius="5" Height="40" Width="40" VerticalAlignment="Center"
@@ -4140,7 +4221,7 @@
                                                     <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonShutdow}">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowSleepButton]}" Value="False">
+                                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowShutdownButton]}" Value="False">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -4553,8 +4634,8 @@
                                 </StackPanel>
                             </Border>
 
-                            <!--Update Notif-->
-                            <Border x:Name="UpdateMessagePanel"  Grid.RowSpan="3" Grid.ColumnSpan="3" FocusVisualStyle="{x:Null}"
+                            <!-- GLOBAL TOAST (AnikiHelper) -->
+                            <Border x:Name="GlobalToastPanel"
                                     Background="{DynamicResource OverlayMenu}"
                                     CornerRadius="{DynamicResource Corner}"
                                     Height="70"
@@ -4565,11 +4646,17 @@
                                     Panel.ZIndex="1"
                                     RenderTransformOrigin="1,0.5">
                                 <Border.Effect>
-                                    <DropShadowEffect BlurRadius="8" ShadowDepth="2" Color="Black" Opacity="0.5"/>
+                                    <DropShadowEffect BlurRadius="8"
+                                                      ShadowDepth="2"
+                                                      Color="Black"
+                                                      Opacity="0.5"/>
                                 </Border.Effect>
+
+                                <!-- slide depuis le haut / fade -->
                                 <Border.RenderTransform>
-                                    <TranslateTransform x:Name="UpdateMessageTransform" X="500" />
+                                    <TranslateTransform X="500" Y="0"/>
                                 </Border.RenderTransform>
+
                                 <Border.Style>
                                     <Style TargetType="Border">
                                         <Setter Property="Margin" Value="0,30,20,0"/>
@@ -4578,42 +4665,78 @@
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Setter Property="Opacity" Value="0"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ElementName=UpdateMessagePanel, Path=Opacity}" Value="0">
+                                            <!-- Comme tes autres panels : visibilité pilotée par l'opacité -->
+                                            <DataTrigger Binding="{Binding ElementName=GlobalToastPanel, Path=Opacity}" Value="0">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding ElementName=UpdateMessagePanel, Path=Opacity}" Value="1">
+                                            <DataTrigger Binding="{Binding ElementName=GlobalToastPanel, Path=Opacity}" Value="1">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamUpdateIsNew}" Value="True"/>
-                                                    <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible"/>
-                                                </MultiDataTrigger.Conditions>
-                                                <MultiDataTrigger.EnterActions>
-                                                    <BeginStoryboard x:Name="BeginMsg">
+
+                                            <!-- Flip = True -> on lance l’anim -->
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=GlobalToastFlip}" Value="True">
+                                                <DataTrigger.EnterActions>
+                                                    <BeginStoryboard x:Name="ShowToastTrue">
                                                         <Storyboard>
-                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" BeginTime="0:0:1" Duration="0:0:0"/>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" BeginTime="0:0:0" Duration="0:0:0"/>
                                                             <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                                                             From="500" To="0" BeginTime="0:0:1.1" Duration="0:0:0.30"
+                                                                             From="700" To="0" BeginTime="0:0:0.2" Duration="0:0:0.30"
                                                                              AccelerationRatio="0.3" DecelerationRatio="0.7"/>
                                                             <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                             BeginTime="0:0:10" From="1" To="0" Duration="0:0:0.20"/>
+                                                                             BeginTime="0:0:09" From="1" To="0" Duration="0:0:0.20"/>
                                                             <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                                                             BeginTime="0:0:09" From="0" To="500" Duration="0:0:0.30"
+                                                                             BeginTime="0:0:08" From="0" To="700" Duration="0:0:0.30"
                                                                              AccelerationRatio="0.3" DecelerationRatio="0.7"/>
                                                         </Storyboard>
                                                     </BeginStoryboard>
-                                                </MultiDataTrigger.EnterActions>
-                                            </MultiDataTrigger>
+                                                </DataTrigger.EnterActions>
+                                            </DataTrigger>
+
+
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
 
-                                <StackPanel Orientation="Vertical" Margin="10,0,10,0" VerticalAlignment="Center">
-                                    <TextBlock FontSize="18" Style="{DynamicResource TextBlockBaseStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{DynamicResource LOCUpdateAvailable}" />
-                                </StackPanel>
+                                <!-- CONTENU TOAST -->
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="12,0,12,0"
+                                            VerticalAlignment="Center">
+                                    <!-- Icône selon le type -->
+                                    <TextBlock Margin="0,0,10,0"
+                                               VerticalAlignment="Center"
+                                               FontFamily="{StaticResource FontIcoFont}"
+                                               FontSize="22"
+                                               Foreground="{DynamicResource TextBrush}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <!-- icône par défaut -->
+                                                <Setter Property="Text" Value="&#xee22;"/>
+                                                <Style.Triggers>
+                                                    <!-- Type = steamUpdate -->
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=GlobalToastType}" Value="steamUpdate">
+                                                        <!-- icône “update” ou “news” -->
+                                                        <Setter Property="Text" Value="&#xef3e;"/>
+                                                    </DataTrigger>
 
+                                                    <!-- Type = successStory (exemple futur) -->
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=GlobalToastType}" Value="Test">
+                                                        <!-- icône trophée -->
+                                                        <Setter Property="Text" Value="&#xef02;"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+
+                                    <!-- Texte -->
+                                    <TextBlock FontSize="17"
+                                               TextWrapping="Wrap"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               VerticalAlignment="Center"
+                                               Text="{PluginSettings Plugin=AnikiHelper, Path=GlobalToastMessage}" />
+                                </StackPanel>
                             </Border>
+
 
 
                             <!-- AnikiHelper MESSAGE -->
@@ -5336,7 +5459,7 @@
 
                                 <Border>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,0"  MaxWidth="400" >
-                                        <TextBlock Margin="0,0,10,0" Text="v2.1" HorizontalAlignment="Center" Style="{DynamicResource TextBlockBaseStyle}" FontSize="20" VerticalAlignment="Center"/>
+                                        <TextBlock Margin="0,0,10,0" Text="v2.1.5" HorizontalAlignment="Center" Style="{DynamicResource TextBlockBaseStyle}" FontSize="20" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Border>
                             </Grid>
@@ -5500,14 +5623,14 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="UpdateMessagePanelSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
+                        <MediaElement x:Name="GlobalMessagePanelSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
                                     <Setter Property="UnloadedBehavior" Value="Close"/>
                                     <Style.Triggers>
 
-                                        <DataTrigger Binding="{Binding ElementName=UpdateMessagePanel, Path=Opacity}" Value="1">
+                                        <DataTrigger Binding="{Binding ElementName=GlobalToastPanel, Path=Opacity}" Value="1">
                                             <Setter Property="LoadedBehavior" Value="Play"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -5741,7 +5864,7 @@
                                                     <Setter Property="Visibility" Value="Visible" />
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding Source={StaticResource AvatarImageIndex}}" Value="1">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar1}" />
+                                                    <Setter Property="Background" Value="{DynamicResource Avatar0}" />
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding Source={StaticResource AvatarImageIndex}}" Value="2">
                                                     <Setter Property="Background" Value="{DynamicResource Avatar2}" />
@@ -6796,31 +6919,7 @@
                             </EventTrigger>
                         </Grid.Triggers>
 
-                        <!-- Separator -->
-                        <Grid FocusVisualStyle="{x:Null}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="200">
 
-                            <!-- Fond verre -->
-                            <Border CornerRadius="0"
-                                    Background="#66000000"
-                                    Opacity="0.8"
-                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-
-                            <!-- Reflet vertical discret -->
-                            <Border CornerRadius="{DynamicResource Corner}" IsHitTestVisible="False" Background="{DynamicResource GlassMainBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-
-                            <!-- Liseré interne -->
-                            <Border CornerRadius="0"
-                                    Margin="1"
-                                    BorderThickness="0,0,0,1"
-                                    BorderBrush="{DynamicResource GlassInnerLineBrush}"
-                                    IsHitTestVisible="False"
-                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-
-                            <!-- Hairline -->
-                            <Border HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="1.5"
-                                    Background="{DynamicResource MenuBorderBrush}" Opacity="0.8"
-                                    CornerRadius="0"/>
-                        </Grid>
 
                         <!-- HEADER -->
                         <Grid x:Name="TopInfo" Margin="0,0,0,12" VerticalAlignment="Top">
@@ -6835,143 +6934,177 @@
                                         Orientation="Vertical"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Margin="30,20,12,0">
-                                <Border RenderOptions.BitmapScalingMode="Fant"
-                                        Margin="0,0,0,6"
-                                        CornerRadius="6"
-                                        Height="110" Width="110"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Left"
-                                        ClipToBounds="True">
-                                    <Border.Style>
-                                        <Style TargetType="Border">
-                                            <Setter Property="Background" Value="{DynamicResource Avatar99}"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="1">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar99}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="2">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar2}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="3">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar3}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="4">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar4}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="5">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar5}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="6">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar6}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="7">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar7}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="8">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar8}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="9">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar9}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="10">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar10}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="11">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar11}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="12">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar12}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="13">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar13}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="14">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar14}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="15">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar15}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="16">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar16}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="17">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar17}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="18">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar18}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="19">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar19}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="20">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar20}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="21">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar21}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="22">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar22}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="23">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar23}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="24">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar24}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="25">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar25}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="26">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar26}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="27">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar27}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="28">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar28}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="29">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar29}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="30">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar30}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="31">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar31}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="32">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar32}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="33">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar33}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="34">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar34}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="35">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar35}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="36">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar36}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="37">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar37}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="38">
-                                                    <Setter Property="Background" Value="{DynamicResource Avatar38}"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Border.Style>
-                                </Border>
+                                        Margin="100,20,12,0">
+                                <Grid Height="110" Width="110"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Left">
+                                    <Border RenderOptions.BitmapScalingMode="Fant"
+                                            Margin="0,0,0,6"
+                                            CornerRadius="6"
+                                            Height="110" Width="110"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left"
+                                            ClipToBounds="True">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Background" Value="{DynamicResource Avatar0}"/>
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=UserAvatar, Path=Source}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="1">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar0}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="2">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar2}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="3">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar3}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="4">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar4}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="5">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar5}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="6">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar6}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="7">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar7}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="8">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar8}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="9">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar9}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="10">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar10}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="11">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar11}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="12">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar12}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="13">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar13}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="14">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar14}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="15">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar15}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="16">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar16}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="17">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar17}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="18">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar18}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="19">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar19}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="20">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar20}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="21">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar21}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="22">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar22}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="23">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar23}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="24">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar24}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="25">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar25}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="26">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar26}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="27">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar27}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="28">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar28}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="29">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar29}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="30">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar30}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="31">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar31}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="32">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar32}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="33">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar33}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="34">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar34}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="35">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar35}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="36">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar36}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="37">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar37}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="38">
+                                                        <Setter Property="Background" Value="{DynamicResource Avatar38}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                    </Border>
+
+                                    <TextBlock x:Name="ProfilePicturePath"
+                                               Tag="{Api Paths.ConfigurationPath}"
+                                               Visibility="Collapsed">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text">
+                                                    <Setter.Value>
+                                                        <MultiBinding StringFormat="{}{0}\ExtraMetadata\Themes\Common\ProfilePicture.png">
+                                                            <Binding Path="Tag" RelativeSource="{RelativeSource Self}"/>
+                                                        </MultiBinding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+
+                                    <Image x:Name="UserAvatar"
+                                           Source="{Binding ElementName=ProfilePicturePath, Path=Text}"
+                                           Stretch="UniformToFill"
+                                           RenderOptions.BitmapScalingMode="Fant"
+                                           Width="110" Height="110"/>
+
+                                    <Border BorderBrush="#eaeaea" BorderThickness="2" Margin="-1" Width="110" Height="110"/>
+                                </Grid>
+
 
                                 <TextBlock Text="{DynamicResource UserName}"
                                            HorizontalAlignment="Center"
                                            Style="{DynamicResource TextBlockBaseStyle}"
-                                           FontSize="34"
-                                           FontWeight="SemiBold"
+                                           FontSize="32"
+                                           FontWeight="Bold"
                                            MaxWidth="380"
+                                           Margin="0,6,0,0"
                                            TextTrimming="CharacterEllipsis"/>
                             </StackPanel>
 
@@ -6983,16 +7116,17 @@
                                         Margin="0,0,0,0">
                                 <TextBlock Text="{DynamicResource LOCOverallStats}"
                                            Style="{DynamicResource TextBlockBaseStyle}"
-                                           FontSize="35"
+                                           FontSize="40"
                                            Typography.Capitals="AllSmallCaps"
                                            FontWeight="SemiBold"
-                                           Opacity="0.95"
+                                           Opacity="0.98"
                                            HorizontalAlignment="Center"/>
+
                                 <TextBlock Text="{DynamicResource LOCLibraryPlaytimeOverview}"
                                            Style="{DynamicResource TextBlockBaseStyle}"
-                                           FontSize="16"
-                                           Opacity="0.70"
-                                           Margin="0,2,0,0"
+                                           FontSize="26"
+                                           Opacity="0.80"
+                                           Margin="0,4,0,0"
                                            HorizontalAlignment="Center"/>
                             </StackPanel>
 
@@ -7000,7 +7134,7 @@
                             <Border Grid.Column="2"
                                     CornerRadius="14"
                                     Padding="14"
-                                    Margin="12,10,100,0"
+                                    Margin="12,12,100,0"
                                     HorizontalAlignment="Right"
                                     SnapsToDevicePixels="True"
                                     BorderBrush="{DynamicResource MenuBorderBrush}"
@@ -7031,12 +7165,12 @@
 
                                     <!-- BANDEAU Titre  -->
                                     <Border Grid.Row="0"
-                                            Background="#2040E0E0"
+                                            Background="#3040E0E0"
                                             BorderBrush="{DynamicResource MenuBorderBrush}"
                                             BorderThickness="0,0,0,1"
-                                            CornerRadius="10,10,0,0"
-                                            Padding="10,4"
-                                            Margin="-14,-14,-14,10">
+                                            CornerRadius="8,8,0,0"
+                                            Padding="8,3"
+                                            Margin="-10,-10,-10,8">
                                         <TextBlock Text="{DynamicResource LOCStatsMonthTopGame}"
                                                    FontSize="16"
                                                    FontWeight="SemiBold"
@@ -7078,7 +7212,7 @@
                                         <Border CornerRadius="8" Background="#1AFFFFFF" Padding="3">
                                             <Image Width="110" MaxHeight="110"
                                                    RenderOptions.BitmapScalingMode="Fant"
-                                                   Stretch="UniformToFill"
+                                                   Stretch="Uniform"
                                                    Source="{PluginSettings Plugin=AnikiHelper, Path=ThisMonthTopGameCoverPath}"/>
                                         </Border>
                                     </StackPanel>
@@ -7091,9 +7225,14 @@
                         </Grid>
 
 
-                        <Grid x:Name="AnikiHelper" Margin="0,210,0,0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <Grid x:Name="AnikiHelper"
+                              Margin="40,200,40,60"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch">
                             <Grid.Resources>
-                                <SolidColorBrush x:Key="CardBgBrush" Color="#1AFFFFFF"/>
+                                <!-- Fond et bordure de base pour les cartes -->
+                                <SolidColorBrush x:Key="CardBgBrush" Color="#05000000"/>
+                                <SolidColorBrush x:Key="CardBgBrushPrimary" Color="#14FFFFFF"/>
                                 <SolidColorBrush x:Key="CardBorderBrush" Color="{DynamicResource TextAltDetail}"/>
                                 <SolidColorBrush x:Key="AccentBrush" Color="#88D3FF7A"/>
                                 <SolidColorBrush x:Key="HeaderFgBrush" Color="#FFFFFFFF"/>
@@ -7119,15 +7258,15 @@
                                     <Setter Property="FontSize" Value="16"/>
                                 </Style>
 
-                                <!-- GroupBox carte -->
+                                <!-- GroupBox carte : style de base -->
                                 <Style x:Key="StatCard" TargetType="GroupBox">
                                     <Setter Property="Padding" Value="12"/>
-                                    <Setter Property="Margin" Value="10"/>
+                                    <Setter Property="Margin" Value="14,8"/>
+                                    <Setter Property="Background" Value="{StaticResource CardBgBrush}"/>
                                     <Setter Property="BorderBrush" Value="{StaticResource CardBorderBrush}"/>
                                     <Setter Property="BorderThickness" Value="1.5"/>
                                     <Setter Property="Foreground" Value="{StaticResource HeaderFgBrush}"/>
                                     <Setter Property="FontFamily" Value="Bahnschrift, Segoe UI" />
-                                    <Setter Property="Effect" Value="{StaticResource CardShadow}"/>
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="GroupBox">
@@ -7136,6 +7275,8 @@
                                                         <RowDefinition Height="Auto"/>
                                                         <RowDefinition Height="*"/>
                                                     </Grid.RowDefinitions>
+
+                                                    <!-- Header -->
                                                     <Grid Margin="8,0,8,6">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="Auto"/>
@@ -7146,13 +7287,20 @@
                                                                 <Style TargetType="TextBlock" BasedOn="{StaticResource CardHeaderText}" />
                                                             </ContentPresenter.Resources>
                                                         </ContentPresenter>
-                                                        <Rectangle Grid.Column="1" Height="2" VerticalAlignment="Center" Fill="{StaticResource AccentBrush}" Opacity="0.9" Margin="10,0,0,0"/>
+                                                        <Rectangle Grid.Column="1"
+                                                                   Height="2"
+                                                                   VerticalAlignment="Center"
+                                                                   Fill="{StaticResource AccentBrush}"
+                                                                   Opacity="0.9"
+                                                                   Margin="10,0,0,0"/>
                                                     </Grid>
+
+                                                    <!-- Contenu -->
                                                     <Border Grid.Row="1"
-                                                            Background="{StaticResource CardBgBrush}"
-                                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                                            CornerRadius="12"
+                                                            Background="{TemplateBinding Background}"
+                                                            BorderBrush="#33FFFFFF"
+                                                            BorderThickness="1"
+                                                            CornerRadius="10"
                                                             Padding="{TemplateBinding Padding}">
                                                         <ContentPresenter/>
                                                     </Border>
@@ -7161,6 +7309,16 @@
                                         </Setter.Value>
                                     </Setter>
                                 </Style>
+
+                                <!-- Variante "carte importante" -->
+                                <Style x:Key="StatCardPrimary"
+                                       TargetType="GroupBox"
+                                       BasedOn="{StaticResource StatCard}">
+                                    <Setter Property="Background" Value="{StaticResource CardBgBrushPrimary}"/>
+                                    <Setter Property="BorderBrush" Value="{DynamicResource TextHighlightBrush}"/>
+                                    <Setter Property="BorderThickness" Value="2"/>
+                                </Style>
+
 
                                 <!-- Liste scroll slim -->
                                 <Style x:Key="ListSlim" TargetType="ItemsControl">
@@ -7247,393 +7405,415 @@
 
                             </Grid.Resources>
 
-                            <!-- CARTES STATS -->
-                            <Grid x:Name="StatsCards" Margin="0,10,0,0" IsSharedSizeScope="True">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1.05*" MinWidth="360"/>
-                                    <ColumnDefinition Width="1.05*" MinWidth="400"/>
-                                    <ColumnDefinition Width="1.05*" MinWidth="400"/>
-                                    <ColumnDefinition Width="1.35*" MinWidth="520"/>
-                                </Grid.ColumnDefinitions>
+                            <Border x:Name="StatsMainPanel"
+                                    CornerRadius="24"
+                                    Opacity="1"
+                                    BorderBrush="{DynamicResource MenuBorderBrush}"
+                                    BorderThickness="1"
+                                    Padding="26,24,26,22"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Stretch">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#70000000" Offset="0"/>
+                                        <GradientStop Color="#44000000" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#000000"
+                                                      BlurRadius="30"
+                                                      ShadowDepth="0"
+                                                      Opacity="0.35"/>
+                                </Border.Effect>
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
+                                <!-- CARTES STATS -->
+                                <Grid x:Name="StatsCards" Margin="0,10,0,0" IsSharedSizeScope="True">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.1*" MinWidth="360"/>
+                                        <ColumnDefinition Width="1.1*" MinWidth="400"/>
+                                        <ColumnDefinition Width="1.1*" MinWidth="400"/>
+                                        <ColumnDefinition Width="1.2*" MinWidth="520"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <!-- LIGNE 1 -->
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
 
-                                <!-- Général -->
-                                <GroupBox Grid.Row="0" Grid.Column="0"
-                                          Header="{DynamicResource LOCStatsGlobal}"
-                                          Style="{StaticResource StatCard}" Margin="10"
-                                          Height="230"
-                                          HorizontalAlignment="Stretch">
-                                    <Grid Margin="10">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
+                                    <!-- LIGNE 1 -->
 
-                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource LOCAll}" Style="{StaticResource ItemText}" Margin="0,0,12,4"/>
-                                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=TotalCount}"
-                                                   Style="{StaticResource ItemText}" HorizontalAlignment="Right" Margin="0,0,0,4"/>
+                                    <!-- Général -->
+                                    <GroupBox Grid.Row="0" Grid.Column="0"
+                                              Header="{DynamicResource LOCStatsGlobal}"
+                                              Style="{StaticResource StatCard}" Margin="10"
+                                              Height="230"
+                                              HorizontalAlignment="Stretch">
+                                        <Grid Margin="10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
 
-                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource LOCGameIsInstalledTitle}" Style="{StaticResource ItemText}" Margin="0,0,12,4"/>
-                                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=InstalledCount}"
-                                                   Style="{StaticResource ItemText}" HorizontalAlignment="Right" Margin="0,0,0,4"/>
+                                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource LOCAll}" Style="{StaticResource ItemText}" Margin="0,0,12,4"/>
+                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=TotalCount}"
+                                                       Style="{StaticResource ItemText}" HorizontalAlignment="Right" Margin="0,0,0,4"/>
 
-                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource LOCGameIsUnInstalledTitle}" Style="{StaticResource ItemText}" Margin="0,0,12,4"/>
-                                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=NotInstalledCount}"
-                                                   Style="{StaticResource ItemText}" HorizontalAlignment="Right" Margin="0,0,0,4"/>
+                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource LOCGameIsInstalledTitle}" Style="{StaticResource ItemText}" Margin="0,0,12,4"/>
+                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=InstalledCount}"
+                                                       Style="{StaticResource ItemText}" HorizontalAlignment="Right" Margin="0,0,0,4"/>
 
-                                        <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource LOCGameHiddenTitle}" Style="{StaticResource ItemText}" Margin="0,0,12,4"/>
-                                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=HiddenCount}"
-                                                   Style="{StaticResource ItemText}" HorizontalAlignment="Right" Margin="0,0,0,4"/>
+                                            <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource LOCGameIsUnInstalledTitle}" Style="{StaticResource ItemText}" Margin="0,0,12,4"/>
+                                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=NotInstalledCount}"
+                                                       Style="{StaticResource ItemText}" HorizontalAlignment="Right" Margin="0,0,0,4"/>
 
-                                        <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource LOCGameFavoriteTitle}" Style="{StaticResource ItemText}" Margin="0,0,12,0"/>
-                                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=FavoriteCount}"
-                                                   Style="{StaticResource ItemText}" HorizontalAlignment="Right"/>
-                                    </Grid>
-                                </GroupBox>
+                                            <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource LOCGameHiddenTitle}" Style="{StaticResource ItemText}" Margin="0,0,12,4"/>
+                                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=HiddenCount}"
+                                                       Style="{StaticResource ItemText}" HorizontalAlignment="Right" Margin="0,0,0,4"/>
 
-                                <!-- Recently played -->
-                                <GroupBox Grid.Row="0" Grid.Column="1"
-                                          Header="{DynamicResource LOCStatsRecentPlayed}"
-                                          Style="{StaticResource StatCard}"
-                                          Margin="10"
-                                          HorizontalAlignment="Stretch"
-                                          Height="230">
+                                            <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource LOCGameFavoriteTitle}" Style="{StaticResource ItemText}" Margin="0,0,12,0"/>
+                                            <TextBlock Grid.Row="4" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=FavoriteCount}"
+                                                       Style="{StaticResource ItemText}" HorizontalAlignment="Right"/>
+                                        </Grid>
+                                    </GroupBox>
 
-                                    <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=RecentPlayed}"
-                                                  ItemTemplate="{StaticResource OneColItemTemplate}"
-                                                  Style="{StaticResource ListSlim}">
+                                    <!-- Recently played -->
+                                    <GroupBox Grid.Row="0" Grid.Column="1"
+                                              Header="{DynamicResource LOCStatsRecentPlayed}"
+                                              Style="{StaticResource StatCard}"
+                                              Margin="10"
+                                              HorizontalAlignment="Stretch"
+                                              Height="230">
 
-                                        <!-- marge verticale homogène + premier item en SemiBold -->
-                                        <ItemsControl.ItemContainerStyle>
-                                            <Style TargetType="ContentPresenter">
-                                                <Setter Property="Margin" Value="6,4"/>
-                                                <Style.Triggers>
-                                                    <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                                                        <Setter Property="TextElement.FontWeight" Value="SemiBold"/>
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </ItemsControl.ItemContainerStyle>
-                                    </ItemsControl>
-                                </GroupBox>
+                                        <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=RecentPlayed}"
+                                                      ItemTemplate="{StaticResource OneColItemTemplate}"
+                                                      Style="{StaticResource ListSlim}">
 
-
-                                <!-- Top playtime -->
-                                <GroupBox Grid.Row="0" Grid.Column="2"
-                                          Header="{DynamicResource LOCStatsTopPlayTime}"
-                                          Style="{StaticResource StatCard}" Margin="10"
-                                          HorizontalAlignment="Stretch" Height="230">
-                                    <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=TopPlayed}"
-                                                  ItemTemplate="{StaticResource TopPlayedItemTemplate}"
-                                                  Style="{StaticResource ListSlim}"/>
-                                </GroupBox>
-
-                                <!-- Recent achievements -->
-                                <GroupBox Grid.Row="0" Grid.Column="3"
-                                          Header="{DynamicResource LOCStatsRecentAchievements}"
-                                          Style="{StaticResource StatCard}" Margin="10"
-                                          HorizontalAlignment="Stretch" MaxHeight="330">
-                                    <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=RecentAchievements}"
-                                                  Style="{StaticResource ListSlim}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Grid Margin="0,8,0,8">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="40"/>
-                                                        <ColumnDefinition Width="10"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Grid Grid.Column="0" Width="39" Height="39" VerticalAlignment="Center">
-                                                        <Image Source="{Binding IconPath}" RenderOptions.BitmapScalingMode="Fant" Stretch="Uniform" Opacity="0.95"/>
-                                                        <TextBlock Text="🏆" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.85">
-                                                            <TextBlock.Style>
-                                                                <Style TargetType="TextBlock">
-                                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding IconPath}" Value="">
-                                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding IconPath}" Value="{x:Null}">
-                                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </TextBlock.Style>
-                                                        </TextBlock>
-                                                    </Grid>
-                                                    <StackPanel Grid.Column="2" Orientation="Vertical">
-                                                        <TextBlock Text="{Binding Title}" Style="{StaticResource ItemText}" FontWeight="SemiBold" Foreground="#CCFFFFFF"/>
-                                                        <TextBlock Text="{Binding Game}" Style="{StaticResource ItemText}" FontSize="13" Opacity="0.8"/>
-                                                    </StackPanel>
-                                                    <TextBlock Grid.Column="3" Text="{Binding UnlockedString}" Margin="12,0,0,0" Style="{StaticResource ItemText}" Opacity="0.85"/>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </GroupBox>
-
-                                <!-- LIGNE 2 -->
-
-                                <!-- PlayTime -->
-                                <GroupBox Grid.Row="1" Grid.Column="0"
-                                          Header="{DynamicResource LOCPlayTime}"
-                                          Style="{StaticResource StatCard}" Margin="10"
-                                          Height="230"
-                                          VerticalAlignment="Stretch"
-                                          HorizontalAlignment="Stretch">
-                                    <Grid Margin="10">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="10"/>
-                                        </Grid.RowDefinitions>
-
-                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource LOCStatsTotalPlayTime}" Style="{StaticResource ItemText}" Margin="0,0,12,4"/>
-                                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=TotalPlaytimeString}"
-                                                   Style="{StaticResource ItemText}" HorizontalAlignment="Right" Margin="0,0,0,4"/>
-
-                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource LOCStatsMonthPlayTime}" Style="{StaticResource ItemText}" Margin="0,0,12,4"/>
-                                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=ThisMonthPlayedTotalString}"
-                                                   Style="{StaticResource ItemText}" HorizontalAlignment="Right" Margin="0,0,0,4"/>
-
-                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource LOCStatsMonthPlayedCount}" Style="{StaticResource ItemText}" Margin="0,0,12,4"/>
-                                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=ThisMonthPlayedCount}"
-                                                   Style="{StaticResource ItemText}" HorizontalAlignment="Right" Margin="0,0,0,4"/>
-
-                                        <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource LOCStatsMonthTopGame}" Style="{StaticResource ItemText}" Margin="0,4,12,2"/>
-                                        <TextBlock Grid.Row="3" Grid.Column="1" Text="" Style="{StaticResource ItemText}" />
-
-                                        <TextBlock Grid.Row="4" Grid.Column="0"
-                                                   Text="{PluginSettings Plugin=AnikiHelper, Path=ThisMonthTopGameName}" MaxWidth="250" Opacity="0.9"
-                                                   Style="{StaticResource ItemText}" TextTrimming="CharacterEllipsis" Margin="0,2,8,0"/>
-                                        <TextBlock Grid.Row="4" Grid.Column="1"
-                                                   Text="{PluginSettings Plugin=AnikiHelper, Path=ThisMonthTopGamePlaytime}"
-                                                   Style="{StaticResource ItemText}" HorizontalAlignment="Right" Opacity="0.85"/>
-                                    </Grid>
-                                </GroupBox>
-
-                                <!-- Recently added -->
-                                <GroupBox Grid.Row="1" Grid.Column="1"
-                                          Header="{DynamicResource LOCStatsRecentAdded}"
-                                          Style="{StaticResource StatCard}" Margin="10"
-                                          VerticalAlignment="Stretch"
-                                          HorizontalAlignment="Stretch" Height="230">
-                                    <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=RecentAdded}"
-                                                  ItemTemplate="{StaticResource TwoColItemTemplate}"
-                                                  Style="{StaticResource ListSlim}">
-                                        <ItemsControl.ItemContainerStyle>
-                                            <Style TargetType="ContentPresenter">
-                                                <Setter Property="Margin" Value="0,2"/>
-                                            </Style>
-                                        </ItemsControl.ItemContainerStyle>
-                                    </ItemsControl>
-                                </GroupBox>
-
-                                <!-- Never played -->
-                                <GroupBox Grid.Row="1" Grid.Column="2"
-                                          Header="{DynamicResource LOCStatsNeverPlayed}"
-                                          Style="{StaticResource StatCard}"
-                                          Margin="10"
-                                          HorizontalAlignment="Stretch"
-                                          Height="230">
-                                    <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=NeverPlayed}"
-                                                  ItemTemplate="{StaticResource OneColItemTemplate}"
-                                                  Style="{StaticResource ListSlim}">
-                                        <ItemsControl.ItemContainerStyle>
-                                            <Style TargetType="ContentPresenter">
-                                                <Setter Property="Margin" Value="0,2"/>
-                                                <!-- espace vertical -->
-                                            </Style>
-                                        </ItemsControl.ItemContainerStyle>
-                                    </ItemsControl>
-
-                                </GroupBox>
-
-                                <!-- Top Rare achievements -->
-                                <GroupBox Grid.Row="1" Grid.Column="3"
-                                          Header="{DynamicResource LOCTopachievementyear}"
-                                          Style="{StaticResource StatCard}" Margin="10"
-                                          VerticalAlignment="Stretch"
-                                          HorizontalAlignment="Stretch" Height="230" >
-
-                                    <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=RareTop}"
-                                                  Style="{StaticResource ListSlim}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Grid Margin="0,8,0,8">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="40"/>
-                                                        <ColumnDefinition Width="10"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Grid Grid.Column="0" Width="39" Height="39" VerticalAlignment="Center">
-                                                        <Image Source="{Binding IconPath}" RenderOptions.BitmapScalingMode="Fant" Stretch="Uniform" Opacity="0.99"/>
-                                                        <TextBlock Text="🏆" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.85">
-                                                            <TextBlock.Style>
-                                                                <Style TargetType="TextBlock">
-                                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding IconPath}" Value="">
-                                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding IconPath}" Value="{x:Null}">
-                                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </TextBlock.Style>
-                                                        </TextBlock>
-                                                    </Grid>
-                                                    <StackPanel Grid.Column="2" Orientation="Vertical">
-                                                        <TextBlock Text="{Binding Game}" Style="{StaticResource ItemText}"  FontWeight="SemiBold" Foreground="#E5E5E5"/>
-                                                        <TextBlock Text="{Binding Title}" Style="{StaticResource ItemText}" FontSize="13" Opacity="0.9" />
-                                                    </StackPanel>
-                                                    <TextBlock Grid.Column="3" Text="{Binding PercentString}" FontSize="15" Foreground="#E5C100"/>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </GroupBox>
-
-                                <!-- LIGNE 3 -->
-
-                                <!-- Sources -->
-                                <GroupBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                                          Header="{DynamicResource LOCGameProviderTitle}"
-                                          Style="{StaticResource StatCard}" Margin="10,0,10,20"
-                                          HorizontalAlignment="Stretch" MaxHeight="260">
-                                    <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=GameProviders}"
-                                                  ItemTemplate="{StaticResource ThreeColItemTemplate}"
-                                                  Style="{StaticResource ListSlim}">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <UniformGrid Columns="2"/>
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                        <ItemsControl.ItemContainerStyle>
-                                            <Style TargetType="ContentPresenter">
-                                                <Setter Property="Margin" Value="4,2"/>
-                                            </Style>
-                                        </ItemsControl.ItemContainerStyle>
-                                    </ItemsControl>
-                                </GroupBox>
+                                            <!-- marge verticale homogène + premier item en SemiBold -->
+                                            <ItemsControl.ItemContainerStyle>
+                                                <Style TargetType="ContentPresenter">
+                                                    <Setter Property="Margin" Value="6,4"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                                            <Setter Property="TextElement.FontWeight" Value="SemiBold"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ItemsControl.ItemContainerStyle>
+                                        </ItemsControl>
+                                    </GroupBox>
 
 
-                                <!-- Storage -->
-                                <GroupBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"
-                                          Header="{DynamicResource LocStorage}"
-                                          Style="{StaticResource StatCard}" Margin="10,0,10,20"
-                                          HorizontalAlignment="Stretch" MaxHeight="260">
+                                    <!-- Top playtime -->
+                                    <GroupBox Grid.Row="0" Grid.Column="2"
+                                              Header="{DynamicResource LOCStatsTopPlayTime}"
+                                              Style="{StaticResource StatCard}" Margin="10"
+                                              HorizontalAlignment="Stretch" Height="230">
+                                        <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=TopPlayed}"
+                                                      ItemTemplate="{StaticResource TopPlayedItemTemplate}"
+                                                      Style="{StaticResource ListSlim}"/>
+                                    </GroupBox>
 
-                                    <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=DiskUsages}"
-                                                  Style="{StaticResource ListSlim}">
-                                        <!-- Deux colonnes -->
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <UniformGrid Columns="2"/>
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-
-                                        <ItemsControl.ItemContainerStyle>
-                                            <Style TargetType="ContentPresenter">
-                                                <Setter Property="Margin" Value="6,4"/>
-                                            </Style>
-                                        </ItemsControl.ItemContainerStyle>
-
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Border CornerRadius="8"
-                                                        Padding="8,6"
-                                                        Margin="2"
-                                                        Background="#16FFFFFF"
-                                                        BorderBrush="#25FFFFFF"
-                                                        BorderThickness="1"
-                                                        Effect="{DynamicResource DropShadowEffectLight}">
-
-                                                    <Grid>
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="Auto"/>
-                                                            <RowDefinition Height="Auto"/>
-                                                        </Grid.RowDefinitions>
-
-                                                        <!-- Ligne d’infos -->
-                                                        <Grid Grid.Row="0">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="Auto"/>
-                                                            </Grid.ColumnDefinitions>
-
-                                                            <TextBlock Grid.Column="0"
-                                                                       Style="{StaticResource TextBlockBaseStyle}">
-                                                                <Run Text="{Binding Label}" FontWeight="SemiBold"/>
-                                                                <Run Text="  "/>
-                                                                <Run Text="{Binding UsedPercentage, StringFormat={}{0:0}%}" Foreground="#E0E0E0"/>
+                                    <!-- Recent achievements -->
+                                    <GroupBox Grid.Row="0" Grid.Column="3"
+                                              Header="{DynamicResource LOCStatsRecentAchievements}"
+                                              Style="{StaticResource StatCardPrimary}" Margin="10"
+                                              HorizontalAlignment="Stretch" MaxHeight="330">
+                                        <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=RecentAchievements}"
+                                                      Style="{StaticResource ListSlim}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Margin="0,8,0,8">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="40"/>
+                                                            <ColumnDefinition Width="10"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Column="0" Width="39" Height="39" VerticalAlignment="Center">
+                                                            <Image Source="{Binding IconPath}" RenderOptions.BitmapScalingMode="Fant" Stretch="Uniform" Opacity="0.95"/>
+                                                            <TextBlock Text="🏆" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.85">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="TextBlock">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding IconPath}" Value="">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding IconPath}" Value="{x:Null}">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
                                                             </TextBlock>
-
-                                                            <TextBlock Grid.Column="1"
-                                                                       Text="{Binding FreeSpaceString}"
-                                                                       Style="{StaticResource TextBlockBaseStyle}"
-                                                                       FontWeight="SemiBold"
-                                                                       Foreground="#E0E0E0"
-                                                                       Margin="8,0,0,0"/>
                                                         </Grid>
-
-                                                        <!-- Barre fine -->
-                                                        <ProgressBar Grid.Row="1"
-                                                                     Value="{Binding UsedPercentage}"
-                                                                     Maximum="100"
-                                                                     Height="10" Margin="0,6,0,0"
-                                                                     Background="#33000000">
-                                                            <ProgressBar.Style>
-                                                                <Style TargetType="ProgressBar">
-                                                                    <Setter Property="Foreground" Value="#0078D7"/>
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding UsedTenthsInt}" Value="8">
-                                                                            <Setter Property="Foreground" Value="DarkOrange"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding UsedTenthsInt}" Value="9">
-                                                                            <Setter Property="Foreground" Value="DarkRed"/>
-                                                                        </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding UsedTenthsInt}" Value="10">
-                                                                            <Setter Property="Foreground" Value="DarkRed"/>
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </ProgressBar.Style>
-                                                        </ProgressBar>
+                                                        <StackPanel Grid.Column="2" Orientation="Vertical">
+                                                            <TextBlock Text="{Binding Title}" Style="{StaticResource ItemText}" FontWeight="SemiBold" Foreground="#CCFFFFFF"/>
+                                                            <TextBlock Text="{Binding Game}" Style="{StaticResource ItemText}" FontSize="13" Opacity="0.8"/>
+                                                        </StackPanel>
+                                                        <TextBlock Grid.Column="3" Text="{Binding UnlockedString}" Margin="12,0,0,0" Style="{StaticResource ItemText}" Opacity="0.85"/>
                                                     </Grid>
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </GroupBox>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </GroupBox>
+
+                                    <!-- LIGNE 2 -->
+
+                                    <!-- PlayTime -->
+                                    <GroupBox Grid.Row="1" Grid.Column="0"
+                                              Header="{DynamicResource LOCPlayTime}"
+                                              Style="{StaticResource StatCardPrimary}" Margin="10"
+                                              Height="230"
+                                              VerticalAlignment="Stretch"
+                                              HorizontalAlignment="Stretch">
+                                        <Grid Margin="10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="10"/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource LOCStatsTotalPlayTime}" Style="{StaticResource ItemText}" Margin="0,0,12,4"/>
+                                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=TotalPlaytimeString}"
+                                                       Style="{StaticResource ItemText}" HorizontalAlignment="Right" Margin="0,0,0,4"/>
+
+                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource LOCStatsMonthPlayTime}" Style="{StaticResource ItemText}" Margin="0,0,12,4"/>
+                                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=ThisMonthPlayedTotalString}"
+                                                       Style="{StaticResource ItemText}" HorizontalAlignment="Right" Margin="0,0,0,4"/>
+
+                                            <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource LOCStatsMonthPlayedCount}" Style="{StaticResource ItemText}" Margin="0,0,12,4"/>
+                                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{PluginSettings Plugin=AnikiHelper, Path=ThisMonthPlayedCount}"
+                                                       Style="{StaticResource ItemText}" HorizontalAlignment="Right" Margin="0,0,0,4"/>
+
+                                            <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource LOCStatsMonthTopGame}" Style="{StaticResource ItemText}" Margin="0,4,12,2"/>
+                                            <TextBlock Grid.Row="3" Grid.Column="1" Text="" Style="{StaticResource ItemText}" />
+
+                                            <TextBlock Grid.Row="4" Grid.Column="0"
+                                                       Text="{PluginSettings Plugin=AnikiHelper, Path=ThisMonthTopGameName}" MaxWidth="250" Opacity="0.9"
+                                                       Style="{StaticResource ItemText}" TextTrimming="CharacterEllipsis" Margin="0,2,8,0"/>
+                                            <TextBlock Grid.Row="4" Grid.Column="1"
+                                                       Text="{PluginSettings Plugin=AnikiHelper, Path=ThisMonthTopGamePlaytime}"
+                                                       Style="{StaticResource ItemText}" HorizontalAlignment="Right" Opacity="0.85"/>
+                                        </Grid>
+                                    </GroupBox>
+
+                                    <!-- Recently added -->
+                                    <GroupBox Grid.Row="1" Grid.Column="1"
+                                              Header="{DynamicResource LOCStatsRecentAdded}"
+                                              Style="{StaticResource StatCard}" Margin="10"
+                                              VerticalAlignment="Stretch"
+                                              HorizontalAlignment="Stretch" Height="230">
+                                        <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=RecentAdded}"
+                                                      ItemTemplate="{StaticResource TwoColItemTemplate}"
+                                                      Style="{StaticResource ListSlim}">
+                                            <ItemsControl.ItemContainerStyle>
+                                                <Style TargetType="ContentPresenter">
+                                                    <Setter Property="Margin" Value="0,2"/>
+                                                </Style>
+                                            </ItemsControl.ItemContainerStyle>
+                                        </ItemsControl>
+                                    </GroupBox>
+
+                                    <!-- Never played -->
+                                    <GroupBox Grid.Row="1" Grid.Column="2"
+                                              Header="{DynamicResource LOCStatsNeverPlayed}"
+                                              Style="{StaticResource StatCard}"
+                                              Margin="10"
+                                              HorizontalAlignment="Stretch"
+                                              Height="230">
+                                        <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=NeverPlayed}"
+                                                      ItemTemplate="{StaticResource OneColItemTemplate}"
+                                                      Style="{StaticResource ListSlim}">
+                                            <ItemsControl.ItemContainerStyle>
+                                                <Style TargetType="ContentPresenter">
+                                                    <Setter Property="Margin" Value="0,2"/>
+                                                    <!-- espace vertical -->
+                                                </Style>
+                                            </ItemsControl.ItemContainerStyle>
+                                        </ItemsControl>
+
+                                    </GroupBox>
+
+                                    <!-- Top Rare achievements -->
+                                    <GroupBox Grid.Row="1" Grid.Column="3"
+                                              Header="{DynamicResource LOCTopachievementyear}"
+                                              Style="{StaticResource StatCardPrimary}" Margin="10"
+                                              VerticalAlignment="Stretch"
+                                              HorizontalAlignment="Stretch" Height="230" >
+
+                                        <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=RareTop}"
+                                                      Style="{StaticResource ListSlim}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Margin="0,8,0,8">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="40"/>
+                                                            <ColumnDefinition Width="10"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Column="0" Width="39" Height="39" VerticalAlignment="Center">
+                                                            <Image Source="{Binding IconPath}" RenderOptions.BitmapScalingMode="Fant" Stretch="Uniform" Opacity="0.99"/>
+                                                            <TextBlock Text="🏆" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.85">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="TextBlock">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding IconPath}" Value="">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding IconPath}" Value="{x:Null}">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                            </TextBlock>
+                                                        </Grid>
+                                                        <StackPanel Grid.Column="2" Orientation="Vertical">
+                                                            <TextBlock Text="{Binding Game}" Style="{StaticResource ItemText}"  FontWeight="SemiBold" Foreground="#E5E5E5"/>
+                                                            <TextBlock Text="{Binding Title}" Style="{StaticResource ItemText}" FontSize="13" Opacity="0.9" />
+                                                        </StackPanel>
+                                                        <TextBlock Grid.Column="3" Text="{Binding PercentString}" FontSize="15" Foreground="#E5C100"/>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </GroupBox>
+
+                                    <!-- LIGNE 3 -->
+
+                                    <!-- Sources -->
+                                    <GroupBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                              Header="{DynamicResource LOCGameProviderTitle}"
+                                              Style="{StaticResource StatCard}" Margin="10,0,10,20"
+                                              HorizontalAlignment="Stretch" MaxHeight="260">
+                                        <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=GameProviders}"
+                                                      ItemTemplate="{StaticResource ThreeColItemTemplate}"
+                                                      Style="{StaticResource ListSlim}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <UniformGrid Columns="2"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemContainerStyle>
+                                                <Style TargetType="ContentPresenter">
+                                                    <Setter Property="Margin" Value="4,2"/>
+                                                </Style>
+                                            </ItemsControl.ItemContainerStyle>
+                                        </ItemsControl>
+                                    </GroupBox>
+
+
+                                    <!-- Storage -->
+                                    <GroupBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"
+                                              Header="{DynamicResource LocStorage}"
+                                              Style="{StaticResource StatCard}" Margin="10,0,10,20"
+                                              HorizontalAlignment="Stretch" MaxHeight="260">
+
+                                        <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=DiskUsages}"
+                                                      Style="{StaticResource ListSlim}">
+                                            <!-- Deux colonnes -->
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <UniformGrid Columns="2"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+
+                                            <ItemsControl.ItemContainerStyle>
+                                                <Style TargetType="ContentPresenter">
+                                                    <Setter Property="Margin" Value="6,4"/>
+                                                </Style>
+                                            </ItemsControl.ItemContainerStyle>
+
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border CornerRadius="8"
+                                                            Padding="8,6"
+                                                            Margin="2"
+                                                            Background="#16FFFFFF"
+                                                            BorderBrush="#25FFFFFF"
+                                                            BorderThickness="1"
+                                                            Effect="{DynamicResource DropShadowEffectLight}">
+
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto"/>
+                                                                <RowDefinition Height="Auto"/>
+                                                            </Grid.RowDefinitions>
+
+                                                            <!-- Ligne d’infos -->
+                                                            <Grid Grid.Row="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="Auto"/>
+                                                                </Grid.ColumnDefinitions>
+
+                                                                <TextBlock Grid.Column="0"
+                                                                           Style="{StaticResource TextBlockBaseStyle}">
+                                                                    <Run Text="{Binding Label}" FontWeight="SemiBold"/>
+                                                                    <Run Text="  "/>
+                                                                    <Run Text="{Binding UsedPercentage, StringFormat={}{0:0}%}" Foreground="#E0E0E0"/>
+                                                                </TextBlock>
+
+                                                                <TextBlock Grid.Column="1"
+                                                                           Text="{Binding FreeSpaceString}"
+                                                                           Style="{StaticResource TextBlockBaseStyle}"
+                                                                           FontWeight="SemiBold"
+                                                                           Foreground="#E0E0E0"
+                                                                           Margin="8,0,0,0"/>
+                                                            </Grid>
+
+                                                            <!-- Barre fine -->
+                                                            <ProgressBar Grid.Row="1"
+                                                                         Value="{Binding UsedPercentage}"
+                                                                         Maximum="100"
+                                                                         Height="10" Margin="0,6,0,0"
+                                                                         Background="#33000000">
+                                                                <ProgressBar.Style>
+                                                                    <Style TargetType="ProgressBar">
+                                                                        <Setter Property="Foreground" Value="#0078D7"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding UsedTenthsInt}" Value="8">
+                                                                                <Setter Property="Foreground" Value="DarkOrange"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding UsedTenthsInt}" Value="9">
+                                                                                <Setter Property="Foreground" Value="DarkRed"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding UsedTenthsInt}" Value="10">
+                                                                                <Setter Property="Foreground" Value="DarkRed"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </ProgressBar.Style>
+                                                            </ProgressBar>
+                                                        </Grid>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </GroupBox>
 
 
 
-                            </Grid>
+                                </Grid>
+                            </Border>
                         </Grid>
                         <Border Background="{DynamicResource MainBackgourndBrush}" CornerRadius="0,0,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="50" Margin="0,0,0,0"/>
                         <ButtonEx x:Name="BackButton" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{StaticResource IconBButton}" Content="{DynamicResource LOCBackLabel}" />
@@ -7651,6 +7831,7 @@
         </Style.Triggers>
     </Style>
 
+    <!-- Vue ControlCenter -->
     <Style x:Key="ControlCenterWindowStyle" TargetType="ContentControl">
         <Setter Property="Template">
             <Setter.Value>
@@ -7838,8 +8019,6 @@
                                             </Grid>
                                         </CheckBoxEx.Content>
                                     </CheckBoxEx>
-
-
 
 
                                 </StackPanel>
@@ -8461,5 +8640,873 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+
+    <!-- Vue News et Last Updates-->
+    <Style x:Key="LastUpdatesWindowStyle" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid
+                        FocusManager.FocusedElement="{Binding ElementName=NewsList}"
+                        KeyboardNavigation.TabNavigation="Contained"
+                        KeyboardNavigation.DirectionalNavigation="Contained"
+                        Opacity="0"
+                        Background="{DynamicResource DynamicGlowBackgroundSuccess}">
+
+                        <Grid.RenderTransform>
+                            <TranslateTransform Y="0"/>
+                        </Grid.RenderTransform>
+
+                        <!-- petite anim entrée -->
+                        <Grid.Triggers>
+                            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.3"/>
+                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" From="-20" To="0" Duration="0:0:0.3"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Grid.Triggers>
+
+                        <Grid.Resources>
+
+                            <!-- Style de base pour un onglet "dossier" (état INACTIF) -->
+                            <Style x:Key="TabButtonBaseStyle" TargetType="ButtonEx">
+                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                                <Setter Property="FontSize" Value="22"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                <Setter Property="Padding" Value="20,8,20,8"/>
+                                <Setter Property="Margin" Value="0,0,8,0"/>
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ButtonEx">
+                                            <Grid>
+                                                <!-- onglet -->
+                                                <Border x:Name="TabBorder"
+                                                        CornerRadius="12,12,0,0"
+                                                        Background="#66000000"
+                                                        BorderThickness="1,1,1,0"
+                                                        BorderBrush="{DynamicResource MenuBorderBrush}"
+                                                        Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter HorizontalAlignment="Center"
+                                                                      VerticalAlignment="Center"/>
+                                                </Border>
+                                            </Grid>
+
+                                            <ControlTemplate.Triggers>
+
+                                                <!-- hover souris -->
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="TabBorder"
+                                                            Property="Background"
+                                                            Value="{DynamicResource OverlayMenu}"/>
+                                                </Trigger>
+
+                                                <!-- focus clavier / manette -->
+                                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                    <Setter TargetName="TabBorder"
+                                                            Property="BorderBrush"
+                                                            Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                    <Setter TargetName="TabBorder"
+                                                            Property="BorderThickness"
+                                                            Value="3,3,3,0"/>
+                                                    <Setter TargetName="TabBorder"
+                                                            Property="Background"
+                                                            Value="{DynamicResource OverlayMenu}"/>
+                                                </Trigger>
+
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+
+                            <!-- Onglet NEWS : actif quand ModeUpdatesInternal == False -->
+                            <Style x:Key="NewsTabStyle"
+                                   TargetType="ButtonEx"
+                                   BasedOn="{StaticResource TabButtonBaseStyle}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=ModeUpdatesInternal}"
+                                                 Value="False">
+                                        <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="Margin" Value="0,0,8,0"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ButtonEx">
+                                                    <Grid>
+                                                        <!-- onglet actif -->
+                                                        <Border x:Name="TabBorder"
+                                                                CornerRadius="12,12,0,0"
+                                                                Background="#10FFFFFF"
+                                                                BorderThickness="1,1,1,0"
+                                                                BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                                Padding="{TemplateBinding Padding}">
+                                                            <ContentPresenter HorizontalAlignment="Center"
+                                                                              VerticalAlignment="Center"/>
+                                                        </Border>
+                                                    </Grid>
+
+                                                    <ControlTemplate.Triggers>
+                                                        <!-- hover souris -->
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="TabBorder"
+                                                                    Property="Background"
+                                                                    Value="{DynamicResource OverlayMenu}"/>
+                                                        </Trigger>
+
+                                                        <!-- focus clavier / manette sur l’onglet ACTIF -->
+                                                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                            <Setter TargetName="TabBorder"
+                                                                    Property="BorderThickness"
+                                                                    Value="3,3,3,0"/>
+                                                            <Setter TargetName="TabBorder"
+                                                                    Property="Background"
+                                                                    Value="{DynamicResource OverlayMenu}"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+
+                            <!-- Onglet UPDATES : actif quand ModeUpdatesInternal == True -->
+                            <Style x:Key="UpdatesTabStyle"
+                                   TargetType="ButtonEx"
+                                   BasedOn="{StaticResource TabButtonBaseStyle}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsChecked, ElementName=ModeUpdatesInternal}"
+                                                 Value="True">
+                                        <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="Margin" Value="0,0,8,0"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ButtonEx">
+                                                    <Grid>
+
+                                                        <!-- onglet actif -->
+                                                        <Border x:Name="TabBorder"
+                                                                CornerRadius="12,12,0,0"
+                                                                Background="#10FFFFFF"
+                                                                BorderThickness="1,1,1,0"
+                                                                BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                                Padding="{TemplateBinding Padding}">
+                                                            <ContentPresenter HorizontalAlignment="Center"
+                                                                              VerticalAlignment="Center"/>
+                                                        </Border>
+                                                    </Grid>
+
+                                                    <ControlTemplate.Triggers>
+                                                        <!-- hover souris -->
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="TabBorder"
+                                                                    Property="Background"
+                                                                    Value="{DynamicResource OverlayMenu}"/>
+                                                        </Trigger>
+
+                                                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                            <Setter TargetName="TabBorder"
+                                                                    Property="BorderThickness"
+                                                                    Value="3,3,3,0"/>
+                                                            <Setter TargetName="TabBorder"
+                                                                    Property="Background"
+                                                                    Value="{DynamicResource OverlayMenu}"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+
+
+                        </Grid.Resources>
+
+                        <!-- état interne News / Updates -->
+                        <ToggleButtonEx x:Name="ModeUpdatesInternal"
+                                        Visibility="Collapsed"
+                                        IsChecked="False"/>
+
+                        <!-- BARRE ONGLET -->
+                        <Grid x:Name="TabsHeader" Panel.ZIndex="10"
+                              Margin="40,83,20,0"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Onglets -->
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Left"
+                                        Margin="0,0,0,-1">
+
+                                <!-- Bouton NEWS -->
+                                <ButtonEx x:Name="NewsTabBtn"
+                                          Content="News"
+                                          Style="{StaticResource NewsTabStyle}">
+                                    <ButtonEx.Triggers>
+                                        <EventTrigger RoutedEvent="ButtonBase.Click">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModeUpdatesInternal"
+                                                                                    Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame Value="False" KeyTime="0:0:0"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </ButtonEx.Triggers>
+                                </ButtonEx>
+
+                                <!-- Bouton UPDATES -->
+                                <ButtonEx x:Name="UpdatesTabBtn"
+                                          Content="Updates"
+                                          Style="{StaticResource UpdatesTabStyle}">
+                                    <ButtonEx.Triggers>
+                                        <EventTrigger RoutedEvent="ButtonBase.Click">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModeUpdatesInternal"
+                                                                                    Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame Value="True" KeyTime="0:0:0"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </ButtonEx.Triggers>
+                                </ButtonEx>
+
+                            </StackPanel>
+                        </Grid>
+
+                        <!--NewsPanel-->
+                        <Grid x:Name="NewsPanel" Panel.ZIndex="0" MaxWidth="1900" Margin="20,40,20,80" Visibility="Visible">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+
+                            <!-- Titre -->
+                            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Center">
+                                <TextBlock Text="ANIKI NEWS"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           FontSize="38"
+                                           FontWeight="SemiBold"
+                                           Typography.Capitals="AllSmallCaps"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="{DynamicResource LOCLatestNews}"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           Opacity="0.7"
+                                           FontSize="20"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+
+                            <!-- Liste des news -->
+                            <Border Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,20,10,0"
+                                    Focusable="False"
+                                    CornerRadius="12"
+                                    HorizontalAlignment="Stretch">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="#66000000"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <!-- Focus initial sur la liste -->
+                                <ListBox x:Name="NewsList"
+                                         HorizontalAlignment="Stretch"
+                                         Focusable="True"
+                                         SelectedIndex="0"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         FocusVisualStyle="{x:Null}"
+                                         KeyboardNavigation.DirectionalNavigation="Once"
+                                         KeyboardNavigation.TabNavigation="Once"
+                                         KeyboardNavigation.ControlTabNavigation="Once"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                         ScrollViewer.CanContentScroll="True"
+                                         VirtualizingPanel.IsVirtualizing="True"
+                                         VirtualizingPanel.VirtualizationMode="Recycling"
+                                         VirtualizingPanel.ScrollUnit="Item"
+                                         VirtualizingPanel.CacheLengthUnit="Item"
+                                         VirtualizingPanel.CacheLength="3"
+                                         ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SteamGlobalNews}"
+                                         pbeh:FocusBahaviors.OnVisibilityFocus="True">
+
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel Orientation="Vertical"
+                                                                    IsVirtualizing="True"
+                                                                    VirtualizationMode="Recycling"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+
+                                    <ListBox.Style>
+                                        <Style TargetType="ListBox">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
+                                        </Style>
+                                    </ListBox.Style>
+
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <Border Margin="12,6"
+                                                    Padding="8"
+                                                    HorizontalAlignment="Stretch"
+                                                    FocusVisualStyle="{x:Null}"
+                                                    Focusable="False"
+                                                    CornerRadius="10">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Background" Value="{DynamicResource SuccessMenu}"/>
+                                                        <Setter Property="BorderBrush" Value="#22FFFFFF"/>
+                                                        <Setter Property="BorderThickness" Value="1"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource OverlayMenu}"/>
+                                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                <Setter Property="BorderThickness" Value="1.5"/>
+                                                            </Trigger>
+                                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource OverlayMenu}"/>
+                                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                                <!-- CONTENU ITEM -->
+                                                <Grid Margin="4,2"
+                                                      Focusable="False"
+                                                      KeyboardNavigation.IsTabStop="False"
+                                                      KeyboardNavigation.TabNavigation="None"
+                                                      KeyboardNavigation.DirectionalNavigation="None">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="4"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <!-- Accent gauche -->
+                                                    <Border Grid.RowSpan="3" MaxHeight="120"
+                                                            Grid.Column="0"
+                                                            CornerRadius="2">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="Transparent" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsSelected,
+                                                                                 RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                                                                 Value="True">
+                                                                        <Setter Property="Background" Value="{DynamicResource TextHighlightBrush}" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                    </Border>
+
+                                                    <!-- Image -->
+                                                    <Border Grid.RowSpan="3"
+                                                            Grid.Column="1"
+                                                            MaxWidth="220"
+                                                            Height="120"
+                                                            Margin="0,0,12,0"
+                                                            CornerRadius="8"
+                                                            Background="#00000000"
+                                                            ClipToBounds="True">
+                                                        <Image Stretch="Uniform">
+                                                            <Image.Style>
+                                                                <Style TargetType="Image">
+                                                                    <Setter Property="Source" Value="{Binding LocalImagePath}" />
+                                                                    <Style.Triggers>
+
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Image.Style>
+                                                        </Image>
+                                                    </Border>
+
+                                                    <!-- Titre -->
+                                                    <TextBlock Grid.Row="0"
+                                                               Grid.Column="2"
+                                                               Text="{Binding Title}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="24"
+                                                               FontWeight="SemiBold"
+                                                               MaxWidth="600"
+                                                               TextWrapping="Wrap"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               Margin="0,2,8,0"/>
+
+                                                    <!-- Date -->
+                                                    <TextBlock Grid.Row="2"
+                                                               Grid.Column="2"
+                                                               Text="{Binding DateString}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="20"
+                                                               Opacity="0.7"
+                                                               Margin="15,4,8,4"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="Padding" Value="0"/>
+                                            <Setter Property="Margin" Value="0"/>
+                                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListBoxItem">
+                                                        <Border Background="{TemplateBinding Background}">
+                                                            <ContentPresenter
+                                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                Margin="{TemplateBinding Padding}" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="20"
+                                                      Color="#000000"
+                                                      ShadowDepth="0"
+                                                      Opacity="0.3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <!-- Détails de la news -->
+                            <Border x:Name="BorderNewsDetails"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="10,10,0,0"
+                                    Focusable="False"
+                                    CornerRadius="12"
+                                    HorizontalAlignment="Stretch">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <Grid DataContext="{Binding SelectedItem, ElementName=NewsList}">
+
+                                    <!-- Contenu -->
+                                    <Grid Margin="10,0,10,10">
+                                        <Border x:Name="BorderNews" Grid.Row="1" Grid.Column="1" Margin="10,20,0,0" Focusable="False" CornerRadius="12" HorizontalAlignment="Stretch">
+                                            <Border.OpacityMask>
+                                                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                                    <GradientStop Color="#00FFFFFF" Offset="0"/>
+                                                    <GradientStop Color="#FF000000" Offset="0.5"/>
+                                                </LinearGradientBrush>
+                                            </Border.OpacityMask>
+                                            <ScrollViewerEx x:Name="NewsContentScroll"
+                                                            Focusable="True"
+                                                            IsTabStop="True"
+                                                            FocusVisualStyle="{x:Null}"
+                                                            PanningMode="VerticalOnly"
+                                                            ScrollViewer.CanContentScroll="False"
+                                                            VerticalScrollBarVisibility="Auto">
+
+                                                <HtmlTextView x:Name="NewsContent"
+                                                              HtmlText="{Binding HtmlDescription}"
+                                                              HtmlFontFamily="{DynamicResource FontFamily}"
+                                                              HtmlForeground="{DynamicResource TextColor}"
+                                                              LinkForeground="{DynamicResource GlyphColor}"
+                                                              HtmlFontSize="{DynamicResource FontSize}"
+                                                              Focusable="False"
+                                                              IsTabStop="False" />
+                                            </ScrollViewerEx>
+                                        </Border>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <!--UpdatePanel-->
+                        <Grid x:Name="UpdatePanel" Panel.ZIndex="0" MaxWidth="1900" Margin="20,40,20,80" Visibility="Collapsed">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Titre -->
+                            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Vertical" HorizontalAlignment="Center">
+                                <TextBlock Text="{DynamicResource LOCLatestGamesUpdates}"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           FontSize="38"
+                                           FontWeight="SemiBold"
+                                           Typography.Capitals="AllSmallCaps"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="{DynamicResource LOCMostRecentPatchedGames}"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           Opacity="0.7"
+                                           FontSize="20"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                            <!-- Liste Update-->
+                            <Border Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,20,10,0"
+                                    Focusable="False"
+                                    CornerRadius="12"
+                                    HorizontalAlignment="Stretch">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="#66000000"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <ListBox x:Name="UpdateList"
+                                         HorizontalAlignment="Stretch"
+                                         Focusable="True"
+                                         SelectedIndex="0"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         FocusVisualStyle="{x:Null}"
+                                         KeyboardNavigation.DirectionalNavigation="Once"
+                                         KeyboardNavigation.TabNavigation="Once"
+                                         KeyboardNavigation.ControlTabNavigation="Once"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                         ScrollViewer.CanContentScroll="True"
+                                         VirtualizingPanel.IsVirtualizing="True"
+                                         VirtualizingPanel.VirtualizationMode="Recycling"
+                                         VirtualizingPanel.ScrollUnit="Item"
+                                         VirtualizingPanel.CacheLengthUnit="Item"
+                                         VirtualizingPanel.CacheLength="3"
+                                         ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SteamRecentUpdates}">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel Orientation="Vertical"
+                                                                    IsVirtualizing="True"
+                                                                    VirtualizationMode="Recycling"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+
+                                    <ListBox.Style>
+                                        <Style TargetType="ListBox">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
+                                        </Style>
+                                    </ListBox.Style>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Margin="12,6"
+                                                    Padding="8"
+                                                    HorizontalAlignment="Stretch"
+                                                    FocusVisualStyle="{x:Null}"
+                                                    Focusable="False"
+                                                    CornerRadius="10">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Background" Value="{DynamicResource SuccessMenu}"/>
+                                                        <Setter Property="BorderBrush" Value="#22FFFFFF"/>
+                                                        <Setter Property="BorderThickness" Value="1"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource OverlayMenu}"/>
+                                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                <Setter Property="BorderThickness" Value="1.5"/>
+                                                            </Trigger>
+                                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource OverlayMenu}"/>
+                                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                                <Grid Margin="4,2"
+                                                      Focusable="False"
+                                                      KeyboardNavigation.IsTabStop="False"
+                                                      KeyboardNavigation.TabNavigation="None"
+                                                      KeyboardNavigation.DirectionalNavigation="None">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="4"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <Border x:Name="NewUpdateBadge" Grid.Column="3" Width="50" Height="50" CornerRadius="20" Background="{DynamicResource ButtonPlayColor}" BorderBrush="{DynamicResource MenuBorderBrush}" BorderThickness="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,3,3,0">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsRecent}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="NEW" FontWeight="Bold" FontSize="14" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                                                    </Border>
+
+                                                    <!-- Accent -->
+                                                    <Border Grid.RowSpan="2" Grid.Column="0" CornerRadius="2">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="Transparent" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                                        <Setter Property="Background" Value="{DynamicResource TextHighlightBrush}" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                    </Border>
+                                                    <!-- Vignette / icône -->
+                                                    <Border Grid.RowSpan="2" Grid.Column="1" Width="80" MaxHeight="80" Margin="0,0,12,0" CornerRadius="8" Background="#33000000" ClipToBounds="True">
+                                                        <Image Source="{Binding CoverPath}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant">
+                                                            <Image.Style>
+                                                                <Style TargetType="Image">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding CoverPath}" Value="">
+                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding CoverPath}" Value="{x:Null}">
+                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Image.Style>
+                                                        </Image>
+                                                    </Border>
+                                                    <!-- Nom du jeu -->
+                                                    <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding GameName}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="26" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Margin="0,2,8,0"/>
+                                                    <!-- Date + titre de l’update -->
+                                                    <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,6,8,4">
+                                                        <TextBlock Text="Updated " FontSize="26" Style="{DynamicResource TextBlockBaseStyle}" Opacity="0.75"/>
+                                                        <TextBlock Text="{Binding DateString}" FontSize="26" Style="{DynamicResource TextBlockBaseStyle}" Opacity="0.75"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="Padding" Value="0"/>
+                                            <Setter Property="Margin" Value="0"/>
+                                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListBoxItem">
+                                                        <Border Background="{TemplateBinding Background}">
+                                                            <ContentPresenter
+                                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                Margin="{TemplateBinding Padding}" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="20" Color="#000000" ShadowDepth="0" Opacity="0.3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <!-- PatchNote -->
+                            <Border x:Name="BorderPatchDetails"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="10,10,0,0"
+                                    Focusable="False"
+                                    CornerRadius="12"
+                                    HorizontalAlignment="Stretch">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <Grid DataContext="{Binding SelectedItem, ElementName=UpdateList}">
+
+                                    <!-- Contenu -->
+                                    <Grid Margin="10,0,10,10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Titre "Patch Note" -->
+                                        <TextBlock Margin="10,5,10,10"
+                                                   Grid.Row="0"
+                                                   Text="{DynamicResource LOCPatchNote}"
+                                                   HorizontalAlignment="Center"
+                                                   Style="{StaticResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   FontSize="30" />
+
+                                        <!-- Titre de l’update sélectionnée -->
+                                        <TextBlock Margin="10,10,10,5"
+                                                   Grid.Row="1"
+                                                   Text="{Binding Title}"
+                                                   Style="{StaticResource InfoValueStyle}"
+                                                   FontSize="26" />
+
+                                        <!-- Zone scrollable avec masque -->
+                                        <Border x:Name="BorderPatch"
+                                                Grid.Row="2"
+                                                Margin="10,10,0,0"
+                                                Focusable="False"
+                                                CornerRadius="12"
+                                                HorizontalAlignment="Stretch">
+
+                                            <Border.OpacityMask>
+                                                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                                    <GradientStop Color="#00FFFFFF" Offset="0"/>
+                                                    <GradientStop Color="#FF000000" Offset="0.5"/>
+                                                </LinearGradientBrush>
+                                            </Border.OpacityMask>
+
+                                            <ScrollViewerEx x:Name="ContenuUpdateScroll"
+                                                            Focusable="True"
+                                                            IsTabStop="True"
+                                                            FocusVisualStyle="{x:Null}"
+                                                            PanningMode="VerticalOnly"
+                                                            ScrollViewer.CanContentScroll="False"
+                                                            VerticalScrollBarVisibility="Auto">
+                                                <HtmlTextView x:Name="ContenuUpdate"
+                                                              HtmlText="{Binding Html}"
+                                                              HtmlFontFamily="{DynamicResource FontFamily}"
+                                                              HtmlForeground="{DynamicResource TextColor}"
+                                                              LinkForeground="{DynamicResource GlyphColor}"
+                                                              HtmlFontSize="{DynamicResource FontSize}"
+                                                              Focusable="False"
+                                                              IsTabStop="False" />
+                                            </ScrollViewerEx>
+                                        </Border>
+                                    </Grid>
+
+                                </Grid>
+                            </Border>
+
+                        </Grid>
+
+                        <!-- barre bas + bouton retour -->
+                        <Border Background="{DynamicResource MainBackgourndBrush}"
+                                CornerRadius="0,0,5,5"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Bottom"
+                                Height="50"/>
+                        <ButtonEx x:Name="BackButton"
+                                  Margin="0,0,10,10"
+                                  VerticalAlignment="Bottom"
+                                  HorizontalAlignment="Right"
+                                  Style="{StaticResource IconBButton}"
+                                  Content="{DynamicResource LOCBackLabel}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!-- Mode NEWS -->
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=ModeUpdatesInternal}" Value="False">
+                            <Setter TargetName="NewsPanel" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="UpdatePanel" Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+
+                        <!-- Mode UPDATES -->
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=ModeUpdatesInternal}" Value="True">
+                            <Setter TargetName="NewsPanel" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="UpdatePanel" Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp1610">
+                <Setter Property="Margin" Value="0,-60,0,-60"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp219">
+                <Setter Property="Margin" Value="-320,0,-320,0"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
 
 </ResourceDictionary>

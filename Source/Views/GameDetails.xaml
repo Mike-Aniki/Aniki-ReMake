@@ -261,14 +261,19 @@
                                                 <Border RenderOptions.BitmapScalingMode="Fant" Margin="0,0,0,0" CornerRadius="0" Height="60" Width="60" VerticalAlignment="Center" HorizontalAlignment="Left" ClipToBounds="True" >
                                                     <Border.Style>
                                                         <Style TargetType="Border">
-                                                            <Setter Property="Background" Value="{DynamicResource Avatar99}"/>
+                                                            <Setter Property="Background" Value="{DynamicResource Avatar0}"/>
+                                                            <Setter Property="Visibility" Value="Collapsed" />
                                                             <Setter Property="Opacity" Value="1"/>
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed">
-                                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                                </DataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding ElementName=UserAvatar, Path=Source}" Value="{x:Null}" />
+                                                                        <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible" />
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Visibility" Value="Visible" />
+                                                                </MultiDataTrigger>
                                                                 <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="1">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar99}"/>
+                                                                    <Setter Property="Background" Value="{DynamicResource Avatar0}"/>
                                                                 </DataTrigger>
                                                                 <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="2">
                                                                     <Setter Property="Background" Value="{DynamicResource Avatar2}"/>
@@ -385,6 +390,30 @@
                                                         </Style>
                                                     </Border.Style>
                                                 </Border>
+
+                                                <TextBlock x:Name="ProfilePicturePath"
+                                                           Tag="{Api Paths.ConfigurationPath}"
+                                                           Visibility="Collapsed">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Text">
+                                                                <Setter.Value>
+                                                                    <MultiBinding StringFormat="{}{0}\ExtraMetadata\Themes\Common\ProfilePicture.png">
+                                                                        <Binding Path="Tag" RelativeSource="{RelativeSource Self}"/>
+                                                                    </MultiBinding>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+
+                                                <Image x:Name="UserAvatar"
+                                                       Source="{Binding ElementName=ProfilePicturePath, Path=Text}"
+                                                       Stretch="UniformToFill"
+                                                       RenderOptions.BitmapScalingMode="Fant"
+                                                       Width="60" Height="60"/>
+
+                                                <Border BorderBrush="#eaeaea" BorderThickness="2" Margin="-1" Width="60" Height="60"/>
                                             </Grid>
 
                                             <!-- Trophée -->
@@ -694,9 +723,9 @@
                                         <Border CornerRadius="0,14,14,0" IsHitTestVisible="False">
                                             <Border.Background>
                                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <GradientStop Color="#10FFFFFF" Offset="0.00"/>
-                                                    <GradientStop Color="#00000000" Offset="0.50"/>
-                                                    <GradientStop Color="#10000000" Offset="1.00"/>
+                                                    <GradientStop Color="#18FFFFFF" Offset="0.00"/>
+                                                    <GradientStop Color="#00FFFFFF" Offset="0.55"/>
+                                                    <GradientStop Color="#15000000" Offset="1.00"/>
                                                 </LinearGradientBrush>
                                             </Border.Background>
                                         </Border>
@@ -997,6 +1026,8 @@
                                                                     <TextBlock Text="&#xedd7;" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontFamily="{DynamicResource FontIcoFont}"/>
                                                                 </ButtonEx>
 
+
+
                                                                 <ButtonEx x:Name="DlcButton"
                                                                           Height="50"
                                                                           Width="50"
@@ -1098,18 +1129,12 @@
                                                                     <CheckBoxEx.Style>
                                                                         <Style TargetType="CheckBoxEx" BasedOn="{StaticResource DescPanelToggleScale}">
                                                                             <Style.Triggers>
-
-
                                                                                 <MultiDataTrigger>
                                                                                     <MultiDataTrigger.Conditions>
-                                                                                        <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[DescVisible]}" Value="False"/>
                                                                                         <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed"/>
                                                                                     </MultiDataTrigger.Conditions>
                                                                                     <Setter Property="IsChecked" Value="False"/>
                                                                                 </MultiDataTrigger>
-
-
-
                                                                             </Style.Triggers>
                                                                         </Style>
                                                                     </CheckBoxEx.Style>
@@ -1504,11 +1529,11 @@
                                                                        Text="{PluginSettings Plugin=AnikiHelper, Path=SteamCurrentPlayersString}"/>
 
                                                             <!-- Label "in game" -->
-                                                            <TextBlock Margin="0,0,0,0"
+                                                            <TextBlock Margin="6,0,0,0"
                                                                        VerticalAlignment="Center"
                                                                        Style="{StaticResource InfoValueStyle}"
                                                                        FontSize="26"
-                                                                       Text="{DynamicResource LOC_AnikiHelper_InGameCountLabel}"/>
+                                                                       Text="{DynamicResource LOCPlayerInGame}"/>
                                                         </StackPanel>
                                                     </Grid>
 
@@ -1598,7 +1623,7 @@
                                                     </ItemsControl.Style>
                                                     <ItemsControl.ItemsPanel>
                                                         <ItemsPanelTemplate>
-                                                            <WrapPanel HorizontalAlignment="Left"/>
+                                                            <StackPanel Orientation="Horizontal"/>
                                                         </ItemsPanelTemplate>
                                                     </ItemsControl.ItemsPanel>
                                                     <ItemsControl.ItemTemplate>
@@ -1754,9 +1779,9 @@
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Setter Property="Opacity" Value="0"/>
                                     <Style.Triggers>
-
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamUpdateAvailable}" Value="True"/>
                                                 <Condition Binding="{Binding ElementName=UpdatePanelToggle, Path=IsChecked}" Value="True"/>
                                                 <Condition Binding="{Binding ElementName=DescPanelToggle, Path=IsChecked}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
@@ -3575,7 +3600,7 @@
                                                    FontSize="50"
                                                    TextWrapping="Wrap"
                                                    TextTrimming="WordEllipsis"
-                                                   MaxWidth="1500"
+                                                   MaxWidth="1000"
                                                    Style="{DynamicResource TextBlockBaseStyle}" />
                                     </StackPanel>
                                 </StackPanel>

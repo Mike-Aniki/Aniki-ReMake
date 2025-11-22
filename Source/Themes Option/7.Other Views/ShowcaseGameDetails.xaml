@@ -261,14 +261,19 @@
                                                 <Border RenderOptions.BitmapScalingMode="Fant" Margin="0,0,0,0" CornerRadius="0" Height="60" Width="60" VerticalAlignment="Center" HorizontalAlignment="Left" ClipToBounds="True" >
                                                     <Border.Style>
                                                         <Style TargetType="Border">
-                                                            <Setter Property="Background" Value="{DynamicResource Avatar99}"/>
+                                                            <Setter Property="Background" Value="{DynamicResource Avatar0}"/>
+                                                            <Setter Property="Visibility" Value="Collapsed" />
                                                             <Setter Property="Opacity" Value="1"/>
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed">
-                                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                                </DataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding ElementName=UserAvatar, Path=Source}" Value="{x:Null}" />
+                                                                        <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible" />
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Visibility" Value="Visible" />
+                                                                </MultiDataTrigger>
                                                                 <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="1">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar99}"/>
+                                                                    <Setter Property="Background" Value="{DynamicResource Avatar0}"/>
                                                                 </DataTrigger>
                                                                 <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="2">
                                                                     <Setter Property="Background" Value="{DynamicResource Avatar2}"/>
@@ -385,6 +390,30 @@
                                                         </Style>
                                                     </Border.Style>
                                                 </Border>
+
+                                                <TextBlock x:Name="ProfilePicturePath"
+                                                           Tag="{Api Paths.ConfigurationPath}"
+                                                           Visibility="Collapsed">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Text">
+                                                                <Setter.Value>
+                                                                    <MultiBinding StringFormat="{}{0}\ExtraMetadata\Themes\Common\ProfilePicture.png">
+                                                                        <Binding Path="Tag" RelativeSource="{RelativeSource Self}"/>
+                                                                    </MultiBinding>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+
+                                                <Image x:Name="UserAvatar"
+                                                       Source="{Binding ElementName=ProfilePicturePath, Path=Text}"
+                                                       Stretch="UniformToFill"
+                                                       RenderOptions.BitmapScalingMode="Fant"
+                                                       Width="60" Height="60"/>
+
+                                                <Border BorderBrush="#eaeaea" BorderThickness="2" Margin="-1" Width="60" Height="60"/>
                                             </Grid>
 
                                             <!-- Trophée -->
@@ -1408,49 +1437,50 @@
 
                                     </Grid>
 
-                                    <!--InGames-->
+                                    <!-- InGames (AnikiHelper) -->
 
-                                    <Grid Margin="0,-5,0,-5">
+                                    <Grid Margin="0,4,0,0" FocusVisualStyle="{x:Null}" Focusable="False">
                                         <Grid.Style>
                                             <Style TargetType="Grid">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{PluginSettings Plugin=NewsViewer, Path=PlayersCountAvailable}" Value="True"/>
-                                                            <Condition Binding="{PluginStatus Plugin=NewsViewer_15e03ffe-90f6-4e8e-bd4d-94514777481d, Status=Installed}" Value="True"/>
-                                                        </MultiDataTrigger.Conditions>
+                                                    <!-- Afficher uniquement si le nombre de joueurs est dispo -->
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamCurrentPlayersAvailable}" Value="True">
                                                         <Setter Property="Visibility" Value="Visible"/>
-                                                    </MultiDataTrigger>
+                                                    </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Grid.Style>
+
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="34" SharedSizeGroup="InfoIcon"/>
                                             <ColumnDefinition Width="10" SharedSizeGroup="InfoGap"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="&#xecf9;" Style="{StaticResource InfoGlyphStyle}"/>
 
-                                        <StackPanel Grid.Column="2" Margin="-10,0,0,0"
+                                        <!-- Icône -->
+                                        <TextBlock Grid.Column="0"
+                                                   Text="&#xecf9;"
+                                                   Style="{StaticResource InfoGlyphStyle}"/>
+
+                                        <StackPanel Grid.Column="2"
+                                                    Margin="0,0,0,0"
                                                     Orientation="Horizontal"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Center">
 
-                                            <ContentControl x:Name="NewsViewer_PlayersInGameViewerControl"
-                                                            VerticalAlignment="Center">
-                                                <ContentControl.Resources>
-                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource InfoValueStyle}">
-                                                        <Setter Property="FontSize" Value="26"/>
-                                                    </Style>
-                                                </ContentControl.Resources>
-                                            </ContentControl>
+                                            <!-- Nombre de joueurs (depuis AnikiHelper) -->
+                                            <TextBlock VerticalAlignment="Center"
+                                                       Style="{StaticResource InfoValueStyle}"
+                                                       FontSize="26"
+                                                       Text="{PluginSettings Plugin=AnikiHelper, Path=SteamCurrentPlayersString}"/>
 
-                                            <TextBlock Margin="-26,0,0,0"
+                                            <!-- Label "in game" -->
+                                            <TextBlock Margin="6,0,0,0"
                                                        VerticalAlignment="Center"
                                                        Style="{StaticResource InfoValueStyle}"
                                                        FontSize="26"
-                                                       Text="{DynamicResource LOC_NewsViewer_PlayersInGameViewerControl_InGameCountLabel}"/>
+                                                       Text="{DynamicResource LOCPlayerInGame}"/>
                                         </StackPanel>
                                     </Grid>
 
