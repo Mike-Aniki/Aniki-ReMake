@@ -193,6 +193,8 @@
                                                     <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible" />
                                                     <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoBarMode]}" Value="False"/>
                                                     <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TopOrBottomBar]}" Value="False"/>
+                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PerformanceMode]}" Value="False"/>
+                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[FullBar]}" Value="False" />
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.EnterActions>
                                                     <BeginStoryboard>
@@ -294,7 +296,7 @@
 
 
                                         <!-- Avatar/Success -->
-                                        <Grid HorizontalAlignment="Left" Grid.Column="0" Margin="20,0,0,0">
+                                        <Grid HorizontalAlignment="Right" Grid.Column="2" Margin="0,0,20,0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="Auto"/>
@@ -302,7 +304,7 @@
                                             </Grid.ColumnDefinitions>
 
                                             <!-- Avatar -->
-                                            <Grid x:Name="Avatar" Grid.Column="0">
+                                            <Grid x:Name="Avatar" Grid.Column="1">
                                                 <Border RenderOptions.BitmapScalingMode="Fant" Margin="0,0,0,0" CornerRadius="0" Height="60" Width="60" VerticalAlignment="Center" HorizontalAlignment="Left" ClipToBounds="True" >
                                                     <Border.Style>
                                                         <Style TargetType="Border">
@@ -465,7 +467,7 @@
                                             <StackPanel x:Name="Trophée" Orientation="Horizontal"
                                                         VerticalAlignment="Center"
                                                         Margin="20,0,20,0"
-                                                        Grid.Column="1"
+                                                        Grid.Column="0"
                                                         Tag="{PluginSettings Plugin=SuccessStory, Path=HasData}">
                                                 <StackPanel.Style>
                                                     <Style TargetType="StackPanel">
@@ -531,90 +533,11 @@
 
                                             </StackPanel>
 
-                                            <!-- NowPlaying -->
-                                            <StackPanel Orientation="Horizontal" Focusable="False" Grid.Column="2"  Margin="0,0,10,15" VerticalAlignment="Bottom">
-                                                <StackPanel.Style>
-                                                    <Style TargetType="StackPanel">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Setter Property="Opacity" Value="0"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding ElementName=Id, Path=Opacity}" Value="1">
-                                                                <DataTrigger.EnterActions>
-                                                                    <BeginStoryboard>
-                                                                        <Storyboard>
-                                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                                             BeginTime="0:0:1"
-                                                                                             Duration="0:0:0.6"
-                                                                                             From="0"
-                                                                                             To="1"/>
-                                                                        </Storyboard>
-                                                                    </BeginStoryboard>
-                                                                </DataTrigger.EnterActions>
-                                                                <DataTrigger.ExitActions>
-                                                                    <BeginStoryboard>
-                                                                        <Storyboard>
-                                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                                             Duration="0:0:0"
-                                                                                             From="1"
-                                                                                             To="0"/>
-                                                                        </Storyboard>
-                                                                    </BeginStoryboard>
-                                                                </DataTrigger.ExitActions>
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{PluginStatus Plugin=NowPlaying_db4e7ade-57fb-426c-8392-60e2347a0209, Status=Installed}" Value="False">
-                                                                <Setter Property="Visibility" Value="Collapsed" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=NowPlaying, Path=IsGameRunning}" Value="True">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed">
-                                                                <Setter Property="Visibility" Value="Collapsed" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </StackPanel.Style>
-
-                                                <Image Width="32"
-                                                       Height="32"
-                                                       Source="{PluginSettings Plugin=NowPlaying, Path=RunningGame.IconPath}"
-                                                       Margin="10,5,10,5"/>
-                                                <StackPanel Orientation="Vertical">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <TextBlock x:Name="NowPlaying_Title"
-                                                                   Style="{DynamicResource TextBlockBaseStyle}"
-                                                                   Text="{DynamicResource LOCNowPlayingNP}"
-                                                                   FontSize="16"
-                                                                   Margin="10,0,5,0"/>
-                                                        <TextBlock x:Name="SessionLength"
-                                                                   Style="{DynamicResource TextBlockBaseStyle}"
-                                                                   Text="{PluginSettings Plugin=NowPlaying, Path=SessionLength}"
-                                                                   FontSize="15"
-                                                                   VerticalAlignment="Bottom"
-                                                                   Margin="0,0,10,0"/>
-                                                    </StackPanel>
-
-                                                    <TextBlock x:Name="NowPlaying_Game"
-                                                               Style="{DynamicResource TextBlockBoldBaseStyle}"
-                                                               Text="{PluginSettings Plugin=NowPlaying, Path=RunningGame.GameName}"
-                                                               FontSize="16"
-                                                               Margin="10,0,10,0"
-                                                               TextTrimming="WordEllipsis"
-                                                               MaxWidth="250"/>
-
-                                                </StackPanel>
-                                                <StackPanel.Effect>
-                                                    <DropShadowEffect ShadowDepth="2" Color="Black" BlurRadius="2" RenderingBias="Performance" Opacity="0.8"/>
-                                                </StackPanel.Effect>
-                                            </StackPanel>
-
                                         </Grid>
 
 
-
-
-
                                         <!-- Image de Source -->
-                                        <Border x:Name="SourceIconBorder" HorizontalAlignment="Right"  Grid.Column="2" Opacity="1">
+                                        <Border x:Name="SourceIconBorder" HorizontalAlignment="Left" Margin="20,0,0,0" Grid.Column="0" Opacity="1">
                                             <Border.Style>
                                                 <Style TargetType="Border">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -629,8 +552,8 @@
                                                 <Image x:Name="SourceIcons" Source="{ThemeFileBinding Source.Name, PathFormat='Icons/Source/{0}.png'}"
                                                        RenderOptions.BitmapScalingMode="Fant"
                                                        VerticalAlignment="Center"
-                                                       HorizontalAlignment="Left"
-                                                       MaxHeight="50"
+                                                       HorizontalAlignment="Center"
+                                                       MaxHeight="70"
                                                        MaxWidth="180"
                                                        Margin="0,0,40,0">
                                                     <Image.Style>
@@ -647,8 +570,8 @@
                                                 <Image x:Name="PlateformIcons" Source="{ThemeFileBinding Platforms[0].Name, PathFormat='Icons/Source/{0}.png'}"
                                                        RenderOptions.BitmapScalingMode="Fant"
                                                        VerticalAlignment="Center"
-                                                       HorizontalAlignment="Left"
-                                                       MaxHeight="50"
+                                                       HorizontalAlignment="Center"
+                                                       MaxHeight="70"
                                                        MaxWidth="180"
                                                        Margin="0,0,40,0">
                                                     <Image.Style>
@@ -1095,6 +1018,56 @@
                                                     </CheckBoxEx.Triggers>
                                                 </CheckBoxEx>
 
+                                                <CheckBoxEx x:Name="ScreenshotUtilitiesToggle"
+                                                            Height="50"
+                                                            Width="50"
+                                                            Margin="0,0,10,0"
+                                                            FocusVisualStyle="{x:Null}">
+
+                                                    <TextBlock Text="&#xec5f;"
+                                                               FontSize="22"
+                                                               FontFamily="{DynamicResource FontIcoFont}"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"/>
+
+                                                    <CheckBoxEx.Style>
+                                                        <Style TargetType="CheckBoxEx" BasedOn="{StaticResource DescPanelToggleScale}">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                            <Style.Triggers>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="IsChecked" Value="False"/>
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{PluginSettings Plugin=ScreenshotUtilities, Path=CurrentScreenshotGroups.ScreenshotCount}" Value="0"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </MultiDataTrigger>
+                                                                <DataTrigger Binding="{PluginStatus Plugin=ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90, Status=Installed}" Value="False">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </CheckBoxEx.Style>
+                                                    <CheckBoxEx.Triggers>
+                                                        <EventTrigger RoutedEvent="ButtonBase.Click">
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <ObjectAnimationUsingKeyFrames
+                                                                        Storyboard.TargetName="OpenViewSound"
+                                                                        Storyboard.TargetProperty="LoadedBehavior">
+                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
+                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
+                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </EventTrigger>
+                                                    </CheckBoxEx.Triggers>
+                                                </CheckBoxEx>
+
 
                                                 <CheckBoxEx x:Name="UpdatePanelToggle"
                                                             Height="50"
@@ -1288,6 +1261,9 @@
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{PluginSettings Plugin=SuccessStory, Path=HasData}" Value="False">
                                                     <Setter  Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="False">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -1947,6 +1923,255 @@
                                 </Style>
                             </Grid.Style>
                         </Grid>
+
+                        <!-- PANNEAU SCREENSHOT UTILITIES -->
+                        <Grid x:Name="ScreenshotUtilitiesGrid"
+                              Grid.RowSpan="3"
+                              Grid.ColumnSpan="3"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Center"
+                              Width="1100"
+                              Panel.ZIndex="50"
+                              FocusVisualStyle="{x:Null}"
+                              RenderTransformOrigin="1,0">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <TranslateTransform x:Name="ScreenshotUtilitiesRightTranslate" X="0" Y="0"/>
+                                </TransformGroup>
+                            </Grid.RenderTransform>
+
+                            <Grid>
+                                <!-- Fond verre fumé -->
+                                <Border Background="{DynamicResource OverlayMenu}"
+                                        CornerRadius="16,0,0,16"
+                                        Opacity="1"/>
+
+                                <!-- Reflet vertical discret -->
+                                <Border CornerRadius="16,0,0,16"
+                                        Background="{DynamicResource GlassMainBrush}"
+                                        IsHitTestVisible="False" />
+
+                                <!-- Liseré interne fin -->
+                                <Border CornerRadius="16,0,0,16"
+                                        BorderBrush="{DynamicResource GlassInnerLineBrush}"
+                                        Margin="1"
+                                        BorderThickness="1,1,0,1"
+                                        IsHitTestVisible="False"/>
+
+                                <Border Background="Transparent"
+                                        CornerRadius="16,0,0,16"
+                                        Padding="28,24,28,24">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="BorderBrush" Value="Transparent"/>
+                                            <Style.Triggers>
+                                                <!-- Focus clavier dans le ScrollViewer -->
+                                                <DataTrigger Binding="{Binding ElementName=ScreenshotUtilitiesScrollViewer, Path=IsKeyboardFocusWithin}"
+                                                             Value="True">
+                                                    <Setter Property="BorderThickness" Value="2,2,0,2"/>
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                </DataTrigger>
+
+                                                <!-- Survol de la zone de screenshots -->
+                                                <DataTrigger Binding="{Binding ElementName=ScreenshotUtilitiesItemsControl, Path=IsMouseOver}"
+                                                             Value="True">
+                                                    <Setter Property="BorderThickness" Value="2,2,0,2"/>
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="14"
+                                                          ShadowDepth="0"
+                                                          Opacity="0.45"/>
+                                    </Border.Effect>
+                                    <Border.CacheMode>
+                                        <BitmapCache RenderAtScale="1"/>
+                                    </Border.CacheMode>
+
+
+                                    <!-- CONTENU DU PANNEAU -->
+                                    <Grid MaxWidth="1000" HorizontalAlignment="Center">
+
+
+                                        <StackPanel>
+
+                                            <!-- Titre -->
+                                            <TextBlock Text="Store screenshots"
+                                                       FontSize="28"
+                                                       FontWeight="SemiBold"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       Margin="0,0,0,16" />
+
+                                            <!-- LISTE DES GROUPES AVEC VIEWER + MINIATURES -->
+                                            <ItemsControl x:Name="ScreenshotUtilitiesItemsControl" Focusable="False"
+                                                          ItemsSource="{PluginSettings Plugin=ScreenshotUtilities, Path=CurrentScreenshotGroups}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Margin="0,0,0,32">
+
+                                                            <!-- Nom du groupe (Steam, etc.) -->
+                                                            <TextBlock Text="{Binding DisplayName}"
+                                                                       FontSize="22"
+                                                                       FontWeight="SemiBold"
+                                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                                       Margin="0,0,0,8" />
+
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto" />
+                                                                    <RowDefinition Height="Auto" />
+                                                                </Grid.RowDefinitions>
+
+                                                                <!-- IMAGE PRINCIPALE -->
+                                                                <Image x:Name="StoreMainImage"
+                                                                       Source="{Binding SelectedScreenshot.DisplayPath}"
+                                                                       Height="560"
+                                                                       Stretch="Uniform"
+                                                                       HorizontalAlignment="Center"
+                                                                       VerticalAlignment="Center"
+                                                                       SnapsToDevicePixels="True"
+                                                                       RenderOptions.BitmapScalingMode="HighQuality" />
+
+
+                                                                <!-- BARRE DE MINIATURES NAVIGABLE -->
+                                                                <ListBox x:Name="StoreThumbList" Margin="0,10,0,0"
+                                                                         Grid.Row="1"
+                                                                         ItemsSource="{Binding Screenshots}"
+                                                                         SelectedItem="{Binding SelectedScreenshot, Mode=TwoWay}"
+                                                                         SelectedIndex="0"
+                                                                         Background="Transparent"
+                                                                         BorderThickness="0"
+                                                                         FocusVisualStyle="{x:Null}"
+                                                                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                                                         ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                                         ScrollViewer.CanContentScroll="True"
+                                                                         KeyboardNavigation.DirectionalNavigation="Once"
+                                                                         KeyboardNavigation.TabNavigation="Once"
+                                                                         KeyboardNavigation.ControlTabNavigation="Once">
+                                                                    <ListBox.ItemsPanel>
+                                                                        <ItemsPanelTemplate>
+                                                                            <StackPanel Orientation="Horizontal" />
+                                                                        </ItemsPanelTemplate>
+                                                                    </ListBox.ItemsPanel>
+
+                                                                    <!-- MINIATURES -->
+                                                                    <ListBox.ItemTemplate>
+                                                                        <DataTemplate>
+                                                                            <Border x:Name="ThumbCard"
+                                                                                    CornerRadius="2"
+                                                                                    RenderTransformOrigin="0.5,0.5">
+                                                                                <Border.RenderTransform>
+                                                                                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                                                                                </Border.RenderTransform>
+
+                                                                                <Image Source="{Binding DisplayThumbnail}"
+                                                                                       Width="220"
+                                                                                       Height="124"
+                                                                                       Stretch="UniformToFill"
+                                                                                       SnapsToDevicePixels="True"
+                                                                                       RenderOptions.BitmapScalingMode="Fant" />
+                                                                            </Border>
+
+                                                                            <!-- Effets focus / sélection -->
+                                                                            <DataTemplate.Triggers>
+                                                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}"
+                                                                                             Value="True">
+                                                                                    <Setter TargetName="ThumbCard"
+                                                                                            Property="BorderBrush"
+                                                                                            Value="{DynamicResource FocusGameBorderBrush}" />
+                                                                                    <Setter TargetName="ThumbCard"
+                                                                                            Property="BorderThickness"
+                                                                                            Value="3" />
+
+                                                                                </DataTrigger>
+
+                                                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsMouseOver}"
+                                                                                             Value="True">
+                                                                                    <Setter TargetName="ThumbCard"
+                                                                                            Property="BorderBrush"
+                                                                                            Value="{DynamicResource FocusGameBorderBrush}" />
+                                                                                    <Setter TargetName="ThumbCard"
+                                                                                            Property="BorderThickness"
+                                                                                            Value="3" />
+                                                                                </DataTrigger>
+                                                                            </DataTemplate.Triggers>
+                                                                        </DataTemplate>
+                                                                    </ListBox.ItemTemplate>
+
+                                                                    <!-- Style global des items -->
+                                                                    <ListBox.ItemContainerStyle>
+                                                                        <Style TargetType="ListBoxItem">
+                                                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                                            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                                                            <Setter Property="Padding" Value="0" />
+                                                                            <Setter Property="Margin" Value="0" />
+                                                                            <Setter Property="Margin" Value="10,0,10,0" />
+                                                                            <Setter Property="Background" Value="Transparent" />
+                                                                            <Setter Property="BorderThickness" Value="0" />
+                                                                            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                                                        </Style>
+                                                                    </ListBox.ItemContainerStyle>
+                                                                </ListBox>
+
+
+
+                                                            </Grid>
+
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+
+                            <!-- Animation ouverture / fermeture -->
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Setter Property="Opacity" Value="0"/>
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=ScreenshotUtilitiesToggle, Path=IsChecked}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <MultiDataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                         From="0" To="1"
+                                                                         Duration="0:0:0.18"/>
+                                                        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"
+                                                                         From="1100" To="0"
+                                                                         Duration="0:0:0.22"
+                                                                         AccelerationRatio="0.05"
+                                                                         DecelerationRatio="0.95"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </MultiDataTrigger.EnterActions>
+
+                                            <MultiDataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                         To="0"
+                                                                         Duration="0:0:0.15"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </MultiDataTrigger.ExitActions>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                        </Grid>
+
 
                         <!-- PANNEAU DESCRIPTION -->
 

@@ -123,7 +123,8 @@
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible" />
                                                     <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoBarMode]}" Value="False"/>
-                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TopOrBottomBar]}" Value="False"/>
+                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[FullBar]}" Value="False" />
+                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PerformanceMode]}" Value="False"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.EnterActions>
                                                     <BeginStoryboard>
@@ -144,52 +145,7 @@
                                                 </MultiDataTrigger.EnterActions>
                                             </MultiDataTrigger>
 
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible" />
-                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoBarMode]}" Value="False"/>
-                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TopOrBottomBar]}" Value="True"/>
-                                                </MultiDataTrigger.Conditions>
-                                                <MultiDataTrigger.Setters>
-                                                    <Setter Property="BorderThickness" Value="0,1,0,0"/>
-                                                    <Setter Property="VerticalAlignment" Value="Bottom"/>
-                                                </MultiDataTrigger.Setters>
-                                                <MultiDataTrigger.EnterActions>
-                                                    <BeginStoryboard>
-                                                        <Storyboard FillBehavior="HoldEnd">
-                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                             BeginTime="0:0:0" Duration="0:0:0"
-                                                                             From="0" To="0"/>
-                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                             BeginTime="0:0:0.5" Duration="0:0:0.2"
-                                                                             From="0" To="1"/>
-                                                            <DoubleAnimation
-                                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.Y)"
-                                                                BeginTime="0:0:0.5" Duration="0:0:0.6"
-                                                                From="80" To="0"
-                                                                AccelerationRatio="0.3" DecelerationRatio="0.7"/>
-                                                        </Storyboard>
-                                                    </BeginStoryboard>
-                                                </MultiDataTrigger.EnterActions>
-                                                <MultiDataTrigger.ExitActions>
-                                                    <BeginStoryboard>
-                                                        <Storyboard FillBehavior="Stop">
-                                                            <DoubleAnimation
-                                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.Y)"
-                                                                Duration="0:0:0.25"
-                                                                From="0" To="80"
-                                                                AccelerationRatio="0.2" DecelerationRatio="0.8"/>
-                                                            <DoubleAnimation
-                                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
-                                                                Duration="0:0:0.25"
-                                                                From="1" To="0.98"/>
-                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                             BeginTime="0:0:0.05" Duration="0:0:0.2"
-                                                                             From="1" To="0"/>
-                                                        </Storyboard>
-                                                    </BeginStoryboard>
-                                                </MultiDataTrigger.ExitActions>
-                                            </MultiDataTrigger>
+
 
                                         </Style.Triggers>
                                     </Style>
@@ -249,7 +205,7 @@
 
 
                                         <!-- Avatar/Success -->
-                                        <Grid HorizontalAlignment="Left" Grid.Column="0" Margin="20,0,0,0">
+                                        <Grid HorizontalAlignment="Right" Grid.Column="2" Margin="0,0,20,0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="Auto"/>
@@ -257,7 +213,7 @@
                                             </Grid.ColumnDefinitions>
 
                                             <!-- Avatar -->
-                                            <Grid x:Name="Avatar" Grid.Column="0">
+                                            <Grid x:Name="Avatar" Grid.Column="1">
                                                 <Border RenderOptions.BitmapScalingMode="Fant" Margin="0,0,0,0" CornerRadius="0" Height="60" Width="60" VerticalAlignment="Center" HorizontalAlignment="Left" ClipToBounds="True" >
                                                     <Border.Style>
                                                         <Style TargetType="Border">
@@ -420,7 +376,7 @@
                                             <StackPanel x:Name="Trophée" Orientation="Horizontal"
                                                         VerticalAlignment="Center"
                                                         Margin="20,0,20,0"
-                                                        Grid.Column="1"
+                                                        Grid.Column="0"
                                                         Tag="{PluginSettings Plugin=SuccessStory, Path=HasData}">
                                                 <StackPanel.Style>
                                                     <Style TargetType="StackPanel">
@@ -531,7 +487,7 @@
 
 
                                         <!-- Image de Source -->
-                                        <Border x:Name="SourceIconBorder" HorizontalAlignment="Right"  Grid.Column="2" Opacity="1">
+                                        <Border x:Name="SourceIconBorder" HorizontalAlignment="Left" Margin="20,0,0,0" Grid.Column="0" Opacity="1">
                                             <Border.Style>
                                                 <Style TargetType="Border">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -546,8 +502,8 @@
                                                 <Image x:Name="SourceIcons" Source="{ThemeFileBinding Source.Name, PathFormat='Icons/Source/{0}.png'}"
                                                        RenderOptions.BitmapScalingMode="Fant"
                                                        VerticalAlignment="Center"
-                                                       HorizontalAlignment="Left"
-                                                       MaxHeight="50"
+                                                       HorizontalAlignment="Center"
+                                                       MaxHeight="70"
                                                        MaxWidth="180"
                                                        Margin="0,0,40,0">
                                                     <Image.Style>
@@ -564,8 +520,8 @@
                                                 <Image x:Name="PlateformIcons" Source="{ThemeFileBinding Platforms[0].Name, PathFormat='Icons/Source/{0}.png'}"
                                                        RenderOptions.BitmapScalingMode="Fant"
                                                        VerticalAlignment="Center"
-                                                       HorizontalAlignment="Left"
-                                                       MaxHeight="50"
+                                                       HorizontalAlignment="Center"
+                                                       MaxHeight="70"
                                                        MaxWidth="180"
                                                        Margin="0,0,40,0">
                                                     <Image.Style>
@@ -1322,6 +1278,9 @@
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </MultiDataTrigger>
+                                                    <DataTrigger Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Grid.Style>
