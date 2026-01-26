@@ -2494,6 +2494,9 @@
                                         <DataTrigger Binding="{Binding Visibility, ElementName=PART_ElemFiltersAdditional}" Value="Visible">
                                             <Setter Property="Tag" Value="False"/>
                                         </DataTrigger>
+                                        <DataTrigger Binding="{Binding Visibility, ElementName=Power}" Value="Visible">
+                                            <Setter Property="Tag" Value="False"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </ContentControl.Style>
@@ -2509,14 +2512,14 @@
                                     CommandParameter="{Binding Data.OpenGameMenuCommand, Source={StaticResource MAIN_Commands}}"/>
 
                                 <pin:GameControllerInputBinding
+                                    Button="B"
+                                    Command="{Binding Data.Toggle, Source={StaticResource THEMEOPTIONS_Commands}}"
+                                    CommandParameter="ChangeViewButton"/>
+
+                                <pin:GameControllerInputBinding
                                     Button="Back"
                                     Command="{Binding Data.Toggle, Source={StaticResource THEMEOPTIONS_Commands}}"
                                     CommandParameter="ControlCenterButton"/>
-
-                                <pin:GameControllerInputBinding
-                                    Button="X"
-                                    Command="{Binding Data.Toggle, Source={StaticResource THEMEOPTIONS_Commands}}"
-                                    CommandParameter="ChangeViewButton"/>
 
                                 <pin:GameControllerInputBinding
                                     Button="LeftStick"
@@ -5694,7 +5697,7 @@
                                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=HasItems}" Value="False">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                                     </DataTrigger>
-                                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[FeaturesSteamMain]}" Value="True">
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[FeaturesSteamMain]}" Value="False">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
@@ -5765,6 +5768,10 @@
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </MultiDataTrigger>
+
+                                            <DataTrigger Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
 
                                             <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[SteamBanner]}" Value="True">
                                                 <Setter Property="Height" Value="480"/>
@@ -6077,6 +6084,10 @@
                                         <ButtonEx
                                             Style="{StaticResource IconSelectButton}"
                                             Content="{DynamicResource LOCQuickOptions}" />
+
+                                        <ButtonEx
+                                            Style="{StaticResource IconBButton}"
+                                            Content="{DynamicResource LOCChangeView}" />
 
 
                                         <ButtonEx x:Name="PART_ButtonInstall"
@@ -6408,7 +6419,7 @@
                                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=HasItems}" Value="False">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[FeaturesSteamMain]}" Value="True">
+                                                        <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[FeaturesSteamMain]}" Value="False">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
@@ -8631,7 +8642,7 @@
 
                                 <Border>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,0"  MaxWidth="400" >
-                                        <TextBlock Margin="0,0,10,0" Text="v2.5" HorizontalAlignment="Center" Style="{DynamicResource TextBlockBaseStyle}" FontSize="20" VerticalAlignment="Center"/>
+                                        <TextBlock Margin="0,0,10,0" Text="v2.5.1" HorizontalAlignment="Center" Style="{DynamicResource TextBlockBaseStyle}" FontSize="20" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Border>
                             </Grid>

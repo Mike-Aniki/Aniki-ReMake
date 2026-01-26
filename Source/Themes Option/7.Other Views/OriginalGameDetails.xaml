@@ -806,11 +806,6 @@
                                       HorizontalAlignment="Left"
                                       SnapsToDevicePixels="True">
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <!-- Dev + Year -->
@@ -833,7 +828,7 @@
                                     </Grid.RowDefinitions>
 
                                     <!-- Dev + Year (on garde exactement tes bindings/converter) -->
-                                    <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                                    <Grid Grid.Row="0">
                                         <Grid.Style>
                                             <Style TargetType="Grid">
                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -853,53 +848,69 @@
 
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
+
+
+
 
                                         <StackPanel Orientation="Horizontal"
                                                     Margin="0,10,5,0"
-                                                    Grid.Column="0">
+                                                    Grid.Row="0" Grid.Column="0">
+
                                             <TextBlock
                                                 Style="{StaticResource TextBlockDetailStyle}"
                                                 Opacity="0.8"
                                                 Text="{Binding Developers[0], Converter={StaticResource ListToStringConverter}}"
                                                 VerticalAlignment="Center"
-                                                FontSize="26"/>
+                                                FontSize="24"/>
                                             <TextBlock Style="{StaticResource TextBlockDetailStyle}"
                                                        Text=" : "
+                                                       FontSize="24"
                                                        Opacity="0.8"
                                                        VerticalAlignment="Center"/>
                                         </StackPanel>
-                                        <TextBlock Grid.Column="1"
+                                        <TextBlock Grid.Row="1" Grid.Column="1"
                                                    Style="{StaticResource TextBlockAltDetailStyle}"
                                                    Text="{Binding ReleaseYear, Converter={StaticResource ListToStringConverter}}"
                                                    VerticalAlignment="Center"
-                                                   FontSize="26"
+                                                   HorizontalAlignment="Left"
+                                                   FontSize="22"
                                                    Margin="0,10,0,0"/>
+
                                     </Grid>
 
                                     <!-- Critic score -->
-                                    <StackPanel Orientation="Horizontal"  Margin="0,10,5,0">
-                                        <StackPanel.Style>
-                                            <Style TargetType="StackPanel">
+                                    <Grid Grid.Row="1">
+                                        <Grid.Style>
+                                            <Style TargetType="Grid">
+                                                <Setter Property="Visibility" Value="Visible"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoStar]}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
-                                        </StackPanel.Style>
+                                        </Grid.Style>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+
                                         <StackPanel Orientation="Horizontal"
                                                     Margin="0,10,5,0"
-                                                    Grid.Row="1" Grid.Column="0">
+                                                    Grid.Row="0" Grid.Column="0">
 
                                             <TextBlock Style="{StaticResource TextBlockDetailStyle}"
                                                        Text="{DynamicResource LOCCriticScore}"
-                                                       Opacity="0.8"
+                                                       Opacity="0.8" FontSize="24"
                                                        VerticalAlignment="Center"/>
 
                                             <TextBlock Style="{StaticResource TextBlockDetailStyle}"
                                                        Text=" : "
+                                                       FontSize="24"
                                                        Opacity="0.8"
                                                        VerticalAlignment="Center"/>
                                         </StackPanel>
@@ -907,14 +918,16 @@
                                         <TextBlock Grid.Row="1" Grid.Column="1"
                                                    Style="{StaticResource TextBlockAltDetailStyle}"
                                                    Text="{Binding CriticScore}"
-                                                   FontSize="26"
+                                                   FontSize="22"
                                                    Margin="0,10,0,0"
+                                                   HorizontalAlignment="Left"
                                                    VerticalAlignment="Center"/>
 
-                                    </StackPanel>
+
+                                    </Grid>
 
                                     <!-- Time played -->
-                                    <Grid Grid.Row="3" Grid.ColumnSpan="2">
+                                    <Grid Grid.Row="2">
                                         <Grid.Style>
                                             <Style TargetType="Grid">
                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -937,13 +950,16 @@
                                         <StackPanel Orientation="Horizontal"
                                                     Margin="0,10,5,0"
                                                     Grid.Column="0">
+
                                             <TextBlock Grid.Column="0"
                                                        Text="{DynamicResource LOCTimePlayed}"
                                                        Style="{StaticResource TextBlockDetailStyle}"
                                                        Opacity="0.8"
+                                                       FontSize="24"
                                                        VerticalAlignment="Center"/>
                                             <TextBlock Style="{StaticResource TextBlockDetailStyle}"
                                                        Text=" : "
+                                                       FontSize="24"
                                                        Opacity="0.8"
                                                        VerticalAlignment="Center"/>
                                         </StackPanel>
@@ -953,14 +969,13 @@
                                                    Text="{Binding Playtime, Converter={StaticResource PlayTimeToStringConverter}}"
                                                    Style="{StaticResource TextBlockAltDetailStyle}"
                                                    Margin="0,10,0,0"
-                                                   FontSize="26"
-                                                   VerticalAlignment="Center"
-                                                   TextTrimming="CharacterEllipsis"
-                                                   MaxWidth="220"/>
+                                                   FontSize="22"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"/>
                                     </Grid>
 
                                     <!-- Last activity -->
-                                    <Grid Grid.Row="4" Grid.ColumnSpan="2">
+                                    <Grid Grid.Row="3">
                                         <Grid.Style>
                                             <Style TargetType="Grid">
                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -990,24 +1005,27 @@
                                                 Text="{DynamicResource LOCLastPlayedLabel}"
                                                 Style="{StaticResource TextBlockDetailStyle}"
                                                 Opacity="0.8"
+                                                FontSize="24"
                                                 VerticalAlignment="Center"/>
                                             <TextBlock Style="{StaticResource TextBlockDetailStyle}"
                                                        Text=" : "
+                                                       FontSize="24"
                                                        Opacity="0.8"
                                                        VerticalAlignment="Center"/>
                                         </StackPanel>
 
                                         <TextBlock Grid.Column="1"
                                                    x:Name="Played"
-                                                   FontSize="26"
+                                                   FontSize="22"
                                                    Text="{Binding LastActivity, StringFormat='{}{0:dd MMM yyyy}'}"
                                                    Style="{StaticResource TextBlockAltDetailStyle}"
                                                    Margin="0,10,0,0"
+                                                   HorizontalAlignment="Left"
                                                    VerticalAlignment="Center"/>
                                     </Grid>
 
                                     <!-- Size -->
-                                    <Grid Grid.Row="5" Grid.ColumnSpan="2">
+                                    <Grid Grid.Row="4" >
                                         <Grid.Style>
                                             <Style TargetType="Grid">
                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -1037,23 +1055,27 @@
                                                 Text="{DynamicResource LOCInstallSizeLabel}"
                                                 Style="{StaticResource TextBlockDetailStyle}"
                                                 Opacity="0.8"
+                                                FontSize="24"
                                                 VerticalAlignment="Center"/>
                                             <TextBlock Style="{StaticResource TextBlockDetailStyle}"
                                                        Text=" : "
+                                                       FontSize="24"
                                                        Opacity="0.8"
                                                        VerticalAlignment="Center"/>
                                         </StackPanel>
 
                                         <TextBlock Grid.Column="1"
                                                    x:Name="Siz"
+                                                   FontSize="22"
                                                    Text="{Binding InstallSize, Converter={StaticResource NullableUlongBytesSizeToStringConverter}, StringFormat='{}{0}'}"
                                                    Style="{StaticResource TextBlockAltDetailStyle}"
                                                    Margin="0,10,0,0"
+                                                   HorizontalAlignment="Left"
                                                    VerticalAlignment="Center"/>
                                     </Grid>
 
                                     <!-- Completed -->
-                                    <Grid Grid.Row="6" Grid.ColumnSpan="2">
+                                    <Grid Grid.Row="5">
                                         <Grid.Style>
                                             <Style TargetType="Grid">
                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -1083,10 +1105,11 @@
                                                 Text="{DynamicResource LOCCompletionStatus}"
                                                 Style="{StaticResource TextBlockDetailStyle}"
                                                 Opacity="0.8"
-
+                                                FontSize="24"
                                                 VerticalAlignment="Center"/>
                                             <TextBlock Style="{StaticResource TextBlockDetailStyle}"
                                                        Text=" : "
+                                                       FontSize="24"
                                                        Opacity="0.8"
                                                        VerticalAlignment="Center"/>
                                         </StackPanel>
@@ -1094,12 +1117,14 @@
                                                    x:Name="Completed"
                                                    Text="{Binding CompletionStatus, Converter={StaticResource ListToStringConverter}}"
                                                    Style="{StaticResource TextBlockAltDetailStyle}"
+                                                   FontSize="22"
                                                    Margin="0,10,0,0"
+                                                   HorizontalAlignment="Left"
                                                    VerticalAlignment="Center"/>
                                     </Grid>
 
                                     <!-- Trophée -->
-                                    <Grid Grid.Row="7" Grid.ColumnSpan="2">
+                                    <Grid Grid.Row="6">
                                         <Grid.Style>
                                             <Style TargetType="Grid">
                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -1128,10 +1153,12 @@
                                             <TextBlock
                                                 Style="{StaticResource TextBlockDetailStyle}"
                                                 Opacity="0.8"
+                                                FontSize="24"
                                                 VerticalAlignment="Center"
                                                 Text="{DynamicResource LOCSuccessStoryAchievements}"/>
                                             <TextBlock Style="{StaticResource TextBlockDetailStyle}"
                                                        Text=" : "
+                                                       FontSize="24"
                                                        Opacity="0.8"
                                                        VerticalAlignment="Center"/>
                                         </StackPanel>
@@ -1139,21 +1166,25 @@
                                         <StackPanel Grid.Column="1"
                                                     Orientation="Horizontal"
                                                     Margin="0,10,0,0"
+                                                    HorizontalAlignment="Left"
                                                     VerticalAlignment="Center">
                                             <TextBlock Margin="2,0,2,0"
+                                                       FontSize="22"
                                                        Text="{PluginSettings Plugin=SuccessStory, Path=Unlocked, FallbackValue='-'}"
                                                        Style="{DynamicResource TextBlockAltDetailStyle}" />
                                             <TextBlock Margin="2,0,2,0"
                                                        Text="/"
+                                                       FontSize="22"
                                                        Style="{DynamicResource TextBlockAltDetailStyle}" />
                                             <TextBlock Margin="2,0,2,0"
+                                                       FontSize="22"
                                                        Text="{PluginSettings Plugin=SuccessStory, Path=Total, FallbackValue='-'}"
                                                        Style="{DynamicResource TextBlockAltDetailStyle}" />
                                         </StackPanel>
                                     </Grid>
 
                                     <!-- Current players -->
-                                    <Grid Grid.Row="8" Grid.ColumnSpan="2">
+                                    <Grid Grid.Row="7">
                                         <Grid.Style>
                                             <Style TargetType="Grid">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -1180,17 +1211,20 @@
                                                 Text="{DynamicResource LOCPlayerInGame}"
                                                 Style="{StaticResource TextBlockDetailStyle}"
                                                 Opacity="0.8"
+                                                FontSize="24"
                                                 VerticalAlignment="Center"/>
                                             <TextBlock Style="{StaticResource TextBlockDetailStyle}"
                                                        Text=" : "
+                                                       FontSize="24"
                                                        Opacity="0.8"
                                                        VerticalAlignment="Center"/>
                                         </StackPanel>
                                         <TextBlock Grid.Column="1"
                                                    Text="{PluginSettings Plugin=AnikiHelper, Path=SteamCurrentPlayersString}"
                                                    Style="{StaticResource TextBlockAltDetailStyle}"
-                                                   FontSize="26"
+                                                   FontSize="22"
                                                    Margin="0,10,0,0"
+                                                   HorizontalAlignment="Left"
                                                    VerticalAlignment="Center"/>
                                     </Grid>
 
@@ -1549,9 +1583,9 @@
                                     <ScrollViewerEx x:Name="PART_ScrollHtmlDescription" FocusVisualStyle="{x:Null}" MaxHeight="300"
                                                     ScrollViewer.VerticalScrollBarVisibility="Hidden" >
                                         <HtmlTextView x:Name="PART_HtmlDescription"
-                                                      HtmlFontSize="{DynamicResource FontSize}" HtmlFontFamily="Segoe UI"
-                                                      HtmlForeground="White"
-                                                      LinkForeground="White"
+                                                      HtmlFontSize="20" HtmlFontFamily="OCR A Extended"
+                                                      HtmlForeground="{DynamicResource TextColor}"
+                                                      LinkForeground="{DynamicResource GlyphColor}"
                                                       FocusVisualStyle="{x:Null}" />
                                     </ScrollViewerEx>
                                 </Border>
