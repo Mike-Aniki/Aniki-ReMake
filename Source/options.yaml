@@ -15,12 +15,6 @@ Presets:
                 Files:
                     - Themes Option\2.Interface\7.ArcticLight.xaml
 
-            Flat:
-                Name: Flat Midnight
-                Preview: Themes Option\2.Interface\Images\1.Color\Flat.png
-                Files:
-                    - Themes Option\2.Interface\43.Flat.xaml
-
             AnikiEssence:
                 Name: Aniki Essence
                 Preview: Themes Option\2.Interface\Images\1.Color\AnikiEssence.png
@@ -277,6 +271,36 @@ Presets:
                 Preview: Themes Option\2.Interface\Images\44.ClairObscur\SettingsBackground.png
                 Files:
                     - Themes Option\2.Interface\44.ClairObscur.xaml
+
+            FlatBlack:
+                Name: Flat Black
+                Preview: Themes Option\2.Interface\Images\1.Color\Flat-Black.png
+                Files:
+                    - Themes Option\2.Interface\46.Flat-Black.xaml
+
+            FlatBlue:
+                Name: Flat Blue
+                Preview: Themes Option\2.Interface\Images\1.Color\Flat-Blue.png
+                Files:
+                    - Themes Option\2.Interface\47.Flat-Blue.xaml
+
+            FlatRed:
+                Name: Flat Red
+                Preview: Themes Option\2.Interface\Images\1.Color\Flat-Red.png
+                Files:
+                    - Themes Option\2.Interface\48.Flat-Red.xaml
+
+            FlatPink:
+                Name: Flat Pink
+                Preview: Themes Option\2.Interface\Images\1.Color\Flat-Pink.png
+                Files:
+                    - Themes Option\2.Interface\49.Flat-Pink.xaml
+
+            FlatMidnight:
+                Name: Flat Midnight
+                Preview: Themes Option\2.Interface\Images\1.Color\Flat-Midnight.png
+                Files:
+                    - Themes Option\2.Interface\43.Flat-Midnight.xaml
 
             Dynamic:
                 Name: Dynamic Colors
@@ -971,7 +995,7 @@ Variables:
         Type: Boolean
         Default: False
     SteamBannerDesc:
-        Title: Prevents stretching and adds a bottom shade for Steam hero images.
+        Title: Adapts the interface to Steam banner format for a clean, uncropped display. Some layout options may not apply in this mode.
         LocKey: LOCSteamBannerDesc
         Type: Header
         TitleStyle: TextThemeOptionStyleMini
@@ -991,13 +1015,8 @@ Variables:
         Default: True
 
     PlatformBanner:
-        Title: Show platform badge
+        Title: Show platform banner on covers
         LocKey: LOCPlatformBanner
-        Type: Boolean
-        Default: False
-    PlatformBannerTop:
-        Title: Display platform badge on top
-        LocKey: LOCPlatformBannerTop
         Type: Boolean
         Default: False
     
@@ -1025,17 +1044,41 @@ Variables:
         Type: Boolean
         Default: True
 
+    FeaturesSteamMain:
+        Title: Hide feature tags
+        LocKey: LOCFeaturesSteamMain
+        Type: Boolean
+        Default: False
+
     AltInfo:
         Title: Show detailed info panel on the right
         LocKey: LOCAltInfo
         Type: Boolean
         Default: False
     AltInfoDesc:
-        Title: Shows game info on the right and hides redundant badges (trophy, completed, age rating).
+        Title: Displays detailed game information in a panel on the right side of the screen and hides redundant badges (trophies, completion status, age rating).
         LocKey: LOCAltInfoDesc
         Type: Header
         TitleStyle: TextThemeOptionStyleMini
         Style: HeaderDockPanelStyleMini
+
+    TopInfoBar:
+        Title: Show info panel above game covers
+        LocKey: LOCTopInfoBar
+        Type: Boolean
+        Default: False
+    TopInfoBarDesc:
+        Title: Displays game information above the covers and replaces the controller button bar.
+        LocKey: LOCTopInfoBarDesc
+        Type: Header
+        TitleStyle: TextThemeOptionStyleMini
+        Style: HeaderDockPanelStyleMini
+
+    ButtonControllerVisibleByDefault:
+        Title: Show controller buttons
+        LocKey: LOCButtonControllerVisibleByDefault
+        Type: Boolean
+        Default: True
 
     TrailerOnMainView:
         Title: Show video trailer on main view
@@ -1056,12 +1099,6 @@ Variables:
         Type: Boolean
         Default: True
         NeedRestart: True
-
-    ButtonControllerVisibleByDefault:
-        Title: Show controller buttons
-        LocKey: LOCButtonControllerVisibleByDefault
-        Type: Boolean
-        Default: True
 
     TopButtonAlwaysVisible:
         Title: Keep top menu always visible
@@ -1177,22 +1214,16 @@ Variables:
         Type: Header
         TitleStyle: TextThemeOptionStyleMini
         Style: HeaderDockPanelStyleMini
-    
-    NoLogo:
-        Title: Display game title instead of logo
-        LocKey: LOCNoLogo
-        Type: Boolean
-        Default: False
 
     NoSource:
         Title: Show source logo on details view
         LocKey: LOCSourceLogoOnDetailsView
         Type: Boolean
-        Default: True
-
-    FeaturesSteam:
-        Title: Hide feature tags (e.g. Steam Cloud, Family Sharing)
-        LocKey: LOCFeaturesSteam
+        Default: False
+    
+    NoLogo:
+        Title: Display game title instead of logo
+        LocKey: LOCNoLogo
         Type: Boolean
         Default: False
 
@@ -1227,6 +1258,12 @@ Variables:
         Type: Header
         TitleStyle: TextThemeOptionStyle
         Style: HeaderDockPanelStyle
+
+    FeaturesSteam:
+        Title: Hide feature tags (e.g. Steam Cloud, Family Sharing)
+        LocKey: LOCFeaturesSteam
+        Type: Boolean
+        Default: False
 
     NoGenreDetails:
         Title: Hide genre
@@ -1276,7 +1313,17 @@ Variables:
         Type: Boolean
         Default: False
     
+    NoTrophyDetails:
+        Title: Hide Trophy
+        LocKey: LOCNoTrophyDetails
+        Type: Boolean
+        Default: False
 
+    NoPlayerDetails:
+        Title: Hide Player in-Game
+        LocKey: LOCNoPlayerDetails
+        Type: Boolean
+        Default: False
 
     ExtraSeparation:
         Title: Extra Options
@@ -1284,6 +1331,12 @@ Variables:
         Type: Header
         TitleStyle: TextThemeOptionStyle
         Style: HeaderDockPanelStyle
+
+    ShowMoData:
+        Title: Show internet status (via MoData)
+        LocKey: LOCShowMoData
+        Type: Boolean
+        Default: True
 
     ShowToolsButton:
         Title: Show Tools Button on top menu 
@@ -1310,37 +1363,37 @@ Variables:
         Default: Visible
         Style: SettingsSectionOffsetDockPanelStyle
     ShowMinimizeButton:
-        Title: Show Minimize button (Control Center)
+        Title: Show Minimize button (Power Menu)
         LocKey: LOCShowMinimizeButton
         Type: Boolean
         Default: True
         Style: SettingsSectionOffsetDockPanelStyle
     ShowDesktopButton:
-        Title: Show Desktop button (Control Center)
+        Title: Show Desktop button (Power Menu)
         LocKey: LOCShowDesktopButton
         Type: Boolean
         Default: True
         Style: SettingsSectionOffsetDockPanelStyle   
     ShowRestartButton:
-        Title: Show Restart button (Control Center)
+        Title: Show Restart button (Power Menu)
         LocKey: LOCShowRestartButton
         Type: Boolean
         Default: True
         Style: SettingsSectionOffsetDockPanelStyle
     ShowShutdownButton:
-        Title: Show Shutdown button (Control Center)
+        Title: Show Shutdown button (Power Menu)
         LocKey: LOCShowShutdownButton
         Type: Boolean
         Default: True
         Style: SettingsSectionOffsetDockPanelStyle
     ShowSleepButton:
-        Title: Show Sleep button (Control Center)
+        Title: Show Sleep button (Power Menu)
         LocKey: LOCShowSleepButton
         Type: Boolean
         Default: True
         Style: SettingsSectionOffsetDockPanelStyle
     ShowHibernateButton:
-        Title: Show Hibernate button (Control Center)
+        Title: Show Hibernate button (Power Menu)
         LocKey: LOCShowHibernateButton
         Type: Boolean
         Default: False

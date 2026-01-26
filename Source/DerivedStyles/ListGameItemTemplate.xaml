@@ -184,7 +184,6 @@
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
                                                         <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True"/>
-                                                        <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="False"/>
                                                     </MultiDataTrigger.Conditions>
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                 </MultiDataTrigger>
@@ -193,77 +192,6 @@
                                     </Grid.Style>
 
                                     <!-- Pas de ColumnDefinitions : on colle la bannière à gauche, hauteur = cover -->
-                                    <Grid ClipToBounds="True" SnapsToDevicePixels="True" UseLayoutRounding="True"
-                                          Width="{Binding ActualWidth, ElementName=PART_ImageCover}"
-                                          Height="{Binding ActualHeight, ElementName=PART_ImageCover}">
-                                        <Border x:Name="BannerStrip"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Stretch"
-                                                Background="Transparent"
-                                                SnapsToDevicePixels="True"
-                                                MaxWidth="25"
-                                                UseLayoutRounding="True">
-
-                                            <Grid IsHitTestVisible="False">
-                                                <Image x:Name="SourceBanner"
-                                                       RenderOptions.BitmapScalingMode="Fant"
-                                                       Stretch="Fill"
-                                                       HorizontalAlignment="Left"
-                                                       VerticalAlignment="Stretch"
-                                                       Height="{Binding ElementName=CoverImage, Path=ActualHeight}"
-                                                       Source="{ThemeFileBinding Game.Source.Name, PathFormat='Icons/Banner/{0}.png', FallbackValue={x:Null}}">
-                                                    <Image.Style>
-                                                        <Style TargetType="Image">
-                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                            <Style.Triggers>
-                                                                <Trigger Property="Source" Value="{x:Null}">
-                                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                                </Trigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Image.Style>
-                                                </Image>
-
-                                                <Image x:Name="PlatformBanner"
-                                                       RenderOptions.BitmapScalingMode="Fant"
-                                                       Stretch="Fill"
-                                                       HorizontalAlignment="Left"
-                                                       VerticalAlignment="Stretch"
-                                                       Height="{Binding ElementName=CoverImage, Path=ActualHeight}"
-                                                       Source="{ThemeFileBinding Game.Platforms[0].Name, PathFormat='Icons/Banner/{0}.png', FallbackValue={x:Null}}">
-                                                    <Image.Style>
-                                                        <Style TargetType="Image">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ElementName=SourceBanner, Path=Source}" Value="{x:Null}">
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Image.Style>
-                                                </Image>
-                                            </Grid>
-                                        </Border>
-                                    </Grid>
-                                </Grid>
-
-
-
-                                <Grid x:Name="BannerTop" IsHitTestVisible="False" Panel.ZIndex="2" Margin="0">
-                                    <Grid.Style>
-                                        <Style TargetType="Grid">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True"/>
-                                                        <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="True"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Grid.Style>
                                     <Grid ClipToBounds="True" SnapsToDevicePixels="True" UseLayoutRounding="True"
                                           Width="{Binding ActualWidth, ElementName=CoverImage}"
                                           Height="{Binding ActualHeight, ElementName=CoverImage}">
@@ -314,6 +242,10 @@
                                         <Grid Grid.Row="1"/>
                                     </Grid>
                                 </Grid>
+
+
+
+
 
 
 

@@ -7,56 +7,23 @@
     <!-- Style pour le bouton d'action de statut de jeu -->
     <Style x:Key="ButtonGameStatusAction" BasedOn="{StaticResource {x:Type ButtonEx}}" TargetType="ButtonEx">
         <Setter Property="Margin" Value="0,5,0,5" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="MinWidth" Value="240" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ButtonEx">
-                    <Grid Background="{TemplateBinding Background}" Margin="0,0,20,0">
-                        <Border CornerRadius="10" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
-
-                        <Border CornerRadius="15"
-                                Visibility="Visible"
-                                Background="Transparent"
-                                BorderThickness="2"
-                                BorderBrush="#66FFFFFF"
-                                x:Name="MainBorder">
-                            <Border.Effect>
-                                <DropShadowEffect Color="Black"
-                                                  Direction="270"
-                                                  ShadowDepth="2"
-                                                  BlurRadius="6"
-                                                  Opacity="0.4" />
-                            </Border.Effect>
-                        </Border>
-
-                        <Border x:Name="MainBorderFocus" Opacity="0" Margin="-6" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False"
-                                BorderThickness="2" CornerRadius="15" Visibility="Collapsed" />
-
+                <ControlTemplate TargetType="Button">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Border CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" Background="{DynamicResource ButtonBackgroundFocus}"
+                                x:Name="MainBackground"/>
+                        <Border x:Name="MainBorder" Margin="0"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
                         <TextBlock x:Name="Text" Style="{DynamicResource ButtonTextBlockBaseStyle}"
-                                   Foreground="{TemplateBinding Foreground}" FontWeight="SemiBold" FontSize="26"
+                                   Foreground="{TemplateBinding Foreground}" FontWeight="SemiBold"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                   Margin="25,0">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Effect">
-                                        <Setter.Value>
-                                            <DropShadowEffect Color="Black"
-                                                              BlurRadius="2"
-                                                              ShadowDepth="1"
-                                                              Opacity="0.5"/>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <!-- Si le parent bouton a le focus, enlever l'ombre -->
-                                        <DataTrigger Binding="{Binding IsFocused, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
-                                            <Setter Property="Effect" Value="{x:Null}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
+                                   Margin="25,0" FontSize="24">
                             <ContentPresenter />
                         </TextBlock>
                     </Grid>
@@ -64,26 +31,19 @@
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5" />
                         </Trigger>
+
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="BorderBrush" Value="White" TargetName="MainBorderFocus"/>
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-                            <Setter Property="Tag" Value="True" TargetName="MainBorderFocus" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorderFocus" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="MainBorder" />
-                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-                            <Setter Property="Background" Value="White" TargetName="MainBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground"  />
                         </Trigger>
+
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="White" TargetName="MainBorderFocus"/>
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
-                            <Setter Property="Tag" Value="True" TargetName="MainBorderFocus" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorderFocus" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="MainBorder" />
-                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
-                            <Setter Property="Background" Value="White" TargetName="MainBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground"  />
                         </Trigger>
+
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                            <Setter Property="Foreground" Value="Transparent" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

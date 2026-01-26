@@ -544,7 +544,7 @@
 
                         <!--Grid Panel Details-->
 
-                        <Grid x:Name="GameDetailsStack" MinHeight="400"
+                        <Grid x:Name="GameDetailsStack" Height="450"
                               Grid.Row="1" Grid.ColumnSpan="5" Grid.RowSpan="2"
                               HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
                               RenderTransformOrigin="0.5,1">
@@ -873,7 +873,7 @@
                                             <CheckBoxEx x:Name="UpdatePanelToggle"
                                                         Height="50"
                                                         Width="50"
-                                                        Margin="0,0,10,0"
+                                                        Margin="10,0,10,0"
                                                         FocusVisualStyle="{x:Null}">
                                                 <TextBlock Text="&#xefdb;"
                                                            FontSize="22"
@@ -892,6 +892,56 @@
                                                             </MultiDataTrigger>
                                                             <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamUpdateAvailable}" Value="True">
                                                                 <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </CheckBoxEx.Style>
+                                                <CheckBoxEx.Triggers>
+                                                    <EventTrigger RoutedEvent="ButtonBase.Click">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <ObjectAnimationUsingKeyFrames
+                                                                    Storyboard.TargetName="OpenViewSound"
+                                                                    Storyboard.TargetProperty="LoadedBehavior">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                </CheckBoxEx.Triggers>
+                                            </CheckBoxEx>
+
+                                            <CheckBoxEx x:Name="ScreenshotUtilitiesToggle"
+                                                        Height="50"
+                                                        Width="50"
+                                                        Margin="10,0,10,0"
+                                                        FocusVisualStyle="{x:Null}">
+
+                                                <TextBlock Text="&#xec5f;"
+                                                           FontSize="22"
+                                                           FontFamily="{DynamicResource FontIcoFont}"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"/>
+
+                                                <CheckBoxEx.Style>
+                                                    <Style TargetType="CheckBoxEx" BasedOn="{StaticResource DescPanelToggleScale}">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                        <Style.Triggers>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed"/>
+                                                                </MultiDataTrigger.Conditions>
+                                                                <Setter Property="IsChecked" Value="False"/>
+                                                            </MultiDataTrigger>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{PluginSettings Plugin=ScreenshotUtilities, Path=CurrentScreenshotGroups.ScreenshotCount}" Value="0"/>
+                                                                </MultiDataTrigger.Conditions>
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger>
+                                                            <DataTrigger Binding="{PluginStatus Plugin=ScreenshotUtilities_485d682f-73e9-4d54-b16f-b8dd49e88f90, Status=Installed}" Value="False">
+                                                                <Setter Property="Visibility" Value="Collapsed" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
@@ -1270,6 +1320,9 @@
                                                     <DataTrigger Binding="{PluginSettings Plugin=SuccessStory, Path=HasData}" Value="False">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoTrophyDetails]}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
                                                     <!-- Si pas de chiffres -> collapse -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
@@ -1406,6 +1459,9 @@
                                                     <!-- Afficher uniquement si le nombre de joueurs est dispo -->
                                                     <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamCurrentPlayersAvailable}" Value="True">
                                                         <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoPlayerDetails]}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -1753,7 +1809,12 @@
 
                         <!--Panel Update-->
 
-                        <Grid x:Name="PanelUpdateGrid" Grid.RowSpan="3" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,130,0,0" Width="1100" Panel.ZIndex="50" FocusVisualStyle="{x:Null}" RenderTransformOrigin="1,0">
+                        <Grid x:Name="PanelUpdateGrid" Grid.RowSpan="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top"
+                              Margin="0,100,0,0" Width="1300" Panel.ZIndex="50" FocusVisualStyle="{x:Null}" RenderTransformOrigin="1,0"
+                              KeyboardNavigation.TabNavigation="Cycle"
+                              KeyboardNavigation.DirectionalNavigation="Contained"
+                              KeyboardNavigation.ControlTabNavigation="None"
+                              Focusable="False">
                             <Grid.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>
@@ -1762,106 +1823,131 @@
                             </Grid.RenderTransform>
 
                             <Grid>
-                                <!-- Fond verre fumé -->
-                                <Border Background="{DynamicResource OverlayMenu}"
-                                        CornerRadius="16,0,0,16"
-                                        Opacity="0.9"/>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
 
-                                <!-- Reflet vertical discret -->
-                                <Border CornerRadius="16,0,0,16" Background="{DynamicResource GlassMainBrush}" IsHitTestVisible="False" />
-
-                                <!-- Liseré interne fin -->
-                                <Border CornerRadius="16,0,0,16"
-                                        BorderBrush="{DynamicResource GlassInnerLineBrush}"
-                                        Margin="1"
-                                        BorderThickness="1,1,0,1"
-                                        IsHitTestVisible="False"/>
-
-                                <Border Background="Transparent" CornerRadius="16,0,0,16" Padding="28,24,28,24">
-                                    <Border.Style>
-                                        <Style TargetType="Border">
-                                            <Setter Property="BorderThickness" Value="0"/>
-                                            <Setter Property="BorderBrush" Value="Transparent"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding ElementName=ContenuUpdateScroll, Path=IsKeyboardFocusWithin}" Value="True">
-                                                    <Setter Property="BorderThickness" Value="2,2,0,2"/>
-                                                    <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding ElementName=ContenuUpdateScroll, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="BorderThickness" Value="2,2,0,2"/>
-                                                    <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Border.Style>
-                                    <Border.Effect>
-                                        <DropShadowEffect BlurRadius="14" ShadowDepth="0" Opacity="0.45"/>
-                                    </Border.Effect>
-                                    <Border.CacheMode>
-                                        <BitmapCache RenderAtScale="1"/>
-                                    </Border.CacheMode>
+                                <!-- PORTE de sortie (à gauche) -->
+                                <ToggleButtonEx x:Name="PanelUpdateGridExit"
+                                                Grid.Column="0"
+                                                Width="60"
+                                                Height="60"
+                                                Margin="0,0,16,0"
+                                                VerticalAlignment="Center"
+                                                pbeh:FocusBahaviors.FocusBinding="{Binding ElementName=PanelUpdateGrid, Path=IsVisible}"
+                                                FocusVisualStyle="{x:Null}"
+                                                IsChecked="{Binding ElementName=UpdatePanelToggle, Path=IsChecked, Mode=TwoWay}"
+                                                KeyboardNavigation.DirectionalNavigation="Continue"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                TabIndex="99"
+                                                Style="{StaticResource UpdatePanelExitButtonStyle}" />
 
 
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock Margin="0,2,0,10"
-                                                   Text="{DynamicResource LOCLatestUpdate}"
-                                                   Style="{StaticResource InfoValueStyle}"
-                                                   FontSize="26" />
-                                        <!-- Titre de la news -->
-                                        <TextBlock Margin="0,2,0,5"
-                                                   Text="{PluginSettings Plugin=AnikiHelper, Path=SteamUpdateTitle}"
-                                                   Style="{StaticResource InfoValueStyle}"
-                                                   FontSize="26" />
 
-                                        <!-- Date -->
-                                        <TextBlock
-                                            Text="{PluginSettings Plugin=AnikiHelper, Path=SteamUpdateDate}"
-                                            Style="{StaticResource InfoValueStyle}"
-                                            Opacity="0.7"
-                                            Margin="0,2,0,10" />
+                                <Grid Grid.Column="1" MaxWidth="1200">
+                                    <!-- Fond verre fumé -->
+                                    <Border Background="{DynamicResource OverlayMenu}"
+                                            CornerRadius="16"
+                                            Opacity="0.9"/>
 
-                                        <!-- Contenu HTML dans ton HtmlTextView -->
-                                        <ScrollViewerEx x:Name="ContenuUpdateScroll"
-                                                        FocusVisualStyle="{x:Null}"
-                                                        KeyboardNavigation.TabNavigation="None"
-                                                        PanningMode="VerticalOnly"
-                                                        ScrollViewer.CanContentScroll="False"
-                                                        VerticalAlignment="Top"
-                                                        MaxHeight="300"
-                                                        ScrollViewer.VerticalScrollBarVisibility="Auto">
-                                            <ScrollViewerEx.Style>
-                                                <Style TargetType="ScrollViewerEx">
-                                                    <!-- Par défaut : pas focusable -->
-                                                    <Setter Property="Focusable" Value="False"/>
-                                                    <Setter Property="IsTabStop" Value="False"/>
+                                    <!-- Reflet vertical discret -->
+                                    <Border CornerRadius="16" Background="{DynamicResource GlassMainBrush}" IsHitTestVisible="False" />
 
-                                                    <Style.Triggers>
-                                                        <!-- Quand le panneau est ouvert -->
-                                                        <DataTrigger Binding="{Binding ElementName=UpdatePanelToggle, Path=IsChecked}" Value="True">
-                                                            <Setter Property="Focusable" Value="True"/>
-                                                            <Setter Property="IsTabStop" Value="True"/>
-                                                        </DataTrigger>
+                                    <!-- Liseré interne fin -->
+                                    <Border CornerRadius="16"
+                                            BorderBrush="{DynamicResource GlassInnerLineBrush}"
+                                            Margin="1"
+                                            BorderThickness="1"
+                                            IsHitTestVisible="False"/>
 
-                                                        <!-- Quand il se ferme (immédiat) -->
-                                                        <DataTrigger Binding="{Binding ElementName=UpdatePanelToggle, Path=IsChecked}" Value="False">
-                                                            <Setter Property="Focusable" Value="False"/>
-                                                            <Setter Property="IsTabStop" Value="False"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </ScrollViewerEx.Style>
+                                    <Border Background="Transparent" CornerRadius="16" Padding="28,24,28,24">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=ContenuUpdateScroll, Path=IsKeyboardFocusWithin}" Value="True">
+                                                        <Setter Property="BorderThickness" Value="2"/>
+                                                        <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ElementName=ContenuUpdateScroll, Path=IsMouseOver}" Value="True">
+                                                        <Setter Property="BorderThickness" Value="2"/>
+                                                        <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="14" ShadowDepth="0" Opacity="0.45"/>
+                                        </Border.Effect>
+                                        <Border.CacheMode>
+                                            <BitmapCache RenderAtScale="1"/>
+                                        </Border.CacheMode>
 
-                                            <HtmlTextView x:Name="ContenuUpdate"
-                                                          HtmlText="{PluginSettings Plugin=AnikiHelper, Path=SteamUpdateHtml}"
-                                                          HtmlFontFamily="{DynamicResource FontFamily}"
-                                                          HtmlForeground="{DynamicResource TextColor}"
-                                                          LinkForeground="{DynamicResource GlyphColor}"
-                                                          HtmlFontSize="{DynamicResource FontSize}" />
-                                        </ScrollViewerEx>
-                                    </StackPanel>
-                                </Border>
+
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock Margin="0,2,0,10"
+                                                       Text="{DynamicResource LOCLatestUpdate}"
+                                                       Style="{StaticResource InfoValueStyle}"
+                                                       FontSize="26" />
+                                            <!-- Titre de la news -->
+                                            <TextBlock Margin="0,2,0,5"
+                                                       Text="{PluginSettings Plugin=AnikiHelper, Path=SteamUpdateTitle}"
+                                                       Style="{StaticResource InfoValueStyle}"
+                                                       FontSize="26" />
+
+                                            <!-- Date -->
+                                            <TextBlock
+                                                Text="{PluginSettings Plugin=AnikiHelper, Path=SteamUpdateDate}"
+                                                Style="{StaticResource InfoValueStyle}"
+                                                Opacity="0.7"
+                                                Margin="0,2,0,10" />
+
+                                            <!-- Contenu HTML dans ton HtmlTextView -->
+                                            <ScrollViewerEx x:Name="ContenuUpdateScroll"
+                                                            FocusVisualStyle="{x:Null}"
+                                                            KeyboardNavigation.TabNavigation="None"
+                                                            PanningMode="VerticalOnly"
+                                                            ScrollViewer.CanContentScroll="False"
+                                                            VerticalAlignment="Top"
+                                                            MaxHeight="400"
+                                                            ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                                <ScrollViewerEx.Style>
+                                                    <Style TargetType="ScrollViewerEx">
+                                                        <!-- Par défaut : pas focusable -->
+                                                        <Setter Property="Focusable" Value="False"/>
+                                                        <Setter Property="IsTabStop" Value="False"/>
+
+                                                        <Style.Triggers>
+                                                            <!-- Quand le panneau est ouvert -->
+                                                            <DataTrigger Binding="{Binding ElementName=UpdatePanelToggle, Path=IsChecked}" Value="True">
+                                                                <Setter Property="Focusable" Value="True"/>
+                                                                <Setter Property="IsTabStop" Value="True"/>
+                                                            </DataTrigger>
+
+                                                            <!-- Quand il se ferme (immédiat) -->
+                                                            <DataTrigger Binding="{Binding ElementName=UpdatePanelToggle, Path=IsChecked}" Value="False">
+                                                                <Setter Property="Focusable" Value="False"/>
+                                                                <Setter Property="IsTabStop" Value="False"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ScrollViewerEx.Style>
+
+                                                <HtmlTextView x:Name="ContenuUpdate"
+                                                              HtmlText="{PluginSettings Plugin=AnikiHelper, Path=SteamUpdateHtml}"
+                                                              HtmlFontFamily="{DynamicResource FontFamily}"
+                                                              HtmlForeground="{DynamicResource TextColor}"
+                                                              LinkForeground="{DynamicResource GlyphColor}"
+                                                              HtmlFontSize="{DynamicResource FontSize}" />
+                                            </ScrollViewerEx>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
                             </Grid>
-
 
                             <Grid.Style>
                                 <Style TargetType="Grid">
@@ -1896,6 +1982,283 @@
                                 </Style>
                             </Grid.Style>
                         </Grid>
+
+                        <!-- PANNEAU SCREENSHOT UTILITIES -->
+                        <Grid x:Name="ScreenshotUtilitiesGrid"
+                              Grid.RowSpan="3"
+                              Grid.ColumnSpan="3"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Top"
+                              Margin="0,80,0,0"
+                              Width="1600"
+                              Panel.ZIndex="50"
+                              FocusVisualStyle="{x:Null}"
+                              RenderTransformOrigin="1,0"
+                              KeyboardNavigation.TabNavigation="Cycle"
+                              KeyboardNavigation.DirectionalNavigation="Contained"
+                              KeyboardNavigation.ControlTabNavigation="None"
+                              Focusable="False">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <TranslateTransform x:Name="ScreenshotUtilitiesRightTranslate" X="0" Y="0"/>
+                                </TransformGroup>
+                            </Grid.RenderTransform>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- PORTE de sortie (à gauche) -->
+                                <ToggleButtonEx x:Name="ScreenshotUtilitiesGridExit"
+                                                Grid.Column="0"
+                                                Width="60"
+                                                Height="60"
+                                                Margin="0,0,16,0"
+                                                VerticalAlignment="Center"
+                                                FocusVisualStyle="{x:Null}"
+                                                pbeh:FocusBahaviors.FocusBinding="{Binding ElementName=ScreenshotUtilitiesGrid, Path=IsVisible}"
+                                                IsChecked="{Binding ElementName=ScreenshotUtilitiesToggle, Path=IsChecked, Mode=TwoWay}"
+                                                KeyboardNavigation.DirectionalNavigation="Continue"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                TabIndex="99"
+                                                Style="{StaticResource UpdatePanelExitButtonStyle}" />
+
+
+
+                                <Grid Grid.Column="1">
+                                    <!-- Fond verre fumé -->
+                                    <Border Background="{DynamicResource OverlayMenu}"
+                                            CornerRadius="16"
+                                            Opacity="1"/>
+
+                                    <!-- Reflet vertical discret -->
+                                    <Border CornerRadius="16"
+                                            Background="{DynamicResource GlassMainBrush}"
+                                            IsHitTestVisible="False" />
+
+                                    <!-- Liseré interne fin -->
+                                    <Border CornerRadius="16"
+                                            BorderBrush="{DynamicResource GlassInnerLineBrush}"
+                                            Margin="1"
+                                            BorderThickness="1"
+                                            IsHitTestVisible="False"/>
+
+                                    <Border Background="Transparent"
+                                            CornerRadius="16"
+                                            Padding="28,24,28,24">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                                <Style.Triggers>
+                                                    <!-- Focus clavier dans le ScrollViewer -->
+                                                    <DataTrigger Binding="{Binding ElementName=ScreenshotUtilitiesItemsControl, Path=IsKeyboardFocusWithin}"
+                                                                 Value="True">
+                                                        <Setter Property="BorderThickness" Value="2"/>
+                                                        <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                    </DataTrigger>
+
+                                                    <!-- Survol de la zone de screenshots -->
+                                                    <DataTrigger Binding="{Binding ElementName=ScreenshotUtilitiesItemsControl, Path=IsMouseOver}"
+                                                                 Value="True">
+                                                        <Setter Property="BorderThickness" Value="2"/>
+                                                        <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+
+                                        <Border.Effect>
+                                            <DropShadowEffect BlurRadius="14"
+                                                              ShadowDepth="0"
+                                                              Opacity="0.45"/>
+                                        </Border.Effect>
+                                        <Border.CacheMode>
+                                            <BitmapCache RenderAtScale="1"/>
+                                        </Border.CacheMode>
+
+
+                                        <!-- CONTENU DU PANNEAU -->
+                                        <Grid MaxWidth="1600" HorizontalAlignment="Center">
+
+
+                                            <StackPanel>
+
+                                                <!-- Titre -->
+                                                <TextBlock Text="Store screenshots"
+                                                           FontSize="28"
+                                                           FontWeight="SemiBold"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           Margin="0,0,0,16" />
+
+                                                <!-- LISTE DES GROUPES AVEC VIEWER + MINIATURES -->
+                                                <ItemsControl x:Name="ScreenshotUtilitiesItemsControl" Focusable="False"
+                                                              ItemsSource="{PluginSettings Plugin=ScreenshotUtilities, Path=CurrentScreenshotGroups}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="0,0,0,32">
+
+                                                                <!-- Nom du groupe (Steam, etc.) -->
+                                                                <TextBlock Text="{Binding DisplayName}"
+                                                                           FontSize="22"
+                                                                           FontWeight="SemiBold"
+                                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                                           Margin="0,0,0,8" />
+
+                                                                <Grid>
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="Auto" />
+                                                                        <RowDefinition Height="Auto" />
+                                                                    </Grid.RowDefinitions>
+
+                                                                    <!-- IMAGE PRINCIPALE -->
+                                                                    <Image x:Name="StoreMainImage"
+                                                                           Source="{Binding SelectedScreenshot.DisplayPath}"
+                                                                           Height="600"
+                                                                           Stretch="Uniform"
+                                                                           HorizontalAlignment="Center"
+                                                                           VerticalAlignment="Center"
+                                                                           SnapsToDevicePixels="True"
+                                                                           RenderOptions.BitmapScalingMode="HighQuality" />
+
+
+                                                                    <!-- BARRE DE MINIATURES NAVIGABLE -->
+                                                                    <ListBox x:Name="StoreThumbList" Margin="0,10,0,0"
+                                                                             Grid.Row="1"
+                                                                             ItemsSource="{Binding Screenshots}"
+                                                                             SelectedItem="{Binding SelectedScreenshot, Mode=TwoWay}"
+                                                                             Background="Transparent"
+                                                                             BorderThickness="0"
+                                                                             FocusVisualStyle="{x:Null}"
+                                                                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                                                             ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                                             ScrollViewer.CanContentScroll="True"
+                                                                             KeyboardNavigation.DirectionalNavigation="Once"
+                                                                             KeyboardNavigation.TabNavigation="Once"
+                                                                             KeyboardNavigation.ControlTabNavigation="Once">
+                                                                        <ListBox.ItemsPanel>
+                                                                            <ItemsPanelTemplate>
+                                                                                <StackPanel Orientation="Horizontal" />
+                                                                            </ItemsPanelTemplate>
+                                                                        </ListBox.ItemsPanel>
+
+                                                                        <!-- MINIATURES -->
+                                                                        <ListBox.ItemTemplate>
+                                                                            <DataTemplate>
+                                                                                <Border x:Name="ThumbCard"
+                                                                                        CornerRadius="2"
+                                                                                        RenderTransformOrigin="0.5,0.5">
+                                                                                    <Border.RenderTransform>
+                                                                                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                                                                                    </Border.RenderTransform>
+
+                                                                                    <Image Source="{Binding DisplayThumbnail}"
+                                                                                           Width="220"
+                                                                                           Height="120"
+                                                                                           Stretch="UniformToFill"
+                                                                                           SnapsToDevicePixels="True"
+                                                                                           RenderOptions.BitmapScalingMode="Fant" />
+                                                                                </Border>
+
+                                                                                <!-- Effets focus / sélection -->
+                                                                                <DataTemplate.Triggers>
+                                                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}"
+                                                                                                 Value="True">
+                                                                                        <Setter TargetName="ThumbCard"
+                                                                                                Property="BorderBrush"
+                                                                                                Value="{DynamicResource FocusGameBorderBrush}" />
+                                                                                        <Setter TargetName="ThumbCard"
+                                                                                                Property="BorderThickness"
+                                                                                                Value="3" />
+
+                                                                                    </DataTrigger>
+
+                                                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsMouseOver}"
+                                                                                                 Value="True">
+                                                                                        <Setter TargetName="ThumbCard"
+                                                                                                Property="BorderBrush"
+                                                                                                Value="{DynamicResource FocusGameBorderBrush}" />
+                                                                                        <Setter TargetName="ThumbCard"
+                                                                                                Property="BorderThickness"
+                                                                                                Value="3" />
+                                                                                    </DataTrigger>
+                                                                                </DataTemplate.Triggers>
+                                                                            </DataTemplate>
+                                                                        </ListBox.ItemTemplate>
+
+                                                                        <!-- Style global des items -->
+                                                                        <ListBox.ItemContainerStyle>
+                                                                            <Style TargetType="ListBoxItem">
+                                                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                                                                <Setter Property="Padding" Value="0" />
+                                                                                <Setter Property="Margin" Value="0" />
+                                                                                <Setter Property="Margin" Value="10,0,10,0" />
+                                                                                <Setter Property="Background" Value="Transparent" />
+                                                                                <Setter Property="BorderThickness" Value="0" />
+                                                                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                                                            </Style>
+                                                                        </ListBox.ItemContainerStyle>
+                                                                    </ListBox>
+
+
+
+                                                                </Grid>
+
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                            <!-- Animation ouverture / fermeture -->
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Setter Property="Opacity" Value="0"/>
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=ScreenshotUtilitiesToggle, Path=IsChecked}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <MultiDataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                         From="0" To="1"
+                                                                         Duration="0:0:0.18"/>
+                                                        <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"
+                                                                         From="1100" To="0"
+                                                                         Duration="0:0:0.22"
+                                                                         AccelerationRatio="0.05"
+                                                                         DecelerationRatio="0.95"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </MultiDataTrigger.EnterActions>
+
+                                            <MultiDataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                         To="0"
+                                                                         Duration="0:0:0.15"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </MultiDataTrigger.ExitActions>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                        </Grid>
+
 
 
                         <!--Trigger-->
@@ -3586,7 +3949,6 @@
                           FocusManager.FocusedElement="{Binding ElementName=ThumbList}"
                           UseLayoutRounding="True"
                           SnapsToDevicePixels="True">
-
                         <Grid.RenderTransform>
                             <TranslateTransform Y="0"/>
                         </Grid.RenderTransform>
@@ -3659,7 +4021,7 @@
                                             <Image x:Name="Shot"
                                                    Stretch="Uniform"
                                                    SnapsToDevicePixels="True"
-                                                   RenderOptions.BitmapScalingMode="HighQuality"
+                                                   RenderOptions.BitmapScalingMode="Fant"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    MaxWidth="1920"
@@ -3706,11 +4068,11 @@
                             <Border x:Name="ViewerFrame"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Top"
-                                    Padding="14"
-                                    CornerRadius="2,2,0,0"
-                                    BorderThickness="12,12,12,228"
-                                    BorderBrush="#FFFFFF"
-                                    Background="#20000000"
+                                    Padding="0"
+                                    CornerRadius="0,0,0,0"
+                                    BorderThickness="0"
+                                    BorderBrush="Transparent"
+                                    Background="{DynamicResource ShadeBottomScreenShot}"
                                     IsHitTestVisible="False"
                                     SnapsToDevicePixels="True"
                                     Width="{Binding ElementName=Viewer, Path=ActualWidth}"
@@ -3724,8 +4086,7 @@
                                                     <StopStoryboard BeginStoryboardName="ViewerFrameFadeOut"/>
                                                     <BeginStoryboard x:Name="ViewerFrameFadeIn" HandoffBehavior="SnapshotAndReplace">
                                                         <Storyboard>
-                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                             To="1" Duration="0:0:0.1"/>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1"/>
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </DataTrigger.EnterActions>
@@ -3733,8 +4094,7 @@
                                                     <StopStoryboard BeginStoryboardName="ViewerFrameFadeIn"/>
                                                     <BeginStoryboard x:Name="ViewerFrameFadeOut" HandoffBehavior="SnapshotAndReplace">
                                                         <Storyboard>
-                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                             To="0" Duration="0:0:0.4"/>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.4"/>
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </DataTrigger.ExitActions>
@@ -3745,7 +4105,6 @@
                                             <DataTrigger Binding="{Binding ElementName=ThumbList, Path=SelectedItem.IsVideo}" Value="True">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
-
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
@@ -3774,14 +4133,12 @@
                         <Grid x:Name="ThumbBarHost"
                               FocusVisualStyle="{x:Null}"
                               Panel.ZIndex="2"
-                              Height="220"
+                              Height="300"
                               VerticalAlignment="Bottom"
                               KeyboardNavigation.DirectionalNavigation="Cycle">
-                            <Border Margin="0,0,0,30"
+                            <Border Margin="0,0,0,0"
                                     FocusVisualStyle="{x:Null}"
-                                    Background="{DynamicResource OverlayMenu}"
-                                    BorderBrush="{DynamicResource MenuBorderBrush}"
-                                    BorderThickness="0,1,0,0"
+                                    Background="Transparent"
                                     Opacity="1"
                                     IsHitTestVisible="False"/>
                             <ListBox x:Name="ThumbList"
@@ -3789,7 +4146,7 @@
                                      SelectionMode="Single"
                                      Background="Transparent"
                                      BorderThickness="0"
-                                     Margin="5,0,5,50"
+                                     Margin="0,0,0,0"
                                      FocusVisualStyle="{x:Null}"
                                      AlternationCount="10000"
                                      pbeh:FocusBahaviors.FocusBinding="True"
@@ -3852,8 +4209,8 @@
                                             <Image x:Name="ThumbImage" FocusVisualStyle="{x:Null}"
                                                    Stretch="UniformToFill"
                                                    SnapsToDevicePixels="True"
-                                                   RenderOptions.BitmapScalingMode="Linear"
-                                                   Height="130"
+                                                   RenderOptions.BitmapScalingMode="LowQuality"
+                                                   Height="150"
                                                    Panel.ZIndex="0">
                                                 <Image.Style>
                                                     <Style TargetType="Image">
@@ -3917,39 +4274,83 @@
 
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="ListBoxItem">
-                                        <Setter Property="Width" Value="232"/>
-                                        <Setter Property="Height" Value="120"/>
-                                        <Setter Property="Margin" Value="5,0,5,0"/>
+                                        <Setter Property="Width" Value="267"/>
+                                        <Setter Property="Height" Value="150"/>
+                                        <Setter Property="Margin" Value="25,0,25,0"/>
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                                         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="ListBoxItem">
-                                                    <Border x:Name="Card" CornerRadius="2" BorderThickness="2" BorderBrush="Transparent" RenderTransformOrigin="0.5,0.5">
+                                                    <Border x:Name="Card" CornerRadius="2" BorderThickness="2" BorderBrush="#40FFFFFF" RenderTransformOrigin="0.5,0.5">
                                                         <!-- >>> Le ScaleTransform est dans le template et nommé -->
                                                         <Border.RenderTransform>
-                                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                                            <ScaleTransform x:Name="CardScale" ScaleX="1" ScaleY="1"/>
                                                         </Border.RenderTransform>
 
                                                         <ContentPresenter/>
                                                     </Border>
                                                     <ControlTemplate.Triggers>
+
+                                                        <!-- SELECTED -->
                                                         <Trigger Property="IsSelected" Value="True">
                                                             <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
-                                                            <Setter TargetName="Card" Property="RenderTransform">
-                                                                <Setter.Value>
-                                                                    <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
-                                                                </Setter.Value>
-                                                            </Setter>
+
+                                                            <Trigger.EnterActions>
+                                                                <BeginStoryboard>
+                                                                    <Storyboard>
+                                                                        <DoubleAnimation Storyboard.TargetName="CardScale"
+                                                                                         Storyboard.TargetProperty="ScaleX"
+                                                                                         To="1.15" Duration="0:0:0.22">
+                                                                            <DoubleAnimation.EasingFunction>
+                                                                                <CubicEase EasingMode="EaseOut"/>
+                                                                            </DoubleAnimation.EasingFunction>
+                                                                        </DoubleAnimation>
+
+                                                                        <DoubleAnimation Storyboard.TargetName="CardScale"
+                                                                                         Storyboard.TargetProperty="ScaleY"
+                                                                                         To="1.15" Duration="0:0:0.22">
+                                                                            <DoubleAnimation.EasingFunction>
+                                                                                <CubicEase EasingMode="EaseOut"/>
+                                                                            </DoubleAnimation.EasingFunction>
+                                                                        </DoubleAnimation>
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </Trigger.EnterActions>
+
+                                                            <Trigger.ExitActions>
+                                                                <BeginStoryboard>
+                                                                    <Storyboard>
+                                                                        <DoubleAnimation Storyboard.TargetName="CardScale"
+                                                                                         Storyboard.TargetProperty="ScaleX"
+                                                                                         To="1" Duration="0:0:0.3">
+                                                                            <DoubleAnimation.EasingFunction>
+                                                                                <CubicEase EasingMode="EaseOut"/>
+                                                                            </DoubleAnimation.EasingFunction>
+                                                                        </DoubleAnimation>
+
+                                                                        <DoubleAnimation Storyboard.TargetName="CardScale"
+                                                                                         Storyboard.TargetProperty="ScaleY"
+                                                                                         To="1" Duration="0:0:0.3">
+                                                                            <DoubleAnimation.EasingFunction>
+                                                                                <CubicEase EasingMode="EaseOut"/>
+                                                                            </DoubleAnimation.EasingFunction>
+                                                                        </DoubleAnimation>
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </Trigger.ExitActions>
                                                         </Trigger>
+
+
                                                         <Trigger Property="IsMouseOver" Value="True">
                                                             <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
                                                             <Setter TargetName="Card" Property="RenderTransform">
                                                                 <Setter.Value>
-                                                                    <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
+                                                                    <ScaleTransform ScaleX="1.15" ScaleY="1.15"/>
                                                                 </Setter.Value>
                                                             </Setter>
                                                         </Trigger>
+
                                                     </ControlTemplate.Triggers>
                                                 </ControlTemplate>
                                             </Setter.Value>
@@ -3960,7 +4361,6 @@
 
                             <!-- Barre de Button -->
 
-                            <Border Background="{DynamicResource MainBackgourndBrush}" CornerRadius="0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="50" Margin="0,0,0,0"/>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
 
                                 <!-- D-Pad Gauche : Précédent -->
@@ -3989,13 +4389,9 @@
                                                                      To="1"
                                                                      Duration="0:0:0"/>
                                                     <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                     To="0.15"
-                                                                     BeginTime="0:0:3"
-                                                                     Duration="0:0:0.6"/>
-                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
                                                                      To="0"
-                                                                     BeginTime="0:0:10"
-                                                                     Duration="0:0:0.6"/>
+                                                                     BeginTime="0:0:4"
+                                                                     Duration="0:0:0.8"/>
                                                 </Storyboard>
                                             </BeginStoryboard>
                                         </EventTrigger>
