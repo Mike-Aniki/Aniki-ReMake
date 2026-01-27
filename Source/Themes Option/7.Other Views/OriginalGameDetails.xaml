@@ -626,10 +626,6 @@
                             </Border>
                         </Grid>
 
-
-
-
-
                         <!--Grid Panel Details-->
 
                         <Grid x:Name="GameDetailsStack"
@@ -887,6 +883,9 @@
                                                 <Setter Property="Visibility" Value="Visible"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoStar]}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Game.CriticScore}" Value="{x:Null}">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -3050,10 +3049,6 @@
 
                         <DataTrigger Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Content.SettingsModel.Settings.IsVideoPlaying}" Value="{StaticResource True}">
                             <Setter Property="Command" Value="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Content.VideoPauseCommand}" TargetName="TrailerPlay"/>
-                        </DataTrigger>
-
-                        <DataTrigger Binding="{Binding ElementName=TrailerPlay, Path=IsChecked}" Value="True">
-                            <Setter Property="IsChecked" Value="False" TargetName="TrailerZoom"/>
                         </DataTrigger>
 
                         <DataTrigger Binding="{Binding ElementName=TrailerMute, Path=Visibility}" Value="Collapsed">

@@ -4774,6 +4774,7 @@
                                     </Rectangle>
 
 
+
                                     <!-- Calque 3 : ShadeTrailer -->
                                     <Rectangle x:Name="RTrailer" IsHitTestVisible="False">
                                         <Rectangle.Fill>
@@ -4786,20 +4787,19 @@
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Setter Property="Opacity" Value="0"/>
                                                 <Style.Triggers>
+
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
                                                             <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
                                                             <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="True"/>
                                                             <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnMainView]}" Value="True"/>
-                                                            <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
-                                                            <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
-                                                            <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Opacity}" Value="1"/>
+                                                            <Condition Binding="{Binding ElementName=TrailerVideoLoadedFlag, Path=IsChecked}" Value="True"/>
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                         <MultiDataTrigger.EnterActions>
                                                             <BeginStoryboard>
                                                                 <Storyboard>
-                                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" BeginTime="0:0:1" Duration="0:0:0.8" From="0" To="1"/>
+                                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" BeginTime="0:0:0" Duration="0:0:0.4" From="0" To="1"/>
                                                                 </Storyboard>
                                                             </BeginStoryboard>
                                                         </MultiDataTrigger.EnterActions>
@@ -4835,9 +4835,7 @@
                                                             <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="True"/>
                                                             <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnMainView]}" Value="True"/>
                                                             <Condition Binding="{Binding ElementName=PART_ViewHost, Path=ActualWidth}" Value="1728"/>
-                                                            <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
-                                                            <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
-                                                            <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Opacity}" Value="1"/>
+                                                            <Condition Binding="{Binding ElementName=TrailerVideoLoadedFlag, Path=IsChecked}" Value="True"/>
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                     </MultiDataTrigger>
@@ -5300,17 +5298,17 @@
                             </DockPanel>
 
                             <!--Trailer-->
-                            <Border x:Name="TrailerContainer" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="5" Panel.ZIndex="-10"
-                                    VerticalAlignment="Top" HorizontalAlignment="Right" Background="Black" >
+                            <Border x:Name="TrailerContainer" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="5" Panel.ZIndex="-10" VerticalAlignment="Top" HorizontalAlignment="Right" Background="Black" >
                                 <Border.RenderTransform>
                                     <TransformGroup>
-                                        <ScaleTransform     ScaleX="1" ScaleY="1"/>
+                                        <ScaleTransform ScaleX="1" ScaleY="1"/>
                                         <TranslateTransform Y="0"/>
                                     </TransformGroup>
                                 </Border.RenderTransform>
                                 <Border.Style>
                                     <Style TargetType="Border">
                                         <Setter Property="Height" Value="800"/>
+                                        <Setter Property="HorizontalAlignment" Value="Right"/>
                                         <Setter Property="Opacity" Value="0"/>
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
@@ -5330,15 +5328,11 @@
                                                     <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
                                                     <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="True"/>
                                                     <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnMainView]}" Value="True"/>
-                                                    <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
-                                                    <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
-                                                    <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Opacity}" Value="1"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.EnterActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" BeginTime="0:0:1.5" Duration="0:0:0.5"
-                                                                             From="0" To="1">
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" BeginTime="0:0:0" Duration="0:0:0.8" From="0" To="1">
                                                                 <DoubleAnimation.EasingFunction>
                                                                     <QuinticEase EasingMode="EaseInOut"/>
                                                                 </DoubleAnimation.EasingFunction>
@@ -5354,56 +5348,63 @@
                                                     </BeginStoryboard>
                                                 </MultiDataTrigger.ExitActions>
                                             </MultiDataTrigger>
-
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
-
-                                <ContentControl x:Name="ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound" Focusable="False" Panel.ZIndex="-46"  >
-                                    <ContentControl.Style>
-                                        <Style TargetType="ContentControl">
+                                <Grid x:Name="LocalTrailerHost" Focusable="False" Panel.ZIndex="-46">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
                                             <Setter Property="HorizontalAlignment" Value="Center" />
+                                            <Setter Property="VerticalAlignment" Value="Top" />
                                             <Setter Property="Opacity" Value="0" />
                                             <Setter Property="Visibility" Value="Collapsed" />
                                             <Setter Property="Background" Value="Black" />
                                             <Style.Triggers>
+
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
                                                         <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="True"/>
                                                         <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
                                                         <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnMainView]}" Value="True"/>
-                                                        <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
+                                                        <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="True"/>
                                                     </MultiDataTrigger.Conditions>
-                                                    <Setter Property="ItemsControl.Visibility" Value="Visible" />
+                                                    <Setter Property="Visibility" Value="Visible" />
                                                 </MultiDataTrigger>
+
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
                                                         <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
                                                         <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnMainView]}" Value="True"/>
-                                                        <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
-                                                        <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
+                                                        <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="True"/>
                                                     </MultiDataTrigger.Conditions>
                                                     <MultiDataTrigger.EnterActions>
                                                         <BeginStoryboard>
                                                             <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" BeginTime="0:0:1" Duration="0:0:0" From="0" To="1"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                 BeginTime="0:0:0"
+                                                                                 Duration="0:0:0"
+                                                                                 From="0" To="1"/>
                                                             </Storyboard>
                                                         </BeginStoryboard>
                                                     </MultiDataTrigger.EnterActions>
                                                     <MultiDataTrigger.ExitActions>
                                                         <BeginStoryboard>
                                                             <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:0" From="1" To="0"/>
+                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                 Duration="0:0:0"
+                                                                                 From="1" To="0"/>
                                                             </Storyboard>
                                                         </BeginStoryboard>
                                                     </MultiDataTrigger.ExitActions>
                                                 </MultiDataTrigger>
+
+                                                <!-- Masque -->
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
                                                         <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="True"/>
                                                         <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnMainView]}" Value="True"/>
                                                     </MultiDataTrigger.Conditions>
-                                                    <Setter Property="ContentControl.OpacityMask">
+                                                    <Setter Property="OpacityMask">
                                                         <Setter.Value>
                                                             <ImageBrush ImageSource="{ThemeFile 'Images/ShadowBackground/TrailerMask.png'}"
                                                                         Stretch="Fill"
@@ -5411,22 +5412,164 @@
                                                                         AlignmentY="Center"/>
                                                         </Setter.Value>
                                                     </Setter>
-
-
                                                 </MultiDataTrigger>
+
                                                 <DataTrigger Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible">
                                                     <Setter Property="Visibility" Value="Collapsed" />
                                                 </DataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="False"/>
-                                                    </MultiDataTrigger.Conditions>
+
+                                                <DataTrigger Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="False">
                                                     <Setter Property="Visibility" Value="Collapsed" />
-                                                </MultiDataTrigger>
+                                                </DataTrigger>
+
                                             </Style.Triggers>
                                         </Style>
-                                    </ContentControl.Style>
-                                </ContentControl>
+                                    </Grid.Style>
+
+                                    <ToggleButton x:Name="TrailerVideoLoadedFlag"
+                                                  Visibility="Collapsed"
+                                                  IsHitTestVisible="False"
+                                                  Focusable="False"
+                                                  IsChecked="False"/>
+
+                                    <!-- Path -->
+                                    <TextBlock x:Name="VideoPath"
+                                               Tag="{DynamicResource ExtraMetadataPath}"
+                                               Visibility="Collapsed">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0}{1}{2}{3}">
+                                                <Binding RelativeSource="{RelativeSource Self}" Path="Tag" />
+                                                <Binding Source="\ExtraMetadata\games\"/>
+                                                <Binding Path="SelectedGame.Id"/>
+                                                <Binding Source="\VideoTrailer.mp4" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+
+                                    <!--  player  -->
+                                    <MediaElement x:Name="LocalTrailer"
+                                                  Focusable="False"
+                                                  Stretch="Uniform"
+                                                  LoadedBehavior="Play"
+                                                  UnloadedBehavior="Stop"
+                                                  MediaElementBehaviors.Repeat="True">
+                                        <MediaElement.Style>
+                                            <Style TargetType="MediaElement">
+                                                <Setter Property="Source" Value="{Binding ElementName=VideoPath, Path=Text}" />
+                                                <Setter Property="Volume" Value="0" />
+
+                                                <Style.Triggers>
+
+                                                    <!-- Si Playnite perd le focus -->
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}"
+                                                                 Value="False">
+                                                        <Setter Property="Source" Value="{x:Null}" />
+                                                    </DataTrigger>
+
+                                                    <DataTrigger Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="False">
+                                                        <Setter Property="Source" Value="{x:Null}" />
+                                                    </DataTrigger>
+
+                                                    <DataTrigger Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible">
+                                                        <Setter Property="Source" Value="{x:Null}" />
+                                                    </DataTrigger>
+
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnMainView]}" Value="False">
+                                                        <Setter Property="Source" Value="{x:Null}" />
+                                                    </DataTrigger>
+
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerSoundMainOn]}" Value="True"/>
+                                                            <Condition Binding="{Binding ElementName=TrailerVideoLoadedFlag, Path=IsChecked}" Value="True"/>
+                                                            <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
+
+                                                        </MultiDataTrigger.Conditions>
+
+                                                        <MultiDataTrigger.EnterActions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetProperty="Volume"
+                                                                                     BeginTime="0:0:0"
+                                                                                     Duration="0:0:0.8"
+                                                                                     To="1"/>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </MultiDataTrigger.EnterActions>
+
+                                                        <MultiDataTrigger.ExitActions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetProperty="Volume"
+                                                                                     Duration="0:0:0.2"
+                                                                                     To="0"/>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </MultiDataTrigger.ExitActions>
+                                                    </MultiDataTrigger>
+
+
+                                                    <DataTrigger Binding="{Binding ElementName=TOMissing, Path=Visibility}" Value="Visible">
+                                                        <Setter Property="Source" Value="{x:Null}" />
+                                                    </DataTrigger>
+
+                                                    <DataTrigger Binding="{Binding ElementName=WelcomeControl, Path=Visibility}" Value="Visible">
+                                                        <Setter Property="Source" Value="{x:Null}" />
+                                                    </DataTrigger>
+
+                                                    <!-- Si l'écran des settings est visible, on masque aussi -->
+                                                    <DataTrigger Binding="{Binding ElementName=AcceuilSettings, Path=Visibility}" Value="Visible">
+                                                        <Setter Property="Source" Value="{x:Null}" />
+                                                    </DataTrigger>
+
+                                                    <!-- Si la vidéo d'intro est pleine opacité, on masque -->
+                                                    <DataTrigger Binding="{Binding ElementName=IntroVideoBackground, Path=Opacity}" Value="1">
+                                                        <Setter Property="Source" Value="{x:Null}" />
+                                                    </DataTrigger>
+
+                                                </Style.Triggers>
+                                            </Style>
+                                        </MediaElement.Style>
+                                        <MediaElement.Triggers>
+
+                                            <EventTrigger RoutedEvent="MediaElement.MediaOpened">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="TrailerVideoLoadedFlag"
+                                                                                        Storyboard.TargetProperty="IsChecked">
+                                                            <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                                                        </BooleanAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+
+                                            <EventTrigger RoutedEvent="MediaElement.MediaFailed">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="TrailerVideoLoadedFlag"
+                                                                                        Storyboard.TargetProperty="IsChecked">
+                                                            <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
+                                                        </BooleanAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+
+                                            <EventTrigger RoutedEvent="FrameworkElement.Unloaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="TrailerVideoLoadedFlag"
+                                                                                        Storyboard.TargetProperty="IsChecked">
+                                                            <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
+                                                        </BooleanAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+
+                                        </MediaElement.Triggers>
+
+                                    </MediaElement>
+                                </Grid>
+
                             </Border >
 
                             <!--Info Alternatif -->
@@ -8050,7 +8193,7 @@
                                                 <MultiDataTrigger.EnterActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" BeginTime="0:0:1" Duration="0:0:1" From="0" To="1"/>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" BeginTime="0:0:0" Duration="0:0:0.5" From="0" To="1"/>
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </MultiDataTrigger.EnterActions>
@@ -8642,7 +8785,7 @@
 
                                 <Border>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,0"  MaxWidth="400" >
-                                        <TextBlock Margin="0,0,10,0" Text="v2.5.1" HorizontalAlignment="Center" Style="{DynamicResource TextBlockBaseStyle}" FontSize="20" VerticalAlignment="Center"/>
+                                        <TextBlock Margin="0,0,10,0" Text="v2.5.2" HorizontalAlignment="Center" Style="{DynamicResource TextBlockBaseStyle}" FontSize="20" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Border>
                             </Grid>
@@ -8756,10 +8899,12 @@
                                             <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[IntroVideo_None]}" Value="True">
                                                 <Setter Property="Tag" Value="False"/>
                                             </DataTrigger>
+
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ElementName=TrailerContainer, Path=Opacity}" Value="1"/>
-                                                    <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Content.IsPlayerMuted}" Value="False" />
+                                                    <Condition Binding="{Binding ElementName=LocalTrailer, Path=Volume}" Value="1"/>
+                                                    <Condition Binding="{Binding ElementName=TrailerVideoLoadedFlag, Path=IsChecked}" Value="True"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="Tag" Value="True" />
                                             </MultiDataTrigger>
@@ -8767,7 +8912,8 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ElementName=TrailerContainer, Path=Opacity}" Value="1"/>
-                                                    <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Content.IsPlayerMuted}" Value="True" />
+                                                    <Condition Binding="{Binding ElementName=LocalTrailer, Path=Volume}" Value="0" />
+                                                    <Condition Binding="{Binding ElementName=TrailerVideoLoadedFlag, Path=IsChecked}" Value="True"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="Tag" Value="False"/>
                                             </MultiDataTrigger>
@@ -12971,7 +13117,19 @@
                                             <StackPanel	Grid.Column="1" HorizontalAlignment="Right"	Orientation="Horizontal">
                                                 <CheckBoxEx HorizontalAlignment="Right" VerticalAlignment="Center" Style="{DynamicResource SettingsSectionCheckbox}" IsChecked="{PluginSettings Plugin=ThemeOptions, Path=Options[MiniTrailer], Mode=TwoWay}" />
                                             </StackPanel>
+                                        </Grid>
 
+                                        <Grid Margin="0,20,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel	Grid.Column="0"	HorizontalAlignment="Left" Orientation="Horizontal">
+                                                <TextBlock Style="{DynamicResource TextBlockBaseStyle}" Margin="40,0,20,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="24"	Text="{DynamicResource LOCTrailerSoundMainOn}" />
+                                            </StackPanel>
+                                            <StackPanel	Grid.Column="1" HorizontalAlignment="Right"	Orientation="Horizontal">
+                                                <CheckBoxEx HorizontalAlignment="Right" VerticalAlignment="Center" Style="{DynamicResource SettingsSectionCheckbox}" IsChecked="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerSoundMainOn], Mode=TwoWay}" />
+                                            </StackPanel>
                                         </Grid>
 
                                     </StackPanel>
@@ -13351,6 +13509,19 @@
                                             <StackPanel	Grid.Column="1" HorizontalAlignment="Right"	Orientation="Horizontal">
                                                 <SliderEx HorizontalAlignment="Right" VerticalAlignment="Center" IsSnapToTickEnabled="True"	LargeChange="0.10" Maximum="1" Minimum="0"
                                                           SmallChange="0.10" Style="{DynamicResource SettingsSectionSlider}" TickFrequency="0.10" Value="{Settings Fullscreen.BackgroundVolume, Mode=TwoWay}" />
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <Grid Margin="0,20,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel	Grid.Column="0"	HorizontalAlignment="Left" Orientation="Horizontal">
+                                                <TextBlock Style="{DynamicResource TextBlockBaseStyle}" Margin="40,0,20,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="24"	Text="{DynamicResource LOCTrailerSoundMainOn}" />
+                                            </StackPanel>
+                                            <StackPanel	Grid.Column="1" HorizontalAlignment="Right"	Orientation="Horizontal">
+                                                <CheckBoxEx HorizontalAlignment="Right" VerticalAlignment="Center" Style="{DynamicResource SettingsSectionCheckbox}" IsChecked="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerSoundMainOn], Mode=TwoWay}" />
                                             </StackPanel>
                                         </Grid>
 

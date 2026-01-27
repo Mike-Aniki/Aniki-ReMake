@@ -533,9 +533,7 @@
                                                 </StackPanel.Effect>
 
                                             </StackPanel>
-
                                         </Grid>
-
 
                                         <!-- Image de Source -->
                                         <Border x:Name="SourceIconBorder" HorizontalAlignment="Left" Margin="20,0,0,0" Grid.Column="0" Opacity="1">
@@ -593,15 +591,11 @@
                             </Border>
                         </Grid>
 
-
-
-
-
                         <!--Grid Panel Details-->
 
                         <Grid x:Name="GameDetailsStack"
                               Grid.Row="1" Grid.ColumnSpan="3"
-                              HorizontalAlignment="Left" VerticalAlignment="Center"
+                              HorizontalAlignment="Left" VerticalAlignment="Bottom"
                               RenderTransformOrigin="0,0">
 
                             <Grid.RowDefinitions>
@@ -614,7 +608,7 @@
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Opacity" Value="0"/>
-                                    <Setter Property="Margin" Value="50,0,0,0"/>
+                                    <Setter Property="Margin" Value="50,0,0,10"/>
                                     <Setter Property="Grid.RowSpan" Value="1"/>
                                     <Setter Property="RenderTransform">
                                         <Setter.Value>
@@ -3097,8 +3091,8 @@
                             <Setter Property="IsChecked" Value="False" TargetName="TrailerZoom"/>
                         </DataTrigger>
 
-                        <DataTrigger Binding="{Binding ElementName=TrailerPlay, Path=IsChecked}" Value="True">
-                            <Setter Property="IsChecked" Value="False" TargetName="TrailerZoom"/>
+                        <DataTrigger Binding="{Binding ElementName=TrailerMute, Path=Visibility}" Value="Collapsed">
+                            <Setter Property="Margin" Value="15,15,15,15" TargetName="TrailerPlay"/>
                         </DataTrigger>
 
                         <DataTrigger Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Content.SettingsModel.Settings.IsVideoPlaying}" Value="{StaticResource True}">
