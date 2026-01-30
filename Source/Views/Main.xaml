@@ -2324,69 +2324,186 @@
                                                         KeyboardNavigation.DirectionalNavigation="Cycle"
                                                         KeyboardNavigation.TabNavigation="Cycle">
 
-                                                <ButtonEx x:Name="StatusOnlineBtn"
-                                                          Style="{StaticResource StatusMenuButtonStyle}"
-                                                          Content="{DynamicResource LOCSteamOnline}"
-                                                          pbeh:FocusBahaviors.FocusBinding="{Binding ElementName=FriendsStatusPage, Path=IsVisible}"
-                                                          Margin="0,0,0,12"
-                                                          Command="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SetStatusOnlineCommand}" >
-                                                    <ButtonEx.Triggers>
-                                                        <EventTrigger RoutedEvent="ButtonBase.Click">
-                                                            <BeginStoryboard>
-                                                                <Storyboard>
-                                                                    <ObjectAnimationUsingKeyFrames
-                                                                        Storyboard.TargetName="OpenViewSound"
-                                                                        Storyboard.TargetProperty="LoadedBehavior">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
-                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                </Storyboard>
-                                                            </BeginStoryboard>
-                                                        </EventTrigger>
-                                                    </ButtonEx.Triggers>
-                                                </ButtonEx>
+                                                <Grid>
 
 
+                                                    <!-- STATUS BUTTONS (visible only if Steam is running) -->
+                                                    <StackPanel x:Name="SteamStatusButtons">
+                                                        <StackPanel.Style>
+                                                            <Style TargetType="StackPanel">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=IsSteamRunning}" Value="False">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </StackPanel.Style>
 
-                                                <ButtonEx Style="{StaticResource StatusMenuButtonStyle}"
-                                                          Content="{DynamicResource LOCSteamBusy}"
-                                                          Margin="0,0,0,12"
-                                                          Command="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SetStatusBusyCommand}" >
-                                                    <ButtonEx.Triggers>
-                                                        <EventTrigger RoutedEvent="ButtonBase.Click">
-                                                            <BeginStoryboard>
-                                                                <Storyboard>
-                                                                    <ObjectAnimationUsingKeyFrames
-                                                                        Storyboard.TargetName="OpenViewSound"
-                                                                        Storyboard.TargetProperty="LoadedBehavior">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
-                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                </Storyboard>
-                                                            </BeginStoryboard>
-                                                        </EventTrigger>
-                                                    </ButtonEx.Triggers>
-                                                </ButtonEx>
+                                                        <!-- === TES BOUTONS (inchangés) === -->
 
-                                                <ButtonEx Style="{StaticResource StatusMenuButtonStyle}"
-                                                          Content="{DynamicResource LOCSteamOffline}"
-                                                          Margin="0,0,0,18"
-                                                          Command="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SetStatusInvisibleCommand}" >
-                                                    <ButtonEx.Triggers>
-                                                        <EventTrigger RoutedEvent="ButtonBase.Click">
-                                                            <BeginStoryboard>
-                                                                <Storyboard>
-                                                                    <ObjectAnimationUsingKeyFrames
-                                                                        Storyboard.TargetName="OpenViewSound"
-                                                                        Storyboard.TargetProperty="LoadedBehavior">
-                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
-                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
-                                                                    </ObjectAnimationUsingKeyFrames>
-                                                                </Storyboard>
-                                                            </BeginStoryboard>
-                                                        </EventTrigger>
-                                                    </ButtonEx.Triggers>
-                                                </ButtonEx>
+                                                        <ButtonEx x:Name="StatusOnlineBtn"
+                                                                  pbeh:FocusBahaviors.FocusBinding="{Binding ElementName=SteamStatusButtons, Path=IsVisible}"
+                                                                  Style="{StaticResource StatusMenuButtonStyle}"
+                                                                  Content="{DynamicResource LOCSteamOnline}"
+                                                                  Margin="0,0,0,12"
+                                                                  Command="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SetStatusOnlineCommand}" >
+                                                            <ButtonEx.Triggers>
+                                                                <EventTrigger RoutedEvent="ButtonBase.Click">
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <ObjectAnimationUsingKeyFrames
+                                                                                Storyboard.TargetName="OpenViewSound"
+                                                                                Storyboard.TargetProperty="LoadedBehavior">
+                                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
+                                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </EventTrigger>
+                                                            </ButtonEx.Triggers>
+                                                        </ButtonEx>
+
+                                                        <ButtonEx Style="{StaticResource StatusMenuButtonStyle}"
+                                                                  Content="{DynamicResource LOCSteamBusy}"
+                                                                  Margin="0,0,0,12"
+                                                                  Command="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SetStatusBusyCommand}" >
+                                                            <ButtonEx.Triggers>
+                                                                <EventTrigger RoutedEvent="ButtonBase.Click">
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <ObjectAnimationUsingKeyFrames
+                                                                                Storyboard.TargetName="OpenViewSound"
+                                                                                Storyboard.TargetProperty="LoadedBehavior">
+                                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
+                                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </EventTrigger>
+                                                            </ButtonEx.Triggers>
+                                                        </ButtonEx>
+
+                                                        <ButtonEx Style="{StaticResource StatusMenuButtonStyle}"
+                                                                  Content="{DynamicResource LOCSteamOffline}"
+                                                                  Margin="0,0,0,18"
+                                                                  Command="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SetStatusInvisibleCommand}" >
+                                                            <ButtonEx.Triggers>
+                                                                <EventTrigger RoutedEvent="ButtonBase.Click">
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <ObjectAnimationUsingKeyFrames
+                                                                                Storyboard.TargetName="OpenViewSound"
+                                                                                Storyboard.TargetProperty="LoadedBehavior">
+                                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
+                                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </EventTrigger>
+                                                            </ButtonEx.Triggers>
+                                                        </ButtonEx>
+
+                                                    </StackPanel>
+
+                                                    <!-- MESSAGE (visible only if Steam is NOT running) -->
+                                                    <StackPanel x:Name="SteamClosedMessage"
+                                                                Orientation="Vertical"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                Margin="0,12,0,0">
+
+                                                        <!-- Le bloc reste visible tant que Steam n'est pas détecté -->
+                                                        <StackPanel.Style>
+                                                            <Style TargetType="StackPanel">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=IsSteamRunning}" Value="False">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </StackPanel.Style>
+
+                                                        <!-- Message "Steam closed" : caché pendant le lancement -->
+                                                        <TextBlock Text="{DynamicResource LOCSteamisclosed}"
+                                                                   FontSize="24"
+                                                                   Foreground="Red"
+                                                                   Opacity="0.95"
+                                                                   TextAlignment="Center"
+                                                                   HorizontalAlignment="Center"
+                                                                   Margin="0,0,0,6">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=IsSteamLaunching}" Value="True">
+                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+
+                                                        <TextBlock Text="{DynamicResource LOCSteamisclosed2}"
+                                                                   Opacity="0.85"
+                                                                   Margin="0,10,0,0"
+                                                                   FontSize="18"
+                                                                   TextAlignment="Center"
+                                                                   Width="520"
+                                                                   TextWrapping="Wrap"
+                                                                   HorizontalAlignment="Center">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=IsSteamLaunching}" Value="True">
+                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+
+                                                        <!-- Message de lancement : visible seulement pendant IsSteamLaunching -->
+                                                        <TextBlock Text="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SteamLaunchMessage}"
+                                                                   Margin="0,10,0,0"
+                                                                   FontSize="24">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=IsSteamLaunching}" Value="True">
+                                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+
+                                                        <!-- Bouton désactivé pendant le lancement -->
+                                                        <ButtonEx x:Name="OpenSteamBtn"
+                                                                  Margin="0,10,0,0"
+                                                                  pbeh:FocusBahaviors.FocusBinding="{Binding ElementName=SteamClosedMessage, Path=IsVisible}"
+                                                                  Content="{DynamicResource LOCOpenSteam}"
+                                                                  Command="{PluginSettings Plugin=SteamFriendsFullscreen, Path=OpenSteamCommand}">
+                                                            <ButtonEx.Style>
+                                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource StatusMenuButtonStyle}">
+                                                                    <Setter Property="IsEnabled" Value="True"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=IsSteamLaunching}" Value="True">
+                                                                            <Setter Property="IsEnabled" Value="False"/>
+                                                                            <Setter Property="Opacity" Value="0.5"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ButtonEx.Style>
+                                                        </ButtonEx>
+
+                                                    </StackPanel>
+
+                                                </Grid>
+
 
 
                                                 <!-- RETOUR : même look que les autres, mais c'est un Toggle bindé sur SelfStatusButton -->
@@ -2690,9 +2807,6 @@
                                                 </BeginStoryboard>
                                             </MultiDataTrigger.EnterActions>
                                         </MultiDataTrigger>
-
-
-
 
                                     </Style.Triggers>
                                 </Style>
@@ -5919,7 +6033,6 @@
                                             <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[SteamBanner]}" Value="True">
                                                 <Setter Property="Height" Value="480"/>
                                                 <Setter Property="Grid.RowSpan" Value="3"/>
-                                                <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
 
                                             <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ButtonControllerVisibleByDefault]}" Value="True">
@@ -8785,7 +8898,7 @@
 
                                 <Border>
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,0"  MaxWidth="400" >
-                                        <TextBlock Margin="0,0,10,0" Text="v2.5.2" HorizontalAlignment="Center" Style="{DynamicResource TextBlockBaseStyle}" FontSize="20" VerticalAlignment="Center"/>
+                                        <TextBlock Margin="0,0,10,0" Text="v2.5.3" HorizontalAlignment="Center" Style="{DynamicResource TextBlockBaseStyle}" FontSize="20" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Border>
                             </Grid>
@@ -12509,8 +12622,9 @@
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <StackPanel	Grid.Column="0"	HorizontalAlignment="Left" Orientation="Horizontal">
+                                            <StackPanel	Grid.Column="0"	HorizontalAlignment="Left" Orientation="Vertical">
                                                 <TextBlock Style="{DynamicResource TextBlockBaseStyle}" Margin="40,0,20,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="24"	Text="{DynamicResource LOCSteamBanner}" />
+                                                <TextBlock Style="{DynamicResource TextBlockMiniStyle}" Margin="40,0,20,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14"	Text="{DynamicResource LOCSteamBannerDesc}" />
                                             </StackPanel>
                                             <StackPanel	Grid.Column="1" HorizontalAlignment="Right"	Orientation="Horizontal">
                                                 <CheckBoxEx x:Name="ButtonQuick1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{DynamicResource SettingsSectionCheckbox}" IsChecked="{PluginSettings Plugin=ThemeOptions, Path=Options[SteamBanner], Mode=TwoWay}" />

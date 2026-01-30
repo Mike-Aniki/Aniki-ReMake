@@ -2362,43 +2362,6 @@
                         </Grid>
 
 
-                        <!-- GameTrailer -->
-
-                        <StackPanel>
-                            <StackPanel.Style>
-                                <Style TargetType="StackPanel">
-                                    <Setter Property="Opacity" Value="0"/>
-                                    <Setter Property="VerticalAlignment" Value="Top"/>
-                                    <Setter Property="HorizontalAlignment" Value="Right"/>
-                                    <Setter Property="Margin" Value="0,30,10,0"/>
-                                    <Setter Property="Grid.Row" Value="0"/>
-                                    <Setter Property="Grid.RowSpan" Value="3"/>
-                                    <Setter Property="Grid.ColumnSpan" Value="3"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=Id, Path=Opacity}" Value="1">
-                                            <DataTrigger.EnterActions>
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" BeginTime="0:0:1" Duration="0:0:1" From="0" To="1" AccelerationRatio="0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </DataTrigger.EnterActions>
-                                            <DataTrigger.ExitActions>
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:0" From="1" To="0"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </DataTrigger.ExitActions>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding ElementName=TrailerZoom, Path=IsChecked}" Value="True">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </StackPanel.Style>
-                        </StackPanel>
-
                         <!--Trigger-->
 
                         <Grid Grid.Row="0" Height="10" Width="10" Focusable="False" >
@@ -2536,11 +2499,49 @@
                                     <Setter Property="MaxWidth" Value="600"/>
                                     <Setter Property="Panel.ZIndex" Value="-49"/>
                                     <Style.Triggers>
+
+
+
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding ElementName=Id, Path=Opacity}" Value="1"/>
                                                 <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
                                                 <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnDetailsView]}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[MiniTrailer]}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                         From="0"
+                                                                         To="1"
+                                                                         BeginTime="0:0:1.7"
+                                                                         Duration="0:0:1.5">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <SineEase EasingMode="EaseInOut"/>
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </MultiDataTrigger.EnterActions>
+                                            <MultiDataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:0" To="0" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </MultiDataTrigger.ExitActions>
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </MultiDataTrigger>
+
+
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=Id, Path=Opacity}" Value="1"/>
+                                                <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnDetailsView]}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[MiniTrailer]}" Value="True"/>
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard>
