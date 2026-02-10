@@ -13,6 +13,17 @@
         <Setter Property="UseLayoutRounding" Value="True"/>
         <Setter Property="Opacity" Value="0.85"/>
         <Style.Triggers>
+            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2">
+                            <DoubleAnimation.EasingFunction>
+                                <CubicEase EasingMode="EaseOut" />
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="19">
                 <Setter Property="Background" Value="{DynamicResource BoxMessageImage19}" />
                 <Setter Property="Opacity" Value="1" />

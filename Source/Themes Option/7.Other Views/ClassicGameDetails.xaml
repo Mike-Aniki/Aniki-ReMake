@@ -465,29 +465,36 @@
                                             </Grid>
 
                                             <!-- Trophée -->
-                                            <StackPanel x:Name="Trophée" Orientation="Horizontal"
+                                            <StackPanel x:Name="Trophee_SS"
+                                                        Orientation="Horizontal"
                                                         VerticalAlignment="Center"
                                                         Margin="20,0,20,0"
-                                                        Grid.Column="0"
-                                                        Tag="{PluginSettings Plugin=SuccessStory, Path=HasData}">
+                                                        Grid.Column="0">
+
                                                 <StackPanel.Style>
                                                     <Style TargetType="StackPanel">
                                                         <Setter Property="Visibility" Value="Collapsed" />
                                                         <Setter Property="Opacity" Value="1"/>
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed">
-                                                                <Setter Property="Visibility" Value="Collapsed" />
-                                                            </DataTrigger>
+
+                                                            <!-- SS only (PA absent) + SS has data -->
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="True"/>
+                                                                    <Condition Binding="{PluginSettings Plugin=SuccessStory, Path=HasData, FallbackValue=False}" Value="True"/>
+                                                                    <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="False"/>
+                                                                    <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible"/>
+                                                                </MultiDataTrigger.Conditions>
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </MultiDataTrigger>
+
                                                         </Style.Triggers>
                                                     </Style>
                                                 </StackPanel.Style>
 
+                                                <!-- TON CONTENU SS INCHANGÉ -->
                                                 <Border Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,0,0" ClipToBounds="True">
-                                                    <Image Source="{ThemeFile 'Images/platinum.png'}"
-                                                           RenderOptions.BitmapScalingMode="Fant" />
+                                                    <Image Source="{ThemeFile 'Images/platinum.png'}" RenderOptions.BitmapScalingMode="Fant" />
                                                 </Border>
                                                 <TextBlock Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="{DynamicResource TextBrush}" FontSize="20">
                                                     <TextBlock.Style>
@@ -503,35 +510,104 @@
                                                 </TextBlock>
 
                                                 <Border Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,0,0" ClipToBounds="True">
-                                                    <Image Source="{ThemeFile 'Images/Or.png'}"
-                                                           RenderOptions.BitmapScalingMode="Fant"/>
+                                                    <Image Source="{ThemeFile 'Images/Or.png'}" RenderOptions.BitmapScalingMode="Fant"/>
                                                 </Border>
                                                 <TextBlock Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="{DynamicResource TextBrush}"
-                                                           Text="{PluginSettings Plugin=SuccessStory, Path=Rare.UnLocked, StringFormat={}{0}}" Style="{StaticResource TextBlockDetailStyle}" FontSize="20">
-                                                </TextBlock>
+                                                           Text="{PluginSettings Plugin=SuccessStory, Path=Rare.UnLocked, StringFormat={}{0}}"
+                                                           Style="{StaticResource TextBlockDetailStyle}" FontSize="20"/>
 
                                                 <Border Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,0,0" ClipToBounds="True">
-
-                                                    <Image Height="55" Source="{ThemeFile 'Images/Argent.png'}"
-                                                           RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                    <Image Height="55" Source="{ThemeFile 'Images/Argent.png'}" RenderOptions.BitmapScalingMode="Fant"
+                                                           VerticalAlignment="Center" HorizontalAlignment="Center" />
                                                 </Border>
                                                 <TextBlock Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="{DynamicResource TextBrush}"
-                                                           Text="{PluginSettings Plugin=SuccessStory, Path=NoCommon.UnLocked, StringFormat={}{0}}" Style="{StaticResource TextBlockDetailStyle}" FontSize="20">
-                                                </TextBlock>
+                                                           Text="{PluginSettings Plugin=SuccessStory, Path=NoCommon.UnLocked, StringFormat={}{0}}"
+                                                           Style="{StaticResource TextBlockDetailStyle}" FontSize="20"/>
 
                                                 <Border Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,0,0" ClipToBounds="True">
-
-                                                    <Image Source="{ThemeFile 'Images/Bronze.png'}"
-                                                           RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                    <Image Source="{ThemeFile 'Images/Bronze.png'}" RenderOptions.BitmapScalingMode="Fant"
+                                                           VerticalAlignment="Center" HorizontalAlignment="Center" />
                                                 </Border>
                                                 <TextBlock Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="{DynamicResource TextBrush}"
-                                                           Text="{PluginSettings Plugin=SuccessStory, Path=Common.UnLocked, StringFormat={}{0}}" Style="{StaticResource TextBlockDetailStyle}" FontSize="20">
-                                                </TextBlock>
+                                                           Text="{PluginSettings Plugin=SuccessStory, Path=Common.UnLocked, StringFormat={}{0}}"
+                                                           Style="{StaticResource TextBlockDetailStyle}" FontSize="20"/>
 
                                                 <StackPanel.Effect>
-                                                    <DropShadowEffect ShadowDepth="2" Color="Black" BlurRadius="2" RenderingBias="Performance" Opacity="0.8"/>
+                                                    <DropShadowEffect ShadowDepth="2" Color="Black" BlurRadius="2"
+                                                                      RenderingBias="Performance" Opacity="0.8"/>
                                                 </StackPanel.Effect>
+                                            </StackPanel>
 
+                                            <StackPanel x:Name="Trophee_PA"
+                                                        Orientation="Horizontal"
+                                                        VerticalAlignment="Center"
+                                                        Margin="20,0,20,0"
+                                                        Grid.Column="0">
+
+                                                <StackPanel.Style>
+                                                    <Style TargetType="StackPanel">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                        <Setter Property="Opacity" Value="1"/>
+                                                        <Style.Triggers>
+
+                                                            <!-- PA priority -->
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="True"/>
+                                                                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=HasData, FallbackValue=False}" Value="True"/>
+                                                                    <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible"/>
+                                                                </MultiDataTrigger.Conditions>
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </MultiDataTrigger>
+
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </StackPanel.Style>
+
+                                                <!-- Contenu PA (mêmes images) -->
+                                                <Border Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,0,0" ClipToBounds="True">
+                                                    <Image Source="{ThemeFile 'Images/platinum.png'}" RenderOptions.BitmapScalingMode="Fant" />
+                                                </Border>
+                                                <TextBlock Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="{DynamicResource TextBrush}" FontSize="20">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockDetailStyle}">
+                                                            <Setter Property="Text" Value="0"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Percent}" Value="100">
+                                                                    <Setter Property="Text" Value="1"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+
+                                                <Border Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,0,0" ClipToBounds="True">
+                                                    <Image Source="{ThemeFile 'Images/Or.png'}" RenderOptions.BitmapScalingMode="Fant"/>
+                                                </Border>
+                                                <TextBlock Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="{DynamicResource TextBrush}"
+                                                           Text="{PluginSettings Plugin=PlayniteAchievements, Path=Rare.UnLocked, StringFormat={}{0}}"
+                                                           Style="{StaticResource TextBlockDetailStyle}" FontSize="20"/>
+
+                                                <Border Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,0,0" ClipToBounds="True">
+                                                    <Image Height="55" Source="{ThemeFile 'Images/Argent.png'}" RenderOptions.BitmapScalingMode="Fant"
+                                                           VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                </Border>
+                                                <TextBlock Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="{DynamicResource TextBrush}"
+                                                           Text="{PluginSettings Plugin=PlayniteAchievements, Path=NoCommon.UnLocked, StringFormat={}{0}}"
+                                                           Style="{StaticResource TextBlockDetailStyle}" FontSize="20"/>
+
+                                                <Border Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,10,0,0" ClipToBounds="True">
+                                                    <Image Source="{ThemeFile 'Images/Bronze.png'}" RenderOptions.BitmapScalingMode="Fant"
+                                                           VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                </Border>
+                                                <TextBlock Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Foreground="{DynamicResource TextBrush}"
+                                                           Text="{PluginSettings Plugin=PlayniteAchievements, Path=Common.UnLocked, StringFormat={}{0}}"
+                                                           Style="{StaticResource TextBlockDetailStyle}" FontSize="20"/>
+
+                                                <StackPanel.Effect>
+                                                    <DropShadowEffect ShadowDepth="2" Color="Black" BlurRadius="2"
+                                                                      RenderingBias="Performance" Opacity="0.8"/>
+                                                </StackPanel.Effect>
                                             </StackPanel>
                                         </Grid>
 
@@ -858,9 +934,14 @@
                                                         <Style TargetType="ButtonEx" BasedOn="{StaticResource GameOptionScaleStyle}">
                                                             <Setter Property="Visibility" Value="Collapsed" />
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
-                                                                    <Setter Property="Visibility" Value="Visible" />
-                                                                </DataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="True"/>
+                                                                        <Condition Binding="{PluginSettings Plugin=SuccessStory, Path=HasData, FallbackValue=False}" Value="True"/>
+                                                                        <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="False"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </MultiDataTrigger>
                                                             </Style.Triggers>
                                                         </Style>
                                                     </ButtonEx.Style>
@@ -880,6 +961,45 @@
                                                     </ButtonEx.Triggers>
                                                     <TextBlock Text="&#xedd7;" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontFamily="{DynamicResource FontIcoFont}"/>
                                                 </ButtonEx>
+
+                                                <ButtonEx x:Name="PlayniteAchievementButton"
+                                                          Command="{PluginSettings Plugin=PlayniteAchievements, Path=OpenGameAchievementWindow}"
+                                                          Height="50"
+                                                          Width="50"
+                                                          Margin="0,0,10,0"
+                                                          Grid.Row="1"
+                                                          Tag="{PluginSettings Plugin=PlayniteAchievements, Path=HasData, FallbackValue=False}">
+                                                    <ButtonEx.Style>
+                                                        <Style TargetType="ButtonEx" BasedOn="{StaticResource GameOptionScaleStyle}">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="True"/>
+                                                                        <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=HasData, FallbackValue=False}" Value="True"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </MultiDataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ButtonEx.Style>
+                                                    <ButtonEx.Triggers>
+                                                        <EventTrigger RoutedEvent="ButtonBase.Click">
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <ObjectAnimationUsingKeyFrames
+                                                                        Storyboard.TargetName="OpenViewSound"
+                                                                        Storyboard.TargetProperty="LoadedBehavior">
+                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
+                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
+                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </EventTrigger>
+                                                    </ButtonEx.Triggers>
+                                                    <TextBlock Text="&#xedd7;" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" FontFamily="{DynamicResource FontIcoFont}"/>
+                                                </ButtonEx>
+
 
                                                 <ButtonEx x:Name="DlcButton"
                                                           Height="50"
@@ -3054,7 +3174,8 @@
                                 <Setter Property="Visibility" Value="Collapsed" TargetName="Avatar"/>
                                 <Setter Property="Visibility" Value="Collapsed" TargetName="Overlay"/>
                                 <Setter Property="Visibility" Value="Visible" TargetName="TrailerMuteZoom"/>
-                                <Setter Property="Visibility" Value="Collapsed" TargetName="Trophée"/>
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="Trophee_SS"/>
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="Trophee_PA"/>
                                 <Setter Property="Visibility" Value="Collapsed" TargetName="SourceIconBorder"/>
                                 <Setter Property="Visibility" Value="Collapsed" TargetName="InterfaceBar"/>
                                 <Setter Property="VerticalAlignment" Value="Center" TargetName="ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound"/>
@@ -3107,6 +3228,1084 @@
         </Setter>
     </Style>
 
+    <!--PlayniteAchievement-->
+
+    <Style x:Key="GameAchievementsWindow" TargetType="ContentControl">
+        <Setter Property="Margin" Value="0,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid KeyboardNavigation.DirectionalNavigation="Cycle"
+                          KeyboardNavigation.TabNavigation="Cycle"
+                          KeyboardNavigation.ControlTabNavigation="Cycle"
+                          FocusManager.FocusedElement="{Binding ElementName=SortButton}"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          Opacity="0"
+                          Background="{DynamicResource DynamicGlowBackgroundSuccess}">
+
+                        <Grid.RenderTransform>
+                            <TranslateTransform Y="0"/>
+                        </Grid.RenderTransform>
+
+                        <Grid.Triggers>
+                            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" From="-20" To="0" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Grid.Triggers>
+
+
+                        <FadeImage Source="{Binding SelectedGame.BackgroundImage}" Margin="0,-150,0,0"
+                                   HorizontalContentAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Top"
+                                   Height="1000"
+                                   Stretch="UniformToFill"
+                                   Opacity="0.7">
+                            <FadeImage.OpacityMask>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="Black" Offset="0.0" />
+                                    <GradientStop Color="Transparent" Offset="0.5" />
+                                </LinearGradientBrush>
+                            </FadeImage.OpacityMask>
+                        </FadeImage>
+
+                        <!-- Bandeau supérieur du panneau de trophées -->
+                        <Border Background="Transparent" Margin="0,20,0,0"
+                                BorderThickness="0,0,0,0"
+                                BorderBrush="{DynamicResource OverlayMenu}"
+                                Height="250"
+                                VerticalAlignment="Top">
+
+                            <Grid Margin="100,0,100,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="200"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+
+
+                                <!-- Colonne gauche : Cover -->
+                                <Border Grid.Column="0"
+                                        MaxWidth="200"
+                                        MaxHeight="200"
+                                        Margin="0,10,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        BorderThickness="2"
+                                        BorderBrush="{DynamicResource MenuBorderBrush}"
+                                        Background="{DynamicResource OverlayMenu}">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="0"
+                                                          BlurRadius="10"
+                                                          Opacity="0.4"
+                                                          Color="Black" />
+                                    </Border.Effect>
+                                    <Image Source="{PluginSettings Plugin=PlayniteAchievements, Path=SelectedGameCoverPath}"
+                                           Stretch="Uniform"
+                                           RenderOptions.BitmapScalingMode="Fant"
+                                           ClipToBounds="True"
+                                           SnapsToDevicePixels="True"
+                                           MaxWidth="200"
+                                           MaxHeight="210"
+                                           />
+                                </Border>
+
+                                <!-- Colonne centre : Titre + barre progression -->
+                                <StackPanel Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Margin="0,0,0,0"
+                                            HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding SelectedGame.DisplayName}"
+                                               HorizontalAlignment="Center"
+                                               FontSize="50"
+                                               TextWrapping="Wrap"
+                                               TextTrimming="WordEllipsis"
+                                               MaxWidth="1500">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[LogoTrophy]}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+
+                                    <StackPanel >
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[LogoTrophy]}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                        <TextBlock Name="LogoPath" Tag="{DynamicResource ExtraMetadataPath}" Visibility="Collapsed">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Text">
+                                                        <Setter.Value>
+                                                            <MultiBinding StringFormat="{}{0}{1}{2}{3}">
+                                                                <Binding RelativeSource="{RelativeSource Self}" Path="Tag" />
+                                                                <Binding Source="\ExtraMetadata\games\"/>
+                                                                <Binding Path="SelectedGame.Id"/>
+                                                                <Binding Source="\logo.png" />
+                                                            </MultiBinding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                        <Image Name="LogoImage" Width="450" MaxHeight="125" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant"
+                                               VerticalAlignment="Top" HorizontalAlignment="Center"
+                                               Tag="{DynamicResource UseAbsoluteExtraMetadataPath}" >
+                                            <Image.Style>
+                                                <Style TargetType="Image">
+                                                    <Setter Property="Source" Value="{Binding ElementName=LogoPath, Path=Text}"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="">
+                                                            <Setter Property="Source" Value="{Binding ElementName=LogoPath, Path=Text, Converter={StaticResource ImageStringToImageConverter}}"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="false">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsLogoAvailable}" Value="False">
+                                                            <Setter Property="ItemsControl.Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+                                    </StackPanel>
+
+
+                                    <ProgressBar Value="{PluginSettings Plugin=PlayniteAchievements, Path=Percent}"
+                                                 Background="{DynamicResource TextBrush}"
+                                                 Minimum="0"
+                                                 Maximum="100"
+                                                 Height="10"
+                                                 Width="500"
+                                                 Style="{DynamicResource ProgressBarCustom}"
+                                                 Margin="0,20,0,0"
+                                                 Foreground="#FFCD31" />
+
+                                    <TextBlock Margin="0,10,0,0"
+                                               HorizontalAlignment="Center"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="30"
+                                               Text="{PluginSettings Plugin=PlayniteAchievements, Path=Percent, StringFormat={}{0}%}" />
+                                </StackPanel>
+
+                            </Grid>
+                        </Border>
+
+                        <StackPanel Orientation="Horizontal"  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,280,150,0">
+                            <!-- Rangées de trophées -->
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
+                                <!-- Platine -->
+                                <Image Source="{ThemeFile 'Images/platinum.png'}" Width="40" Height="40" Margin="0,0,6,0"/>
+                                <TextBlock FontWeight="Light" FontSize="26">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                            <Setter Property="Text" Value="0" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Percent}" Value="100">
+                                                    <Setter Property="Text" Value="1"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
+                                <!-- Or -->
+                                <Image Source="{ThemeFile 'Images/Or.png'}" Width="40" Height="40" Margin="0,0,6,0"/>
+                                <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=Rare.UnLocked, StringFormat={}{0}}" FontWeight="Light" FontSize="26" Style="{DynamicResource TextBlockBaseStyle}" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
+                                <!-- Argent -->
+                                <Image Source="{ThemeFile 'Images/Argent.png'}" Width="40" Height="40" Margin="0,0,6,0"/>
+                                <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=NoCommon.UnLocked, StringFormat={}{0}}" FontWeight="Light" FontSize="26" Style="{DynamicResource TextBlockBaseStyle}" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <!-- Bronze -->
+                                <Image Source="{ThemeFile 'Images/Bronze.png'}" Width="40" Height="40" Margin="0,0,6,0"/>
+                                <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=Common.UnLocked, StringFormat={}{0}}" FontWeight="Light" FontSize="26" Style="{DynamicResource TextBlockBaseStyle}" />
+                            </StackPanel>
+                        </StackPanel>
+
+
+                        <Grid x:Name="AchievementList" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="1600" KeyboardNavigation.DirectionalNavigation="Cycle" pbeh:FocusBahaviors.FocusBinding="True" >
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Margin" Value="0,0,0,50"/>
+                                    <Setter Property="Height" Value="750"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp1610">
+                                            <Setter Property="Height" Value="870"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+
+                            <TextBlock Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="{DynamicResource TextBrush}"
+                                       FontSize="32" Typography.Capitals="AllSmallCaps">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=SuccessChangeToggle, Path=IsChecked}" Value="True">
+                                                <Setter Property="Text" Value="{DynamicResource LocLockedAchievements}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=SuccessChangeToggle, Path=IsChecked}" Value="False">
+                                                <Setter Property="Text" Value="{DynamicResource LocUnlockedAchievements}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+                            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-30,-10,0,0" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <CheckBoxEx x:Name="SortButton"
+                                            Grid.Column="0"
+                                            Style="{StaticResource SuccessSorting}"
+                                            IsChecked="True"/>
+
+                                <CheckBoxEx x:Name="SuccessChangeToggle"
+                                            Grid.Column="2"
+                                            Style="{StaticResource SuccessChangeToggle}"
+                                            IsChecked="False"/>
+
+                                <ButtonEx x:Name="RefreshTrophiesButton"
+                                          Grid.Column="4"
+                                          Style="{DynamicResource RefreshSuccess}"
+                                          Content="&#xec80;"
+                                          FontFamily="{DynamicResource FontIcoFont}"
+                                          FontSize="22"
+                                          Foreground="{DynamicResource TextBrush}"
+                                          Command="{PluginSettings Plugin=AnikiHelper, Path=RefreshSuccessStoryCommand}"/>
+
+                            </Grid>
+
+                            <Grid HorizontalAlignment="Stretch" Width="1250" VerticalAlignment="Top" Margin="0,-20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+
+                            </Grid>
+
+                            <Rectangle Fill="{DynamicResource TextBrush}" Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,50,0,0" />
+
+
+                            <ListView x:Name="AchievementListDesc" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="Auto" ScrollViewer.CanContentScroll="True" Margin="10,60,0,10"
+                                      VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"  BorderBrush="Transparent" BorderThickness="0" Background="Transparent"
+                                      FocusVisualStyle="{x:Null}" Focusable="False" KeyboardNavigation.DirectionalNavigation="Local" ItemsSource="{PluginSettings Plugin=PlayniteAchievements, Path=ListAchUnlockDateDesc}">
+                                <ListView.Style>
+                                    <Style TargetType="ListView">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=SortButton, Path=IsChecked}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=SortButton, Path=IsChecked}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.Style>
+
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                        <Setter Property="Focusable" Value="True"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListViewItem">
+                                                    <Border BorderBrush="Transparent" CornerRadius="5">
+                                                        <Grid Height="120" Width="1400" Margin="0,8,0,8" >
+                                                            <Border x:Name="mask" CornerRadius="5" Background="{DynamicResource SuccessMenu}"/>
+                                                            <Grid>
+                                                                <Grid.OpacityMask>
+                                                                    <VisualBrush Visual="{Binding ElementName=mask}"/>
+                                                                </Grid.OpacityMask>
+                                                                <Image x:Name="BronzeFond" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right"  Stretch="UniformToFill"
+                                                                       Source="{ThemeFile 'Images/Bronze.png'}" Height="50" RenderOptions.BitmapScalingMode="Fant" />
+                                                                <Image x:Name="ArgentFond" Visibility="Collapsed" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right"  Stretch="UniformToFill"
+                                                                       Source="{ThemeFile 'Images/Argent.png'}" Height="110" RenderOptions.BitmapScalingMode="Fant" />
+                                                                <Image x:Name="OrFond" Visibility="Collapsed"  Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                                                                       Source="{ThemeFile 'Images/Or.png'}" Height="110" RenderOptions.BitmapScalingMode="Fant" Stretch="UniformToFill" />
+                                                                <Image x:Name="SaphirFond" Visibility="Collapsed" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Stretch="UniformToFill"
+                                                                       Source="{ThemeFile 'Images/Saphir.png'}" Height="110" RenderOptions.BitmapScalingMode="Fant" />
+                                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                                    <StackPanel Margin="0,0,0,0" Orientation="Horizontal" >
+                                                                        <Grid Height="120" Width="120" VerticalAlignment="Center">
+                                                                            <Border Background="Black"/>
+
+
+                                                                            <!-- Unlocked icon (default) -->
+                                                                            <Image Source="{Binding Icon}"
+                                                                                   Stretch="UniformToFill">
+                                                                                <Image.Style>
+                                                                                    <Style TargetType="Image">
+                                                                                        <Setter Property="Opacity" Value="1"/>
+                                                                                        <Style.Triggers>
+                                                                                            <DataTrigger Binding="{Binding Unlocked}" Value="False">
+                                                                                                <Setter Property="Opacity" Value="0.25"/>
+                                                                                            </DataTrigger>
+                                                                                        </Style.Triggers>
+                                                                                    </Style>
+                                                                                </Image.Style>
+                                                                            </Image>
+
+                                                                            <Image Source="{ThemeFile 'Images/Buttons/locked.png'}" Opacity="0.8" Height="60" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                                   Stretch="Uniform" >
+                                                                                <Image.Style>
+                                                                                    <Style TargetType="Image">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                        <Style.Triggers>
+                                                                                            <DataTrigger Binding="{Binding Unlocked}" Value="False">
+                                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                                            </DataTrigger>
+                                                                                        </Style.Triggers>
+                                                                                    </Style>
+                                                                                </Image.Style>
+                                                                            </Image>
+
+
+                                                                        </Grid>
+
+                                                                    </StackPanel>
+                                                                </StackPanel>
+
+                                                                <Grid VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1350" Height="120" Margin="30,5,0,0">
+                                                                    <Grid VerticalAlignment="Top" Margin="100,0,0,0">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition Height="Auto"/>
+                                                                            <RowDefinition Height="*"/>
+                                                                            <RowDefinition Height="Auto"/>
+                                                                        </Grid.RowDefinitions>
+
+                                                                        <!-- Ligne 1 : Nom -->
+                                                                        <TextBlock x:Name="Name"
+                                                                                   Grid.Row="0"
+                                                                                   Margin="0,5,0,5"
+                                                                                   Text="{Binding Name}"
+                                                                                   HorizontalAlignment="Left"
+                                                                                   MaxWidth="1150"
+                                                                                   TextWrapping="Wrap"
+                                                                                   FontSize="23"
+                                                                                   Style="{DynamicResource TextBlockBaseStyle}" />
+
+                                                                        <!-- Ligne 2 : Description -->
+                                                                        <TextBlock x:Name="Desc"
+                                                                                   Margin="0,5,0,5"
+                                                                                   Grid.Row="1"
+                                                                                   Text="{Binding Description}"
+                                                                                   Opacity="0.8"
+                                                                                   MaxWidth="1200"
+                                                                                   TextTrimming="WordEllipsis"
+                                                                                   TextWrapping="Wrap"
+                                                                                   VerticalAlignment="Top"
+                                                                                   HorizontalAlignment="Left"
+                                                                                   FontSize="20"
+                                                                                   Style="{DynamicResource TextBlockBaseStyle}" />
+
+                                                                        <!-- Ligne 3 : % + joueurs -->
+                                                                        <StackPanel Grid.Row="2"
+                                                                                    Orientation="Horizontal"
+                                                                                    Margin="0,5,0,0"
+                                                                                    VerticalAlignment="Bottom">
+                                                                            <TextBlock x:Name="Perc"
+                                                                                       Text="{Binding Percent, Path=Percent, StringFormat={}{0:F0}%}"
+                                                                                       FontSize="17"
+                                                                                       Opacity="0.9"
+                                                                                       Style="{DynamicResource TextBlockDetailStyle}" />
+                                                                            <TextBlock x:Name="Player"
+                                                                                       Margin="5,0,0,0"
+                                                                                       Text="{DynamicResource LOCPlayershaveachievement}"
+                                                                                       FontSize="16"
+                                                                                       Opacity="0.9"
+                                                                                       Style="{DynamicResource TextBlockDetailStyle}" />
+                                                                        </StackPanel>
+                                                                    </Grid>
+
+                                                                    <StackPanel Margin="0,15,80,0"
+                                                                                Orientation="Vertical"
+                                                                                HorizontalAlignment="Right"
+                                                                                Opacity="0.85"
+                                                                                VerticalAlignment="Center">
+
+                                                                        <StackPanel.Style>
+                                                                            <Style TargetType="StackPanel">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding ProgressNum}" Value="{x:Null}">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding ProgressDenom}" Value="{x:Null}">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding ProgressDenom}" Value="1">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding IsUnlocked}" Value="True">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </StackPanel.Style>
+
+                                                                        <!-- Progress bar "premium": background track + fill -->
+                                                                        <Grid Width="160" Height="10" VerticalAlignment="Center">
+                                                                            <!-- Track -->
+                                                                            <Border CornerRadius="6"
+                                                                                    Background="#33000000"
+                                                                                    Height="8"
+                                                                                    VerticalAlignment="Center"/>
+
+                                                                            <!-- Fill -->
+                                                                            <ProgressBar Value="{Binding ProgressNum, FallbackValue=0}"
+                                                                                         Minimum="0"
+                                                                                         Maximum="{Binding ProgressDenom, FallbackValue=1}"
+                                                                                         Height="8"
+                                                                                         BorderThickness="0"
+                                                                                         Foreground="#FFCD31"
+                                                                                         Background="Transparent"
+                                                                                         VerticalAlignment="Center"/>
+                                                                        </Grid>
+
+                                                                        <!-- Compact counter -->
+                                                                        <TextBlock Margin="0,6,0,0"
+                                                                                   FontSize="18"
+                                                                                   FontWeight="SemiBold"
+                                                                                   HorizontalAlignment="Center"
+                                                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                                                   Opacity="0.95">
+                                                                            <Run Text="{Binding ProgressNum}" />
+                                                                            <Run Text="/" />
+                                                                            <Run Text="{Binding ProgressDenom}" />
+                                                                        </TextBlock>
+                                                                    </StackPanel>
+
+
+
+                                                                    <StackPanel Margin="0,10,55,0" Orientation="Vertical" HorizontalAlignment="Right" Opacity="0.7" VerticalAlignment="Center">
+
+
+                                                                        <TextBlock x:Name="Clock1" Visibility="Visible" Margin="0,0,3,0" VerticalAlignment="Top" HorizontalAlignment="Right" Text="{Binding DateUnlocked, StringFormat='{}{0:HH:mm}'}" FontSize="20" Style="{DynamicResource TextBlockBaseStyle}" />
+                                                                        <TextBlock x:Name="Clock2" Visibility="Collapsed" Margin="0,0,3,0" VerticalAlignment="Top" HorizontalAlignment="Right" Text="{Binding DateUnlocked, StringFormat='{}{0:t}'}" FontSize="20" Style="{DynamicResource TextBlockBaseStyle}" />
+                                                                        <TextBlock  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,3,2" Text="{Binding DateUnlocked, StringFormat='{}{0:d MMM yyyy}'}" FontSize="20" Style="{DynamicResource TextBlockBaseStyle}"/>
+
+                                                                    </StackPanel>
+
+
+
+                                                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Width="55" >
+                                                                        <Image x:Name="Bronze" Margin="10,10,5,0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                                               Source="{ThemeFile 'Images/Bronze.png'}" Height="45" RenderOptions.BitmapScalingMode="Fant" Visibility="Visible"/>
+                                                                        <Image x:Name="Argent"  Margin="10,10,5,0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                                               Source="{ThemeFile 'Images/Argent.png'}" Height="45" RenderOptions.BitmapScalingMode="Fant" Visibility="Collapsed" />
+                                                                        <Image x:Name="Or"  Margin="10,10,5,0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                                               Source="{ThemeFile 'Images/Or.png'}" Height="45" RenderOptions.BitmapScalingMode="Fant" Visibility="Collapsed"/>
+                                                                        <Image x:Name="Saphir" Margin="10,10,5,0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                                               Source="{ThemeFile 'Images/Saphir.png'}" Height="45" RenderOptions.BitmapScalingMode="Fant" Visibility="Collapsed"/>
+                                                                    </StackPanel>
+                                                                    <TextBlock x:Name="PercentLogic" Text="{Binding GamerScore}" Visibility="Collapsed"/>
+                                                                </Grid>
+                                                            </Grid>
+
+                                                            <Border x:Name="BorderFocus" Opacity="1" BorderThickness="3" Margin="-4,0,-4,0" Visibility="Collapsed" CornerRadius="5" >
+                                                                <Border.Style>
+                                                                    <Style TargetType="Border">
+                                                                        <Setter Property="BorderBrush" Value="#8C5A2B"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="180">
+                                                                                <Setter Property="BorderBrush" Value="#D4AF37"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="90">
+                                                                                <Setter Property="BorderBrush" Value="#D4AF37"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="50">
+                                                                                <Setter Property="BorderBrush" Value="#D4AF37"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="30">
+                                                                                <Setter Property="BorderBrush" Value="#E5E4E2"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="25">
+                                                                                <Setter Property="BorderBrush" Value="#D4AF37"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="10">
+                                                                                <Setter Property="BorderBrush" Value="#E5E4E2"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Border.Style>
+                                                            </Border>
+                                                        </Grid>
+                                                    </Border>
+
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsFocused" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" TargetName="BorderFocus" />
+                                                            <Setter Property="FontSize" Value="25" TargetName="Name" />
+                                                            <Setter Property="Opacity" Value="0.8" TargetName="Desc" />
+                                                            <Setter Property="FontSize" Value="22" TargetName="Desc" />
+                                                            <Setter Property="Background" Value="{DynamicResource OverlayMenu}" TargetName="mask" />
+                                                        </Trigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="180"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter TargetName="Saphir" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Or" Property="Visibility" Value="Visible"/>
+                                                                <Setter TargetName="Argent" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Bronze" Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="90"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter TargetName="Saphir" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Or" Property="Visibility" Value="Visible"/>
+                                                                <Setter TargetName="Argent" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Bronze" Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="30"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter TargetName="Saphir" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Or" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Argent" Property="Visibility" Value="Visible"/>
+                                                                <Setter TargetName="Bronze" Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                        <!-- Retro-->
+
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="50"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter TargetName="Saphir" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Or" Property="Visibility" Value="Visible"/>
+                                                                <Setter TargetName="Argent" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Bronze" Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="25"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter TargetName="Saphir" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Or" Property="Visibility" Value="Visible"/>
+                                                                <Setter TargetName="Argent" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Bronze" Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="10"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter TargetName="Saphir" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Or" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Argent" Property="Visibility" Value="Visible"/>
+                                                                <Setter TargetName="Bronze" Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=SuccessChangeToggle, Path=IsChecked}" Value="True"/>
+                                                                <Condition Binding="{Binding IsUnlock}" Value="False"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=SuccessChangeToggle, Path=IsChecked}" Value="{x:Null}"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=SuccessChangeToggle, Path=IsChecked}" Value="False"/>
+                                                                <Condition Binding="{Binding IsUnlock}" Value="True"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=SuccessChangeToggle, Path=IsChecked}" Value="False"/>
+                                                                <Condition Binding="{Binding IsUnlock}" Value="True"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[LocalClock]}" Value="False"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter TargetName="Clock2" Property="Visibility" Value="Visible"/>
+                                                                <Setter TargetName="Clock1" Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                            </ListView>
+
+                            <ListView x:Name="AchievementListAsc" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="Auto" ScrollViewer.CanContentScroll="True" Margin="10,60,0,10"
+                                      VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"  BorderBrush="Transparent" BorderThickness="0" Background="Transparent"
+                                      FocusVisualStyle="{x:Null}" Focusable="False" KeyboardNavigation.DirectionalNavigation="Local" ItemsSource="{PluginSettings Plugin=PlayniteAchievements, Path=ListAchUnlockDateAsc}">
+                                <ListView.Style>
+                                    <Style TargetType="ListView">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=SortButton, Path=IsChecked}" Value="True">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=SortButton, Path=IsChecked}" Value="False">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.Style>
+
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                        <Setter Property="Focusable" Value="True"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListViewItem">
+                                                    <Border BorderBrush="Transparent" CornerRadius="5">
+                                                        <Grid Height="120" Width="1400" Margin="0,8,0,8" >
+                                                            <Border x:Name="mask" CornerRadius="5" Background="{DynamicResource SuccessMenu}"/>
+                                                            <Grid>
+                                                                <Grid.OpacityMask>
+                                                                    <VisualBrush Visual="{Binding ElementName=mask}"/>
+                                                                </Grid.OpacityMask>
+                                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                                    <Grid Height="120" Width="120" VerticalAlignment="Center">
+                                                                        <Border Background="Black"/>
+
+
+                                                                        <!-- Unlocked icon (default) -->
+                                                                        <Image Source="{Binding Icon}"
+                                                                               Stretch="UniformToFill">
+                                                                            <Image.Style>
+                                                                                <Style TargetType="Image">
+                                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                                    <Style.Triggers>
+                                                                                        <DataTrigger Binding="{Binding Unlocked}" Value="False">
+                                                                                            <Setter Property="Opacity" Value="0.25"/>
+                                                                                        </DataTrigger>
+                                                                                    </Style.Triggers>
+                                                                                </Style>
+                                                                            </Image.Style>
+                                                                        </Image>
+
+                                                                        <Image Source="{ThemeFile 'Images/Buttons/locked.png'}" Opacity="0.8" Height="60" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                               Stretch="Uniform" >
+                                                                            <Image.Style>
+                                                                                <Style TargetType="Image">
+                                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    <Style.Triggers>
+                                                                                        <DataTrigger Binding="{Binding Unlocked}" Value="False">
+                                                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                                                        </DataTrigger>
+                                                                                    </Style.Triggers>
+                                                                                </Style>
+                                                                            </Image.Style>
+                                                                        </Image>
+
+
+                                                                    </Grid>
+                                                                </StackPanel>
+
+                                                                <Grid VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="1350" Height="120" Margin="30,0,0,0">
+                                                                    <Grid VerticalAlignment="Top" Margin="100,0,0,0">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition Height="35"/>
+                                                                            <RowDefinition Height="60"/>
+                                                                            <RowDefinition Height="20"/>
+                                                                        </Grid.RowDefinitions>
+
+                                                                        <!-- Ligne 1 : Nom -->
+                                                                        <TextBlock x:Name="Name"
+                                                                                   Grid.Row="0"
+                                                                                   Margin="0,5,0,5"
+                                                                                   VerticalAlignment="Top"
+                                                                                   Text="{Binding Name}"
+                                                                                   HorizontalAlignment="Left"
+                                                                                   MaxWidth="1150"
+                                                                                   TextWrapping="Wrap"
+                                                                                   FontSize="23"
+                                                                                   Style="{DynamicResource TextBlockBaseStyle}" />
+
+                                                                        <!-- Ligne 2 : Description -->
+                                                                        <TextBlock x:Name="Desc"
+                                                                                   Grid.Row="1"
+                                                                                   VerticalAlignment="Top"
+                                                                                   Text="{Binding Description}"
+                                                                                   Opacity="0.8"
+                                                                                   Margin="0,5,0,0"
+                                                                                   MaxWidth="1200"
+                                                                                   TextTrimming="WordEllipsis"
+                                                                                   TextWrapping="Wrap"
+                                                                                   HorizontalAlignment="Left"
+                                                                                   FontSize="20"
+                                                                                   Style="{DynamicResource TextBlockBaseStyle}" />
+
+                                                                        <!-- Ligne 3 : % + joueurs -->
+                                                                        <StackPanel Grid.Row="2"
+                                                                                    Orientation="Horizontal"
+                                                                                    Margin="0,0,0,3"
+                                                                                    VerticalAlignment="Bottom">
+                                                                            <TextBlock x:Name="Perc"
+                                                                                       Text="{Binding Percent, Path=Percent, StringFormat={}{0:F0}%}"
+                                                                                       FontSize="17"
+                                                                                       Opacity="0.9"
+                                                                                       Style="{DynamicResource TextBlockDetailStyle}" />
+                                                                            <TextBlock x:Name="Player"
+                                                                                       Margin="5,0,0,0"
+                                                                                       Text="{DynamicResource LOCPlayershaveachievement}"
+                                                                                       FontSize="16"
+                                                                                       Opacity="0.9"
+                                                                                       Style="{DynamicResource TextBlockDetailStyle}" />
+                                                                        </StackPanel>
+                                                                    </Grid>
+
+                                                                    <StackPanel Margin="0,15,80,0"
+                                                                                Orientation="Vertical"
+                                                                                HorizontalAlignment="Right"
+                                                                                Opacity="0.85"
+                                                                                VerticalAlignment="Center">
+
+                                                                        <StackPanel.Style>
+                                                                            <Style TargetType="StackPanel">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding ProgressNum}" Value="{x:Null}">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding ProgressDenom}" Value="{x:Null}">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding ProgressDenom}" Value="1">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding IsUnlocked}" Value="True">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </StackPanel.Style>
+
+                                                                        <!-- Progress bar "premium": background track + fill -->
+                                                                        <Grid Width="160" Height="10" VerticalAlignment="Center">
+                                                                            <!-- Track -->
+                                                                            <Border CornerRadius="6"
+                                                                                    Background="#33000000"
+                                                                                    Height="8"
+                                                                                    VerticalAlignment="Center"/>
+
+                                                                            <!-- Fill -->
+                                                                            <ProgressBar Value="{Binding ProgressNum, FallbackValue=0}"
+                                                                                         Minimum="0"
+                                                                                         Maximum="{Binding ProgressDenom, FallbackValue=1}"
+                                                                                         Height="8"
+                                                                                         BorderThickness="0"
+                                                                                         Foreground="#FFCD31"
+                                                                                         Background="Transparent"
+                                                                                         VerticalAlignment="Center"/>
+                                                                        </Grid>
+
+                                                                        <!-- Compact counter -->
+                                                                        <TextBlock Margin="0,6,0,0"
+                                                                                   FontSize="18"
+                                                                                   FontWeight="SemiBold"
+                                                                                   HorizontalAlignment="Center"
+                                                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                                                   Opacity="0.95">
+                                                                            <Run Text="{Binding ProgressNum}" />
+                                                                            <Run Text="/" />
+                                                                            <Run Text="{Binding ProgressDenom}" />
+                                                                        </TextBlock>
+                                                                    </StackPanel>
+
+                                                                    <StackPanel Margin="0,10,55,0" Orientation="Vertical" HorizontalAlignment="Right" Opacity="0.7" VerticalAlignment="Center">
+
+                                                                        <TextBlock x:Name="Clock1" Visibility="Visible" Margin="0,0,3,0" VerticalAlignment="Top" HorizontalAlignment="Right" Text="{Binding DateUnlocked, StringFormat='{}{0:HH:mm}'}" FontSize="20" Style="{DynamicResource TextBlockBaseStyle}" />
+                                                                        <TextBlock x:Name="Clock2" Visibility="Collapsed" Margin="0,0,3,0" VerticalAlignment="Top" HorizontalAlignment="Right" Text="{Binding DateUnlocked, StringFormat='{}{0:t}'}" FontSize="20" Style="{DynamicResource TextBlockBaseStyle}" />
+                                                                        <TextBlock  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,3,2" Text="{Binding DateUnlocked, StringFormat='{}{0:d MMM yyyy}'}" FontSize="20" Style="{DynamicResource TextBlockBaseStyle}"/>
+
+                                                                    </StackPanel>
+
+                                                                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Width="55" >
+                                                                        <Image x:Name="Bronze" Margin="10,10,5,0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                                               Source="{ThemeFile 'Images/Bronze.png'}" Height="45" RenderOptions.BitmapScalingMode="Fant" Visibility="Visible"/>
+                                                                        <Image x:Name="Argent"  Margin="10,10,5,0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                                               Source="{ThemeFile 'Images/Argent.png'}" Height="45" RenderOptions.BitmapScalingMode="Fant" Visibility="Collapsed" />
+                                                                        <Image x:Name="Or"  Margin="10,10,5,0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                                               Source="{ThemeFile 'Images/Or.png'}" Height="45" RenderOptions.BitmapScalingMode="Fant" Visibility="Collapsed"/>
+                                                                        <Image x:Name="Saphir" Margin="10,10,5,0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                                               Source="{ThemeFile 'Images/Saphir.png'}" Height="45" RenderOptions.BitmapScalingMode="Fant" Visibility="Collapsed"/>
+                                                                    </StackPanel>
+                                                                    <TextBlock x:Name="PercentLogic" Text="{Binding GamerScore}" Visibility="Collapsed"/>
+                                                                </Grid>
+                                                            </Grid>
+
+
+
+                                                            <Border x:Name="BorderFocus" Opacity="1" BorderThickness="3" Margin="-4,0,-4,0" Visibility="Collapsed" CornerRadius="5" >
+                                                                <Border.Style>
+                                                                    <Style TargetType="Border">
+                                                                        <Setter Property="BorderBrush" Value="#8C5A2B"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="180">
+                                                                                <Setter Property="BorderBrush" Value="#D4AF37"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="90">
+                                                                                <Setter Property="BorderBrush" Value="#D4AF37"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="50">
+                                                                                <Setter Property="BorderBrush" Value="#D4AF37"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="30">
+                                                                                <Setter Property="BorderBrush" Value="#E5E4E2"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="25">
+                                                                                <Setter Property="BorderBrush" Value="#D4AF37"/>
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="10">
+                                                                                <Setter Property="BorderBrush" Value="#E5E4E2"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Border.Style>
+                                                            </Border>
+                                                        </Grid>
+                                                    </Border>
+
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsFocused" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" TargetName="BorderFocus" />
+                                                            <Setter Property="FontSize" Value="25" TargetName="Name" />
+                                                            <Setter Property="Opacity" Value="0.8" TargetName="Desc" />
+                                                            <Setter Property="FontSize" Value="22" TargetName="Desc" />
+                                                            <Setter Property="Background" Value="{DynamicResource OverlayMenu}" TargetName="mask" />
+                                                        </Trigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="180"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter TargetName="Saphir" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Or" Property="Visibility" Value="Visible"/>
+                                                                <Setter TargetName="Argent" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Bronze" Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="90"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter TargetName="Saphir" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Or" Property="Visibility" Value="Visible"/>
+                                                                <Setter TargetName="Argent" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Bronze" Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="30"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter TargetName="Saphir" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Or" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Argent" Property="Visibility" Value="Visible"/>
+                                                                <Setter TargetName="Bronze" Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                        <!-- Retro-->
+
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="50"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter TargetName="Saphir" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Or" Property="Visibility" Value="Visible"/>
+                                                                <Setter TargetName="Argent" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Bronze" Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=PercentLogic, Path=Text}" Value="25"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter TargetName="Saphir" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Or" Property="Visibility" Value="Visible"/>
+                                                                <Setter TargetName="Argent" Property="Visibility" Value="Collapsed"/>
+                                                                <Setter TargetName="Bronze" Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=SuccessChangeToggle, Path=IsChecked}" Value="True"/>
+                                                                <Condition Binding="{Binding IsUnlock}" Value="False"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=SuccessChangeToggle, Path=IsChecked}" Value="{x:Null}"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=SuccessChangeToggle, Path=IsChecked}" Value="False"/>
+                                                                <Condition Binding="{Binding IsUnlock}" Value="True"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding ElementName=SuccessChangeToggle, Path=IsChecked}" Value="False"/>
+                                                                <Condition Binding="{Binding IsUnlock}" Value="True"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[LocalClock]}" Value="False"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <MultiDataTrigger.Setters>
+                                                                <Setter TargetName="Clock2" Property="Visibility" Value="Visible"/>
+                                                                <Setter TargetName="Clock1" Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger.Setters>
+                                                        </MultiDataTrigger>
+
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                            </ListView>
+
+
+
+                            <Grid.Effect>
+                                <DropShadowEffect BlurRadius="10" ShadowDepth="2" Direction="270" Opacity="0.4" />
+                            </Grid.Effect>
+
+                        </Grid>
+                        <Border Background="{DynamicResource MainBackgourndBrush}" CornerRadius="0,0,5,5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="50" Margin="0,0,0,0"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,0" >
+                            <TextBlock Text="{DynamicResource LocTotalTrophiesUnlocked}"  Style="{DynamicResource TextBlockBaseStyle}" FontSize="28" Margin="0,50,5,10" />
+                            <TextBlock Text=" : " Style="{DynamicResource TextBlockBaseStyle}"  FontSize="28"  Margin="0,50,5,10" />
+                            <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=Unlocked, FallbackValue='-'}" Style="{DynamicResource TextBlockBaseStyle}"  FontSize="28"  Margin="0,50,0,10" />
+                            <TextBlock Text="/" Style="{DynamicResource TextBlockBaseStyle}" FontSize="28" Margin="2,50,2,10" />
+                            <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=Total, FallbackValue='-'}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="28" Margin="0,50,0,10" />
+                        </StackPanel>
+                        <ButtonEx x:Name="BackButton" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{StaticResource IconBButton}" Content="{DynamicResource LOCBackLabel}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=PART_ViewHost, Path=ActualWidth}" Value="1728">
+                            <Setter Property="Margin" Value="-140,80,30,80" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp1610">
+                <Setter Property="Margin" Value="0,-60,0,-60"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp219">
+                <Setter Property="Margin" Value="-320,0,-320,0"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--SuccessStory-->
+
     <Style x:Key="GameAchievementsWindowStyle" TargetType="ContentControl">
         <Setter Property="Margin" Value="0,0,0,0"/>
         <Setter Property="Template">
@@ -3135,6 +4334,7 @@
                                 </BeginStoryboard>
                             </EventTrigger>
                         </Grid.Triggers>
+
 
                         <FadeImage Source="{Binding SelectedGame.BackgroundImage}" Margin="0,-150,0,0"
                                    HorizontalContentAlignment="Center"
@@ -3193,7 +4393,7 @@
                                            ClipToBounds="True"
                                            SnapsToDevicePixels="True"
                                            MaxWidth="200"
-                                           MaxHeight="200"
+                                           MaxHeight="210"
                                            />
                                 </Border>
 
@@ -3287,8 +4487,6 @@
                                                Text="{PluginSettings Plugin=SuccessStory, Path=Percent, StringFormat={}{0}%}" />
                                 </StackPanel>
 
-
-
                             </Grid>
                         </Border>
 
@@ -3360,7 +4558,7 @@
                                 </TextBlock.Style>
                             </TextBlock>
 
-                            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-30,-10,0,0">
+                            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-30,-10,0,0" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="10"/>
@@ -3399,7 +4597,6 @@
 
 
                             </Grid>
-
 
                             <Rectangle Fill="{DynamicResource TextBrush}" Height="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,50,0,0" />
 
@@ -3471,11 +4668,11 @@
 
                                                                         <!-- Ligne 2 : Description -->
                                                                         <TextBlock x:Name="Desc"
+                                                                                   Margin="0,5,0,0"
                                                                                    Grid.Row="1"
                                                                                    VerticalAlignment="Top"
                                                                                    Text="{Binding Description}"
                                                                                    Opacity="0.8"
-                                                                                   Margin="0,5,0,0"
                                                                                    MaxWidth="1200"
                                                                                    TextTrimming="WordEllipsis"
                                                                                    TextWrapping="Wrap"
@@ -3994,6 +5191,7 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+
 
     <Style x:Key="CheckDLCWindowStyle" TargetType="ContentControl">
         <Setter Property="Margin" Value="0,0,0,0"/>
