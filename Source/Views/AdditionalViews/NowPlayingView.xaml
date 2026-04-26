@@ -1,0 +1,146 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:pc="clr-namespace:Playnite.Controls;assembly=Playnite"
+                    xmlns:pbeh="clr-namespace:Playnite.Behaviors;assembly=Playnite"
+                    mc:Ignorable="d">
+
+
+    <!-- Vue NowPlaying -->
+    <Style x:Key="NowPlayingWindowStyle" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid KeyboardNavigation.TabNavigation="Cycle"
+                          KeyboardNavigation.DirectionalNavigation="Cycle"
+                          KeyboardNavigation.ControlTabNavigation="Cycle">
+                        <Border x:Name="MainBorder"
+                                Width="1280"
+                                Height="720"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                CornerRadius="2"
+                                Opacity="0"
+                                BorderBrush="{DynamicResource MenuBorderBrush}"
+                                Margin="-2"
+                                BorderThickness="1.5">
+
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black"  ShadowDepth="0" Opacity="0.5"/>
+                            </Border.Effect>
+                            <Border.RenderTransform>
+                                <TranslateTransform Y="50" />
+                            </Border.RenderTransform>
+
+                            <!-- Animation fade-in -->
+                            <Border.Triggers>
+                                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.4"/>
+                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" From="50" To="0" Duration="0:0:0.4">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Border.Triggers>
+
+                            <Grid>
+                                <!-- Image du plugin -->
+                                <Image Source="{PluginSettings Plugin=NowPlaying, Path=RunningGame.BackgroundPath}" Stretch="UniformToFill"/>
+
+                                <!-- Bandeau supérieur -->
+                                <Grid VerticalAlignment="Top" Panel.ZIndex="1">
+                                    <Border Background="{DynamicResource TopBar}" Opacity="0.9" CornerRadius="2,2,0,0" Height="Auto"/>
+                                    <StackPanel VerticalAlignment="Center" Opacity="0.9" HorizontalAlignment="Center" Margin="20,10,20,0">
+                                        <TextBlock Text="{PluginSettings Plugin=NowPlaying, Path=RunningGame.GameName}"
+                                                   FontSize="44"
+                                                   FontWeight="Bold"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   TextWrapping="Wrap"
+                                                   TextAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0,0,0,4">
+                                        </TextBlock>
+                                        <StackPanel.Effect>
+                                            <DropShadowEffect  ShadowDepth="0" Color="Black" Opacity="0.6"/>
+                                        </StackPanel.Effect>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Bandeau Inferieur -->
+                                <Grid VerticalAlignment="Bottom" Panel.ZIndex="1" FocusVisualStyle="{x:Null}">
+                                    <Border Background="{DynamicResource BottomBar}" Opacity="0.8" CornerRadius="0,0,2,2" Height="Auto"/>
+                                    <!-- Timers -->
+                                    <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Margin="0,0,0,20" FocusVisualStyle="{x:Null}">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10" FocusVisualStyle="{x:Null}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{DynamicResource LOCNowPlayingNP}"
+                                                           FontSize="26"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           Opacity="0.8"
+                                                           FontWeight="Regular"
+                                                           Margin="0,0,4,0"/>
+                                                <TextBlock Text="{PluginSettings Plugin=NowPlaying, Path=SessionLength}"
+                                                           FontSize="24"
+                                                           Margin="0,2,0,0"
+                                                           FontWeight="Regular"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"/>
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <!-- Boutons -->
+                                        <StackPanel Orientation="Horizontal"
+                                                    HorizontalAlignment="Center"
+                                                    FocusVisualStyle="{x:Null}">
+                                            <ButtonEx Content="{DynamicResource LOCReturnGameNP}"
+                                                      Width="330"
+                                                      Height="70"
+                                                      FocusVisualStyle="{x:Null}"
+                                                      pbeh:FocusBahaviors.FocusBinding="True"
+                                                      pbeh:FocusBahaviors.OnVisibilityFocus="True"
+                                                      Style="{StaticResource NowPlayingActionButtonPremium}"
+                                                      Margin="10,0,10,0"
+                                                      Command="{PluginSettings Plugin=NowPlaying, Path=ReturnToGame}"/>
+
+                                            <ButtonEx Content="{DynamicResource LOCExitGameNP}"
+                                                      Width="330"
+                                                      Height="70"
+                                                      Tag="Danger"
+                                                      Style="{StaticResource NowPlayingActionButtonPremium}"
+                                                      Margin="10,0,10,0"
+                                                      Command="{PluginSettings Plugin=NowPlaying, Path=CloseGame}"/>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal"  VerticalAlignment="Bottom" Effect="{DynamicResource SoftTextShadow}" HorizontalAlignment="Right" Margin="0,0,20,0">
+
+                                            <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                                      Tag="Dpad"
+                                                      Content="{DynamicResource LOCButtonPrompt_Navigate}" />
+
+                                            <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                                      Tag="A"
+                                                      Content="{DynamicResource LOCButtonPrompt_Select}" />
+
+                                            <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                                      Tag="B"
+                                                      Content="{DynamicResource LOCBackLabel}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,1517 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:pc="clr-namespace:Playnite.Controls;assembly=Playnite"
+                    xmlns:pbeh="clr-namespace:Playnite.Behaviors;assembly=Playnite"
+                    mc:Ignorable="d">
+
+    <!-- Vue News et Last Updates-->
+    <Style x:Key="LastUpdatesWindowStyle" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid
+                        FocusManager.FocusedElement="{Binding ElementName=NewsTabBtn}"
+                        KeyboardNavigation.TabNavigation="Contained"
+                        KeyboardNavigation.DirectionalNavigation="Contained"
+                        Opacity="0"
+                        Background="{DynamicResource SecondaryViewBackground}">
+
+                        <Grid.RenderTransform>
+                            <TranslateTransform Y="40"/>
+                        </Grid.RenderTransform>
+
+                        <!-- petite anim entrée -->
+                        <Grid.Triggers>
+                            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         From="0" To="1"
+                                                         Duration="0:0:0.30"/>
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                                         From="40" To="0"
+                                                         Duration="0:0:0.40">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Grid.Triggers>
+
+
+
+                        <Grid>
+                            <Border Background="{DynamicResource NewsImageDefault}" Opacity="0.1">
+                                <Border.OpacityMask>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                                        <GradientStop Color="#80FFFFFF" Offset="0.30"/>
+                                        <GradientStop Color="#80FFFFFF" Offset="0.60"/>
+                                        <GradientStop Color="#FFFFFFFF" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.OpacityMask>
+                            </Border>
+                        </Grid>
+
+
+                        <!-- TOGGLES INTERNES (un seul actif à la fois) -->
+                        <ToggleButtonEx x:Name="ModeNewsInternal"
+                                        Visibility="Collapsed"
+                                        IsChecked="True" />
+
+                        <ToggleButtonEx x:Name="ModeUpdatesInternal"
+                                        Visibility="Collapsed"
+                                        IsChecked="False" />
+
+                        <ToggleButtonEx x:Name="ModePlayniteInternal"
+                                        Visibility="Collapsed"
+                                        IsChecked="False" />
+
+                        <ToggleButtonEx x:Name="ModeDealsInternal"
+                                        Visibility="Collapsed"
+                                        IsChecked="False" />
+
+
+                        <!-- BARRE ONGLET -->
+                        <!-- BARRE HAUTE NEWS -->
+                        <Grid x:Name="TabsHeader"
+                              VerticalAlignment="Top"
+                              HorizontalAlignment="Stretch"
+                              Height="80"
+                              Panel.ZIndex="10"
+                              FocusVisualStyle="{x:Null}">
+
+                            <!-- Fond verre -->
+                            <Border CornerRadius="0"
+                                    Background="{DynamicResource TopBar}"
+                                    Opacity="{DynamicResource OpacityBar}"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"/>
+
+                            <!-- Reflet vertical discret -->
+                            <Border Opacity="{DynamicResource OpacityBar}"
+                                    CornerRadius="0"
+                                    IsHitTestVisible="False"
+                                    Background="{DynamicResource GlassMainBrush}"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"/>
+
+                            <!-- Ligne basse -->
+                            <Border HorizontalAlignment="Stretch"
+                                    Height="1.5"
+                                    VerticalAlignment="Bottom"
+                                    Background="{DynamicResource SeparatorTopBarBrush}"
+                                    Opacity="{DynamicResource OpacityBar}"
+                                    CornerRadius="0"/>
+
+                            <!-- Titre gauche -->
+                            <StackPanel Orientation="Vertical"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Margin="34,0,0,0"
+                                        Effect="{DynamicResource SoftTextShadow}">
+
+                                <TextBlock Text="ANIKI NEWS"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           Foreground="{DynamicResource TextHighlightNewsViewBrush}"
+                                           FontSize="26"
+                                           FontWeight="SemiBold"
+                                           Typography.Capitals="AllSmallCaps"/>
+
+                                <TextBlock Text="{DynamicResource LOCLatestNews}"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           Foreground="{DynamicResource TextBrush}"
+                                           FontSize="14"
+                                           Opacity="0.7"
+                                           Margin="1,-3,0,0"/>
+                            </StackPanel>
+
+                            <!-- Onglets / navigation centrale -->
+                            <StackPanel Orientation="Horizontal"
+                                        Height="46"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Effect="{DynamicResource SoftTextShadow}">
+
+                                <!-- NEWS -->
+                                <ButtonEx x:Name="NewsTabBtn"
+                                          Content="{PluginSettings Plugin=AnikiHelper, Path=NewsSourceATitle}"
+                                          pbeh:FocusBahaviors.OnVisibilityFocus="True"
+                                          pbeh:FocusBahaviors.FocusBinding="True"
+                                          MinWidth="120"
+                                          Margin="8,0"
+                                          Padding="20,8"
+                                          Style="{StaticResource WelcomeHubQuickButtonStyle}">
+                                    <ButtonEx.Triggers>
+                                        <EventTrigger RoutedEvent="ButtonBase.Click">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModeNewsInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModeUpdatesInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModePlayniteInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModeDealsInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </ButtonEx.Triggers>
+                                </ButtonEx>
+
+                                <!-- SOURCE B / DEALS -->
+                                <ButtonEx x:Name="DealsTabBtn"
+                                          Content="{PluginSettings Plugin=AnikiHelper, Path=NewsSourceBTitle}"
+                                          MinWidth="120"
+                                          Margin="8,0"
+                                          Padding="20,8"
+                                          Style="{StaticResource WelcomeHubQuickButtonStyle}">
+                                    <ButtonEx.Triggers>
+                                        <EventTrigger RoutedEvent="ButtonBase.Click">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModeDealsInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModeNewsInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModeUpdatesInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModePlayniteInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </ButtonEx.Triggers>
+                                </ButtonEx>
+
+                                <!-- UPDATES -->
+                                <ButtonEx x:Name="UpdatesTabBtn"
+                                          Content="{DynamicResource LOCGameUpdateTab}"
+                                          MinWidth="120"
+                                          Margin="8,0"
+                                          Padding="20,8"
+                                          Style="{StaticResource WelcomeHubQuickButtonStyle}">
+                                    <ButtonEx.Triggers>
+                                        <EventTrigger RoutedEvent="ButtonBase.Click">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModeUpdatesInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModeNewsInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModePlayniteInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModeDealsInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </ButtonEx.Triggers>
+                                </ButtonEx>
+
+                                <!-- PLAYNITE -->
+                                <ButtonEx x:Name="PlayniteTabBtn"
+                                          Content="{DynamicResource LOCPlayniteNewsTab}"
+                                          MinWidth="120"
+                                          Margin="8,0"
+                                          Padding="20,8"
+                                          Style="{StaticResource WelcomeHubQuickButtonStyle}">
+                                    <ButtonEx.Triggers>
+                                        <EventTrigger RoutedEvent="ButtonBase.Click">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModePlayniteInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModeNewsInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModeUpdatesInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="ModeDealsInternal" Storyboard.TargetProperty="IsChecked">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </ButtonEx.Triggers>
+                                </ButtonEx>
+
+
+
+                            </StackPanel>
+                        </Grid>
+
+                        <!--NewsPanel-->
+                        <Grid x:Name="NewsPanel" Panel.ZIndex="0" MaxWidth="1900" Margin="20,120,20,80" Visibility="Visible">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Liste des news -->
+                            <Border Grid.Column="0"
+                                    Margin="0,20,10,0"
+                                    Focusable="False"
+                                    CornerRadius="12"
+                                    HorizontalAlignment="Stretch">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="{DynamicResource BackgroundListNewsBrush}"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource BorderListNewsBrush}"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusBorderListNews}"/>
+                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <!-- Focus initial sur la liste -->
+                                <ListBox x:Name="NewsList"
+                                         HorizontalAlignment="Stretch"
+                                         Focusable="True"
+                                         SelectedIndex="0"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         FocusVisualStyle="{x:Null}"
+                                         KeyboardNavigation.DirectionalNavigation="Once"
+                                         KeyboardNavigation.TabNavigation="Once"
+                                         KeyboardNavigation.ControlTabNavigation="Once"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                         ScrollViewer.CanContentScroll="True"
+                                         VirtualizingPanel.IsVirtualizing="True"
+                                         VirtualizingPanel.VirtualizationMode="Recycling"
+                                         VirtualizingPanel.ScrollUnit="Item"
+                                         VirtualizingPanel.CacheLengthUnit="Item"
+                                         VirtualizingPanel.CacheLength="3"
+                                         ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SteamGlobalNewsA}">
+
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel Orientation="Vertical"
+                                                                    IsVirtualizing="True"
+                                                                    VirtualizationMode="Recycling"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+
+                                    <ListBox.Style>
+                                        <Style TargetType="ListBox">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
+                                        </Style>
+                                    </ListBox.Style>
+
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <Border Margin="20,10"
+                                                    Padding="1"
+                                                    HorizontalAlignment="Stretch"
+                                                    FocusVisualStyle="{x:Null}"
+                                                    Focusable="False"
+                                                    CornerRadius="10">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Background" Value="{DynamicResource CardNewsBackgroundBrush}"/>
+                                                        <Setter Property="BorderBrush" Value="{DynamicResource CardNewsBorderBrush}"/>
+                                                        <Setter Property="BorderThickness" Value="1"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource FocusCardNewsBackgroundBrush}"/>
+                                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusCardNewsBorder}"/>
+                                                                <Setter Property="BorderThickness" Value="1.5"/>
+                                                            </Trigger>
+                                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource FocusCardNewsBackgroundBrush}"/>
+                                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusCardNewsBorder}"/>
+                                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+
+
+                                                <!-- CONTENU ITEM -->
+                                                <Grid Margin="4,2"
+                                                      Focusable="False"
+                                                      KeyboardNavigation.IsTabStop="False"
+                                                      KeyboardNavigation.TabNavigation="None"
+                                                      KeyboardNavigation.DirectionalNavigation="None">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="4"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <!-- Accent gauche -->
+                                                    <Border Grid.RowSpan="3" MaxHeight="120"
+                                                            Grid.Column="0"
+                                                            CornerRadius="2">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="Transparent" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsSelected,
+                                                                                 RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                                                                 Value="True">
+                                                                        <Setter Property="Background" Value="{DynamicResource AccentCardNewsBrush}" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                    </Border>
+
+                                                    <!-- Image -->
+                                                    <Border Grid.RowSpan="3"
+                                                            Grid.Column="1"
+                                                            MaxWidth="220"
+                                                            Height="120"
+                                                            Margin="0,0,12,0"
+                                                            CornerRadius="8"
+                                                            Background="#00000000"
+                                                            ClipToBounds="True">
+                                                        <Grid>
+
+                                                            <!-- Image principale : LocalImagePath -->
+                                                            <Image x:Name="NewsMainImage"
+                                                                   Stretch="Uniform"
+                                                                   RenderOptions.BitmapScalingMode="LowQuality"
+                                                                   Source="{Binding LocalImagePath}">
+                                                                <Image.Style>
+                                                                    <Style TargetType="Image">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                        <Style.Triggers>
+                                                                            <!-- Si LocalImagePath est null ou vide -> on cache -->
+                                                                            <DataTrigger Binding="{Binding LocalImagePath}" Value="{x:Null}">
+                                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding LocalImagePath}" Value="">
+                                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Image.Style>
+                                                            </Image>
+
+                                                            <!-- Fallback : NoImagesNews.png via ThemeFile -->
+                                                            <Image x:Name="NewsFallbackImage"
+                                                                   Stretch="Uniform"
+                                                                   RenderOptions.BitmapScalingMode="LowQuality"
+                                                                   Source="{ThemeFile 'Images/NoImagesGameNews.png'}">
+                                                                <Image.Style>
+                                                                    <Style TargetType="Image">
+                                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                                        <Style.Triggers>
+                                                                            <!-- Si LocalImagePath est null ou vide -> on affiche le fallback -->
+                                                                            <DataTrigger Binding="{Binding LocalImagePath}" Value="{x:Null}">
+                                                                                <Setter Property="Visibility" Value="Visible" />
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding LocalImagePath}" Value="">
+                                                                                <Setter Property="Visibility" Value="Visible" />
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Image.Style>
+                                                            </Image>
+
+                                                        </Grid>
+                                                    </Border>
+
+                                                    <!-- Titre -->
+                                                    <TextBlock Grid.Row="0"
+                                                               Grid.Column="2"
+                                                               Text="{Binding Title}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="24"
+                                                               MaxWidth="600"
+                                                               TextWrapping="Wrap"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               Margin="0,2,8,0"/>
+
+                                                    <!-- Date -->
+                                                    <TextBlock Grid.Row="2"
+                                                               Grid.Column="2"
+                                                               Text="{Binding DateString}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="20"
+                                                               Opacity="0.7"
+                                                               Margin="15,4,8,4"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="Padding" Value="0"/>
+                                            <Setter Property="Margin" Value="0"/>
+                                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListBoxItem">
+                                                        <Border Background="{TemplateBinding Background}">
+                                                            <ContentPresenter
+                                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                Margin="{TemplateBinding Padding}" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
+                            </Border>
+
+                            <!-- Détails de la news -->
+                            <Border x:Name="BorderNewsDetails"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="10,0,10,0"
+                                    Focusable="False"
+                                    CornerRadius="12"
+                                    HorizontalAlignment="Stretch">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="BorderBrush" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusBorderListNews}"/>
+                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <Grid DataContext="{Binding SelectedItem, ElementName=NewsList}">
+
+                                    <!-- Contenu -->
+                                    <Grid Margin="10,0,10,10">
+                                        <Border x:Name="BorderNews" Grid.Row="1" Grid.Column="1" Margin="10,20,0,0" Focusable="False" CornerRadius="12" HorizontalAlignment="Stretch">
+                                            <Border.OpacityMask>
+                                                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                                    <GradientStop Color="#00FFFFFF" Offset="0"/>
+                                                    <GradientStop Color="#FF000000" Offset="0.5"/>
+                                                </LinearGradientBrush>
+                                            </Border.OpacityMask>
+
+                                            <ScrollViewerEx x:Name="NewsContentScroll"
+                                                            Focusable="True"
+                                                            IsTabStop="True"
+                                                            FocusVisualStyle="{x:Null}"
+                                                            PanningMode="VerticalOnly"
+                                                            ScrollViewer.CanContentScroll="False"
+                                                            VerticalScrollBarVisibility="Auto">
+
+                                                <HtmlTextView x:Name="NewsContent"
+                                                              HtmlText="{Binding HtmlDescription}"
+                                                              HtmlFontFamily="{DynamicResource FontFamily}"
+                                                              HtmlForeground="{DynamicResource TextColorNewsDesc}"
+                                                              LinkForeground="{DynamicResource GlyphColor}"
+                                                              HtmlFontSize="{DynamicResource FontSize}"
+                                                              Focusable="False"
+                                                              IsTabStop="False" />
+                                            </ScrollViewerEx>
+                                        </Border>
+                                    </Grid>
+                                    <!-- flux RSS invalide -->
+                                    <TextBlock
+                                        Text="{DynamicResource LOCRSSInvalidFallbackIGN}"
+                                        FontSize="20"
+                                        Foreground="Red"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Right"
+                                        Opacity="0.7"
+                                        Margin="15,4,20,10">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamNewsCustomFeedInvalid}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <!--UpdatePanel-->
+                        <Grid x:Name="UpdatePanel" Panel.ZIndex="0" MaxWidth="1900" Margin="20,120,20,80" Visibility="Collapsed">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Liste Update-->
+                            <Border Grid.Column="0"
+                                    Margin="0,20,10,0"
+                                    Focusable="False"
+                                    CornerRadius="12"
+                                    HorizontalAlignment="Stretch">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="{DynamicResource BackgroundListNewsBrush}"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource BorderListNewsBrush}"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusBorderListNews}"/>
+                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <ListBox x:Name="UpdateList"
+                                         HorizontalAlignment="Stretch"
+                                         Focusable="True"
+                                         SelectedIndex="0"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         FocusVisualStyle="{x:Null}"
+                                         KeyboardNavigation.DirectionalNavigation="Once"
+                                         KeyboardNavigation.TabNavigation="Once"
+                                         KeyboardNavigation.ControlTabNavigation="Once"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                         ScrollViewer.CanContentScroll="True"
+                                         VirtualizingPanel.IsVirtualizing="True"
+                                         VirtualizingPanel.VirtualizationMode="Recycling"
+                                         VirtualizingPanel.ScrollUnit="Item"
+                                         VirtualizingPanel.CacheLengthUnit="Item"
+                                         VirtualizingPanel.CacheLength="3"
+                                         ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SteamRecentUpdates}">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel Orientation="Vertical"
+                                                                    IsVirtualizing="True"
+                                                                    VirtualizationMode="Recycling"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+
+                                    <ListBox.Style>
+                                        <Style TargetType="ListBox">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
+                                        </Style>
+                                    </ListBox.Style>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Margin="20,10"
+                                                    Padding="1"
+                                                    HorizontalAlignment="Stretch"
+                                                    FocusVisualStyle="{x:Null}"
+                                                    Focusable="False"
+                                                    CornerRadius="10">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Background" Value="{DynamicResource CardNewsBackgroundBrush}"/>
+                                                        <Setter Property="BorderBrush" Value="{DynamicResource CardNewsBorderBrush}"/>
+                                                        <Setter Property="BorderThickness" Value="1"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource FocusCardNewsBackgroundBrush}"/>
+                                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusCardNewsBorder}"/>
+                                                                <Setter Property="BorderThickness" Value="1.5"/>
+                                                            </Trigger>
+                                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource FocusCardNewsBackgroundBrush}"/>
+                                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusCardNewsBorder}"/>
+                                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                                <Grid Margin="4,2"
+                                                      Focusable="False"
+                                                      KeyboardNavigation.IsTabStop="False"
+                                                      KeyboardNavigation.TabNavigation="None"
+                                                      KeyboardNavigation.DirectionalNavigation="None">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="4"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <Border x:Name="NewUpdateBadge" Grid.Column="3" Width="50" Height="50" CornerRadius="20" Background="{DynamicResource ButtonPlayColor}" BorderBrush="{DynamicResource MenuBorderBrush}" BorderThickness="2" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,3,3,0">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsRecent}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="NEW" FontWeight="Bold" FontSize="14" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                                                    </Border>
+
+                                                    <!-- Accent -->
+                                                    <Border Grid.RowSpan="2" Grid.Column="0" CornerRadius="2" MaxHeight="120">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="Transparent" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                                        <Setter Property="Background" Value="{DynamicResource AccentCardNewsBrush}" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                    </Border>
+                                                    <!-- Vignette / icône -->
+                                                    <Border Grid.RowSpan="2" Grid.Column="1" Width="120" MaxHeight="120" Margin="0,0,12,0" CornerRadius="8" Background="#33000000" ClipToBounds="True">
+                                                        <Image Source="{Binding CoverPath}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant">
+                                                            <Image.Style>
+                                                                <Style TargetType="Image">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding CoverPath}" Value="">
+                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding CoverPath}" Value="{x:Null}">
+                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Image.Style>
+                                                        </Image>
+                                                    </Border>
+                                                    <!-- Nom du jeu -->
+                                                    <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding GameName}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="26" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Margin="0,2,8,0"/>
+                                                    <!-- Date + titre de l’update -->
+                                                    <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,6,8,4">
+                                                        <TextBlock Text="Updated " FontSize="26" Style="{DynamicResource TextBlockBaseStyle}" Opacity="0.75"/>
+                                                        <TextBlock Text="{Binding DateString}" FontSize="26" Style="{DynamicResource TextBlockBaseStyle}" Opacity="0.75"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="Padding" Value="0"/>
+                                            <Setter Property="Margin" Value="0"/>
+                                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListBoxItem">
+                                                        <Border Background="{TemplateBinding Background}">
+                                                            <ContentPresenter
+                                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                Margin="{TemplateBinding Padding}" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
+                                <Border.Effect>
+                                    <DropShadowEffect  Color="#000000" ShadowDepth="0" Opacity="0.3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <!-- PatchNote -->
+                            <Border x:Name="BorderPatchDetails"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="10,10,0,0"
+                                    Focusable="False"
+                                    CornerRadius="12"
+                                    HorizontalAlignment="Stretch">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="BorderBrush" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusBorderListNews}"/>
+                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <Grid DataContext="{Binding SelectedItem, ElementName=UpdateList}">
+
+                                    <!-- Contenu -->
+                                    <Grid Margin="10,0,10,10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Titre "Patch Note" -->
+                                        <TextBlock Margin="10,5,10,10"
+                                                   Grid.Row="0"
+                                                   Text="{DynamicResource LOCPatchNote}"
+                                                   HorizontalAlignment="Center"
+                                                   Style="{StaticResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightNewsViewBrush}"
+                                                   FontSize="30" />
+
+                                        <!-- Titre de l’update sélectionnée -->
+                                        <TextBlock Margin="10,10,10,5"
+                                                   Grid.Row="1"
+                                                   Text="{Binding Title}"
+                                                   Style="{StaticResource InfoValueStyle}"
+                                                   FontSize="26" />
+
+                                        <!-- Zone scrollable avec masque -->
+                                        <Border x:Name="BorderPatch"
+                                                Grid.Row="2"
+                                                Margin="10,10,0,0"
+                                                Focusable="False"
+                                                CornerRadius="12"
+                                                HorizontalAlignment="Stretch">
+
+                                            <Border.OpacityMask>
+                                                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                                    <GradientStop Color="#00FFFFFF" Offset="0"/>
+                                                    <GradientStop Color="#FF000000" Offset="0.5"/>
+                                                </LinearGradientBrush>
+                                            </Border.OpacityMask>
+
+                                            <ScrollViewerEx x:Name="ContenuUpdateScroll"
+                                                            Focusable="True"
+                                                            IsTabStop="True"
+                                                            FocusVisualStyle="{x:Null}"
+                                                            PanningMode="VerticalOnly"
+                                                            ScrollViewer.CanContentScroll="False"
+                                                            VerticalScrollBarVisibility="Auto">
+                                                <HtmlTextView x:Name="ContenuUpdate"
+                                                              HtmlText="{Binding Html}"
+                                                              HtmlFontFamily="{DynamicResource FontFamily}"
+                                                              HtmlForeground="{DynamicResource TextColorNewsDesc}"
+                                                              LinkForeground="{DynamicResource GlyphColor}"
+                                                              HtmlFontSize="{DynamicResource FontSize}"
+                                                              Focusable="False"
+                                                              IsTabStop="False" />
+                                            </ScrollViewerEx>
+                                        </Border>
+                                    </Grid>
+
+                                </Grid>
+                            </Border>
+
+                        </Grid>
+
+                        <!--PlayniteNewsPanel-->
+                        <Grid x:Name="PlayniteNewsPanel" Panel.ZIndex="0" MaxWidth="1900" Margin="20,120,20,80" Visibility="Visible">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+
+                            <!-- Liste des news -->
+                            <Border Grid.Column="0"
+                                    Margin="0,20,10,0"
+                                    Focusable="False"
+                                    CornerRadius="12"
+                                    HorizontalAlignment="Stretch">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="{DynamicResource BackgroundListNewsBrush}"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource BorderListNewsBrush}"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusBorderListNews}"/>
+                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <!-- Focus initial sur la liste -->
+                                <ListBox x:Name="PlayniteNewsList"
+                                         HorizontalAlignment="Stretch"
+                                         Focusable="True"
+                                         SelectedIndex="0"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         FocusVisualStyle="{x:Null}"
+                                         KeyboardNavigation.DirectionalNavigation="Once"
+                                         KeyboardNavigation.TabNavigation="Once"
+                                         KeyboardNavigation.ControlTabNavigation="Once"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                         ScrollViewer.CanContentScroll="True"
+                                         VirtualizingPanel.IsVirtualizing="True"
+                                         VirtualizingPanel.VirtualizationMode="Recycling"
+                                         VirtualizingPanel.ScrollUnit="Item"
+                                         VirtualizingPanel.CacheLengthUnit="Item"
+                                         VirtualizingPanel.CacheLength="3"
+                                         ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=PlayniteNews}">
+
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel Orientation="Vertical"
+                                                                    IsVirtualizing="True"
+                                                                    VirtualizationMode="Recycling"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+
+                                    <ListBox.Style>
+                                        <Style TargetType="ListBox">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
+                                        </Style>
+                                    </ListBox.Style>
+
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <Border Margin="20,10"
+                                                    Padding="1"
+                                                    HorizontalAlignment="Stretch"
+                                                    FocusVisualStyle="{x:Null}"
+                                                    Focusable="False"
+                                                    CornerRadius="10">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Background" Value="{DynamicResource CardNewsBackgroundBrush}"/>
+                                                        <Setter Property="BorderBrush" Value="{DynamicResource CardNewsBorderBrush}"/>
+                                                        <Setter Property="BorderThickness" Value="1"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource FocusCardNewsBackgroundBrush}"/>
+                                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusCardNewsBorder}"/>
+                                                                <Setter Property="BorderThickness" Value="1.5"/>
+                                                            </Trigger>
+                                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource FocusCardNewsBackgroundBrush}"/>
+                                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusCardNewsBorder}"/>
+                                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                                <!-- CONTENU ITEM -->
+                                                <Grid Margin="4,2"
+                                                      Focusable="False"
+                                                      KeyboardNavigation.IsTabStop="False"
+                                                      KeyboardNavigation.TabNavigation="None"
+                                                      KeyboardNavigation.DirectionalNavigation="None">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="4"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <!-- Accent gauche -->
+                                                    <Border Grid.RowSpan="3" MaxHeight="120"
+                                                            Grid.Column="0"
+                                                            CornerRadius="2">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="Transparent" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsSelected,
+                                                                                 RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                                                                 Value="True">
+                                                                        <Setter Property="Background" Value="{DynamicResource AccentCardNewsBrush}" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                    </Border>
+
+                                                    <!-- Image -->
+                                                    <Border Grid.RowSpan="3"
+                                                            Grid.Column="1"
+                                                            MaxWidth="220"
+                                                            Height="120"
+                                                            Margin="0,0,12,0"
+                                                            CornerRadius="8"
+                                                            Background="#00000000"
+                                                            ClipToBounds="True">
+                                                        <Grid>
+
+                                                            <!-- Image principale : LocalImagePath -->
+                                                            <Image x:Name="NewsMainImage"
+                                                                   Stretch="Uniform"
+                                                                   RenderOptions.BitmapScalingMode="LowQuality"
+                                                                   Source="{Binding LocalImagePath}">
+                                                                <Image.Style>
+                                                                    <Style TargetType="Image">
+                                                                        <Setter Property="Visibility" Value="Visible" />
+                                                                        <Style.Triggers>
+                                                                            <!-- Si LocalImagePath est null ou vide -> on cache -->
+                                                                            <DataTrigger Binding="{Binding LocalImagePath}" Value="{x:Null}">
+                                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding LocalImagePath}" Value="">
+                                                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Image.Style>
+                                                            </Image>
+
+                                                            <!-- Fallback : NoImagesNews.png via ThemeFile -->
+                                                            <Image x:Name="NewsFallbackImage"
+                                                                   Stretch="Uniform"
+                                                                   RenderOptions.BitmapScalingMode="LowQuality"
+                                                                   Source="{ThemeFile 'Images/NoImagesNews.png'}">
+                                                                <Image.Style>
+                                                                    <Style TargetType="Image">
+                                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                                        <Style.Triggers>
+                                                                            <!-- Si LocalImagePath est null ou vide -> on affiche le fallback -->
+                                                                            <DataTrigger Binding="{Binding LocalImagePath}" Value="{x:Null}">
+                                                                                <Setter Property="Visibility" Value="Visible" />
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding LocalImagePath}" Value="">
+                                                                                <Setter Property="Visibility" Value="Visible" />
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Image.Style>
+                                                            </Image>
+
+                                                        </Grid>
+                                                    </Border>
+
+                                                    <!-- Titre -->
+                                                    <TextBlock Grid.Row="0"
+                                                               Grid.Column="2"
+                                                               Text="{Binding Title}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="24"
+                                                               MaxWidth="600"
+                                                               TextWrapping="Wrap"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               Margin="0,2,8,0"/>
+
+                                                    <!-- Date -->
+                                                    <TextBlock Grid.Row="2"
+                                                               Grid.Column="2"
+                                                               Text="{Binding DateString}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="20"
+                                                               Opacity="0.7"
+                                                               Margin="15,4,8,4"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="Padding" Value="0"/>
+                                            <Setter Property="Margin" Value="0"/>
+                                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListBoxItem">
+                                                        <Border Background="{TemplateBinding Background}">
+                                                            <ContentPresenter
+                                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                Margin="{TemplateBinding Padding}" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        Color="#000000"
+                                        ShadowDepth="0"
+                                        Opacity="0.3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <!-- Détails de la news -->
+                            <Border x:Name="BorderPlayniteNewsDetails"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="10,10,0,0"
+                                    Focusable="False"
+                                    CornerRadius="12"
+                                    HorizontalAlignment="Stretch">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="BorderBrush" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusBorderListNews}"/>
+                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <!-- Détail Playnite Actu -->
+                                <Grid DataContext="{Binding SelectedItem, ElementName=PlayniteNewsList}">
+
+                                    <!-- Contenu -->
+                                    <Grid Margin="10,0,10,10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Titre "Patch Note" -->
+                                        <TextBlock Margin="10,5,10,10"
+                                                   Grid.Row="0"
+                                                   Text="{Binding Title}"
+                                                   HorizontalAlignment="Center"
+                                                   Style="{StaticResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightNewsViewBrush}"
+                                                   FontSize="30" />
+
+                                        <Border x:Name="BorderPlayniteNews"
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Margin="10,20,0,0"
+                                                Focusable="False"
+                                                CornerRadius="12"
+                                                HorizontalAlignment="Stretch">
+                                            <Border.OpacityMask>
+                                                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                                    <GradientStop Color="#00FFFFFF" Offset="0"/>
+                                                    <GradientStop Color="#FF000000" Offset="0.5"/>
+                                                </LinearGradientBrush>
+                                            </Border.OpacityMask>
+
+
+
+                                            <ScrollViewerEx x:Name="PlayniteNewsContentScroll"
+                                                            Focusable="True"
+                                                            IsTabStop="True"
+                                                            FocusVisualStyle="{x:Null}"
+                                                            PanningMode="VerticalOnly"
+                                                            ScrollViewer.CanContentScroll="False"
+                                                            VerticalScrollBarVisibility="Auto">
+
+                                                <HtmlTextView x:Name="PlayniteNewsContent"
+                                                              HtmlText="{Binding HtmlDescription}"
+                                                              HtmlFontFamily="Bahnschrift"
+                                                              HtmlForeground="{DynamicResource TextColorNewsDesc}"
+                                                              LinkForeground="{DynamicResource GlyphColor}"
+                                                              HtmlFontSize="{DynamicResource FontSize}"
+                                                              Focusable="True"
+                                                              IsTabStop="False" />
+                                            </ScrollViewerEx>
+                                        </Border>
+                                    </Grid>
+                                </Grid>
+
+                            </Border>
+                        </Grid>
+
+                        <!--DealsPanel-->
+                        <Grid x:Name="DealsPanel"
+                              Panel.ZIndex="0"
+                              MaxWidth="1900"
+                              Margin="20,120,20,80"
+                              Visibility="Collapsed">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+
+                            <!-- Liste des news -->
+                            <Border Grid.Column="0"
+                                    Margin="0,20,10,0"
+                                    Focusable="False"
+                                    CornerRadius="12"
+                                    HorizontalAlignment="Stretch">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="{DynamicResource BackgroundListNewsBrush}"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource BorderListNewsBrush}"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusBorderListNews}"/>
+                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <!-- Focus initial sur la liste -->
+                                <ListBox x:Name="DealsList"
+                                         HorizontalAlignment="Stretch"
+                                         Focusable="True"
+                                         SelectedIndex="0"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         FocusVisualStyle="{x:Null}"
+                                         KeyboardNavigation.DirectionalNavigation="Once"
+                                         KeyboardNavigation.TabNavigation="Once"
+                                         KeyboardNavigation.ControlTabNavigation="Once"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                         ScrollViewer.CanContentScroll="True"
+                                         VirtualizingPanel.IsVirtualizing="True"
+                                         VirtualizingPanel.VirtualizationMode="Recycling"
+                                         VirtualizingPanel.ScrollUnit="Item"
+                                         VirtualizingPanel.CacheLengthUnit="Item"
+                                         VirtualizingPanel.CacheLength="3"
+                                         ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SteamGlobalNewsB}">
+
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel Orientation="Vertical"
+                                                                    IsVirtualizing="True"
+                                                                    VirtualizationMode="Recycling"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+
+                                    <ListBox.Style>
+                                        <Style TargetType="ListBox">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
+                                        </Style>
+                                    </ListBox.Style>
+
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <Border Margin="20,10"
+                                                    Padding="1"
+                                                    HorizontalAlignment="Stretch"
+                                                    FocusVisualStyle="{x:Null}"
+                                                    Focusable="False"
+                                                    CornerRadius="10">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Background" Value="{DynamicResource CardNewsBackgroundBrush}"/>
+                                                        <Setter Property="BorderBrush" Value="{DynamicResource CardNewsBorderBrush}"/>
+                                                        <Setter Property="BorderThickness" Value="1"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource FocusCardNewsBackgroundBrush}"/>
+                                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusCardNewsBorder}"/>
+                                                                <Setter Property="BorderThickness" Value="1.5"/>
+                                                            </Trigger>
+                                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource FocusCardNewsBackgroundBrush}"/>
+                                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusCardNewsBorder}"/>
+                                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                                <!-- CONTENU ITEM -->
+                                                <Grid Margin="4,2"
+                                                      Focusable="False"
+                                                      KeyboardNavigation.IsTabStop="False"
+                                                      KeyboardNavigation.TabNavigation="None"
+                                                      KeyboardNavigation.DirectionalNavigation="None">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="4"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <!-- Accent gauche -->
+                                                    <Border Grid.RowSpan="3" MaxHeight="120"
+                                                            Grid.Column="0"
+                                                            CornerRadius="2">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="Transparent" />
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsSelected,
+                                                                                 RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                                                                 Value="True">
+                                                                        <Setter Property="Background" Value="{DynamicResource AccentCardNewsBrush}" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                    </Border>
+
+                                                    <!-- Image -->
+                                                    <Border Grid.RowSpan="3"
+                                                            Grid.Column="1"
+                                                            MaxWidth="220"
+                                                            Height="120"
+                                                            Margin="0,0,12,0"
+                                                            CornerRadius="8"
+                                                            Background="#00000000"
+                                                            ClipToBounds="True">
+                                                        <Image Stretch="Uniform" RenderOptions.BitmapScalingMode="LowQuality">
+                                                            <Image.Style>
+                                                                <Style TargetType="Image">
+                                                                    <Setter Property="Source" Value="{Binding LocalImagePath}" />
+                                                                    <Style.Triggers>
+
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Image.Style>
+                                                        </Image>
+                                                    </Border>
+
+                                                    <!-- Titre -->
+                                                    <TextBlock Grid.Row="0"
+                                                               Grid.Column="2"
+                                                               Text="{Binding Title}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="24"
+                                                               MaxWidth="600"
+                                                               TextWrapping="Wrap"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               Margin="0,2,8,0"/>
+
+                                                    <!-- Date -->
+                                                    <TextBlock Grid.Row="2"
+                                                               Grid.Column="2"
+                                                               Text="{Binding DateString}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="20"
+                                                               Opacity="0.7"
+                                                               Margin="15,4,8,4"/>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="Padding" Value="0"/>
+                                            <Setter Property="Margin" Value="0"/>
+                                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListBoxItem">
+                                                        <Border Background="{TemplateBinding Background}">
+                                                            <ContentPresenter
+                                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                Margin="{TemplateBinding Padding}" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
+                                <Border.Effect>
+                                    <DropShadowEffect
+                                        Color="#000000"
+                                        ShadowDepth="0"
+                                        Opacity="0.3"/>
+                                </Border.Effect>
+                            </Border>
+
+                            <!-- Détails de la news -->
+                            <Border x:Name="BorderDealsDetails"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="10,10,0,0"
+                                    Focusable="False"
+                                    CornerRadius="12"
+                                    HorizontalAlignment="Stretch">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="BorderBrush" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusBorderListNews}"/>
+                                                <Setter Property="BorderThickness" Value="2.5"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <!-- Détail Playnite Actu -->
+                                <Grid DataContext="{Binding SelectedItem, ElementName=DealsList}">
+
+                                    <Grid Margin="10,0,10,10">
+                                        <Border x:Name="BorderDeals"
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Margin="10,20,0,0"
+                                                Focusable="False"
+                                                CornerRadius="12"
+                                                HorizontalAlignment="Stretch">
+                                            <Border.OpacityMask>
+                                                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                                    <GradientStop Color="#00FFFFFF" Offset="0"/>
+                                                    <GradientStop Color="#FF000000" Offset="0.5"/>
+                                                </LinearGradientBrush>
+                                            </Border.OpacityMask>
+
+                                            <ScrollViewerEx x:Name="DealsContentScroll"
+                                                            Focusable="True"
+                                                            IsTabStop="True"
+                                                            FocusVisualStyle="{x:Null}"
+                                                            PanningMode="VerticalOnly"
+                                                            ScrollViewer.CanContentScroll="False"
+                                                            VerticalScrollBarVisibility="Auto">
+
+                                                <HtmlTextView x:Name="DealsContent"
+                                                              HtmlText="{Binding HtmlDescription}"
+                                                              HtmlFontFamily="Bahnschrift"
+                                                              HtmlForeground="{DynamicResource TextColorNewsDesc}"
+                                                              LinkForeground="{DynamicResource GlyphColor}"
+                                                              HtmlFontSize="{DynamicResource FontSize}"
+                                                              Focusable="False"
+                                                              IsTabStop="False" />
+                                            </ScrollViewerEx>
+                                        </Border>
+                                    </Grid>
+
+                                </Grid>
+
+                            </Border>
+
+
+                        </Grid>
+
+
+                        <!-- bouton retour -->
+
+                        <StackPanel x:Name="BackButton" Orientation="Horizontal"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Effect="{DynamicResource SoftTextShadow}" Margin="0,0,20,10">
+                            <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                      Tag="Dpad"
+                                      Content="{DynamicResource LOCButtonPrompt_Navigate}" />
+
+                            <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                      Tag="A"
+                                      Content="{DynamicResource LOCButtonPrompt_Select}" />
+
+                            <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                      Tag="B"
+                                      Content="{DynamicResource LOCBackLabel}" />
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!-- NEWS -->
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=ModeNewsInternal}" Value="True">
+                            <Setter TargetName="NewsPanel" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="UpdatePanel" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PlayniteNewsPanel" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="DealsPanel" Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+
+                        <!-- UPDATES -->
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=ModeUpdatesInternal}" Value="True">
+                            <Setter TargetName="NewsPanel" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="UpdatePanel" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="PlayniteNewsPanel" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="DealsPanel" Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+
+                        <!-- PLAYNITE ACTU -->
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=ModePlayniteInternal}" Value="True">
+                            <Setter TargetName="NewsPanel" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="UpdatePanel" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PlayniteNewsPanel" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="DealsPanel" Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+
+                        <!-- DEALS -->
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=ModeDealsInternal}" Value="True">
+                            <Setter TargetName="NewsPanel" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="UpdatePanel" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PlayniteNewsPanel" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="DealsPanel" Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp1610">
+                <Setter Property="Margin" Value="0,-60,0,-60"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp219">
+                <Setter Property="Margin" Value="-320,0,-320,0"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,86 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <!-- Définition du style pour les boutons du menu inférieur -->
+    <Style x:Key="ButtonBottomMenuDark" TargetType="ButtonEx">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Focusable" Value="False" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonEx">
+                    <Border Background="{TemplateBinding Background}"
+                            Margin="20,0,20,0">
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+
+                            <Image x:Name="IconImg"
+                                   Width="40"
+                                   Height="40"
+                                   Margin="0,0,5,0"
+                                   RenderOptions.BitmapScalingMode="Fant"
+                                   Source="{DynamicResource ImageButtonA-Generic}" />
+
+                            <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                       FontSize="18"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       Foreground="{DynamicResource ButtonIconDarkBrush}">
+                                <ContentPresenter />
+                            </TextBlock>
+
+                        </StackPanel>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Tag" Value="A">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonA-Generic}" />
+                        </Trigger>
+                        <Trigger Property="Tag" Value="B">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonB-Generic}" />
+                        </Trigger>
+                        <Trigger Property="Tag" Value="X">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonX-Generic}" />
+                        </Trigger>
+                        <Trigger Property="Tag" Value="Y">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonY-Generic}" />
+                        </Trigger>
+                        <Trigger Property="Tag" Value="Start">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonStart-Generic}" />
+                        </Trigger>
+                        <Trigger Property="Tag" Value="Back">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonBack-Generic}" />
+                        </Trigger>
+                        <Trigger Property="Tag" Value="LS">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonLS-Generic}" />
+                        </Trigger>
+                        <Trigger Property="Tag" Value="RS">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonRS-Generic}" />
+                        </Trigger>
+                        <Trigger Property="Tag" Value="Dpad">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonDpad-Generic}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Generic Default -->
+    <BitmapImage x:Key="ImageButtonA-Generic" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Button-A.png'}" />
+    <BitmapImage x:Key="ImageButtonB-Generic" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Button-B.png'}" />
+    <BitmapImage x:Key="ImageButtonX-Generic" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Button-X.png'}" />
+    <BitmapImage x:Key="ImageButtonY-Generic" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Button-Y.png'}" />
+    <BitmapImage x:Key="ImageButtonStart-Generic" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Button-Start.png'}" />
+    <BitmapImage x:Key="ImageButtonBack-Generic" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Button-Back.png'}" />
+    <BitmapImage x:Key="ImageButtonLS-Generic" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Button-LS.png'}" />
+    <BitmapImage x:Key="ImageButtonRS-Generic" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Button-RS.png'}" />
+    <BitmapImage x:Key="ImageButtonDpad-Generic" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Button-Dpad.png'}" />
+
+
+
+</ResourceDictionary>

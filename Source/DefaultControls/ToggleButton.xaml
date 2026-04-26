@@ -97,32 +97,23 @@
                             <Setter Property="Opacity" Value="0.5"/>
                         </Trigger>
 
-
-
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="MainBackground" Property="Background" Value="#1AFFFFFF"/>
+                            <Setter TargetName="MainBackground" Property="Background" Value="{DynamicResource FocusSuccessCardBackgroundBrush}"/>
                             <Setter TargetName="MainBorder" Property="Visibility" Value="Visible"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
-                            <Setter TargetName="Text" Property="Foreground" Value="White"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{DynamicResource FocusSuccessCardBorder}"/>
+                            <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource SuccessMainTextColorCardBrush}"/>
                         </Trigger>
 
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="MainBackground" Property="Background" Value="#1AFFFFFF"/>
+                            <Setter TargetName="MainBackground" Property="Background" Value="{DynamicResource FocusSuccessCardBackgroundBrush}"/>
                             <Setter TargetName="MainBorder" Property="Visibility" Value="Visible"/>
-                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
-                            <Setter TargetName="Text" Property="Foreground" Value="White"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{DynamicResource FocusSuccessCardBorder}"/>
+                            <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource SuccessMainTextColorCardBrush}"/>
                         </Trigger>
-
-                        <!-- Toujours dans ton style : -->
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="Transparent"/>
                         </Trigger>
-                        <DataTrigger Binding="{Binding ElementName=SuccessButton, Path=IsChecked}" Value="False">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding ElementName=SuccessButton, Path=IsChecked}" Value="True">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -288,21 +279,148 @@
         </Setter>
     </Style>
 
-    <Style x:Key="WelcomeButtonStyle" TargetType="ToggleButton">
+    <Style x:Key="WelcomeButtonStyle" TargetType="CheckBox">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Padding" Value="0" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ToggleButton">
-                    <ContentPresenter
-                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                        Margin="{TemplateBinding Padding}" />
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid Background="{TemplateBinding Background}" RenderTransformOrigin="0.5,0.5">
+                        <!-- Ajout d’un scale -->
+                        <Grid.RenderTransform>
+                            <ScaleTransform x:Name="ItemScale" ScaleX="1" ScaleY="1"/>
+                        </Grid.RenderTransform>
+
+                        <!-- Fond carte -->
+                        <Border CornerRadius="10" Opacity="0.9" Background="Transparent"
+                                x:Name="MainBackground"/>
+
+                        <!-- Bordure focus -->
+                        <Border x:Name="MainBorder" Margin="-1"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderThickness="3" CornerRadius="10" Visibility="Collapsed" />
+
+                        <!-- Texte -->
+                        <TextBlock x:Name="Text" Style="{DynamicResource TextBlockBaseStyle}"
+                                   Foreground="{TemplateBinding Foreground}" FontSize="28"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   Margin="0,0,0,0">
+                            <ContentPresenter />
+                        </TextBlock>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <!-- Désactivé -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="MainBackground" Property="Background" Value="{DynamicResource FocusSuccessCardBackgroundBrush}"/>
+                            <Setter TargetName="MainBorder" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{DynamicResource FocusSuccessCardBorder}"/>
+                            <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource SuccessMainTextColorCardBrush}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="MainBackground" Property="Background" Value="{DynamicResource FocusSuccessCardBackgroundBrush}"/>
+                            <Setter TargetName="MainBorder" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="MainBorder" Property="BorderBrush" Value="{DynamicResource FocusSuccessCardBorder}"/>
+                            <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource SuccessMainTextColorCardBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="Transparent"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="WarningDesktopTogglePremium" TargetType="ToggleButtonEx">
+        <Setter Property="Width" Value="720"/>
+        <Setter Property="Height" Value="72"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButtonEx">
+                    <Border x:Name="Root"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            SnapsToDevicePixels="True">
+
+                        <Grid Margin="4">
+                            <Border x:Name="FocusOverlay"
+                                    CornerRadius="18"
+                                    Background="{DynamicResource FocusSuccessCardBackgroundBrush}"
+                                    Opacity="0"
+                                    IsHitTestVisible="False"/>
+
+                            <Border x:Name="BaseBackground"
+                                    CornerRadius="18"
+                                    IsHitTestVisible="False"
+                                    Background="{DynamicResource BackgroundItem}" />
+
+                            <Border CornerRadius="18"
+                                    Opacity="0.16"
+                                    IsHitTestVisible="False">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#22FFFFFF" Offset="0"/>
+                                        <GradientStop Color="#00FFFFFF" Offset="0.42"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+
+                            <Border x:Name="SelectedFill"
+                                    CornerRadius="18"
+                                    Background="{DynamicResource FocusSuccessCardBackgroundBrush}"
+                                    Opacity="0"
+                                    IsHitTestVisible="False"/>
+
+                            <Border x:Name="FocusStroke"
+                                    CornerRadius="18"
+                                    BorderThickness="2"
+                                    BorderBrush="{DynamicResource FocusFriendsCardBorder}"
+                                    Background="Transparent"
+                                    Opacity="0"
+                                    IsHitTestVisible="False"/>
+
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="FocusOverlay" Property="Opacity" Value="1"/>
+                            <Setter TargetName="FocusStroke" Property="Opacity" Value="1"/>
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="SelectedFill" Property="Opacity" Value="0.22"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Opacity" Value="0.45"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -589,6 +707,85 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ChangeDetailsButton" TargetType="ToggleButton">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid x:Name="MainGrid" Background="Transparent" >
+                        <Border CornerRadius="60" Opacity="0.4" Background="Transparent" x:Name="MainBackground"/>
+                        <Border x:Name="FlashMenuBorder" Margin="0" Style="{DynamicResource AnimatedFlashMenu}"
+                                Tag="False" Visibility="Collapsed"/>
+                        <Border x:Name="MainBorder" Margin="-4"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
+                                BorderThickness="3" CornerRadius="5" Visibility="Collapsed" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75"
+                                           Source="{ThemeFile 'Images/Buttons/List.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0" >
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                                    <Image RenderOptions.BitmapScalingMode="Fant" MaxHeight="75"
+                                           Source="{ThemeFile 'Images/Buttons/List.png'}">
+                                    </Image>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Style.Triggers>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
+                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="MainBackgroundImageButton" TargetType="ToggleButton">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
@@ -806,6 +1003,68 @@
                         <DataTrigger Binding="{Binding ElementName=TrailerPlay, Path=IsChecked}" Value="False">
                             <Setter Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <Style x:Key="TrailerMuteToggleAlt" TargetType="CheckBox">
+        <Setter Property="IsChecked" Value="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Content.IsPlayerMuted, Mode=OneWay, FallbackValue={StaticResource False}}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Border CornerRadius="{DynamicResource Corner}" Opacity="0.8" Background="{DynamicResource ButtonPlayColor}"
+                                x:Name="MainBackground"/>
+                        <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
+                                Tag="False" Visibility="Collapsed"/>
+                        <Border x:Name="MainBorder" Margin="0"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
+                                BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
+                        <TextBlock x:Name="Text" Style="{DynamicResource ButtonTextBlockBaseStyle}"
+                                   Foreground="{TemplateBinding Foreground}" FontSize="24"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   Margin="5,0,5,5">
+                            <ContentPresenter />
+                        </TextBlock>
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="{DynamicResource ButtonPlayColor}" TargetName="MainBackground" />
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter Property="Background" Value="{DynamicResource ButtonPlayColor}" TargetName="MainBackground" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                            <Setter Property="Foreground" Value="Transparent" />
+                        </Trigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -1371,7 +1630,7 @@
                             </StackPanel>
                             <StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" >
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-                                    <Image Source="{ThemeFile 'Images/Buttons/SortAsc.png'}" RenderOptions.BitmapScalingMode="Fant" Stretch="Uniform" Height="35" />
+                                    <Image Source="{ThemeFile 'Images/Buttons/SortDesc.png'}" RenderOptions.BitmapScalingMode="Fant" Stretch="Uniform" Height="35" />
                                 </StackPanel>
 
 

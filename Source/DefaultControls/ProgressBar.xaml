@@ -8,11 +8,90 @@
 
     <Style TargetType="{x:Type ProgressBar}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="Background" Value="{DynamicResource CheckBoxCheckMarkBkBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ProgressBackgroundBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource ProgressBrush}" />
         <Setter Property="FontSize" Value="{DynamicResource FontSizeSmall}" />
-        <Setter Property="FontFamily" Value="{DynamicResource FontFamily}" />
+        <Setter Property="FontFamily" Value="{DynamicResource FontMain}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" />
     </Style>
+
+    <Style x:Key="ProgressWindowProgressBarStyle" TargetType="ProgressBar" BasedOn="{StaticResource {x:Type ProgressBar}}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Background" Value="#16000000" />
+        <Setter Property="Foreground" Value="{DynamicResource ProgressBrush}" />
+        <Setter Property="BorderThickness" Value="1.5" />
+        <Setter Property="BorderBrush" Value="#55FFFFFF" />
+        <Setter Property="Height" Value="26" />
+        <Setter Property="Margin" Value="0,25,0,20" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ProgressBar">
+                    <Border
+                        x:Name="TrackBorder"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="14"
+                        SnapsToDevicePixels="True">
+
+                        <Grid ClipToBounds="True">
+                            <Border Margin="1"
+                                    CornerRadius="13"
+                                    Background="#12000000" />
+
+                            <Track x:Name="PART_Track"
+                                   IsDirectionReversed="False"
+                                   Margin="2"
+                                   ClipToBounds="True">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="Slider.DecreaseLarge"
+                                                  IsTabStop="False"
+                                                  Focusable="False">
+                                        <RepeatButton.Template>
+                                            <ControlTemplate TargetType="RepeatButton">
+                                                <Border CornerRadius="9"
+                                                        Background="{DynamicResource ProgressBrush}" />
+                                            </ControlTemplate>
+                                        </RepeatButton.Template>
+                                    </RepeatButton>
+                                </Track.DecreaseRepeatButton>
+
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="Slider.IncreaseLarge"
+                                                  IsTabStop="False"
+                                                  Focusable="False"
+                                                  Opacity="0" />
+                                </Track.IncreaseRepeatButton>
+
+                                <Track.Thumb>
+                                    <Thumb Opacity="0" Focusable="False" />
+                                </Track.Thumb>
+                            </Track>
+
+                            <Border IsHitTestVisible="False"
+                                    Margin="1"
+                                    CornerRadius="13">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#30FFFFFF" Offset="0" />
+                                        <GradientStop Color="#10FFFFFF" Offset="0.35" />
+                                        <GradientStop Color="#00FFFFFF" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+
+                            <Border IsHitTestVisible="False"
+                                    Margin="1.5"
+                                    CornerRadius="12.5"
+                                    BorderBrush="#22FFFFFF"
+                                    BorderThickness="1" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
 </ResourceDictionary>

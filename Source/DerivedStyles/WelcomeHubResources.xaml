@@ -1,0 +1,589 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:pc="clr-namespace:Playnite.Controls;assembly=Playnite"
+                    mc:Ignorable="d">
+
+
+
+    <Style x:Key="HubCardBorderStyle" TargetType="Border">
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="Background" Value="{DynamicResource HubBannerBackgroundBrush}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="BorderBrush" Value="{DynamicResource HubCardBorderBrush}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource AncestorType=ButtonEx}}"
+                         Value="True">
+                <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}" />
+                <Setter Property="BorderThickness" Value="3" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Conteneur image en haut de la carte -->
+    <Style x:Key="HubCardImageContainerStyle" TargetType="Border">
+        <Setter Property="CornerRadius" Value="20,20,20,20" />
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Background" Value="#00000000" />
+    </Style>
+
+    <!-- Bandeau bas commun à toutes les cartes -->
+    <Style x:Key="HubBottomBannerStyle" TargetType="Border">
+        <Setter Property="Background" Value="{DynamicResource HubCardBottomBackgroundBrush}" />
+        <Setter Property="CornerRadius" Value="0,0,20,20" />
+        <Setter Property="Height" Value="79" />
+        <Setter Property="Padding" Value="20,5" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="BorderBrush" Value="{DynamicResource HubCardBottomBorderBrush}" />
+        <Setter Property="BorderThickness" Value="0,2,0,0" />
+    </Style>
+
+    <!-- Quick Button -->
+  
+
+    <!-- Quick CheckBox -->
+    <Style x:Key="WelcomeHubQuickButtonStyleCheckBoxEx" TargetType="CheckBoxEx">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="16,6" />
+        <Setter Property="MinWidth" Value="140" />
+        <Setter Property="Height" Value="44" />
+        <Setter Property="Margin" Value="5,0" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBoxEx">
+                    <Grid x:Name="Root"
+                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+
+                        <Border x:Name="HoverBackground"
+                                CornerRadius="9"
+                                Background="#00000000"
+                                Opacity="0" />
+
+                        <!-- contenu -->
+                        <TextBlock x:Name="TextContent"
+                                   Style="{DynamicResource ButtonTextBlockBaseStyle}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   FontWeight="{TemplateBinding FontWeight}">
+                            <ContentPresenter x:Name="ContentHost"
+                                              Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              RecognizesAccessKey="True"
+                                              Opacity="0.8"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"
+                                              TextElement.FontSize="{TemplateBinding FontSize}"
+                                              TextElement.FontWeight="{TemplateBinding FontWeight}" />
+                        </TextBlock>
+
+                        <!-- trait dessous -->
+                        <Border x:Name="FocusBorder"
+                                Height="3"
+                                Width="78"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center"
+                                Margin="0,0,0,1"
+                                CornerRadius="2"
+                                Background="{DynamicResource FocusGameBorderBrush}"
+                                Opacity="0" />
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.35" />
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="HoverBackground" Property="Opacity" Value="1" />
+                            <Setter TargetName="HoverBackground" Property="Background" Value="#00000000" />
+                            <Setter TargetName="ContentHost" Property="Opacity" Value="0.96" />
+                        </Trigger>
+
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="HoverBackground" Property="Opacity" Value="1" />
+                            <Setter TargetName="ContentHost" Property="Opacity" Value="1" />
+                            <Setter TargetName="FocusBorder" Property="Opacity" Value="1" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="HoverBackground" Property="Opacity" Value="1" />
+                            <Setter TargetName="HoverBackground" Property="Background" Value="#22000000" />
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Trophées : derniers succès SS -->
+    <DataTemplate x:Key="HubTrophyRecentTemplate">
+        <Border Background="{DynamicResource HubAchievementsBackgroundBrush}"
+                CornerRadius="12"
+                Width="400"
+                Padding="10,8"
+                Margin="10,5,10,5"
+                BorderBrush="{DynamicResource HubAchievementsBorderBrush}"
+                BorderThickness="1">
+
+            <Grid Margin="0,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="64"/>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Icône -->
+                <Border Grid.Column="0"
+                        Width="66" Height="66"
+                        BorderThickness="2"
+                        BorderBrush="{DynamicResource HubAchievementsIconBorderBrush}"
+                        Background="{DynamicResource HubAchievementsIconBackgroundBrush}"
+                        VerticalAlignment="Center">
+
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="10"
+                                          ShadowDepth="2"
+                                          Opacity="0.25"/>
+                    </Border.Effect>
+
+                    <Image Margin="2"
+                           Stretch="UniformToFill"
+                           Source="{Binding IconPath}"
+                           RenderOptions.BitmapScalingMode="Fant"/>
+                </Border>
+
+                <!-- Texte -->
+                <Grid Grid.Column="1" Margin="12,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Titre -->
+                    <TextBlock Grid.Row="0"
+                               Text="{Binding Title}"
+                               FontSize="18"
+                               Style="{DynamicResource TextBlockBaseStyle}"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextHubNameAchievementBrush}"
+                               TextTrimming="CharacterEllipsis"/>
+
+                    <!-- Jeu -->
+                    <TextBlock Grid.Row="1"
+                               Margin="0,2,0,0"
+                               Text="{Binding Game}"
+                               FontSize="16"
+                               Style="{DynamicResource TextBlockBaseStyle}"
+                               FontWeight="Regular"
+                               Foreground="{DynamicResource TextHubGameAchievementBrush}"
+                               Opacity="0.90"
+                               TextTrimming="CharacterEllipsis"/>
+
+                    <!-- Date -->
+                    <TextBlock Grid.Row="2"
+                               Margin="0,6,0,0"
+                               Text="{Binding UnlockedStringv}"
+                               Style="{DynamicResource TextBlockBaseStyle}"
+                               FontWeight="Regular"
+                               FontSize="14"
+                               Foreground="{DynamicResource TextHubDateAchievementBrush}"
+                               Opacity="0.75"
+                               VerticalAlignment="Bottom"/>
+                </Grid>
+
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <!-- Trophées : plus rares SS -->
+    <DataTemplate x:Key="HubTrophyRareTemplate">
+        <Border Background="{DynamicResource HubAchievementsBackgroundBrush}"
+                CornerRadius="12"
+                Width="400"
+                Padding="10,8"
+                Margin="10,5,10,5"
+                BorderBrush="{DynamicResource HubAchievementsBorderBrush}"
+                BorderThickness="1">
+
+            <Grid Margin="0,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="64"/>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Icône -->
+                <Border Grid.Column="0"
+                        Width="66" Height="66"
+                        BorderThickness="2"
+                        BorderBrush="{DynamicResource HubAchievementsIconBorderBrush}"
+                        Background="{DynamicResource HubAchievementsIconBackgroundBrush}"
+                        VerticalAlignment="Center">
+
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="10"
+                                          ShadowDepth="2"
+                                          Opacity="0.25"/>
+                    </Border.Effect>
+
+                    <Image Margin="2"
+                           Stretch="UniformToFill"
+                           Source="{Binding IconPath}"
+                           RenderOptions.BitmapScalingMode="Fant"/>
+                </Border>
+
+                <!-- Texte -->
+                <Grid Grid.Column="1" Margin="12,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Titre -->
+                    <TextBlock Grid.Row="0"
+                               Text="{Binding Title}"
+                               FontSize="18"
+                               Style="{DynamicResource TextBlockBaseStyle}"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextHubNameAchievementBrush}"
+                               TextTrimming="CharacterEllipsis"/>
+
+                    <!-- Jeu -->
+                    <TextBlock Grid.Row="1"
+                               Margin="0,2,0,0"
+                               Text="{Binding Game}"
+                               Style="{DynamicResource TextBlockBaseStyle}"
+                               FontWeight="Regular"
+                               FontSize="16"
+                               Foreground="{DynamicResource TextHubGameAchievementBrush}"
+                               Opacity="0.90"
+                               TextTrimming="CharacterEllipsis"/>
+
+                    <!-- % -->
+                    <TextBlock Grid.Row="2"
+                               Margin="0,6,0,0"
+                               Text="{Binding PercentString, StringFormat={}{0:F0}%}"
+                               FontSize="14"
+                               Style="{DynamicResource TextBlockBaseStyle}"
+                               FontWeight="Bold"
+                               Foreground="{DynamicResource TextHubPercentAchievementBrush}"
+                               Opacity="0.85"
+                               VerticalAlignment="Bottom"/>
+                </Grid>
+
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+
+    <!-- Trophées : derniers succès PA -->
+    <DataTemplate x:Key="HubTrophyRecentTemplatePA">
+        <ButtonEx Command="{Binding OpenAchievementWindow}"
+                  Style="{DynamicResource ButtonTrophyviewitem}"
+                  Focusable="True"
+                  Background="Transparent"
+                  Margin="10,5,10,5"
+                  HorizontalContentAlignment="Stretch"
+                  FocusVisualStyle="{x:Null}">
+            <Border Background="{DynamicResource HubAchievementsBackgroundBrush}"
+                    CornerRadius="12"
+                    Width="400"
+                    Padding="10,8"
+                    BorderBrush="{DynamicResource HubAchievementsBorderBrush}"
+                    BorderThickness="1">
+
+                <Grid Margin="0,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="64"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Icône -->
+                    <Border Grid.Column="0"
+                            Width="66" Height="66"
+                            BorderThickness="2"
+                            BorderBrush="{DynamicResource HubAchievementsIconBorderBrush}"
+                            Background="{DynamicResource HubAchievementsIconBackgroundBrush}"
+                            VerticalAlignment="Center">
+
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.25"/>
+                        </Border.Effect>
+
+                        <Image Margin="2"
+                               Stretch="UniformToFill"
+                               Source="{Binding Icon}"
+                               RenderOptions.BitmapScalingMode="Fant"/>
+                    </Border>
+
+                    <!-- Texte aligné haut / centre / bas -->
+                    <Grid Grid.Column="1" Margin="12,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Titre -->
+                        <TextBlock Grid.Row="0"
+                                   Text="{Binding DisplayName}"
+                                   FontSize="18"
+                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextHubNameAchievementBrush}"
+                                   TextTrimming="CharacterEllipsis"/>
+
+                        <!-- Jeu -->
+                        <TextBlock Grid.Row="1"
+                                   Margin="0,2,0,0"
+                                   Text="{Binding Game}"
+                                   FontSize="16"
+                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                   FontWeight="Regular"
+                                   Foreground="{DynamicResource TextHubGameAchievementBrush}"
+                                   Opacity="0.90"
+                                   TextTrimming="CharacterEllipsis"/>
+
+                        <!-- Date (en bas) -->
+                        <TextBlock Grid.Row="2"
+                                   Margin="0,6,0,0"
+                                   Text="{Binding DateUnlocked}"
+                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                   FontWeight="Regular"
+                                   FontSize="14"
+                                   Foreground="{DynamicResource TextHubDateAchievementBrush}"
+                                   Opacity="0.75"
+                                   VerticalAlignment="Bottom"/>
+                    </Grid>
+
+                    <!-- Rank -->
+                    <Border Grid.Column="2"
+                            Width="35"
+                            Height="35"
+                            CornerRadius="19"
+                            Background="#66000000"
+                            BorderBrush="#22FFFFFF"
+                            BorderThickness="1"
+                            VerticalAlignment="Top"
+                            Margin="0,-5,0,0">
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="15"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource TextHubBrush}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                    <Setter Property="Text" Value="#1"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="0">
+                                            <Setter Property="Text" Value="#1"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="1">
+                                            <Setter Property="Text" Value="#2"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="2">
+                                            <Setter Property="Text" Value="#3"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="3">
+                                            <Setter Property="Text" Value="#4"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="4">
+                                            <Setter Property="Text" Value="#5"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="5">
+                                            <Setter Property="Text" Value="#6"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="6">
+                                            <Setter Property="Text" Value="#7"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="7">
+                                            <Setter Property="Text" Value="#8"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="8">
+                                            <Setter Property="Text" Value="#9"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="9">
+                                            <Setter Property="Text" Value="#10"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Border>
+
+
+                </Grid>
+            </Border>
+        </ButtonEx>
+    </DataTemplate>
+
+    <!-- Trophées : plus rares PA -->
+    <DataTemplate x:Key="HubTrophyRareTemplatePA">
+        <ButtonEx Command="{Binding OpenAchievementWindow}"
+                  Style="{DynamicResource ButtonTrophyviewitem}"
+                  Focusable="True"
+                  Background="Transparent"
+                  Margin="10,5,10,5"
+                  HorizontalContentAlignment="Stretch"
+                  FocusVisualStyle="{x:Null}">
+            <Border Background="{DynamicResource HubAchievementsBackgroundBrush}"
+                    CornerRadius="12"
+                    Width="400"
+                    Padding="10,8"
+                    BorderBrush="{DynamicResource HubAchievementsBorderBrush}"
+                    BorderThickness="1">
+
+                <Grid Margin="0,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="64"/>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Icône -->
+                    <Border Grid.Column="0"
+                            Width="66" Height="66"
+                            BorderThickness="2"
+                            BorderBrush="{DynamicResource HubAchievementsIconBorderBrush}"
+                            Background="{DynamicResource HubAchievementsIconBackgroundBrush}"
+                            VerticalAlignment="Center">
+
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" ShadowDepth="2" Opacity="0.25"/>
+                        </Border.Effect>
+
+                        <Image Margin="2"
+                               Stretch="UniformToFill"
+                               Source="{Binding Icon}"
+                               RenderOptions.BitmapScalingMode="Fant"/>
+                    </Border>
+
+                    <!-- Texte aligné haut / centre / bas -->
+                    <Grid Grid.Column="1" Margin="12,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Titre -->
+                        <TextBlock Grid.Row="0"
+                                   Text="{Binding DisplayName}"
+                                   FontSize="18"
+                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextHubNameAchievementBrush}"
+                                   TextTrimming="CharacterEllipsis"/>
+
+                        <!-- Jeu -->
+                        <TextBlock Grid.Row="1"
+                                   Margin="0,2,0,0"
+                                   Text="{Binding Game}"
+                                   FontSize="16"
+                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                   FontWeight="Regular"
+                                   Foreground="{DynamicResource TextHubGameAchievementBrush}"
+                                   Opacity="0.90"
+                                   TextTrimming="CharacterEllipsis"/>
+
+                        <!-- % rareté (en bas) -->
+                        <TextBlock Grid.Row="2"
+                                   Margin="0,6,0,0"
+                                   Text="{Binding Percent, StringFormat={}{0:F0}%}"
+                                   FontSize="14"
+                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource TextHubPercentAchievementBrush}"
+                                   Opacity="0.85"
+                                   VerticalAlignment="Bottom"/>
+                    </Grid>
+
+                    <!-- Rank -->
+                    <Border Grid.Column="2"
+                            Width="35"
+                            Height="35"
+                            CornerRadius="19"
+                            Background="#66000000"
+                            BorderBrush="#22FFFFFF"
+                            BorderThickness="1"
+                            VerticalAlignment="Top"
+                            Margin="0,-5,0,0">
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="15"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource TextHubBrush}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                    <Setter Property="Text" Value="#1"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="0">
+                                            <Setter Property="Text" Value="#1"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="1">
+                                            <Setter Property="Text" Value="#2"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="2">
+                                            <Setter Property="Text" Value="#3"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="3">
+                                            <Setter Property="Text" Value="#4"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="4">
+                                            <Setter Property="Text" Value="#5"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="5">
+                                            <Setter Property="Text" Value="#6"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="6">
+                                            <Setter Property="Text" Value="#7"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="7">
+                                            <Setter Property="Text" Value="#8"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="8">
+                                            <Setter Property="Text" Value="#9"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=(ItemsControl.AlternationIndex)}" Value="9">
+                                            <Setter Property="Text" Value="#10"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Border>
+
+
+                </Grid>
+            </Border>
+        </ButtonEx>
+    </DataTemplate>
+
+
+
+</ResourceDictionary>

@@ -16,28 +16,87 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
                     <ControlTemplate.Resources>
+                        <CubicEase x:Key="EaseOutSoft" EasingMode="EaseOut"/>
+                        <QuadraticEase x:Key="EaseOutFast" EasingMode="EaseOut"/>
+
                         <Storyboard x:Key="SB_ToNone">
                             <DoubleAnimation Storyboard.TargetName="FocusTransform"
                                              Storyboard.TargetProperty="Y"
-                                             To="0" Duration="0:0:0.12"/>
-                        </Storyboard>
+                                             To="0"
+                                             Duration="0:0:0.16"
+                                             EasingFunction="{StaticResource EaseOutFast}"/>
 
-                        <Storyboard x:Key="SB_ToHover">
-                            <DoubleAnimation Storyboard.TargetName="FocusTransform"
-                                             Storyboard.TargetProperty="Y"
-                                             To="-10" Duration="0:0:0.12"/>
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleX"
+                                             To="1"
+                                             Duration="0:0:0.16"
+                                             EasingFunction="{StaticResource EaseOutFast}"/>
+
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleY"
+                                             To="1"
+                                             Duration="0:0:0.16"
+                                             EasingFunction="{StaticResource EaseOutFast}"/>
                         </Storyboard>
 
                         <Storyboard x:Key="SB_ToFocus">
                             <DoubleAnimation Storyboard.TargetName="FocusTransform"
                                              Storyboard.TargetProperty="Y"
-                                             To="-20" Duration="0:0:0.15"/>
+                                             To="-6"
+                                             Duration="0:0:0.18"
+                                             EasingFunction="{StaticResource EaseOutSoft}"/>
+
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleX"
+                                             To="1.035"
+                                             Duration="0:0:0.18"
+                                             EasingFunction="{StaticResource EaseOutSoft}"/>
+
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleY"
+                                             To="1.035"
+                                             Duration="0:0:0.18"
+                                             EasingFunction="{StaticResource EaseOutSoft}"/>
+                        </Storyboard>
+
+                        <Storyboard x:Key="SB_ToHover">
+                            <DoubleAnimation Storyboard.TargetName="FocusTransform"
+                                             Storyboard.TargetProperty="Y"
+                                             To="-4"
+                                             Duration="0:0:0.14"
+                                             EasingFunction="{StaticResource EaseOutFast}"/>
+
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleX"
+                                             To="1.02"
+                                             Duration="0:0:0.14"
+                                             EasingFunction="{StaticResource EaseOutFast}"/>
+
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleY"
+                                             To="1.02"
+                                             Duration="0:0:0.14"
+                                             EasingFunction="{StaticResource EaseOutFast}"/>
                         </Storyboard>
 
                         <Storyboard x:Key="SB_ToFocusHover">
                             <DoubleAnimation Storyboard.TargetName="FocusTransform"
                                              Storyboard.TargetProperty="Y"
-                                             To="-30" Duration="0:0:0.15"/>
+                                             To="-10"
+                                             Duration="0:0:0.18"
+                                             EasingFunction="{StaticResource EaseOutSoft}"/>
+
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleX"
+                                             To="1.045"
+                                             Duration="0:0:0.18"
+                                             EasingFunction="{StaticResource EaseOutSoft}"/>
+
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleY"
+                                             To="1.045"
+                                             Duration="0:0:0.18"
+                                             EasingFunction="{StaticResource EaseOutSoft}"/>
                         </Storyboard>
                     </ControlTemplate.Resources>
 
@@ -66,15 +125,13 @@
 
 
 
-                        <ContentPresenter/>
+                        <ContentPresenter x:Name="ItemContent"/>
 
                         <Border x:Name="FlashFocus"
                                 Opacity="0"
                                 CornerRadius="{DynamicResource Corner}"
                                 Tag="False"
                                 Visibility="Collapsed"/>
-
-
 
                         <Border x:Name="PlatinumIcon"
                                 Width="50" Height="50"
@@ -138,7 +195,7 @@
                                 </Style>
                             </Grid.Style>
 
-                            <Border x:Name="MainBorder" Opacity="0" BorderThickness="3.5" CornerRadius="{DynamicResource Corner}" Tag="False" >
+                            <Border x:Name="MainBorder" Opacity="0" BorderThickness="3" CornerRadius="{DynamicResource Corner}" Tag="False" >
                                 <Border.Style>
                                     <Style TargetType="Border">
                                         <Setter Property="BorderThickness" Value="3.5"/>
@@ -166,7 +223,13 @@
 
                         </Grid>
 
-
+                        <Border x:Name="DimGames"
+                                Background="Black"
+                                IsHitTestVisible="False"
+                                Panel.ZIndex="1"
+                                CornerRadius="{DynamicResource Corner}"
+                                Visibility="Visible"
+                                Opacity="0"/>
 
 
                         <TextBlock x:Name="InstallFont" Visibility="Collapsed" Text="&#xef08;"
@@ -174,14 +237,7 @@
                                    FontSize="30" Foreground="White"
                                    VerticalAlignment="Top" HorizontalAlignment="Right"
                                    TextAlignment="Center" Margin="12,25"  />
-                        <StackPanel x:Name="DetailsStack" VerticalAlignment="Bottom" Margin="12,15" Panel.ZIndex="1" >
-                            <TextBlock x:Name="GameTitle" Visibility="Collapsed" Text="{Binding DisplayName}"
-                                       TextTrimming="WordEllipsis"
-                                       Style="{DynamicResource TextBlockBaseStyle}"
-                                       FontSize="{DynamicResource FontSizeSmall}"
-                                       VerticalAlignment="Bottom"
-                                       TextAlignment="Left" Margin="0,6,0,0"  />
-                        </StackPanel>
+
 
                     </Grid>
 
@@ -197,7 +253,8 @@
                             <Setter Property="Visibility" Value="Visible" TargetName="FlashFocus" />
                             <Setter Property="Opacity" Value="1" TargetName="PlatinumIcon" />
                             <Setter Property="Canvas.ZIndex" Value="90" />
-                            <Setter TargetName="FocusGlow" Property="Opacity" Value="0.6"/>
+                            <Setter TargetName="FocusGlow" Property="Opacity" Value="0.75"/>
+                            <Setter TargetName="DimGames" Property="Opacity" Value="0"/>
                         </Trigger>
                         <Trigger Property="IsFocused" Value="False">
                             <Setter Property="Tag" Value="False" TargetName="FlashFocus" />
@@ -206,6 +263,7 @@
                             <Setter Property="Visibility" Value="Collapsed" TargetName="FlashFocus" />
                             <Setter Property="Opacity" Value="0.9" TargetName="InstallFont" />
                             <Setter TargetName="FocusGlow" Property="Opacity" Value="0"/>
+                            <Setter TargetName="DimGames" Property="Opacity" Value="0.2"/>
                         </Trigger>
                         <!-- Sélection -->
                         <Trigger Property="IsSelected" Value="True">
@@ -215,13 +273,6 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" TargetName="GameTitleBackground" />
                         </Trigger>
-
-                        <!-- Affichage du titre du jeu -->
-                        <DataTrigger Binding="{Settings Fullscreen.ShowGameTitles}" Value="True">
-                            <Setter Property="Opacity" Value="0.9" TargetName="GameTitleBackground" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="GameTitleBackground" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="GameTitle" />
-                        </DataTrigger>
 
                         <!-- Affichage de l'icône d'installation -->
                         <MultiDataTrigger>

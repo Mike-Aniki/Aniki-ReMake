@@ -6,45 +6,101 @@
     <Style x:Key="HelpMenuBorder" TargetType="Border">
         <Setter Property="Tag" Value="{DynamicResource BackgroundImageIndex}" />
         <Setter Property="Width" Value="{StaticResource DesignWidth}" />
-        <Setter Property="Margin" Value="0,0,300,0" />
+        <Setter Property="Margin" Value="0,0,0,0" />
         <Setter Property="Background" Value="{DynamicResource OverlayMenu}"/>
-        <Style.Triggers>
+        <Setter Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0,0,2,0"/>
+        <Setter Property="Opacity" Value="0.95"/>
 
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TranslateTransform X="0"/>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Resources>
+            <Style TargetType="StackPanel">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="Margin" Value="70,40,70,30" />
+            </Style>
+        </Style.Resources>
+
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                         From="0" To="0.95"
+                                         Duration="0:0:0.25"/>
+
+                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                         From="-40" To="0"
+                                         Duration="0:0:0.30">
+                            <DoubleAnimation.EasingFunction>
+                                <CubicEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
         </Style.Triggers>
     </Style>
 
     <!-- Style pour le bouton du menu d'aide -->
     <Style x:Key="HelpMenuButton" BasedOn="{StaticResource {x:Type ButtonEx}}" TargetType="ButtonEx">
-        <Setter Property="Margin" Value="0,20,20,0" />
-        <Setter Property="Height" Value="50" />
-        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Margin" Value="0,14,0,0" />
+        <Setter Property="MinWidth" Value="420" />
+        <Setter Property="Height" Value="58" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid Background="{TemplateBinding Background}">
-                        <Border x:Name="MainBorder" Margin="0,0,0,-5" BorderThickness="3" Opacity="0" CornerRadius="2"
-                                Style="{DynamicResource AnimatedBorderBrush}" Tag="False" Visibility="Collapsed" >
-                        </Border>
-                        <Border x:Name="FlashMenuBorder" Margin="15,5,5,0" Style="{DynamicResource AnimatedFlashMenu}"
-                                Tag="False" Visibility="Collapsed">
-                        </Border>
-                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
-                                   Margin="0,0,25,0" DockPanel.Dock="Left"
-                                   Foreground="{TemplateBinding Foreground}" FontSize="28"
+                        <Border x:Name="MainBackground"
+                                CornerRadius="{DynamicResource Corner}"
+                                Visibility="Collapsed"
+                                Background="{DynamicResource ButtonBackgroundFocus}" />
+
+                        <Border x:Name="MainBorder"
+                                Margin="0"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                BorderThickness="3"
+                                CornerRadius="{DynamicResource Corner}"
+                                Visibility="Collapsed" />
+
+                        <TextBlock x:Name="Text"
+                                   Style="{DynamicResource ButtonTextBlockBaseStyle}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   FontWeight="SemiBold"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                   TextAlignment="Center"
+                                   Margin="25,0"
+                                   FontSize="24">
                             <ContentPresenter />
                         </TextBlock>
                     </Grid>
+
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
-                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
                         </Trigger>
+
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground" />
+                        </Trigger>
+
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource SelectionLightBrush}" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="Transparent" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -54,36 +110,159 @@
 
     <!-- Modèle de données pour l'en-tête du menu d'aide -->
     <DataTemplate x:Key="HelpMenuHeaderTemplate">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="60,40">
-            <Image Source="{ThemeFile 'Images/Playnite.png'}" Height="60"
-                   RenderOptions.BitmapScalingMode="Fant" />
-        </StackPanel>
+        <Grid Width="1400"
+              HorizontalAlignment="Center"
+              Margin="0,70,0,30">
+            <Border Background="#18000000"
+                    BorderBrush="#22FFFFFF"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    Padding="34"
+                    HorizontalAlignment="Center">
+                <StackPanel Width="1100"
+                            HorizontalAlignment="Center">
+
+                    <TextBlock Text="{DynamicResource LOCHelpTitle}"
+                               Style="{DynamicResource TextBlockBaseStyle}"
+                               FontSize="52"
+                               TextAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,28"/>
+
+                    <Border Background="#14000000"
+                            BorderBrush="#22FFFFFF"
+                            BorderThickness="1"
+                            CornerRadius="10"
+                            Padding="24"
+                            Margin="0,0,0,18">
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource LOCHelpSetupTitle}"
+                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                       FontSize="28"
+                                       Margin="0,0,0,8"/>
+                            <TextBlock Text="{DynamicResource LOCHelpSetupDesc}"
+                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                       FontSize="22"
+                                       TextWrapping="Wrap"
+                                       Opacity="0.9"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#14000000"
+                            BorderBrush="#22FFFFFF"
+                            BorderThickness="1"
+                            CornerRadius="10"
+                            Padding="24"
+                            Margin="0,0,0,18">
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource LOCHelpDiscordTitle}"
+                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                       FontSize="28"
+                                       Margin="0,0,0,8"/>
+                            <TextBlock Text="{DynamicResource LOCHelpDiscordDesc}"
+                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                       FontSize="22"
+                                       TextWrapping="Wrap"
+                                       Opacity="0.9"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#14000000"
+                            BorderBrush="#22FFFFFF"
+                            BorderThickness="1"
+                            CornerRadius="10"
+                            Padding="24"
+                            Margin="0,0,0,18">
+                        <StackPanel>
+                            <TextBlock Text="{DynamicResource LOCHelpBugTitle}"
+                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                       FontSize="28"
+                                       Margin="0,0,0,8"/>
+                            <TextBlock Text="{DynamicResource LOCHelpBugDesc}"
+                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                       FontSize="22"
+                                       TextWrapping="Wrap"
+                                       Opacity="0.9"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Rectangle Height="1"
+                               Margin="0,6,0,18"
+                               Fill="#33FFFFFF"/>
+
+                    <TextBlock Text="{DynamicResource LOCHelpNote}"
+                               Style="{DynamicResource TextBlockBaseStyle}"
+                               FontSize="20"
+                               Opacity="0.72"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               HorizontalAlignment="Center"
+                               MaxWidth="950"/>
+                </StackPanel>
+            </Border>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,-200,-250"
+                        Effect="{DynamicResource SoftTextShadow}">
+
+                <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                          Margin="0,0,12,0"
+                          Tag="Dpad"
+                          Content="{DynamicResource LOCButtonPrompt_Navigate}" />
+
+                <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                          Margin="0,0,12,0"
+                          Tag="A"
+                          Content="{DynamicResource LOCButtonPrompt_Select}" />
+
+                <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                          Tag="B"
+                          Content="{DynamicResource LOCBackLabel}" />
+            </StackPanel>
+        </Grid>
+
     </DataTemplate>
 
-    <!-- Modèle de données pour le bouton de redémarrage de Playnite -->
     <DataTemplate x:Key="HelpMenuRestartPlayniteButtonTemplate">
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{DynamicResource LOCCrashRestartPlaynite}" VerticalAlignment="Center" Margin="30,5,0,0"/>
-            <TextBlock Text="&#xefd1;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24"
-                       VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,5,0,0"/>
+            <TextBlock Text="{DynamicResource LOCCrashRestartPlaynite}"
+                       VerticalAlignment="Center"
+                       Margin="0,2,0,0"/>
+            <TextBlock Text="&#xefd1;"
+                       FontFamily="{DynamicResource FontIcoFont}"
+                       FontSize="24"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Margin="16,2,0,0"/>
         </StackPanel>
     </DataTemplate>
 
-    <!-- Modèle de données pour le bouton de mode sans échec -->
     <DataTemplate x:Key="HelpMenuSafeModeButtonTemplate">
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{DynamicResource LOCCrashRestartSafe}" VerticalAlignment="Center" Margin="30,5,0,0"/>
-            <TextBlock Text="&#xefdc;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24"
-                       VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,5,0,0"/>
+            <TextBlock Text="{DynamicResource LOCCrashRestartSafe}"
+                       VerticalAlignment="Center"
+                       Margin="0,2,0,0"/>
+            <TextBlock Text="&#xefdc;"
+                       FontFamily="{DynamicResource FontIcoFont}"
+                       FontSize="24"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Margin="16,2,0,0"/>
         </StackPanel>
     </DataTemplate>
 
-    <!-- Modèle de données pour le bouton de retour d'informations -->
     <DataTemplate x:Key="HelpMenuFeedbackButtonTemplate">
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{DynamicResource LOCMenuIssues}" VerticalAlignment="Center" Margin="30,5,0,0"/>
-            <TextBlock Text="&#xea54;" FontFamily="{DynamicResource FontIcoFont}" FontSize="24"
-                       VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20,5,0,0"/>
+            <TextBlock Text="{DynamicResource LOCMenuIssues}"
+                       VerticalAlignment="Center"
+                       Margin="0,2,0,0"/>
+            <TextBlock Text="&#xea54;"
+                       FontFamily="{DynamicResource FontIcoFont}"
+                       FontSize="24"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Margin="16,2,0,0"/>
         </StackPanel>
     </DataTemplate>
 

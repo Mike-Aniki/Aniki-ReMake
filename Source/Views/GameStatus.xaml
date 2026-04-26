@@ -55,28 +55,16 @@
     <Style TargetType="{x:Type GameStatus}">
         <Setter Property="Template">
             <Setter.Value>
-                <!-- Modèle de contrôle pour l'état de jeu -->
                 <ControlTemplate TargetType="{x:Type GameStatus}">
-                    <Grid Background="{DynamicResource OverlayMenu}"
-                          x:Name="PART_ViewHost"
-                          d:DesignWidth="{Binding ActualWidth, ElementName=PART_ViewHost}"
-                          d:DesignHeight="{Binding ActualHeight, ElementName=PART_ViewHost}"
-                          d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameIntance}"
+                    <Grid x:Name="PART_ViewHost"
                           FocusManager.IsFocusScope="True"
-                          KeyboardNavigation.DirectionalNavigation="Contained"
+                          KeyboardNavigation.DirectionalNavigation="Cycle"
                           KeyboardNavigation.TabNavigation="Cycle"
                           KeyboardNavigation.ControlTabNavigation="Cycle"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center">
-                        <!-- Marges ajoutées -->
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          Background="Black">
+
                         <Grid.Style>
                             <Style TargetType="Grid">
                                 <Style.Triggers>
@@ -90,94 +78,21 @@
                             </Style>
                         </Grid.Style>
 
-                        <!-- Arrière-plan de l'image -->
-                        <Border RenderOptions.BitmapScalingMode="Fant" Grid.RowSpan="5" Grid.ColumnSpan="3" Panel.ZIndex="-44">
-                            <Border.Background>
-                                <ImageBrush ImageSource="{ThemeFile 'Images/ShadowBackground/Shade.png'}" RenderOptions.BitmapScalingMode="Fant" Opacity="0.9" Stretch="Fill"/>
-                            </Border.Background>
-                        </Border>
-
-                        <!--  Notification Game Closing -->
-                        <Border x:Name="GameClosingPanel"
-                                Background="{DynamicResource OverlayMenu}"
-                                CornerRadius="{DynamicResource Corner}"
-                                Height="70"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Right"
-                                Panel.ZIndex="1"
-                                RenderTransformOrigin="1,0.5">
-                            <Border.Effect>
-                                <DropShadowEffect BlurRadius="8" ShadowDepth="2" Color="Black" Opacity="0.5"/>
-                            </Border.Effect>
-                            <Border.RenderTransform>
-                                <TranslateTransform x:Name="SlideTransform" X="500"/>
-                            </Border.RenderTransform>
-
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Setter Property="Margin" Value="0,50,20,0"/>
-                                    <Style.Triggers>
-
-                                        <DataTrigger Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="False">
-                                            <Setter Property="Margin" Value="0,20,20,0"/>
-                                        </DataTrigger>
-
-                                        <DataTrigger Binding="{PluginSettings Plugin=NowPlaying, Path=GameClosing}" Value="True">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                            <DataTrigger.EnterActions>
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                                                         From="500" To="0" Duration="0:0:0.3"
-                                                                         AccelerationRatio="0.3" DecelerationRatio="0.7"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </DataTrigger.EnterActions>
-                                        </DataTrigger>
-
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <TextBlock Margin="15,0,0,0" FontSize="20" Style="{DynamicResource TextBlockBaseStyle}" Text="Closing " />
-                                <TextBlock FontSize="20"
-                                           Style="{DynamicResource TextBlockBaseStyle}"
-                                           MaxWidth="250"
-                                           TextTrimming="None"
-                                           TextWrapping="NoWrap"
-                                           ClipToBounds="True"
-                                           Text="{PluginSettings Plugin=NowPlaying, Path=RunningGame.GameName}" />
-                                <TextBlock FontSize="20" Margin="5,0,0,0" Width="30" TextAlignment="Left" Style="{DynamicResource TextBlockBaseStyle}">
-                                    <TextBlock.Triggers>
-                                        <EventTrigger RoutedEvent="Loaded">
-                                            <BeginStoryboard>
-                                                <Storyboard RepeatBehavior="Forever">
-                                                    <StringAnimationUsingKeyFrames Storyboard.TargetProperty="Text" Duration="0:0:1.2" RepeatBehavior="Forever">
-                                                        <DiscreteStringKeyFrame KeyTime="0:0:0.0" Value="." />
-                                                        <DiscreteStringKeyFrame KeyTime="0:0:0.4" Value=".." />
-                                                        <DiscreteStringKeyFrame KeyTime="0:0:0.8" Value="..." />
-                                                    </StringAnimationUsingKeyFrames>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                    </TextBlock.Triggers>
-                                </TextBlock>
-                            </StackPanel>
-                        </Border>
-
-                        <!-- Image NoBackground -->
+                        <!-- fallback si pas de background -->
                         <Image Source="{ThemeFile 'Images/ShadowBackground/NoBackground.png'}"
                                RenderOptions.BitmapScalingMode="Fant"
                                Stretch="UniformToFill"
                                HorizontalAlignment="Center"
-                               Panel.ZIndex="-100"
-                               Grid.RowSpan="5" Grid.ColumnSpan="3"
-                               RenderTransformOrigin="0.5,0.5"/>
-                        <!-- Image du jeu -->
-                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{Binding Game.BackgroundImage, Converter={StaticResource ImageStringToImageConverterCached}}"
-                               Stretch="UniformToFill" HorizontalAlignment="Center" Panel.ZIndex="-45" Grid.RowSpan="5" Grid.ColumnSpan="3" RenderTransformOrigin="0.5,0.5">
+                               VerticalAlignment="Center"
+                               Panel.ZIndex="-30" />
+
+                        <!-- image du jeu -->
+                        <Image RenderOptions.BitmapScalingMode="Fant"
+                               Source="{Binding Game.BackgroundImage, Converter={StaticResource ImageStringToImageConverterCached}}"
+                               Stretch="UniformToFill"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Panel.ZIndex="-20">
                             <Image.Style>
                                 <Style TargetType="Image">
                                     <Style.Triggers>
@@ -192,126 +107,150 @@
                             </Image.Style>
                         </Image>
 
-                        <!-- Chemin du logo -->
-                        <TextBlock Name="LogoPath" Tag="{DynamicResource ExtraMetadataPath}" Visibility="Collapsed">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Text">
-                                        <Setter.Value>
-                                            <MultiBinding StringFormat="{}{0}{1}{2}{3}">
-                                                <Binding RelativeSource="{RelativeSource Self}" Path="Tag" />
-                                                <Binding Source="\ExtraMetadata\games\"/>
-                                                <Binding Path="Game.Id"/>
-                                                <Binding Source="\logo.png" />
-                                            </MultiBinding>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                        <!-- voile sombre -->
+                        <Grid Panel.ZIndex="-10">
+                            <Grid.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#C0000000" Offset="0"/>
+                                    <GradientStop Color="#8A000000" Offset="0.45"/>
+                                    <GradientStop Color="#D8000000" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                        </Grid>
 
-                        <!-- Image du logo -->
-                        <Image Name="LogoImage" Width="600" MaxHeight="300" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant"
-                               VerticalAlignment="Center" HorizontalAlignment="Left" Margin="150,-250,0,50"
-                               Tag="{DynamicResource ExtraMetadataPath}">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Source" Value="{Binding ElementName=LogoPath, Path=Text}"/>
+                        <!-- léger shade / texture -->
+                        <Border Panel.ZIndex="-5"
+                                RenderOptions.BitmapScalingMode="Fant">
+                            <Border.Background>
+                                <ImageBrush ImageSource="{ThemeFile 'Images/ShadowBackground/Shade.png'}"
+                                            RenderOptions.BitmapScalingMode="Fant"
+                                            Opacity="0.55"
+                                            Stretch="Fill"/>
+                            </Border.Background>
+                        </Border>
+
+                        <!-- Notification fermeture du jeu -->
+                        <Border x:Name="GameClosingPanel"
+                                Background="{DynamicResource OverlayMenu}"
+                                CornerRadius="{DynamicResource Corner}"
+                                Height="70"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right"
+                                Panel.ZIndex="5"
+                                Margin="0,28,28,0"
+                                RenderTransformOrigin="1,0.5">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="8"
+                                                  ShadowDepth="2"
+                                                  Color="Black"
+                                                  Opacity="0.5"/>
+                            </Border.Effect>
+                            <Border.RenderTransform>
+                                <TranslateTransform X="500"/>
+                            </Border.RenderTransform>
+
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="">
-                                            <Setter Property="Source" Value="{Binding ElementName=LogoPath, Path=Text, Converter={StaticResource ImageStringToImageConverter}}"/>
+                                        <DataTrigger Binding="{PluginSettings Plugin=NowPlaying, Path=GameClosing}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                         From="500"
+                                                                         To="0"
+                                                                         Duration="0:0:0.3"
+                                                                         AccelerationRatio="0.3"
+                                                                         DecelerationRatio="0.7"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="false">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Visibility}" Value="Visible"/>
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="Effect">
-                                                <Setter.Value>
-                                                    <DropShadowEffect ShadowDepth="2" />
-                                                </Setter.Value>
-                                            </Setter>
-                                        </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </Image.Style>
-                        </Image>
+                            </Border.Style>
 
-                        <!-- Texte de statut -->
-                        <TextBlock Name="PART_TextStatus" TextWrapping="Wrap" FontSize="42"
-                                   Style="{StaticResource TextBlockBoldBaseStyle}" TextAlignment="Center"
-                                   HorizontalAlignment="Center" Margin="0,20,0,10" Grid.Row="1" VerticalAlignment="Bottom">
-                            <TextBlock.Effect>
-                                <DropShadowEffect ShadowDepth="1"
-                                                  BlurRadius="8"
-                                                  Color="#80000000"
-                                                  Opacity="1"
-                                                  RenderingBias="Quality"/>
-                            </TextBlock.Effect>
-                        </TextBlock>
+                            <StackPanel Orientation="Horizontal"
+                                        VerticalAlignment="Center">
+                                <TextBlock Margin="15,0,0,0"
+                                           FontSize="20"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           Text="Closing " />
+                                <TextBlock FontSize="20"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           MaxWidth="250"
+                                           TextTrimming="CharacterEllipsis"
+                                           TextWrapping="NoWrap"
+                                           ClipToBounds="True"
+                                           Text="{PluginSettings Plugin=NowPlaying, Path=RunningGame.GameName}" />
+                                <TextBlock FontSize="20"
+                                           Margin="5,0,0,0"
+                                           Width="30"
+                                           TextAlignment="Left"
+                                           Style="{DynamicResource TextBlockBaseStyle}">
+                                    <TextBlock.Triggers>
+                                        <EventTrigger RoutedEvent="Loaded">
+                                            <BeginStoryboard>
+                                                <Storyboard RepeatBehavior="Forever">
+                                                    <StringAnimationUsingKeyFrames Storyboard.TargetProperty="Text"
+                                                                                   Duration="0:0:1.2"
+                                                                                   RepeatBehavior="Forever">
+                                                        <DiscreteStringKeyFrame KeyTime="0:0:0.0" Value="." />
+                                                        <DiscreteStringKeyFrame KeyTime="0:0:0.4" Value=".." />
+                                                        <DiscreteStringKeyFrame KeyTime="0:0:0.8" Value="..." />
+                                                    </StringAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </TextBlock.Triggers>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
 
-                        <!-- Boutons d'action -->
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,20" Grid.Row="2" VerticalAlignment="Top">
+                        <Border Grid.RowSpan="3"
+                                VerticalAlignment="Bottom"
+                                Padding="26,12,18,18"
+                                Background="#0E000000"
+                                Panel.ZIndex="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
 
-                            <ButtonEx x:Name="GameStatusButton"
-                                      Style="{StaticResource ButtonGameStatusAction}"
-                                      Command="{Binding DataContext.CloseGameStatusCommand, RelativeSource={RelativeSource AncestorType=Main}}"
-                                      Content="{DynamicResource LOCOpenPlaynite}"/>
+                                <!-- Button visible -->
+                                <StackPanel Grid.Column="1"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            Opacity="0.92">
+                                    <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                              Tag="A"
+                                              Content="{DynamicResource LOCBackToLibrary}" />
+                                </StackPanel>
 
-                            <ButtonEx  Command="{PluginSettings Plugin=BackToGame, Path=ActivateGame}" Content="{DynamicResource LOCBackToGame}">
-                                <ButtonEx.Style>
-                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonGameStatusAction}">
-                                        <Setter Property="Visibility" Value="Visible" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{PluginStatus Plugin=BackToGame_c05dfa72-e302-44cf-9612-af1f7caa07f7, Status=Installed}" Value="False">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{PluginSettings Plugin=BackToGame, Path=IsRunning}" Value="False">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ButtonEx.Style>
-                            </ButtonEx>
-
-                            <ButtonEx Command="{PluginSettings Plugin=NowPlaying, Path=ReturnToGame}" Content="{DynamicResource LOCReturnGameNP}">
-                                <ButtonEx.Style>
-                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonGameStatusAction}">
-                                        <Setter Property="Visibility" Value="Visible" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{PluginStatus Plugin=NowPlaying_db4e7ade-57fb-426c-8392-60e2347a0209, Status=Installed}" Value="False">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{PluginSettings Plugin=NowPlaying, Path=IsGameRunning}" Value="False">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ButtonEx.Style>
-                            </ButtonEx>
-
-                            <ButtonEx Command="{PluginSettings Plugin=NowPlaying, Path=CloseGame}" Content="{DynamicResource LOCExitGameNP}">
-                                <ButtonEx.Style>
-                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonGameStatusAction}">
-                                        <Setter Property="Visibility" Value="Visible" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{PluginStatus Plugin=NowPlaying_db4e7ade-57fb-426c-8392-60e2347a0209, Status=Installed}" Value="False">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{PluginSettings Plugin=NowPlaying, Path=IsGameRunning}" Value="False">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ButtonEx.Style>
-                            </ButtonEx>
-                        </StackPanel>
+                                <!-- Vrai bouton focusable, invisible -->
+                                <ButtonEx x:Name="GameStatusButton"
+                                          Grid.Column="1"
+                                          Command="{Binding DataContext.CloseGameStatusCommand, RelativeSource={RelativeSource AncestorType=Main}}"
+                                          Background="Transparent"
+                                          BorderThickness="0"
+                                          Opacity="0.01"
+                                          Width="260"
+                                          Height="44"
+                                          HorizontalAlignment="Right"
+                                          VerticalAlignment="Center"
+                                          Focusable="True"
+                                          IsTabStop="True"
+                                          Content=""
+                                          Foreground="Transparent"/>
+                            </Grid>
+                        </Border>
                     </Grid>
-                    <ControlTemplate.Triggers>
 
-                        <!-- Ouvert : focus local + confinement nav + focus sur le bouton -->
+                    <ControlTemplate.Triggers>
                         <Trigger Property="IsVisible" Value="True">
                             <Setter TargetName="PART_ViewHost" Property="FocusManager.IsFocusScope" Value="True"/>
                             <Setter TargetName="PART_ViewHost" Property="KeyboardNavigation.TabNavigation" Value="Cycle"/>
@@ -320,11 +259,9 @@
                             <Setter TargetName="PART_ViewHost" Property="IsEnabled" Value="True"/>
                         </Trigger>
 
-                        <!-- Fermé : coupe toute prise de focus dans le panneau -->
                         <Trigger Property="IsVisible" Value="False">
                             <Setter TargetName="PART_ViewHost" Property="IsEnabled" Value="False"/>
                         </Trigger>
-
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

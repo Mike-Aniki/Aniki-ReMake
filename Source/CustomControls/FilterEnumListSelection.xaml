@@ -3,37 +3,85 @@
 
     <!-- Définition du style pour les éléments de sélection d'éléments de la liste d'énumération du filtre -->
     <Style TargetType="{x:Type FilterEnumListSelection}">
-        <!-- Définition des propriétés par défaut -->
         <Setter Property="Focusable" Value="False" />
-        <!-- Définition du modèle de contrôle -->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type FilterEnumListSelection}">
-                    <!-- Contenu principal du modèle -->
-                    <Border CornerRadius="{DynamicResource Corner}" Background="{DynamicResource OverlayMenu}">
-                        <DockPanel MinWidth="400" Height="{StaticResource DesignHeight}"
-                                   Background="Transparent"
-                                   x:Name="PART_MenuHost">
-                            <!-- Bouton de retour -->
-                            <ButtonEx DockPanel.Dock="Top" Margin="30,40,30,10" Height="50"
-                                      Style="{DynamicResource FilterPanelButtonEx}" x:Name="PART_ButtonBack">
-                                <Button.Content>
-                                    <StackPanel Orientation="Horizontal">
-                                        <!-- Titre -->
-                                        <TextBlock Text="{Binding Title}" Margin="10,0,10,10" TextTrimming="CharacterEllipsis" TextWrapping="Wrap"
+                    <Border Background="Transparent">
+                        <DockPanel x:Name="PART_MenuHost"
+                                   MinWidth="560"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"
+                                   LastChildFill="True">
+
+                            <!-- Bouton retour / titre -->
+                            <ButtonEx x:Name="PART_ButtonBack"
+                                      DockPanel.Dock="Top"
+                                      Margin="18,18,18,12"
+                                      Height="54"
+                                      Style="{DynamicResource FilterPanelButtonEx}"
+                                      HorizontalContentAlignment="Center"
+                                      VerticalContentAlignment="Center">
+                                <ButtonEx.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0"
+                                                   Text="&#xe72b;"
+                                                   FontFamily="{DynamicResource FontIcoFont}"
+                                                   FontSize="22"
+                                                   Margin="0,0,12,0"
                                                    VerticalAlignment="Center"
-                                                   FontSize="24" />
-                                    </StackPanel>
-                                </Button.Content>
+                                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ButtonEx}}"/>
+
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding Title}"
+                                                   Margin="0,0,8,0"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   TextWrapping="NoWrap"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="24"
+                                                   Style="{DynamicResource ButtonTextBlockBaseStyle}"
+                                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ButtonEx}}"/>
+                                    </Grid>
+                                </ButtonEx.Content>
                             </ButtonEx>
-                            <!-- Bouton de suppression -->
-                            <ButtonEx Content="{DynamicResource LOCClearLabel}" DockPanel.Dock="Top"
-                                      Margin="30,20,30,10" Height="50"
-                                      Style="{DynamicResource FilterPanelButtonEx}"  x:Name="PART_ButtonClear"/>
+
+                            <!-- Bouton clear -->
+                            <ButtonEx x:Name="PART_ButtonClear"
+                                      Content="{DynamicResource LOCClearLabel}"
+                                      DockPanel.Dock="Top"
+                                      Margin="18,0,18,14"
+                                      Height="50"
+                                      Style="{DynamicResource FilterPanelButtonEx}"/>
+
+                            <!-- Séparateur -->
+                            <Border DockPanel.Dock="Top"
+                                    Height="1"
+                                    Margin="18,0,18,14"
+                                    Background="{DynamicResource SeparatorBrush}" />
+
                             <!-- Conteneur des éléments -->
-                            <ItemsControlEx x:Name="PART_ItemsHost"
-                                            Margin="0,20,0,0" DockPanel.Dock="Top" Focusable="False"
-                                            KeyboardNavigation.DirectionalNavigation="Once" />
+                            <ScrollViewer DockPanel.Dock="Top"
+                                          Focusable="False"
+                                          HorizontalScrollBarVisibility="Disabled"
+                                          VerticalScrollBarVisibility="Auto"
+                                          CanContentScroll="True"
+                                          Padding="0,0,0,18">
+                                <ItemsControlEx x:Name="PART_ItemsHost"
+                                                Margin="0,6,0,0"
+                                                Focusable="False"
+                                                KeyboardNavigation.DirectionalNavigation="Once">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControlEx>
+                            </ScrollViewer>
                         </DockPanel>
                     </Border>
                 </ControlTemplate>

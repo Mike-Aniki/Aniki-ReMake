@@ -2,7 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:ctrl="clr-namespace:Playnite.FullscreenApp.Controls;assembly=Playnite.FullscreenApp"
                     mc:Ignorable="d">
+
+
 
     <!-- Définition du style pour les éléments de la liste de jeux -->
     <Style x:Key="ListGameItemTemplate" TargetType="{x:Type GameListItem}">
@@ -80,6 +83,7 @@
 
                                     <!-- Fond sombre pour assombrir l'image -->
                                     <Border Background="#181A1E" x:Name="BorderDarken" IsHitTestVisible="False" Panel.ZIndex="1" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" Opacity="0.7" />
+
                                     <!-- Texte du nom du jeu -->
                                     <TextBlock Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis"
                                                Visibility="Collapsed"
@@ -138,7 +142,7 @@
                                                Width="Auto">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="Background" Value="{DynamicResource OverlayMenu}" />
+                                                <Setter Property="Background" Value="{DynamicResource ColorBottomBarOtherViewBrush}" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding Text.Length, ElementName=CompletionStatus}" Value="0">
                                                         <Setter Property="Background" Value="Transparent" />
@@ -285,9 +289,131 @@
                             <Setter Property="Text" Value="{DynamicResource LOCBackToGame}" TargetName="GameIsRunningBadge" />
                         </DataTrigger>
 
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+    <DataTemplate x:Key="DetailedListItemTemplate">
+        <ctrl:GameListItem FocusVisualStyle="{x:Null}">
+            <ctrl:GameListItem.Template>
+                <ControlTemplate TargetType="{x:Type ctrl:GameListItem}">
+                    <Grid Height="88">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="62"/>
+                            <ColumnDefinition Width="14"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Cover -->
+                        <Border Width="62"
+                                Height="62"
+                                CornerRadius="10"
+                                VerticalAlignment="Center"
+                                Background="#22000000">
+                            <Image x:Name="PART_ImageCover"
+                                   Source="{Binding CoverImageObject}"
+                                   Stretch="UniformToFill"
+                                   RenderOptions.BitmapScalingMode="Fant"/>
+                        </Border>
+
+                        <!-- Infos -->
+                        <StackPanel Grid.Column="2"
+                                    VerticalAlignment="Center">
+                            <TextBlock Text="{Binding DisplayName}"
+                                       Style="{DynamicResource TextBlockBoldBaseStyle}"
+                                       FontSize="21"
+                                       FontWeight="SemiBold"
+                                       TextTrimming="CharacterEllipsis"/>
+
+                            <TextBlock Margin="0,4,0,0"
+                                       Text="{Binding Playtime, Converter={StaticResource PlayTimeToStringConverter}}"
+                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                       FontSize="14"
+                                       Opacity="0.72"/>
+                        </StackPanel>
+
+                        <TextBlock Text="&#xef08;"
+                                   FontFamily="{StaticResource FontIcoFont}"
+                                   FontSize="30"
+                                   Foreground="White"
+                                   Grid.Column="3"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Right"
+                                   TextAlignment="Center"
+                                   Margin="12,25">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsInstalled}" Value="False">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsInstalled}" Value="False">
+                            <Setter Property="Opacity" Value="0.72"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </ctrl:GameListItem.Template>
+        </ctrl:GameListItem>
+    </DataTemplate>
+
+    <Style x:Key="DetailedListItemContainerStyle" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+        <Setter Property="Margin" Value="0,0,0,5"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Opacity" Value="0.86"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border x:Name="Root"
+                            Background="#14000000"
+                            BorderBrush="Transparent"
+                            BorderThickness="2"
+                            CornerRadius="16"
+                            Padding="12,10">
+
+                        <Grid>
+                            <Border x:Name="AccentBar"
+                                    Width="4"
+                                    HorizontalAlignment="Left"
+                                    Margin="-2,8,0,8"
+                                    CornerRadius="3"
+                                    Background="{DynamicResource FocusGameBorderBrush}"
+                                    Opacity="0"/>
+
+                            <ContentPresenter Margin="10,0,0,0"/>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="AccentBar" Property="Opacity" Value="1"/>
+                            <Setter Property="Opacity" Value="1"/>
+                        </Trigger>
+
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Root" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                            <Setter TargetName="AccentBar" Property="Opacity" Value="1"/>
+                            <Setter TargetName="Root" Property="Background" Value="#30FFFFFF"/>
+
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
 </ResourceDictionary>
