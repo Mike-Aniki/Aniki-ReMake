@@ -302,22 +302,24 @@
                 <ControlTemplate TargetType="{x:Type ctrl:GameListItem}">
                     <Grid Height="88">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="62"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="14"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
                         <!-- Cover -->
-                        <Border Width="62"
-                                Height="62"
-                                CornerRadius="10"
-                                VerticalAlignment="Center"
-                                Background="#22000000">
-                            <Image x:Name="PART_ImageCover"
-                                   Source="{Binding CoverImageObject}"
-                                   Stretch="UniformToFill"
-                                   RenderOptions.BitmapScalingMode="Fant"/>
-                        </Border>
+
+                        <Viewbox Width="80"
+                                 Stretch="Uniform">
+                            <Grid Width="{Settings GridItemWidth}"
+                                  Height="{Settings GridItemHeight}">
+                                <Image x:Name="PART_ImageCover"
+                                       Stretch="{Settings CoverArtStretch}"
+                                       StretchDirection="Both"
+                                       RenderOptions.BitmapScalingMode="Fant"/>
+                            </Grid>
+                        </Viewbox>
+
 
                         <!-- Infos -->
                         <StackPanel Grid.Column="2"
@@ -337,13 +339,14 @@
 
                         <TextBlock Text="&#xef08;"
                                    FontFamily="{StaticResource FontIcoFont}"
-                                   FontSize="30"
-                                   Foreground="White"
+                                   FontSize="24"
+                                   Opacity="0.8"
+                                   Foreground="{DynamicResource TextBrush}"
                                    Grid.Column="3"
-                                   VerticalAlignment="Top"
+                                   VerticalAlignment="Bottom"
                                    HorizontalAlignment="Right"
                                    TextAlignment="Center"
-                                   Margin="12,25">
+                                   Margin="0,0,10,0">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Visibility" Value="Collapsed"/>
