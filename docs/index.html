@@ -1,40 +1,429 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Aniki - About</title>
-    <style>
-        body {
-            background-color: #0a0a0f;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            max-width: 900px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Aniki ReMake</title>
 
-        h1, h2 {
-            color: #ff2c55;
-        }
+  <style>
+    :root {
+      --bg: #070712;
+      --bg-soft: #101020;
+      --card: rgba(18, 18, 36, 0.78);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent: #e63b5f;
+      --accent-soft: rgba(230, 59, 95, 0.18);
+      --text: #f4f4f7;
+      --muted: #b6b6c8;
+      --line: rgba(255, 255, 255, 0.08);
+      --max-width: 980px;
+    }
 
-        p {
-            line-height: 1.6;
-        }
-    </style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(230, 59, 95, 0.18), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(80, 90, 180, 0.16), transparent 35%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 80%);
+      opacity: 0.35;
+    }
+
+    a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .hero {
+      min-height: 72vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 24px 56px;
+      text-align: center;
+    }
+
+    .hero-inner {
+      max-width: var(--max-width);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      margin-bottom: 28px;
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .badge span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px var(--accent);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3rem, 8vw, 6.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+    }
+
+    .hero h1 span {
+      color: var(--accent);
+      text-shadow: 0 0 34px rgba(230, 59, 95, 0.35);
+    }
+
+    .subtitle {
+      max-width: 760px;
+      margin: 28px auto 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 36px;
+    }
+
+    .button {
+      padding: 13px 20px;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.05);
+      transition: 0.2s ease;
+      font-weight: 600;
+    }
+
+    .button.primary {
+      background: linear-gradient(135deg, var(--accent), #9d2642);
+      border-color: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 10px 28px rgba(230, 59, 95, 0.22);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.24);
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .section {
+      position: relative;
+      margin: 26px 0;
+      padding: 34px;
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.025)),
+        var(--card);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
+      overflow: hidden;
+    }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+      opacity: 0.85;
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      letter-spacing: -0.04em;
+    }
+
+    p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    strong {
+      color: var(--text);
+    }
+
+    ul {
+      margin: 18px 0 4px;
+      padding-left: 22px;
+      color: var(--muted);
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    blockquote {
+      margin: 24px 0;
+      padding: 20px 22px;
+      border-left: 4px solid var(--accent);
+      border-radius: 14px;
+      background: var(--accent-soft);
+      color: var(--text);
+      font-size: 1.12rem;
+      font-weight: 600;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      margin: 46px 0;
+      background: linear-gradient(to right, transparent, var(--line), transparent);
+    }
+
+    footer {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px 60px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 720px) {
+      .hero {
+        min-height: auto;
+        padding-top: 56px;
+      }
+
+      .section {
+        padding: 26px 22px;
+        border-radius: 22px;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="badge">
+        <span></span>
+        Creator Story
+      </div>
 
-<h1>About Me</h1>
+      <h1>Aniki <span>ReMake</span></h1>
 
-<p>
-I'm someone who grew up with consoles in the 90s...
-</p>
+      <p class="subtitle">
+        The story behind Aniki ReMake, from simple theme edits to a full console-like experience for Playnite.
+      </p>
 
-<h2>The Origin of Aniki</h2>
+      <div class="buttons">
+        <a class="button primary" href="#about">Read the Story</a>
+        <a class="button" href="https://github.com/Mike-Aniki/Aniki-ReMake" target="_blank" rel="noopener noreferrer">GitHub</a>
+       <a class="button" href="https://ko-fi.com/mikeaniki" target="_blank" rel="noopener noreferrer">Ko-fi</a>
+      </div>
+    </div>
+  </header>
 
-<p>
-When I moved to PC, I quickly realized something was missing...
-</p>
+  <main id="about">
+    <section class="section">
+      <h2>About Me</h2>
 
+      <p>I'm someone who grew up with consoles in the 90s.</p>
+
+      <p>That “plug & play”, smooth, controller-first experience is something that has always stayed with me.</p>
+
+      <p>My job has nothing to do with coding or development. I work in a completely different field, and everything I’ve built around Aniki comes from curiosity, experimentation, and a lot of time spent learning on my own.</p>
+
+      <p>Aniki ReMake does not generate any income. I work on it entirely in my free time.</p>
+
+      <p>The only financial support I receive comes from Ko-fi donations, and I sincerely thank everyone who buys me a coffee. I drink a lot of them while working on the project.</p>
+    </section>
+
+    <section class="section">
+      <h2>The Origin of Aniki</h2>
+
+      <p>When I moved to PC, I quickly realized something was missing.</p>
+
+      <p>The power was there.<br>
+      The freedom was there.<br>
+      But the experience didn’t feel like a console.</p>
+
+      <p>Playnite became my “home” on PC because it was the closest thing to that feeling. But despite the quality of the available fullscreen themes, none of them fully matched what I was looking for.</p>
+
+      <p>Some were excellent, but there was always a detail, a feeling, or an approach that didn’t completely align with my vision.</p>
+    </section>
+
+    <section class="section">
+      <h2>The Beginning with Aniki Remix</h2>
+
+      <p>It all started with existing themes.</p>
+
+      <p>I really liked <strong>Remix</strong> by Zeroantix and <strong>Ubiquity</strong> by Red Schism. Each of them had strong and interesting ideas, but not necessarily the same ones.</p>
+
+      <p>So I started modifying Remix to integrate some of the ideas I liked from Ubiquity, while also trying my own ideas step by step.</p>
+
+      <p>At first, it was very simple:</p>
+
+      <ul>
+        <li>changing colors</li>
+        <li>adding logos</li>
+        <li>adjusting some visual elements</li>
+        <li>testing ideas without really knowing where I was going</li>
+      </ul>
+
+      <p>I then shared this modified version with the Playnite community under the name <strong>Aniki Remix</strong>.</p>
+
+      <p>The name was intentionally simple: it was Remix, but with my vision — my “Aniki” version.</p>
+
+      <p>To my surprise, the theme received a lot of positive feedback and support. That’s what motivated me to keep going.</p>
+    </section>
+
+    <section class="section">
+      <h2>Learning by Breaking Things</h2>
+
+      <p>I had no background in development.</p>
+
+      <p>I never took any courses.<br>
+      I learned by observing, testing, making mistakes, and starting over.</p>
+
+      <p>I spent a lot of time analyzing other themes, understanding how certain elements were built, trying to reproduce ideas, and then adapting them in my own way.</p>
+
+      <p>And of course, I also spent a lot of time crashing Playnite.</p>
+
+      <p>Sometimes a single mistake in XAML was enough to break everything. One misplaced comma, an unclosed tag, a wrongly placed element… and nothing worked anymore.</p>
+
+      <p>But that’s also how I learned.</p>
+
+      <p>The Playnite community and several theme creators helped me a lot with advice, ideas, and feedback.</p>
+    </section>
+
+    <section class="section">
+      <h2>The Birth of Aniki ReMake</h2>
+
+      <p>Over time, I started to better understand how XAML works.</p>
+
+      <p>And at one point, I thought:</p>
+
+      <blockquote>
+        Aniki Remix is great, but now that I understand how things work better, I could probably build something more advanced.
+      </blockquote>
+
+      <p>That’s how <strong>Aniki ReMake</strong> was born.</p>
+
+      <p>The name comes directly from that idea: remaking Aniki Remix, but better.<br>
+      A more advanced, more ambitious, more animated version, closer to what I originally had in mind.</p>
+
+      <p>Aniki ReMake was no longer just a modification of an existing theme.<br>
+      It became a project with a clear direction:</p>
+
+      <ul>
+        <li>recreating a console-like experience on PC</li>
+        <li>building an immersive interface</li>
+        <li>improving controller navigation</li>
+        <li>giving the theme a strong identity</li>
+        <li>focusing more on animations and transitions</li>
+      </ul>
+
+      <p>When I released Aniki ReMake, I once again received a lot of support and positive feedback. That pushed me to keep improving the theme and learning more.</p>
+    </section>
+
+    <section class="section">
+      <h2>Aniki Lite</h2>
+
+      <p>With Aniki ReMake, animations became a key part of the theme’s identity.</p>
+
+      <p>But animations come at a cost.</p>
+
+      <p>On lower-end systems or handheld devices, the theme could become too heavy.</p>
+
+      <p>That’s when the idea for <strong>Aniki Lite</strong> came up.</p>
+
+      <p>The name was, once again, very straightforward: an Aniki theme, but built with a “Lite” mindset.</p>
+
+      <p>The goal was different:</p>
+
+      <ul>
+        <li>a lighter interface</li>
+        <li>a cleaner, more minimalist design</li>
+        <li>better performance</li>
+        <li>an experience better suited for lower-end systems and portable devices</li>
+      </ul>
+
+      <p>Aniki Lite allowed me to explore a different approach: less flashy, but more direct, smoother, and more accessible.</p>
+    </section>
+
+    <section class="section">
+      <h2>Today</h2>
+
+      <p>Managing two projects at the same time with limited free time meant making choices.</p>
+
+      <p>So I decided to focus mainly on <strong>Aniki ReMake</strong>.</p>
+
+      <p>This led to a major evolution of the theme with version 2.0, and later an even more ambitious step with version 3.0.</p>
+
+      <p>Today, Aniki ReMake continues to evolve with the same goal as day one: turning Playnite into a true modern console-like experience on PC.</p>
+    </section>
+
+    <section class="section">
+      <h2>Final Note</h2>
+
+      <p>Aniki ReMake was never meant to be a commercial project.</p>
+
+      <p>It’s first and foremost a passion project, built entirely in my free time.</p>
+
+      <p>It was born from frustration, curiosity, and the desire to create something better.</p>
+
+      <p>I started with simple color changes, and little by little, through trial and error, crashes, and support from the community, the project grew into something much bigger.</p>
+
+      <p>And if Aniki still exists today, it’s also thanks to the users who supported it, tested it, gave feedback, and encouraged me to keep going.</p>
+
+      <p>A big thank you as well to those who support the project via Ko-fi. Your coffees really help keep the energy going during long work sessions on Aniki.</p>
+    </section>
+  </main>
+
+  <footer>
+    Aniki ReMake — A passion project for Playnite.
+  </footer>
 </body>
 </html>
