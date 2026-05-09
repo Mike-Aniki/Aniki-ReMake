@@ -14,9 +14,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContentControl">
-                    <Grid KeyboardNavigation.TabNavigation="Cycle"
-                          KeyboardNavigation.DirectionalNavigation="Cycle"
-                          KeyboardNavigation.ControlTabNavigation="Cycle">
+                    <Grid KeyboardNavigation.TabNavigation="Contained"
+                          KeyboardNavigation.DirectionalNavigation="Contained"
+                          KeyboardNavigation.ControlTabNavigation="Contained"
+                          FocusManager.FocusedElement="{Binding ElementName=ReturnGameButton}">
+
                         <Border x:Name="MainBorder"
                                 Width="1280"
                                 Height="720"
@@ -76,7 +78,12 @@
                                 </Grid>
 
                                 <!-- Bandeau Inferieur -->
-                                <Grid VerticalAlignment="Bottom" Panel.ZIndex="1" FocusVisualStyle="{x:Null}">
+                                <Grid VerticalAlignment="Bottom"
+                                      Panel.ZIndex="1"
+                                      FocusVisualStyle="{x:Null}"
+                                      KeyboardNavigation.TabNavigation="Contained"
+                                      KeyboardNavigation.DirectionalNavigation="Contained"
+                                      KeyboardNavigation.ControlTabNavigation="Contained">
                                     <Border Background="{DynamicResource BottomBar}" Opacity="0.8" CornerRadius="0,0,2,2" Height="Auto"/>
                                     <!-- Timers -->
                                     <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Margin="0,0,0,20" FocusVisualStyle="{x:Null}">
@@ -100,7 +107,8 @@
                                         <StackPanel Orientation="Horizontal"
                                                     HorizontalAlignment="Center"
                                                     FocusVisualStyle="{x:Null}">
-                                            <ButtonEx Content="{DynamicResource LOCReturnGameNP}"
+                                            <ButtonEx x:Name="ReturnGameButton"
+                                                      Content="{DynamicResource LOCReturnGameNP}"
                                                       Width="330"
                                                       Height="70"
                                                       FocusVisualStyle="{x:Null}"
@@ -120,10 +128,6 @@
                                         </StackPanel>
 
                                         <StackPanel Orientation="Horizontal"  VerticalAlignment="Bottom" Effect="{DynamicResource SoftTextShadow}" HorizontalAlignment="Right" Margin="0,0,20,0">
-
-                                            <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                                      Tag="Dpad"
-                                                      Content="{DynamicResource LOCButtonPrompt_Navigate}" />
 
                                             <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
                                                       Tag="A"

@@ -530,45 +530,118 @@
         <Setter Property="RenderTransform">
             <Setter.Value>
                 <TransformGroup>
-                    <ScaleTransform     ScaleX="1"   ScaleY="1"/>
-                    <TranslateTransform X="0"        Y="0"/>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                    <TranslateTransform X="0" Y="0"/>
                 </TransformGroup>
             </Setter.Value>
         </Setter>
 
         <Style.Triggers>
-            <DataTrigger Binding="{Binding Visibility, RelativeSource={RelativeSource Self}}" Value="Visible">
-                <DataTrigger.EnterActions>
-                    <BeginStoryboard x:Name="sbDefault" HandoffBehavior="SnapshotAndReplace">
+
+            <!-- 16:9 / 16:9-like - menu à gauche, preview vers la gauche -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Visibility, RelativeSource={RelativeSource Self}}" Value="Visible"/>
+                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ChangeMenuPlacement]}" Value="False"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.EnterActions>
+                    <BeginStoryboard x:Name="sbPreview_Left_Default" HandoffBehavior="SnapshotAndReplace">
                         <Storyboard>
                             <DoubleAnimation Duration="0:0:0.25"
                                              To="1.5"
                                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"/>
+
                             <DoubleAnimation Duration="0:0:0.25"
                                              To="1.5"
                                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"/>
+
                             <DoubleAnimation Duration="0:0:0.25"
                                              To="-900"
                                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"/>
                         </Storyboard>
                     </BeginStoryboard>
-                </DataTrigger.EnterActions>
-            </DataTrigger>
+                </MultiDataTrigger.EnterActions>
+            </MultiDataTrigger>
 
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp1610">
-                <DataTrigger.EnterActions>
-                    <BeginStoryboard x:Name="sb1610" HandoffBehavior="SnapshotAndReplace">
+
+            <!-- 16:9 / 16:9-like - menu à droite, preview vers la droite -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Visibility, RelativeSource={RelativeSource Self}}" Value="Visible"/>
+                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ChangeMenuPlacement]}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.EnterActions>
+                    <BeginStoryboard x:Name="sbPreview_Right_Default" HandoffBehavior="SnapshotAndReplace">
                         <Storyboard>
-                            <DoubleAnimation Duration="0:0:0.25" To="1.5"
+                            <DoubleAnimation Duration="0:0:0.25"
+                                             To="1.5"
                                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"/>
-                            <DoubleAnimation Duration="0:0:0.25" To="1.5"
+
+                            <DoubleAnimation Duration="0:0:0.25"
+                                             To="1.5"
                                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"/>
-                            <DoubleAnimation Duration="0:0:0.25" To="-840"
+
+                            <DoubleAnimation Duration="0:0:0.25"
+                                             To="900"
                                              Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"/>
                         </Storyboard>
                     </BeginStoryboard>
-                </DataTrigger.EnterActions>
-            </DataTrigger>
+                </MultiDataTrigger.EnterActions>
+            </MultiDataTrigger>
+
+
+            <!-- 16:10 - menu à gauche, preview vers la gauche -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Visibility, RelativeSource={RelativeSource Self}}" Value="Visible"/>
+                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp1610"/>
+                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ChangeMenuPlacement]}" Value="False"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.EnterActions>
+                    <BeginStoryboard x:Name="sbPreview_Left_1610" HandoffBehavior="SnapshotAndReplace">
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.25"
+                                             To="1.5"
+                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"/>
+
+                            <DoubleAnimation Duration="0:0:0.25"
+                                             To="1.5"
+                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"/>
+
+                            <DoubleAnimation Duration="0:0:0.25"
+                                             To="-840"
+                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </MultiDataTrigger.EnterActions>
+            </MultiDataTrigger>
+
+
+            <!-- 16:10 - menu à droite, preview vers la droite -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Visibility, RelativeSource={RelativeSource Self}}" Value="Visible"/>
+                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp1610"/>
+                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ChangeMenuPlacement]}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.EnterActions>
+                    <BeginStoryboard x:Name="sbPreview_Right_1610" HandoffBehavior="SnapshotAndReplace">
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.25"
+                                             To="1.5"
+                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"/>
+
+                            <DoubleAnimation Duration="0:0:0.25"
+                                             To="1.5"
+                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"/>
+
+                            <DoubleAnimation Duration="0:0:0.25"
+                                             To="840"
+                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </MultiDataTrigger.EnterActions>
+            </MultiDataTrigger>
 
         </Style.Triggers>
     </Style>
@@ -843,6 +916,15 @@
         <StackPanel Orientation="Horizontal">
             <!-- Texte du bouton "Theme Options" -->
             <TextBlock Text="{DynamicResource LOCThemeOptionsSettingsMenu}" Style="{DynamicResource ButtonTextBlockBaseStyle}" FontSize="24" VerticalAlignment="Center" />
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="SettingsMenuAnikiHelperButtonTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Aniki Helper"
+                       Style="{DynamicResource ButtonTextBlockBaseStyle}"
+                       FontSize="24"
+                       VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
 

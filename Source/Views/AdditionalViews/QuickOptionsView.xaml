@@ -31,7 +31,7 @@
                                                          From="0" To="1"
                                                          Duration="0:0:0.30"/>
                                         <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)"
-                                                         From="-60" To="0"
+                                                         From="100" To="0"
                                                          Duration="0:0:0.40">
                                             <DoubleAnimation.EasingFunction>
                                                 <CubicEase EasingMode="EaseOut"/>
@@ -264,7 +264,7 @@
 
                         <Grid x:Name="QuickSettingsPanelHost"
                               Width="720"
-                              HorizontalAlignment="Left"
+                              HorizontalAlignment="Right"
                               VerticalAlignment="Stretch"
                               RenderTransformOrigin="0.5,0.5"
                               KeyboardNavigation.TabNavigation="Cycle"
@@ -274,66 +274,15 @@
                             </Grid.RenderTransform>
 
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="80"/>
+                                <RowDefinition Height="95"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
-                                <RowDefinition Height="70"/>
+                                <RowDefinition Height="65"/>
                             </Grid.RowDefinitions>
 
                             <!-- glass shell -->
-                            <Border Grid.RowSpan="4" Background="{DynamicResource OverlayMenu}" BorderBrush="{DynamicResource StaticBorderBrush}" BorderThickness="0,0,1,0"
+                            <Border Grid.RowSpan="4" Background="{DynamicResource OverlayMenu}" BorderBrush="{DynamicResource StaticBorderBrush}" BorderThickness="1,0,0,0"
                                     Opacity="0.93"/>
-
-                            <!-- HEADER -->
-                            <StackPanel Margin="50,10,0,0"
-                                        Grid.Row="0"
-                                        HorizontalAlignment="Left"
-                                        Orientation="Vertical">
-
-                                <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
-                                           FontSize="26"
-                                           Foreground="{DynamicResource TextBrush}"
-                                           Margin="0,0,0,2">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="{DynamicResource LOCSettingsFSSectionGeneral}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding ElementName=ModeThemeInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="{DynamicResource LOCThemOptsMain}" />
-                                                </DataTrigger>
-
-                                                <DataTrigger Binding="{Binding ElementName=ModeDetailsInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="{DynamicResource LOCThemOptsDetails}" />
-                                                </DataTrigger>
-
-                                                <DataTrigger Binding="{Binding ElementName=ModeTrailerInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="{DynamicResource LOCTrailerControlCenter}" />
-                                                </DataTrigger>
-
-                                                <DataTrigger Binding="{Binding ElementName=ModeSystemInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="{DynamicResource LOCSettingsFSSectionGeneral}" />
-                                                </DataTrigger>
-
-                                                <DataTrigger Binding="{Binding ElementName=ModeVisualInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="{DynamicResource LOCVisualEffects}" />
-                                                </DataTrigger>
-
-                                                <DataTrigger Binding="{Binding ElementName=ModeDataInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="Details view data" />
-                                                </DataTrigger>
-
-                                                <DataTrigger Binding="{Binding ElementName=ModeAudioInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="{DynamicResource LOCSettingsFSSectionAudio}" />
-                                                </DataTrigger>
-
-                                                <DataTrigger Binding="{Binding ElementName=ModeLayoutInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="{DynamicResource LOCSettingsFSSectionLayout}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </StackPanel>
 
                             <!-- TOGGLES INTERNES -->
                             <ToggleButtonEx x:Name="ModeSystemInternal" Visibility="Collapsed" IsChecked="True" />
@@ -346,8 +295,11 @@
                             <ToggleButtonEx x:Name="ModeAudioInternal" Visibility="Collapsed" IsChecked="False" />
                             <ToggleButtonEx x:Name="ModeLayoutInternal" Visibility="Collapsed" IsChecked="False" />
 
+                            <Border Background="#33000000" Grid.Row="0" />
+                            <Border Background="#33000000" Grid.Row="3" />
+
                             <!-- TOP BUTTON -->
-                            <Grid Grid.Row="1" Height="80" Margin="0,0,0,0"
+                            <Grid Grid.Row="0" Height="80" Margin="0,10,0,0"
                                   KeyboardNavigation.DirectionalNavigation="Continue"
                                   KeyboardNavigation.TabNavigation="Continue"
                                   KeyboardNavigation.ControlTabNavigation="Continue">
@@ -743,16 +695,66 @@
                             </Grid>
 
                             <!-- Separator -->
-                            <Border Grid.Row="1"
+                            <Border Grid.Row="0"
                                     VerticalAlignment="Bottom"
                                     Height="1"
                                     Background="{DynamicResource SeparatorTopBarBrush}"/>
 
+                            <!-- Title -->
+                            <StackPanel Margin="0,10,0,0"
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Center"
+                                        Orientation="Vertical">
+
+                                <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                           FontSize="28" HorizontalAlignment="Center"
+                                           Foreground="{DynamicResource TextHighlightBrush}"
+                                           Margin="0,0,0,2">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="{DynamicResource LOCSettingsFSSectionGeneral}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=ModeThemeInternal, Path=IsChecked}" Value="True">
+                                                    <Setter Property="Text" Value="{DynamicResource LOCThemOptsMain}" />
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding ElementName=ModeDetailsInternal, Path=IsChecked}" Value="True">
+                                                    <Setter Property="Text" Value="{DynamicResource LOCThemOptsDetails}" />
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding ElementName=ModeTrailerInternal, Path=IsChecked}" Value="True">
+                                                    <Setter Property="Text" Value="{DynamicResource LOCTrailerControlCenter}" />
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding ElementName=ModeSystemInternal, Path=IsChecked}" Value="True">
+                                                    <Setter Property="Text" Value="{DynamicResource LOCSettingsFSSectionGeneral}" />
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding ElementName=ModeVisualInternal, Path=IsChecked}" Value="True">
+                                                    <Setter Property="Text" Value="{DynamicResource LOCVisualEffects}" />
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding ElementName=ModeDataInternal, Path=IsChecked}" Value="True">
+                                                    <Setter Property="Text" Value="Details view data" />
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding ElementName=ModeAudioInternal, Path=IsChecked}" Value="True">
+                                                    <Setter Property="Text" Value="{DynamicResource LOCSettingsFSSectionAudio}" />
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding ElementName=ModeLayoutInternal, Path=IsChecked}" Value="True">
+                                                    <Setter Property="Text" Value="{DynamicResource LOCSettingsFSSectionLayout}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <Border Background="{DynamicResource SeparatorTopBarBrush}" Height="2" VerticalAlignment="Bottom" />
+
+                            </StackPanel>
 
                             <!-- CONTENT -->
-
-
-
                             <Grid x:Name="ControlCenterPagesHost"
                                   Grid.Row="2"
                                   Margin="0"
@@ -1270,7 +1272,7 @@
                                                         HorizontalAlignment="Left"
                                                         Orientation="Horizontal">
                                                 <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
-                                                           Margin="40,0,20,0"
+                                                           Margin="10,0,20,0"
                                                            HorizontalAlignment="Left"
                                                            VerticalAlignment="Center"
                                                            FontSize="24"
@@ -1313,7 +1315,7 @@
                                                         HorizontalAlignment="Left"
                                                         Orientation="Horizontal">
                                                 <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
-                                                           Margin="40,0,20,0"
+                                                           Margin="10,0,20,0"
                                                            HorizontalAlignment="Left"
                                                            VerticalAlignment="Center"
                                                            FontSize="24"
@@ -1342,6 +1344,56 @@
                                                           Value="{Settings Fullscreen.BackgroundVolume, Mode=TwoWay}" />
                                             </StackPanel>
                                         </Grid>
+
+                                        <StackPanel Margin="0,10,0,0" Orientation="Vertical">
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginStatus Plugin=UniPlaySong.a1b2c3d4-e5f6-7890-abcd-ef1234567890, Status=Installed}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                            <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                       Foreground="{DynamicResource TextHighlightBrush}"
+                                                       Margin="10,10,0,0"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       FontSize="30"
+                                                       Text="UniPlaySong Settings" />
+
+                                            <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
+
+                                            <CheckBoxEx Margin="0,10,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Center"
+                                                        Style="{DynamicResource SettingsSectionCheckbox}"
+                                                        Content="Enable Game Music"
+                                                        IsChecked="{PluginSettings Plugin=UniPlaySong, Path=EnableMusic, Mode=TwoWay}" />
+
+                                            <CheckBoxEx Margin="0,10,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Center"
+                                                        Style="{DynamicResource SettingsSectionCheckbox}"
+                                                        Content="Enable Default Music"
+                                                        IsChecked="{PluginSettings Plugin=UniPlaySong, Path=EnableDefaultMusic, Mode=TwoWay}" />
+
+                                            <CheckBoxEx Margin="0,10,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Center"
+                                                        Style="{DynamicResource SettingsSectionCheckbox}"
+                                                        Content="Radio Mode"
+                                                        IsChecked="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled, Mode=TwoWay}" />
+
+                                            <CheckBoxEx Margin="0,10,0,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Center"
+                                                        Style="{DynamicResource SettingsSectionCheckbox}"
+                                                        Content="Play Only on Game Select"
+                                                        IsChecked="{PluginSettings Plugin=UniPlaySong, Path=PlayOnlyOnGameSelect, Mode=TwoWay}" />
+                                        </StackPanel>
 
                                     </StackPanel>
                                 </Grid>

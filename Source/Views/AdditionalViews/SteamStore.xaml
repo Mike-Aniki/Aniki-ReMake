@@ -599,23 +599,79 @@
                             </Border>
                         </Grid>
 
+                        <!-- LOADING / ERROR STORE -->
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Orientation="Vertical">
 
-                        <TextBlock Text="{DynamicResource LOCLoading}"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontSize="28"
-                                   Foreground="{DynamicResource TextBrush}">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDeals.Count}" Value="0">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                            <!-- Loading text -->
+                            <TextBlock Text="{DynamicResource LOCLoading}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="28"
+                                       Foreground="{DynamicResource TextBrush}">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreLoading}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreAvailable}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+                            <!-- Progress bar -->
+                            <ProgressBar Width="360"
+                                         Height="6"
+                                         Margin="0,18,0,0"
+                                         IsIndeterminate="True">
+                                <ProgressBar.Style>
+                                    <Style TargetType="ProgressBar">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreLoading}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreAvailable}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ProgressBar.Style>
+                            </ProgressBar>
+
+                            <!-- Error / no data -->
+                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreError}"
+                                       HorizontalAlignment="Center"
+                                       TextAlignment="Center"
+                                       FontSize="22"
+                                       Foreground="{DynamicResource TextBrush}"
+                                       Opacity="0.75"
+                                       Margin="0,18,0,0">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreLoading}" Value="False"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreAvailable}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+                        </StackPanel>
 
                         <!-- MAIN CONTENT -->
                         <Grid Margin="0,0,0,0">
@@ -1011,136 +1067,401 @@
                                 </Border>
                             </Grid>
 
-                            <!-- PREORDER -->
-                            <Border Grid.Column="1"
-                                    Margin="-20,180,0,0"
-                                    Padding="20,8,54,8"
-                                    VerticalAlignment="Top"
-                                    HorizontalAlignment="Left"
-                                    MinWidth="300"
-                                    CornerRadius="0,12,12,0"
-                                    BorderBrush="{DynamicResource StaticBorderBrush}"
-                                    BorderThickness="0,1,1,1"
-                                    Background="{DynamicResource TopBar}">
-                                <Border.Style>
-                                    <Style TargetType="Border">
+                            <!-- LOADING CENTER -->
+                            <StackPanel VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Orientation="Vertical">
+
+                                <TextBlock Text="{DynamicResource LOCLoading}"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           FontSize="30"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+
+                                <ProgressBar Width="360"
+                                             Height="6"
+                                             Margin="0,18,0,0"
+                                             IsIndeterminate="True"/>
+
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsIsPreorder}" Value="True">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsLoading}" Value="True">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
-                                </Border.Style>
+                                </StackPanel.Style>
+                            </StackPanel>
 
-                                <Border.Effect>
-                                    <DropShadowEffect BlurRadius="18"
-                                                      ShadowDepth="0"
-                                                      Opacity="0.35"
-                                                      Color="#FF000000"/>
-                                </Border.Effect>
+                            <Grid>
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsLoading}" Value="True">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
 
-                                <StackPanel Orientation="Horizontal"
-                                            Margin="0,0,-20,0"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center">
-
-                                    <TextBlock Text="{DynamicResource LOCSteamStorePreOrder}"
-                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                               FontSize="22"
-                                               FontWeight="Bold"
-                                               HorizontalAlignment="Left"
-                                               VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Border>
-
-                            <!-- TOP HEADER -->
-                            <Grid Margin="42,26,42,0"
-                                  VerticalAlignment="Top">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <StackPanel>
-                                    <TextBlock Text="{DynamicResource LOCSteamStoreTitle}"
-                                               Foreground="#88FFFFFF"
-                                               FontSize="14"
-                                               FontWeight="SemiBold"
-                                               Margin="0,0,0,8"/>
-
-                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsTitle}"
-                                               Foreground="White"
-                                               FontSize="44"
-                                               FontWeight="SemiBold"
-                                               TextWrapping="Wrap"
-                                               TextTrimming="CharacterEllipsis"
-                                               MaxHeight="110"/>
-                                </StackPanel>
-
-                                <TextBlock Grid.Column="2"
-                                           Text="{DynamicResource LOCLoading}"
-                                           Foreground="#C0FFFFFF"
-                                           FontSize="14"
-                                           FontWeight="SemiBold"
-                                           VerticalAlignment="Top"
-                                           Margin="0,12,0,0">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
+                                <!-- PREORDER -->
+                                <Border Grid.Column="1"
+                                        Margin="-20,180,0,0"
+                                        Padding="20,8,54,8"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Left"
+                                        MinWidth="300"
+                                        CornerRadius="0,12,12,0"
+                                        BorderBrush="{DynamicResource StaticBorderBrush}"
+                                        BorderThickness="0,1,1,1"
+                                        Background="{DynamicResource TopBar}">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsLoading}" Value="True">
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsIsPreorder}" Value="True">
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </Grid>
+                                    </Border.Style>
 
-                            <!-- FLOATING INFO CARD -->
-                            <Border Width="620"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Bottom"
-                                    Margin="42,0,42,138"
-                                    CornerRadius="22"
-                                    Background="{DynamicResource OverlayMenu}"
-                                    BorderBrush="{DynamicResource StaticBorderBrush}"
-                                    BorderThickness="1"
-                                    Padding="26">
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="18"
+                                                          ShadowDepth="0"
+                                                          Opacity="0.35"
+                                                          Color="#FF000000"/>
+                                    </Border.Effect>
 
-                                <Border.Effect>
-                                    <DropShadowEffect BlurRadius="28"
-                                                      ShadowDepth="0"
-                                                      Opacity="0.32"
-                                                      Color="#FF000000"/>
-                                </Border.Effect>
+                                    <StackPanel Orientation="Horizontal"
+                                                Margin="0,0,-20,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center">
 
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
+                                        <TextBlock Text="{DynamicResource LOCSteamStorePreOrder}"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   FontSize="22"
+                                                   FontWeight="Bold"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
 
-                                    <!-- Header image -->
-                                    <Grid Grid.Row="0" MaxHeight="300">
-                                        <Border x:Name="SteamStoreHeaderImageMask"
+                                <!-- TOP HEADER -->
+                                <Grid Margin="42,26,42,0"
+                                      VerticalAlignment="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel>
+                                        <TextBlock Text="{DynamicResource LOCSteamStoreTitle}"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   FontSize="14"
+                                                   FontWeight="SemiBold"
+                                                   Margin="0,0,0,8"/>
+
+                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsTitle}"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   FontSize="44"
+                                                   FontWeight="SemiBold"
+                                                   TextWrapping="Wrap"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   MaxHeight="110"/>
+                                    </StackPanel>
+
+                                    <TextBlock Grid.Column="2"
+                                               Text="{DynamicResource LOCLoading}"
+                                               FontSize="14"
+                                               FontWeight="SemiBold"
+                                               VerticalAlignment="Top"
+                                               Margin="0,12,0,0">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsLoading}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+
+                                <!-- FLOATING INFO CARD -->
+                                <Border Width="620"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Bottom"
+                                        Margin="42,0,42,138"
+                                        CornerRadius="22"
+                                        Background="{DynamicResource OverlayMenu}"
+                                        BorderBrush="{DynamicResource StaticBorderBrush}"
+                                        BorderThickness="1"
+                                        Padding="26">
+
+                                    <Border.Effect>
+                                        <DropShadowEffect BlurRadius="28"
+                                                          ShadowDepth="0"
+                                                          Opacity="0.32"
+                                                          Color="#FF000000"/>
+                                    </Border.Effect>
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Header image -->
+                                        <Grid Grid.Row="0" MaxHeight="300">
+                                            <Border x:Name="SteamStoreHeaderImageMask"
+                                                    CornerRadius="18"
+                                                    Background="Black"/>
+
+                                            <Border CornerRadius="18"
+                                                    Background="#22000000">
+                                                <Border.OpacityMask>
+                                                    <VisualBrush Visual="{Binding ElementName=SteamStoreHeaderImageMask}"/>
+                                                </Border.OpacityMask>
+
+                                                <Image Source="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsImage}"
+                                                       Stretch="Uniform"
+                                                       RenderOptions.BitmapScalingMode="Fant"/>
+                                            </Border>
+
+                                            <Border CornerRadius="18"
+                                                    BorderBrush="{DynamicResource StaticBorderBrush}"
+                                                    BorderThickness="1"/>
+                                        </Grid>
+
+                                        <!-- Quick stats -->
+                                        <StackPanel Grid.Row="1"
+                                                    HorizontalAlignment="Right"
+                                                    Orientation="Horizontal"
+                                                    Margin="0,16,0,0">
+
+                                            <!-- Metacritic -->
+                                            <Border Padding="10,5"
+                                                    CornerRadius="8"
+                                                    Background="#22000000"
+                                                    BorderBrush="{DynamicResource StaticBorderBrush}"
+                                                    BorderThickness="1">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsMetacriticScore}" Value="">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsMetacriticScore}" Value="{x:Null}">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Metacritic : "
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="16"
+                                                               Margin="0,0,0,0"/>
+                                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsMetacriticScore}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="16"
+                                                               FontWeight="Bold"/>
+                                                </StackPanel>
+                                            </Border>
+
+                                            <!-- Achievements -->
+                                            <Border Margin="10,0,0,0"
+                                                    Padding="10,5"
+                                                    CornerRadius="8"
+                                                    Background="#22000000"
+                                                    BorderBrush="{DynamicResource StaticBorderBrush}"
+                                                    BorderThickness="1">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsAchievementsTotal}" Value="">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsAchievementsTotal}" Value="{x:Null}">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="Achievements : "
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="16"
+                                                               Margin="0,0,0,0"/>
+                                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsAchievementsTotal}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="16"
+                                                               FontWeight="SemiBold"/>
+                                                </StackPanel>
+                                            </Border>
+
+                                            <!-- DLC -->
+                                            <Border Margin="10,0,0,0"
+                                                    Padding="10,5"
+                                                    CornerRadius="8"
+                                                    Background="#22000000"
+                                                    BorderBrush="{DynamicResource StaticBorderBrush}"
+                                                    BorderThickness="1">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDlcCount}" Value="">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDlcCount}" Value="{x:Null}">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="DLC : "
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="16"
+                                                               Margin="0,0,0,0"/>
+                                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDlcCount}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="16"
+                                                               FontWeight="SemiBold"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </StackPanel>
+
+                                        <!-- developer -->
+                                        <TextBlock Grid.Row="2"
+                                                   Margin="0,14,0,0"
+                                                   Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDevelopers}"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   FontSize="14"
+                                                   TextTrimming="CharacterEllipsis"/>
+
+                                        <!-- description -->
+                                        <TextBlock Grid.Row="3"
+                                                   Margin="0,14,0,0"
+                                                   Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDescription}"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   FontSize="17"
+                                                   LineHeight="26"
+                                                   TextWrapping="Wrap"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   MaxHeight="120"/>
+
+                                        <!-- price -->
+                                        <StackPanel Grid.Row="4"
+                                                    Orientation="Horizontal"
+                                                    Margin="0,22,0,0"
+                                                    VerticalAlignment="Center">
+
+                                            <Border Background="{DynamicResource FocusGameBorderBrush}"
+                                                    CornerRadius="6"
+                                                    Padding="8,3"
+                                                    VerticalAlignment="Center">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDiscount}" Value="">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDiscount}" Value="{x:Null}">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDiscount}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="15"
+                                                           FontWeight="Bold"/>
+                                            </Border>
+
+                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsPrice}"
+                                                       Margin="10,0,0,0"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="34"
+                                                       FontWeight="Bold"
+                                                       VerticalAlignment="Center"/>
+
+                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsOriginalPrice}"
+                                                       Margin="10,0,0,0"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="18"
+                                                       VerticalAlignment="Center"
+                                                       TextDecorations="Strikethrough">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsOriginalPrice}" Value="">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsOriginalPrice}" Value="{x:Null}">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+
+                                        <!-- buttons -->
+                                        <StackPanel Grid.Row="5"
+                                                    HorizontalAlignment="Center"
+                                                    pbeh:FocusBahaviors.OnVisibilityFocus="True"
+                                                    pbeh:FocusBahaviors.FocusBinding="True"
+                                                    Orientation="Horizontal"
+                                                    Margin="0,22,0,0">
+                                            <ButtonEx MinWidth="250"
+                                                      Height="54"
+                                                      Content="{DynamicResource LOCSteamStoreOpenOnSteam}"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenSteamStorePageExternalCommand}" />
+
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+
+                                <!-- SCREENSHOT GALLERY -->
+                                <StackPanel Width="430"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            Margin="0,90,42,108">
+
+                                    <Grid Width="430" Height="242">
+                                        <Border x:Name="SteamStoreScreenshotMask1"
                                                 CornerRadius="18"
                                                 Background="Black"/>
 
                                         <Border CornerRadius="18"
                                                 Background="#22000000">
                                             <Border.OpacityMask>
-                                                <VisualBrush Visual="{Binding ElementName=SteamStoreHeaderImageMask}"/>
+                                                <VisualBrush Visual="{Binding ElementName=SteamStoreScreenshotMask1}"/>
                                             </Border.OpacityMask>
 
-                                            <Image Source="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsImage}"
-                                                   Stretch="Uniform"
+                                            <Image Source="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsScreenshot1}"
+                                                   Stretch="UniformToFill"
                                                    RenderOptions.BitmapScalingMode="Fant"/>
                                         </Border>
 
@@ -1149,352 +1470,128 @@
                                                 BorderThickness="1"/>
                                     </Grid>
 
-                                    <!-- Quick stats -->
-                                    <StackPanel Grid.Row="1"
-                                                HorizontalAlignment="Right"
-                                                Orientation="Horizontal"
-                                                Margin="0,16,0,0">
+                                    <Grid Width="430" Height="242" Margin="0,25,0,0">
+                                        <Border x:Name="SteamStoreScreenshotMask2"
+                                                CornerRadius="18"
+                                                Background="Black"/>
 
-                                        <!-- Metacritic -->
-                                        <Border Padding="10,5"
-                                                CornerRadius="8"
-                                                Background="#22000000"
-                                                BorderBrush="{DynamicResource StaticBorderBrush}"
-                                                BorderThickness="1">
-                                            <Border.Style>
-                                                <Style TargetType="Border">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsMetacriticScore}" Value="">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsMetacriticScore}" Value="{x:Null}">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
+                                        <Border CornerRadius="18"
+                                                Background="#22000000">
+                                            <Border.OpacityMask>
+                                                <VisualBrush Visual="{Binding ElementName=SteamStoreScreenshotMask2}"/>
+                                            </Border.OpacityMask>
 
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Metacritic : "
-                                                           Style="{DynamicResource TextBlockBaseStyle}"
-                                                           FontSize="16"
-                                                           Margin="0,0,0,0"/>
-                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsMetacriticScore}"
-                                                           Style="{DynamicResource TextBlockBaseStyle}"
-                                                           FontSize="16"
-                                                           FontWeight="Bold"/>
-                                            </StackPanel>
+                                            <Image Source="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsScreenshot2}"
+                                                   Stretch="UniformToFill"
+                                                   RenderOptions.BitmapScalingMode="Fant"/>
                                         </Border>
 
-                                        <!-- Achievements -->
-                                        <Border Margin="10,0,0,0"
-                                                Padding="10,5"
-                                                CornerRadius="8"
-                                                Background="#22000000"
+                                        <Border CornerRadius="18"
                                                 BorderBrush="{DynamicResource StaticBorderBrush}"
-                                                BorderThickness="1">
-                                            <Border.Style>
-                                                <Style TargetType="Border">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsAchievementsTotal}" Value="">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsAchievementsTotal}" Value="{x:Null}">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
+                                                BorderThickness="1"/>
+                                    </Grid>
 
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Achievements : "
-                                                           Style="{DynamicResource TextBlockBaseStyle}"
-                                                           FontSize="16"
-                                                           Margin="0,0,0,0"/>
-                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsAchievementsTotal}"
-                                                           Style="{DynamicResource TextBlockBaseStyle}"
-                                                           FontSize="16"
-                                                           FontWeight="SemiBold"/>
-                                            </StackPanel>
+                                    <Grid Width="430" Height="242" Margin="0,25,0,0">
+
+
+
+                                        <Border x:Name="SteamStoreScreenshotMask3"
+                                                CornerRadius="18"
+                                                Background="Black"/>
+
+                                        <Border CornerRadius="18"
+                                                Background="#22000000">
+                                            <Border.OpacityMask>
+                                                <VisualBrush Visual="{Binding ElementName=SteamStoreScreenshotMask3}"/>
+                                            </Border.OpacityMask>
+
+                                            <Image Source="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsScreenshot3}"
+                                                   Stretch="UniformToFill"
+                                                   RenderOptions.BitmapScalingMode="Fant"/>
                                         </Border>
 
-                                        <!-- DLC -->
-                                        <Border Margin="10,0,0,0"
-                                                Padding="10,5"
-                                                CornerRadius="8"
-                                                Background="#22000000"
+                                        <Border CornerRadius="18"
                                                 BorderBrush="{DynamicResource StaticBorderBrush}"
-                                                BorderThickness="1">
-                                            <Border.Style>
-                                                <Style TargetType="Border">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDlcCount}" Value="">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDlcCount}" Value="{x:Null}">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
+                                                BorderThickness="1"/>
+                                    </Grid>
+                                </StackPanel>
 
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="DLC : "
-                                                           Style="{DynamicResource TextBlockBaseStyle}"
-                                                           FontSize="16"
-                                                           Margin="0,0,0,0"/>
-                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDlcCount}"
-                                                           Style="{DynamicResource TextBlockBaseStyle}"
-                                                           FontSize="16"
-                                                           FontWeight="SemiBold"/>
-                                            </StackPanel>
-                                        </Border>
-                                    </StackPanel>
+                                <!-- BOTTOM INFO BAR -->
+                                <Border VerticalAlignment="Bottom"
+                                        Height="108"
+                                        Background="{DynamicResource BottomBar}"
+                                        BorderBrush="{DynamicResource SeparatorBottomBarBrush}"
+                                        BorderThickness="0,1,0,0">
 
-                                    <!-- developer -->
-                                    <TextBlock Grid.Row="2"
-                                               Margin="0,14,0,0"
-                                               Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDevelopers}"
-                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                               FontSize="14"
-                                               TextTrimming="CharacterEllipsis"/>
+                                    <Grid Margin="42,0,42,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1.4*"/>
+                                            <ColumnDefinition Width="1.1*"/>
+                                            <ColumnDefinition Width="1.4*"/>
+                                            <ColumnDefinition Width="3.5*"/>
+                                        </Grid.ColumnDefinitions>
 
-                                    <!-- description -->
-                                    <TextBlock Grid.Row="3"
-                                               Margin="0,14,0,0"
-                                               Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDescription}"
-                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                               FontSize="17"
-                                               LineHeight="26"
-                                               TextWrapping="Wrap"
-                                               TextTrimming="CharacterEllipsis"
-                                               MaxHeight="120"/>
-
-                                    <!-- price -->
-                                    <StackPanel Grid.Row="4"
-                                                Orientation="Horizontal"
-                                                Margin="0,22,0,0"
-                                                VerticalAlignment="Center">
-
-                                        <Border Background="{DynamicResource FocusGameBorderBrush}"
-                                                CornerRadius="6"
-                                                Padding="8,3"
-                                                VerticalAlignment="Center">
-                                            <Border.Style>
-                                                <Style TargetType="Border">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDiscount}" Value="">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDiscount}" Value="{x:Null}">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-
-                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsDiscount}"
+                                        <StackPanel VerticalAlignment="Center" Margin="0,0,28,0">
+                                            <TextBlock Text="{DynamicResource LOCSteamStoreGenres}"
+                                                       Foreground="{DynamicResource TextHighlightBrush}"
                                                        Style="{DynamicResource TextBlockBaseStyle}"
-                                                       FontSize="15"
-                                                       FontWeight="Bold"/>
-                                        </Border>
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Margin="0,0,0,6"/>
+                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsGenres}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="18"
+                                                       TextWrapping="Wrap"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       MaxHeight="44"/>
+                                        </StackPanel>
 
-                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsPrice}"
-                                                   Margin="10,0,0,0"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"
-                                                   FontSize="34"
-                                                   FontWeight="Bold"
-                                                   VerticalAlignment="Center"/>
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,28,0">
+                                            <TextBlock Text="{DynamicResource LOCSteamStoreReleaseDate}"
+                                                       Foreground="{DynamicResource TextHighlightBrush}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Margin="0,0,0,6"/>
+                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsReleaseDate}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="18"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                        </StackPanel>
 
-                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsOriginalPrice}"
-                                                   Margin="10,0,0,0"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"
-                                                   FontSize="18"
-                                                   VerticalAlignment="Center"
-                                                   TextDecorations="Strikethrough">
-                                            <TextBlock.Style>
-                                                <Style TargetType="TextBlock">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsOriginalPrice}" Value="">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsOriginalPrice}" Value="{x:Null}">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </TextBlock.Style>
-                                        </TextBlock>
-                                    </StackPanel>
+                                        <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="0,0,28,0">
+                                            <TextBlock Text="{DynamicResource LOCSteamStorePublisher}"
+                                                       Foreground="{DynamicResource TextHighlightBrush}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Margin="0,0,0,6"/>
+                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsPublishers}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="18"
+                                                       TextWrapping="Wrap"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       MaxHeight="44"/>
+                                        </StackPanel>
 
-                                    <!-- buttons -->
-                                    <StackPanel Grid.Row="5"
-                                                HorizontalAlignment="Center"
-                                                pbeh:FocusBahaviors.OnVisibilityFocus="True"
-                                                pbeh:FocusBahaviors.FocusBinding="True"
-                                                Orientation="Horizontal"
-                                                Margin="0,22,0,0">
-                                        <ButtonEx MinWidth="250"
-                                                  Height="54"
-                                                  Content="{DynamicResource LOCSteamStoreOpenOnSteam}"
-                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenSteamStorePageExternalCommand}" />
+                                        <StackPanel Grid.Column="3" VerticalAlignment="Center">
+                                            <TextBlock Text="{DynamicResource LOCSteamStoreCategories}"
+                                                       Foreground="{DynamicResource TextHighlightBrush}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="18"
+                                                       FontWeight="SemiBold"
+                                                       Margin="0,0,0,6"/>
+                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsCategories}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="18"
+                                                       TextWrapping="Wrap"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       MaxHeight="44"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
 
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-
-                            <!-- SCREENSHOT GALLERY -->
-                            <StackPanel Width="430"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Center"
-                                        Margin="0,90,42,108">
-
-                                <Grid Width="430" Height="242">
-                                    <Border x:Name="SteamStoreScreenshotMask1"
-                                            CornerRadius="18"
-                                            Background="Black"/>
-
-                                    <Border CornerRadius="18"
-                                            Background="#22000000">
-                                        <Border.OpacityMask>
-                                            <VisualBrush Visual="{Binding ElementName=SteamStoreScreenshotMask1}"/>
-                                        </Border.OpacityMask>
-
-                                        <Image Source="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsScreenshot1}"
-                                               Stretch="UniformToFill"
-                                               RenderOptions.BitmapScalingMode="Fant"/>
-                                    </Border>
-
-                                    <Border CornerRadius="18"
-                                            BorderBrush="{DynamicResource StaticBorderBrush}"
-                                            BorderThickness="1"/>
-                                </Grid>
-
-                                <Grid Width="430" Height="242" Margin="0,25,0,0">
-                                    <Border x:Name="SteamStoreScreenshotMask2"
-                                            CornerRadius="18"
-                                            Background="Black"/>
-
-                                    <Border CornerRadius="18"
-                                            Background="#22000000">
-                                        <Border.OpacityMask>
-                                            <VisualBrush Visual="{Binding ElementName=SteamStoreScreenshotMask2}"/>
-                                        </Border.OpacityMask>
-
-                                        <Image Source="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsScreenshot2}"
-                                               Stretch="UniformToFill"
-                                               RenderOptions.BitmapScalingMode="Fant"/>
-                                    </Border>
-
-                                    <Border CornerRadius="18"
-                                            BorderBrush="{DynamicResource StaticBorderBrush}"
-                                            BorderThickness="1"/>
-                                </Grid>
-
-                                <Grid Width="430" Height="242" Margin="0,25,0,0">
-
-
-
-                                    <Border x:Name="SteamStoreScreenshotMask3"
-                                            CornerRadius="18"
-                                            Background="Black"/>
-
-                                    <Border CornerRadius="18"
-                                            Background="#22000000">
-                                        <Border.OpacityMask>
-                                            <VisualBrush Visual="{Binding ElementName=SteamStoreScreenshotMask3}"/>
-                                        </Border.OpacityMask>
-
-                                        <Image Source="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsScreenshot3}"
-                                               Stretch="UniformToFill"
-                                               RenderOptions.BitmapScalingMode="Fant"/>
-                                    </Border>
-
-                                    <Border CornerRadius="18"
-                                            BorderBrush="{DynamicResource StaticBorderBrush}"
-                                            BorderThickness="1"/>
-                                </Grid>
-                            </StackPanel>
-
-                            <!-- BOTTOM INFO BAR -->
-                            <Border VerticalAlignment="Bottom"
-                                    Height="108"
-                                    Background="{DynamicResource BottomBar}"
-                                    BorderBrush="{DynamicResource SeparatorBottomBarBrush}"
-                                    BorderThickness="0,1,0,0">
-
-                                <Grid Margin="42,0,42,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1.4*"/>
-                                        <ColumnDefinition Width="1.1*"/>
-                                        <ColumnDefinition Width="1.4*"/>
-                                        <ColumnDefinition Width="3.5*"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <StackPanel VerticalAlignment="Center" Margin="0,0,28,0">
-                                        <TextBlock Text="{DynamicResource LOCSteamStoreGenres}"
-                                                   Foreground="{DynamicResource TextHighlightBrush}"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"
-                                                   FontSize="18"
-                                                   FontWeight="SemiBold"
-                                                   Margin="0,0,0,6"/>
-                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsGenres}"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"
-                                                   FontSize="18"
-                                                   TextWrapping="Wrap"
-                                                   TextTrimming="CharacterEllipsis"
-                                                   MaxHeight="44"/>
-                                    </StackPanel>
-
-                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,28,0">
-                                        <TextBlock Text="{DynamicResource LOCSteamStoreReleaseDate}"
-                                                   Foreground="{DynamicResource TextHighlightBrush}"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"
-                                                   FontSize="18"
-                                                   FontWeight="SemiBold"
-                                                   Margin="0,0,0,6"/>
-                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsReleaseDate}"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"
-                                                   FontSize="18"
-                                                   TextTrimming="CharacterEllipsis"/>
-                                    </StackPanel>
-
-                                    <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="0,0,28,0">
-                                        <TextBlock Text="{DynamicResource LOCSteamStorePublisher}"
-                                                   Foreground="{DynamicResource TextHighlightBrush}"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"
-                                                   FontSize="18"
-                                                   FontWeight="SemiBold"
-                                                   Margin="0,0,0,6"/>
-                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsPublishers}"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"
-                                                   FontSize="18"
-                                                   TextWrapping="Wrap"
-                                                   TextTrimming="CharacterEllipsis"
-                                                   MaxHeight="44"/>
-                                    </StackPanel>
-
-                                    <StackPanel Grid.Column="3" VerticalAlignment="Center">
-                                        <TextBlock Text="{DynamicResource LOCSteamStoreCategories}"
-                                                   Foreground="{DynamicResource TextHighlightBrush}"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"
-                                                   FontSize="18"
-                                                   FontWeight="SemiBold"
-                                                   Margin="0,0,0,6"/>
-                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDetailsCategories}"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"
-                                                   FontSize="18"
-                                                   TextWrapping="Wrap"
-                                                   TextTrimming="CharacterEllipsis"
-                                                   MaxHeight="44"/>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
+                            </Grid>
                         </Grid>
                     </Grid>
 

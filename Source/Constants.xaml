@@ -11,6 +11,7 @@
     1) Misc
     ========================================================== -->
     <sys:Boolean x:Key="Aniki_ThemeMarker">True</sys:Boolean>
+    <sys:String x:Key="RequiredAnikiHelperVersion">1.3.4</sys:String>
     <sys:Boolean x:Key="UseAbsoluteExtraMetadataPath">True</sys:Boolean>
     <sys:String x:Key="ExtraMetadataPath">C:\Users\Mike Aniki\AppData\Roaming\Playnite</sys:String>
     <sys:Boolean x:Key="DynamicAutoEnabled">False</sys:Boolean>
@@ -909,25 +910,343 @@
         <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
     </Style>
 
-    <!-- Haut -->
+
+
+    <!-- ==========================================================
+    ADDONS UPDATE WINDOW - SIDE PANEL BACKGROUND
+    ========================================================== -->
+
     <Style x:Key="Aniki_AddonsUpdateWindowStyle_Top" TargetType="Border">
-        <Setter Property="CornerRadius" Value="16,16,0,0"/>
-        <Setter Property="BorderThickness" Value="2,2,2,0"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource NoFocusBorderButtonBrush}"/>
         <Setter Property="Background" Value="{DynamicResource OverlayMenu}"/>
-        <Setter Property="Opacity" Value="0.85"/>
-        <Setter Property="ClipToBounds" Value="True"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+        <Setter Property="CornerRadius" Value="0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Padding" Value="22,14,22,14"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect BlurRadius="28"
+                                  ShadowDepth="0"
+                                  Opacity="0.55"
+                                  Color="#000000"/>
+            </Setter.Value>
+        </Setter>
     </Style>
 
-    <!-- Bas -->
+
+    <!-- ==========================================================
+    ADDONS UPDATE WINDOW - FOOTER
+    ========================================================== -->
+
     <Style x:Key="Aniki_AddonsUpdateWindowStyle_Bottom" TargetType="Border">
-        <Setter Property="CornerRadius" Value="0,0,16,16"/>
-        <Setter Property="BorderThickness" Value="2,0,2,2"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource NoFocusBorderButtonBrush}"/>
         <Setter Property="Background" Value="{DynamicResource OverlayMenu}"/>
-        <Setter Property="Opacity" Value="0.85"/>
-        <Setter Property="ClipToBounds" Value="True"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+        <Setter Property="CornerRadius" Value="0"/>
+        <Setter Property="Height" Value="80"/>
+        <Setter Property="Padding" Value="22,0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
+
+
+    <!-- ==========================================================
+    ADDONS UPDATE WINDOW - FOOTER BUTTONS
+    ========================================================== -->
+
+    <Style x:Key="Aniki_AddonsUpdateButtonStyle" TargetType="ButtonEx">
+        <Setter Property="Height" Value="55"/>
+        <Setter Property="MinWidth" Value="150"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="Padding" Value="18,0"/>
+        <Setter Property="Focusable" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource FontMain}"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonEx">
+
+                    <Grid Background="Transparent"
+                          SnapsToDevicePixels="True">
+
+                        <!-- Normal subtle background -->
+                        <Border x:Name="NormalBackground"
+                                CornerRadius="7"
+                                Background="#08000000"
+                                BorderBrush="#16FFFFFF"
+                                BorderThickness="1"
+                                Opacity="0.65"/>
+
+                        <!-- Focus background -->
+                        <Border x:Name="FocusBackground"
+                                CornerRadius="7"
+                                Background="{DynamicResource ButtonBackgroundFocus}"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                BorderThickness="2"
+                                Visibility="Collapsed"/>
+
+                        <!-- Animated focus flash -->
+                        <Border x:Name="FlashMenuBorder"
+                                CornerRadius="7"
+                                Style="{DynamicResource AnimatedFlashMenu}"
+                                Tag="False"
+                                Visibility="Collapsed"/>
+
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"
+                                          TextElement.Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}"
+                                          TextElement.FontFamily="{DynamicResource FontMain}"
+                                          TextElement.FontSize="18"
+                                          TextElement.FontWeight="SemiBold"/>
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="NormalBackground" Property="Opacity" Value="0"/>
+                            <Setter TargetName="FocusBackground" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="FlashMenuBorder" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="FlashMenuBorder" Property="Tag" Value="True"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="NormalBackground" Property="Opacity" Value="0"/>
+                            <Setter TargetName="FocusBackground" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="FlashMenuBorder" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="FlashMenuBorder" Property="Tag" Value="True"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Opacity" Value="0.82"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!-- ==========================================================
+    ADDONS UPDATE WINDOW - UPDATE ITEM CARD
+    ========================================================== -->
+
+    <Style x:Key="Aniki_AddonsUpdateCheckBoxStyle" TargetType="CheckBoxEx">
+        <Setter Property="MinHeight" Value="90"/>
+        <Setter Property="Margin" Value="0,0,0,10"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Focusable" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBoxEx">
+
+                    <Grid Background="Transparent"
+                          ClipToBounds="True"
+                          SnapsToDevicePixels="True">
+
+                        <!-- Normal card -->
+                        <Border x:Name="NormalBackground"
+                                CornerRadius="7"
+                                Background="#14000000"
+                                BorderBrush="#18FFFFFF"
+                                BorderThickness="1"/>
+
+                        <!-- Focus card -->
+                        <Border x:Name="FocusBackground"
+                                CornerRadius="7"
+                                Background="{DynamicResource ButtonBackgroundFocus}"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                BorderThickness="2"
+                                Visibility="Collapsed"/>
+
+                        <!-- Animated focus flash -->
+                        <Border x:Name="FlashMenuBorder"
+                                CornerRadius="7"
+                                Style="{DynamicResource AnimatedFlashMenu}"
+                                Tag="False"
+                                Visibility="Collapsed"/>
+
+                        <Grid Margin="16,12">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="46"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Original Playnite content: addon name + version -->
+                            <ContentPresenter Grid.Column="0"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Stretch"
+                                              RecognizesAccessKey="True"
+                                              TextElement.Foreground="{DynamicResource TextBrush}"
+                                              TextElement.FontFamily="{DynamicResource FontMain}"/>
+
+                            <!-- Checkbox visual -->
+                            <Border Grid.Column="1"
+                                    Width="30"
+                                    Height="30"
+                                    CornerRadius="5"
+                                    BorderThickness="2"
+                                    BorderBrush="{DynamicResource TextBrush}"
+                                    Background="#12000000"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Opacity="0.82">
+
+                                <TextBlock x:Name="CheckGlyph"
+                                           Text="&#xE73E;"
+                                           FontFamily="{DynamicResource FontIcons}"
+                                           FontSize="20"
+                                           FontWeight="Bold"
+                                           Foreground="{DynamicResource TextBrush}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Visibility="Collapsed"/>
+                            </Border>
+
+                        </Grid>
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="CheckGlyph" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="NormalBackground" Property="Opacity" Value="0"/>
+                            <Setter TargetName="FocusBackground" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="FlashMenuBorder" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="FlashMenuBorder" Property="Tag" Value="True"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="NormalBackground" Property="Opacity" Value="0"/>
+                            <Setter TargetName="FocusBackground" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="FlashMenuBorder" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="FlashMenuBorder" Property="Tag" Value="True"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.45"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Aniki Helper -->
+
+    <Style x:Key="AnikiHelperSettingsScrollViewerStyle"
+           TargetType="{x:Type ScrollViewer}"
+           BasedOn="{StaticResource {x:Type ScrollViewer}}">
+        <Setter Property="PanningMode" Value="VerticalOnly"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Visible"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle"/>
+        <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle"/>
+    </Style>
+
+    <Style x:Key="TextAnikiHelperSettingsStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="34"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}"/>
+        <Setter Property="Margin" Value="0,0,0,2"/>
+        <Setter Property="MaxWidth" Value="1200"/>
+    </Style>
+
+    <Style x:Key="TextAnikiHelperSettingsStyleSousTitre" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextAltBrush}"/>
+        <Setter Property="Opacity" Value="0.85"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="MaxWidth" Value="900"/>
+        <Setter Property="Margin" Value="0,0,0,20"/>
+    </Style>
+
+    <Style x:Key="TextAnikiHelperSettingsStyleMini" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextAltBrush}"/>
+        <Setter Property="Opacity" Value="0.8"/>
+        <Setter Property="LineHeight" Value="18"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="TextTrimming" Value="None"/>
+        <Setter Property="MaxWidth" Value="900"/>
+        <Setter Property="Margin" Value="10,-5,0,15"/>
+    </Style>
+
+    <Style x:Key="AnikiHelperSettingsSectionTitleSectionStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+        <Setter Property="FontSize" Value="34"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}"/>
+        <Setter Property="Margin" Value="0,10,0,10"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="AnikiHelperSettingsSectionTitleOptionComboBoxStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style x:Key="AnikiHelperSettingsTextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="MinWidth" Value="420"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="10,6,0,16"/>
+        <Setter Property="Focusable" Value="True"/>
+        <Setter Property="KeyboardNavigation.IsTabStop" Value="True"/>
+    </Style>
+
+    <Style x:Key="AnikiHelperSettingsSectionSeparatorStyle"
+           TargetType="Border">
+        <Setter Property="Height" Value="2"/>
+        <Setter Property="Margin" Value="120,10,120,0"/>
+        <Setter Property="Opacity" Value="0.6"/>
+        <Setter Property="Background" Value="{DynamicResource SeparatorTopBarBrush}"/>
+    </Style>
+
+
+
 
     <!-- ==========================================================
     6) IMAGE RESOURCES
@@ -973,6 +1292,31 @@
     <ImageBrush x:Key="Avatar36" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (36).png'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="Avatar37" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (37).png'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="Avatar38" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (38).png'}" Stretch="UniformToFill"/>
+
+    <ImageBrush x:Key="Avatar39" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (39).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar40" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (40).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar41" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (41).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar42" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (42).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar43" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (43).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar44" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (44).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar45" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (45).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar46" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (46).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar47" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (47).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar48" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (48).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar49" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (49).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar50" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (50).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar51" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (51).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar52" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (52).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar53" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (53).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar54" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (54).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar55" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (55).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar56" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (56).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar57" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (57).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar58" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (58).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar59" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (59).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar60" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (60).png'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="Avatar61" ImageSource="{ThemeFile 'Themes Option/3.Avatar/Avatar (61).png'}" Stretch="UniformToFill"/>
+
 
     <!-- ===== INTERFACES ===== -->
 
@@ -1532,10 +1876,199 @@
 
 
 
+    <!-- =========================
+    AVATAR STYLE
+    ========================= -->
 
 
-
-
+    <Style x:Key="SelectedAvatarBorderStyle" TargetType="Border">
+        <Setter Property="Background" Value="{DynamicResource Avatar0}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="1">
+                <Setter Property="Background" Value="{DynamicResource Avatar0}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="2">
+                <Setter Property="Background" Value="{DynamicResource Avatar2}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="3">
+                <Setter Property="Background" Value="{DynamicResource Avatar3}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="4">
+                <Setter Property="Background" Value="{DynamicResource Avatar4}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="5">
+                <Setter Property="Background" Value="{DynamicResource Avatar5}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="6">
+                <Setter Property="Background" Value="{DynamicResource Avatar6}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="7">
+                <Setter Property="Background" Value="{DynamicResource Avatar7}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="8">
+                <Setter Property="Background" Value="{DynamicResource Avatar8}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="9">
+                <Setter Property="Background" Value="{DynamicResource Avatar9}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="10">
+                <Setter Property="Background" Value="{DynamicResource Avatar10}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="11">
+                <Setter Property="Background" Value="{DynamicResource Avatar11}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="12">
+                <Setter Property="Background" Value="{DynamicResource Avatar12}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="13">
+                <Setter Property="Background" Value="{DynamicResource Avatar13}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="14">
+                <Setter Property="Background" Value="{DynamicResource Avatar14}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="15">
+                <Setter Property="Background" Value="{DynamicResource Avatar15}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="16">
+                <Setter Property="Background" Value="{DynamicResource Avatar16}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="17">
+                <Setter Property="Background" Value="{DynamicResource Avatar17}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="18">
+                <Setter Property="Background" Value="{DynamicResource Avatar18}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="19">
+                <Setter Property="Background" Value="{DynamicResource Avatar19}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="20">
+                <Setter Property="Background" Value="{DynamicResource Avatar20}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="21">
+                <Setter Property="Background" Value="{DynamicResource Avatar21}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="22">
+                <Setter Property="Background" Value="{DynamicResource Avatar22}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="23">
+                <Setter Property="Background" Value="{DynamicResource Avatar23}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="24">
+                <Setter Property="Background" Value="{DynamicResource Avatar24}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="25">
+                <Setter Property="Background" Value="{DynamicResource Avatar25}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="26">
+                <Setter Property="Background" Value="{DynamicResource Avatar26}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="27">
+                <Setter Property="Background" Value="{DynamicResource Avatar27}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="28">
+                <Setter Property="Background" Value="{DynamicResource Avatar28}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="29">
+                <Setter Property="Background" Value="{DynamicResource Avatar29}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="30">
+                <Setter Property="Background" Value="{DynamicResource Avatar30}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="31">
+                <Setter Property="Background" Value="{DynamicResource Avatar31}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="32">
+                <Setter Property="Background" Value="{DynamicResource Avatar32}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="33">
+                <Setter Property="Background" Value="{DynamicResource Avatar33}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="34">
+                <Setter Property="Background" Value="{DynamicResource Avatar34}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="35">
+                <Setter Property="Background" Value="{DynamicResource Avatar35}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="36">
+                <Setter Property="Background" Value="{DynamicResource Avatar36}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="37">
+                <Setter Property="Background" Value="{DynamicResource Avatar37}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="38">
+                <Setter Property="Background" Value="{DynamicResource Avatar38}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="39">
+                <Setter Property="Background" Value="{DynamicResource Avatar39}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="40">
+                <Setter Property="Background" Value="{DynamicResource Avatar40}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="41">
+                <Setter Property="Background" Value="{DynamicResource Avatar41}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="42">
+                <Setter Property="Background" Value="{DynamicResource Avatar42}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="43">
+                <Setter Property="Background" Value="{DynamicResource Avatar43}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="44">
+                <Setter Property="Background" Value="{DynamicResource Avatar44}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="45">
+                <Setter Property="Background" Value="{DynamicResource Avatar45}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="46">
+                <Setter Property="Background" Value="{DynamicResource Avatar46}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="47">
+                <Setter Property="Background" Value="{DynamicResource Avatar47}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="48">
+                <Setter Property="Background" Value="{DynamicResource Avatar48}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="49">
+                <Setter Property="Background" Value="{DynamicResource Avatar49}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="50">
+                <Setter Property="Background" Value="{DynamicResource Avatar50}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="51">
+                <Setter Property="Background" Value="{DynamicResource Avatar51}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="52">
+                <Setter Property="Background" Value="{DynamicResource Avatar52}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="53">
+                <Setter Property="Background" Value="{DynamicResource Avatar53}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="54">
+                <Setter Property="Background" Value="{DynamicResource Avatar54}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="55">
+                <Setter Property="Background" Value="{DynamicResource Avatar55}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="56">
+                <Setter Property="Background" Value="{DynamicResource Avatar56}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="57">
+                <Setter Property="Background" Value="{DynamicResource Avatar57}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="58">
+                <Setter Property="Background" Value="{DynamicResource Avatar58}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="59">
+                <Setter Property="Background" Value="{DynamicResource Avatar59}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="60">
+                <Setter Property="Background" Value="{DynamicResource Avatar60}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="60">
+                <Setter Property="Background" Value="{DynamicResource Avatar61}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
 
 
 

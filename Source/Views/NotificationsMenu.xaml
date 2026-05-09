@@ -3,26 +3,53 @@
 
     <!-- Style pour la bordure du menu de notifications -->
     <Style x:Key="NotificationsMenuBorder" TargetType="Border">
-        <Setter Property="Background" Value="{DynamicResource OverlayMenu}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource NoFocusBorderButtonBrush}"/>
-        <Setter Property="Margin" Value="0,30,0,40" />
-        <Setter Property="Width" Value="700" />
-        <Setter Property="MinHeight" Value="350"/>
-        <Setter Property="Grid.ColumnSpan" Value="4" />
-        <Setter Property="CornerRadius" Value="16"/>
-        <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="UseLayoutRounding" Value="True"/>
-        <Setter Property="Padding" Value="30,25,30,25"/>
-        <Setter Property="Opacity" Value="0.85"/>
+        <Setter Property="Tag" Value="{DynamicResource BackgroundImageIndex}" />
+        <Setter Property="Height" Value="1080" />
+        <Setter Property="Width" Value="500" />
+        <Setter Property="CornerRadius" Value="0"/>
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Background" Value="{DynamicResource OverlayMenu}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0,0,2,0"/>
+        <Setter Property="Opacity" Value="1"/>
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="0.985" ScaleY="0.985"/>
+                    <TranslateTransform X="-540"/>
+                </TransformGroup>
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
-            <EventTrigger RoutedEvent="Window.Loaded">
+
+
+            <!-- ✅ anim entrée GAUCHE -->
+            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                 <BeginStoryboard>
                     <Storyboard>
-                        <Int32Animation Storyboard.TargetProperty="(Grid.Column)" Duration="0:0:0" To="0"/>
-                        <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:0" From="0" To="1" />
+                        <!-- colonne gauche -->
+                        <Int32Animation Storyboard.TargetProperty="(Grid.Column)"
+                                        Duration="0:0:0" To="0"/>
+
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                         From="0"
+                                         Duration="0:0:0.24"/>
+
+                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"
+                                         From="-540" To="0"
+                                         Duration="0:0:0.36">
+                            <DoubleAnimation.EasingFunction>
+                                <CubicEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+
+                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                         From="0.985" To="1"
+                                         Duration="0:0:0.26"/>
+                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                                         From="0.985" To="1"
+                                         Duration="0:0:0.26"/>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
@@ -150,11 +177,13 @@
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
-        <Setter Property="Margin" Value="0,0,-100,16"/>
+        <Setter Property="Margin" Value="0,0,-80,16"/>
         <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=ActualWidth}"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="TextAlignment" Value="Center"/>
         <!-- span jusqu’au bout -->
     </Style>
+
+
 
 </ResourceDictionary>
