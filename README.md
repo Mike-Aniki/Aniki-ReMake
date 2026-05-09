@@ -32,7 +32,7 @@ With multiple layouts, animated login screens, visual packs, color presets, achi
 
 <div align="center">
 
-## **A Console-Inspired Interface for PC**
+### **A Console-Inspired Interface for PC**
 
 </div>
 
@@ -46,7 +46,7 @@ The theme includes several layouts and visual options, allowing you to customize
 
 <div align="center">
 
-## **Deep Customization**
+### **Deep Customization**
 
 </div>
 
@@ -56,11 +56,11 @@ You can customize the interface style, login screen, visual packs, game list lay
 
 The theme is designed to be modular, so you can keep a clean and simple interface or enable more advanced features depending on what you want.
 
----
-
 <div align="center">
 
-## **Main Features**
+---
+
+### **Main Features**
 
 </div>
 
@@ -76,11 +76,11 @@ The theme is designed to be modular, so you can keep a clean and simple interfac
 - Many visual presets and interface options
 - Support many optional plugin
 
----
-
 <div align="center">
 
-## **Theme Guide**
+---
+
+### **Theme Guide**
 
 </div>
 
@@ -88,25 +88,23 @@ For installation instructions, recommended extensions, configuration help, and f
 
 <div align="center">
 
-# **[Open the Theme Wiki](https://github.com/Mike-Aniki/Aniki-ReMake/wiki/Guide)**
-
-</div>
+### **[Open the Theme Wiki](https://github.com/Mike-Aniki/Aniki-ReMake/wiki/Guide)**
 
 ---
 
+</div>
+
 <div align="center">
 
-## **Preview Video**
+### **Preview Video**
 
 [![Watch the video](https://img.youtube.com/vi/ZzTXwTTJU1g/0.jpg)](https://www.youtube.com/watch?v=ZzTXwTTJU1g)
 
 </div>
 
----
-
 <div align="center">
 
-## **Screenshots**
+### **Screenshots**
 
 </div>
 
@@ -120,17 +118,22 @@ For installation instructions, recommended extensions, configuration help, and f
   <img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/ViewSuccess.png?raw=true" alt="Aniki ReMake achievements view" width="40%" />
 </p>
 
+<div align="center">
+
 ---
+
+### **Support the Project**
+
+</div>
 
 <div align="center">
 
-## **Support the Project**
-
-</div>
 
 Aniki ReMake is a personal project developed and maintained in my free time.
 
 If you enjoy the theme and want to support its development, you can do it here:
+
+</div>
 
 <div align="center">
 
@@ -140,16 +143,16 @@ If you enjoy the theme and want to support its development, you can do it here:
 
 </div>
 
----
-
 <div align="center">
 
-# **Need help?**
+---
+
+### **Need help?**
 
 For setup instructions, recommended extensions and detailed explanations, visit the  
-# **[Theme Wiki](https://github.com/Mike-Aniki/Aniki-ReMake/wiki/Guide)**
+### **[Theme Wiki](https://github.com/Mike-Aniki/Aniki-ReMake/wiki/Guide)**
 
 You can also join the Discord server for support, feedback, discussions, and updates:
-# **[Join the Discord](https://discord.com/invite/BrtABqe)**
+### **[Join the Discord](https://discord.com/invite/BrtABqe)**
 
 </div>
