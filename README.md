@@ -15,7 +15,7 @@
 </div>
 
 <h3 align="center">
-A Premium Console-Like Experience for Playnite Fullscreen
+A Console-Like Fullscreen Theme for Playnite
 </h3>
 
 </div>
