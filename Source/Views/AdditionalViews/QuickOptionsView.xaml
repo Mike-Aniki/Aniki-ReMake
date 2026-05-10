@@ -4,6 +4,7 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:pin="clr-namespace:Playnite.Input;assembly=Playnite"
                     xmlns:pc="clr-namespace:Playnite.Controls;assembly=Playnite"
                     xmlns:pbeh="clr-namespace:Playnite.Behaviors;assembly=Playnite"
                     mc:Ignorable="d">
@@ -19,6 +20,13 @@
                           VerticalAlignment="Stretch"
                           KeyboardNavigation.DirectionalNavigation="Contained"
                           KeyboardNavigation.ControlTabNavigation="Contained">
+                        <Grid.InputBindings>
+                            <pin:GameControllerInputBinding Button="LeftShoulder"
+                                                            Command="{Binding Command, ElementName=QuickOptionsPreviousSectionShortcutButton}" />
+
+                            <pin:GameControllerInputBinding Button="RightShoulder"
+                                                            Command="{Binding Command, ElementName=QuickOptionsNextSectionShortcutButton}" />
+                        </Grid.InputBindings>
                         <Grid.RenderTransform>
                             <TranslateTransform X="0"/>
                         </Grid.RenderTransform>
@@ -294,6 +302,18 @@
                             <ToggleButtonEx x:Name="ModeDataInternal" Visibility="Collapsed" IsChecked="False" />
                             <ToggleButtonEx x:Name="ModeAudioInternal" Visibility="Collapsed" IsChecked="False" />
                             <ToggleButtonEx x:Name="ModeLayoutInternal" Visibility="Collapsed" IsChecked="False" />
+
+                            <ButtonEx x:Name="QuickOptionsPreviousSectionShortcutButton"
+                                      Visibility="Collapsed"
+                                      Focusable="False"
+                                      IsTabStop="False"
+                                      Command="{PluginSettings Plugin=AnikiHelper, Path=QuickOptionsPreviousSectionCommand}" />
+
+                            <ButtonEx x:Name="QuickOptionsNextSectionShortcutButton"
+                                      Visibility="Collapsed"
+                                      Focusable="False"
+                                      IsTabStop="False"
+                                      Command="{PluginSettings Plugin=AnikiHelper, Path=QuickOptionsNextSectionCommand}" />
 
                             <Border Background="#33000000" Grid.Row="0" />
                             <Border Background="#33000000" Grid.Row="3" />
@@ -1550,10 +1570,10 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+
+                                    <ButtonEx Style="{DynamicResource ButtonBottomMenuShoulders}"
                                               Grid.Column="0"
-                                              Tag="Dpad"
-                                              Content="{DynamicResource LOCButtonPrompt_Navigate}" />
+                                              Content="Switch section" />
 
                                     <StackPanel Grid.Column="1"
                                                 Orientation="Horizontal"
@@ -1561,8 +1581,8 @@
                                                 Opacity="0.75">
 
                                         <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                                  Tag="A"
-                                                  Content="{DynamicResource LOCButtonPrompt_Select}" />
+                                                  Tag="B"
+                                                  Content="{DynamicResource LOCBackLabel}" />
                                     </StackPanel>
                                 </Grid>
                             </Border>

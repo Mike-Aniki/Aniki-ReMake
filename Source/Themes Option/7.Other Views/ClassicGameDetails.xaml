@@ -1281,33 +1281,14 @@
                                                 </CheckBoxEx>
 
 
-                                                <CheckBoxEx x:Name="UpdatePanelToggle"
-                                                            Height="50"
-                                                            Width="50"
-                                                            Margin="0,0,10,0"
-                                                            FocusVisualStyle="{x:Null}">
-                                                    <TextBlock Text="&#xefdb;"
-                                                               FontSize="22"
-                                                               FontFamily="{DynamicResource FontIcoFont}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-                                                    <CheckBoxEx.Style>
-                                                        <Style TargetType="CheckBoxEx" BasedOn="{StaticResource DescPanelToggleScale}">
-                                                            <Setter Property="Visibility" Value="Collapsed" />
-                                                            <Style.Triggers>
-                                                                <MultiDataTrigger>
-                                                                    <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed"/>
-                                                                    </MultiDataTrigger.Conditions>
-                                                                    <Setter Property="IsChecked" Value="False"/>
-                                                                </MultiDataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamUpdateAvailable}" Value="True">
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </CheckBoxEx.Style>
-                                                    <CheckBoxEx.Triggers>
+                                                <ButtonEx x:Name="UpdatePanelToggle"
+                                                          Height="50"
+                                                          Width="50"
+                                                          Command="{PluginSettings Plugin=AnikiHelper, Path=OpenSteamGameNewsWindowCommand}"
+                                                          Margin="0,0,10,0"
+                                                          Style="{StaticResource GameOptionScaleStyle}"
+                                                          FocusVisualStyle="{x:Null}">
+                                                    <ButtonEx.Triggers>
                                                         <EventTrigger RoutedEvent="ButtonBase.Click">
                                                             <BeginStoryboard>
                                                                 <Storyboard>
@@ -1320,8 +1301,9 @@
                                                                 </Storyboard>
                                                             </BeginStoryboard>
                                                         </EventTrigger>
-                                                    </CheckBoxEx.Triggers>
-                                                </CheckBoxEx>
+                                                    </ButtonEx.Triggers>
+                                                    <TextBlock Text="&#xefa6;" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource FontIcoFont}"/>
+                                                </ButtonEx>
 
 
                                                 <ButtonEx x:Name="PART_ButtonOptions"

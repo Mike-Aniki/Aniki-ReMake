@@ -1098,29 +1098,15 @@
                                         </CheckBoxEx.Style>
                                     </CheckBoxEx>
 
-                                    <CheckBoxEx x:Name="UpdatePanelToggle"
-                                                Content="Update"
-                                                Height="62"
-                                                MinWidth="210"
-                                                Margin="0,0,0,14"
-                                                FocusVisualStyle="{x:Null}">
-                                        <CheckBoxEx.Style>
-                                            <Style TargetType="CheckBoxEx" BasedOn="{StaticResource CheckBoxAlt}">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                                <Style.Triggers>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed"/>
-                                                        </MultiDataTrigger.Conditions>
-                                                        <Setter Property="IsChecked" Value="False"/>
-                                                    </MultiDataTrigger>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamUpdateAvailable}" Value="True">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </CheckBoxEx.Style>
-                                        <CheckBoxEx.Triggers>
+                                    <ButtonEx x:Name="UpdatePanelToggle"
+                                              Content="Last News"
+                                              Height="62"
+                                              MinWidth="210"
+                                              Margin="0,0,0,14"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenSteamGameNewsWindowCommand}"
+                                              Style="{StaticResource GameDetailsGameOptionsButtonAlt}"
+                                              FocusVisualStyle="{x:Null}">
+                                        <ButtonEx.Triggers>
                                             <EventTrigger RoutedEvent="ButtonBase.Click">
                                                 <BeginStoryboard>
                                                     <Storyboard>
@@ -1133,8 +1119,8 @@
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </EventTrigger>
-                                        </CheckBoxEx.Triggers>
-                                    </CheckBoxEx>
+                                        </ButtonEx.Triggers>
+                                    </ButtonEx>
 
                                     <CheckBoxEx x:Name="ScreenshotUtilitiesToggle"
                                                 Content="Screenshot Utilities"

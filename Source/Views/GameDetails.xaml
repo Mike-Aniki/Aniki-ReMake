@@ -2047,6 +2047,7 @@
                               KeyboardNavigation.DirectionalNavigation="Contained"
                               KeyboardNavigation.ControlTabNavigation="None"
                               Focusable="False">
+
                             <Grid.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>
@@ -2060,7 +2061,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <!-- PORTE de sortie (à gauche) -->
+                                <!-- PORTE DE SORTIE -->
                                 <ToggleButtonEx x:Name="ScreenshotUtilitiesGridExit"
                                                 Grid.Column="0"
                                                 Width="60"
@@ -2076,47 +2077,51 @@
                                                 TabIndex="99"
                                                 Style="{StaticResource UpdatePanelExitButtonStyle}" />
 
-
-
                                 <Grid Grid.Column="1">
-                                    <!-- Fond verre fumé -->
+
+                                    <!-- FOND VERRE FUMÉ -->
                                     <Border Background="{DynamicResource OverlayMenu}"
                                             CornerRadius="16,0,0,16"
                                             Opacity="1"/>
 
-                                    <!-- Reflet vertical discret -->
+                                    <!-- REFLET VERTICAL -->
                                     <Border CornerRadius="16,0,0,16"
                                             Background="{DynamicResource GlassMainBrush}"
                                             IsHitTestVisible="False" />
 
-                                    <!-- Liseré interne fin -->
+                                    <!-- LISERÉ INTERNE -->
                                     <Border CornerRadius="16,0,0,16"
                                             BorderBrush="{DynamicResource GlassInnerLineBrush}"
                                             Margin="1"
                                             BorderThickness="1,1,0,1"
                                             IsHitTestVisible="False"/>
 
+                                    <!-- CONTENEUR PRINCIPAL -->
                                     <Border Background="Transparent"
                                             CornerRadius="16,0,0,16"
                                             Padding="28,24,28,24">
+
                                         <Border.Style>
                                             <Style TargetType="Border">
                                                 <Setter Property="BorderThickness" Value="0"/>
                                                 <Setter Property="BorderBrush" Value="Transparent"/>
+
                                                 <Style.Triggers>
-                                                    <!-- Focus clavier dans le ScrollViewer -->
-                                                    <DataTrigger Binding="{Binding ElementName=ScreenshotUtilitiesScrollViewer, Path=IsKeyboardFocusWithin}"
+
+                                                    <!-- Focus clavier/manette dans la zone Screenshot Utilities -->
+                                                    <DataTrigger Binding="{Binding ElementName=ScreenshotUtilitiesItemsControl, Path=IsKeyboardFocusWithin}"
                                                                  Value="True">
                                                         <Setter Property="BorderThickness" Value="2,2,0,2"/>
                                                         <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
                                                     </DataTrigger>
 
-                                                    <!-- Survol de la zone de screenshots -->
+                                                    <!-- Survol de la zone Screenshot Utilities -->
                                                     <DataTrigger Binding="{Binding ElementName=ScreenshotUtilitiesItemsControl, Path=IsMouseOver}"
                                                                  Value="True">
                                                         <Setter Property="BorderThickness" Value="2,2,0,2"/>
                                                         <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
                                                     </DataTrigger>
+
                                                 </Style.Triggers>
                                             </Style>
                                         </Border.Style>
@@ -2126,32 +2131,54 @@
                                                               ShadowDepth="0"
                                                               Opacity="0.45"/>
                                         </Border.Effect>
+
                                         <Border.CacheMode>
                                             <BitmapCache RenderAtScale="1"/>
                                         </Border.CacheMode>
 
-
                                         <!-- CONTENU DU PANNEAU -->
-                                        <Grid MaxWidth="1000" HorizontalAlignment="Center">
-
+                                        <Grid MaxWidth="1000"
+                                              HorizontalAlignment="Center">
 
                                             <StackPanel>
 
-                                                <!-- Titre -->
+                                                <!-- TITRE -->
                                                 <TextBlock Text="Store screenshots"
                                                            FontSize="28"
                                                            FontWeight="SemiBold"
                                                            Style="{DynamicResource TextBlockBaseStyle}"
                                                            Margin="0,0,0,16" />
 
-                                                <!-- LISTE DES GROUPES AVEC VIEWER + MINIATURES -->
-                                                <ItemsControl x:Name="ScreenshotUtilitiesItemsControl" Focusable="False"
+                                                <!--
+                                                SCREENSHOT UTILITIES
+                                                On charge tous les groupes, mais on masque tout sauf le provider 0.
+                                                C'est plus fiable que CurrentScreenshotGroups[0] avec PluginSettings.
+                                                -->
+                                                <ItemsControl x:Name="ScreenshotUtilitiesItemsControl"
+                                                              Focusable="False"
+                                                              AlternationCount="10000"
                                                               ItemsSource="{PluginSettings Plugin=ScreenshotUtilities, Path=CurrentScreenshotGroups}">
+
+                                                    <!-- MASQUER TOUS LES PROVIDERS SAUF LE PREMIER -->
+                                                    <ItemsControl.ItemContainerStyle>
+                                                        <Style TargetType="ContentPresenter">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding DisplayName}"
+                                                                             Value="Local">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ItemsControl.ItemContainerStyle>
+
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate>
+
                                                             <StackPanel Margin="0,0,0,32">
 
-                                                                <!-- Nom du groupe (Steam, etc.) -->
+                                                                <!-- NOM DU PROVIDER / GROUPE -->
                                                                 <TextBlock Text="{Binding DisplayName}"
                                                                            FontSize="22"
                                                                            FontWeight="SemiBold"
@@ -2165,20 +2192,28 @@
                                                                     </Grid.RowDefinitions>
 
                                                                     <!-- IMAGE PRINCIPALE -->
-                                                                    <Image x:Name="StoreMainImage"
-                                                                           Source="{Binding SelectedScreenshot.DisplayPath}"
-                                                                           Height="560"
-                                                                           Stretch="Uniform"
-                                                                           HorizontalAlignment="Center"
-                                                                           VerticalAlignment="Center"
-                                                                           SnapsToDevicePixels="True"
-                                                                           RenderOptions.BitmapScalingMode="HighQuality" />
+                                                                    <Border Grid.Row="0"
+                                                                            Height="560"
+                                                                            Background="#22000000"
+                                                                            CornerRadius="10"
+                                                                            ClipToBounds="True">
 
+                                                                        <Image x:Name="StoreMainImage"
+                                                                               Source="{Binding SelectedScreenshot.DisplayPath}"
+                                                                               Height="560"
+                                                                               Stretch="Uniform"
+                                                                               HorizontalAlignment="Center"
+                                                                               VerticalAlignment="Center"
+                                                                               SnapsToDevicePixels="True"
+                                                                               RenderOptions.BitmapScalingMode="HighQuality" />
+                                                                    </Border>
 
                                                                     <!-- BARRE DE MINIATURES NAVIGABLE -->
-                                                                    <ListBox x:Name="StoreThumbList" Margin="0,10,0,0"
+                                                                    <ListBox x:Name="StoreThumbList"
                                                                              Grid.Row="1"
+                                                                             Margin="0,10,0,0"
                                                                              ItemsSource="{Binding Screenshots}"
+                                                                             SelectedIndex="0"
                                                                              SelectedItem="{Binding SelectedScreenshot, Mode=TwoWay}"
                                                                              Background="Transparent"
                                                                              BorderThickness="0"
@@ -2186,21 +2221,65 @@
                                                                              ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                                                              ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                                                              ScrollViewer.CanContentScroll="True"
-                                                                             KeyboardNavigation.DirectionalNavigation="Once"
-                                                                             KeyboardNavigation.TabNavigation="Once"
-                                                                             KeyboardNavigation.ControlTabNavigation="Once">
+                                                                             KeyboardNavigation.DirectionalNavigation="Continue"
+                                                                             KeyboardNavigation.TabNavigation="Continue"
+                                                                             KeyboardNavigation.ControlTabNavigation="Continue">
+
                                                                         <ListBox.ItemsPanel>
                                                                             <ItemsPanelTemplate>
                                                                                 <StackPanel Orientation="Horizontal" />
                                                                             </ItemsPanelTemplate>
                                                                         </ListBox.ItemsPanel>
 
+                                                                        <!-- STYLE DES ITEMS -->
+                                                                        <ListBox.ItemContainerStyle>
+                                                                            <Style TargetType="ListBoxItem">
+                                                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                                                                <Setter Property="Padding" Value="0" />
+                                                                                <Setter Property="Margin" Value="10,0,10,0" />
+                                                                                <Setter Property="Background" Value="Transparent" />
+                                                                                <Setter Property="BorderThickness" Value="0" />
+                                                                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                                                                <Setter Property="Focusable" Value="True" />
+                                                                                <Setter Property="IsTabStop" Value="True" />
+                                                                                <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Continue" />
+
+                                                                                <Setter Property="Template">
+                                                                                    <Setter.Value>
+                                                                                        <ControlTemplate TargetType="ListBoxItem">
+                                                                                            <ContentPresenter HorizontalAlignment="Stretch"
+                                                                                                              VerticalAlignment="Stretch"/>
+                                                                                        </ControlTemplate>
+                                                                                    </Setter.Value>
+                                                                                </Setter>
+
+                                                                                <Style.Triggers>
+                                                                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                                                                        <Setter Property="IsSelected" Value="True"/>
+                                                                                    </Trigger>
+
+                                                                                    <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                                                        <Setter Property="IsSelected" Value="True"/>
+                                                                                    </Trigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </ListBox.ItemContainerStyle>
+
                                                                         <!-- MINIATURES -->
                                                                         <ListBox.ItemTemplate>
                                                                             <DataTemplate>
+
                                                                                 <Border x:Name="ThumbCard"
-                                                                                        CornerRadius="2"
+                                                                                        Width="220"
+                                                                                        Height="124"
+                                                                                        CornerRadius="4"
+                                                                                        BorderThickness="0"
+                                                                                        BorderBrush="Transparent"
+                                                                                        Background="#22000000"
+                                                                                        ClipToBounds="True"
                                                                                         RenderTransformOrigin="0.5,0.5">
+
                                                                                     <Border.RenderTransform>
                                                                                         <ScaleTransform ScaleX="1" ScaleY="1" />
                                                                                     </Border.RenderTransform>
@@ -2213,8 +2292,9 @@
                                                                                            RenderOptions.BitmapScalingMode="Fant" />
                                                                                 </Border>
 
-                                                                                <!-- Effets focus / sélection -->
                                                                                 <DataTemplate.Triggers>
+
+                                                                                    <!-- Sélection -->
                                                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}"
                                                                                                  Value="True">
                                                                                         <Setter TargetName="ThumbCard"
@@ -2223,9 +2303,30 @@
                                                                                         <Setter TargetName="ThumbCard"
                                                                                                 Property="BorderThickness"
                                                                                                 Value="3" />
-
                                                                                     </DataTrigger>
 
+                                                                                    <!-- Focus clavier/manette -->
+                                                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsKeyboardFocused}"
+                                                                                                 Value="True">
+                                                                                        <Setter TargetName="ThumbCard"
+                                                                                                Property="BorderBrush"
+                                                                                                Value="{DynamicResource FocusGameBorderBrush}" />
+                                                                                        <Setter TargetName="ThumbCard"
+                                                                                                Property="BorderThickness"
+                                                                                                Value="3" />
+                                                                                    </DataTrigger>
+
+                                                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsKeyboardFocusWithin}"
+                                                                                                 Value="True">
+                                                                                        <Setter TargetName="ThumbCard"
+                                                                                                Property="BorderBrush"
+                                                                                                Value="{DynamicResource FocusGameBorderBrush}" />
+                                                                                        <Setter TargetName="ThumbCard"
+                                                                                                Property="BorderThickness"
+                                                                                                Value="3" />
+                                                                                    </DataTrigger>
+
+                                                                                    <!-- Souris -->
                                                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsMouseOver}"
                                                                                                  Value="True">
                                                                                         <Setter TargetName="ThumbCard"
@@ -2235,58 +2336,50 @@
                                                                                                 Property="BorderThickness"
                                                                                                 Value="3" />
                                                                                     </DataTrigger>
+
                                                                                 </DataTemplate.Triggers>
                                                                             </DataTemplate>
                                                                         </ListBox.ItemTemplate>
 
-                                                                        <!-- Style global des items -->
-                                                                        <ListBox.ItemContainerStyle>
-                                                                            <Style TargetType="ListBoxItem">
-                                                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                                                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                                                                                <Setter Property="Padding" Value="0" />
-                                                                                <Setter Property="Margin" Value="0" />
-                                                                                <Setter Property="Margin" Value="10,0,10,0" />
-                                                                                <Setter Property="Background" Value="Transparent" />
-                                                                                <Setter Property="BorderThickness" Value="0" />
-                                                                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                                                                            </Style>
-                                                                        </ListBox.ItemContainerStyle>
                                                                     </ListBox>
-
-
-
                                                                 </Grid>
-
                                                             </StackPanel>
+
                                                         </DataTemplate>
                                                     </ItemsControl.ItemTemplate>
                                                 </ItemsControl>
+
                                             </StackPanel>
                                         </Grid>
                                     </Border>
                                 </Grid>
                             </Grid>
 
-                            <!-- Animation ouverture / fermeture -->
+                            <!-- ANIMATION OUVERTURE / FERMETURE -->
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Setter Property="Opacity" Value="0"/>
+
                                     <Style.Triggers>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding ElementName=ScreenshotUtilitiesToggle, Path=IsChecked}" Value="True"/>
                                             </MultiDataTrigger.Conditions>
+
                                             <Setter Property="Visibility" Value="Visible"/>
+
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard>
                                                     <Storyboard>
                                                         <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                                         From="0" To="1"
+                                                                         From="0"
+                                                                         To="1"
                                                                          Duration="0:0:0.18"/>
+
                                                         <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"
-                                                                         From="1100" To="0"
+                                                                         From="1100"
+                                                                         To="0"
                                                                          Duration="0:0:0.22"
                                                                          AccelerationRatio="0.05"
                                                                          DecelerationRatio="0.95"/>

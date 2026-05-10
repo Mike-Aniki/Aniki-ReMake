@@ -21,7 +21,7 @@
                                           BlurRadius="8"
                                           Opacity="0.22"/>
 
-                        <Style x:Key="ScreenshotThumbToggleStyle" TargetType="ToggleButton">
+                        <Style x:Key="ScreenshotThumbToggleStyle" TargetType="ToggleButtonEx">
                             <Setter Property="Width" Value="460"/>
                             <Setter Property="Height" Value="259"/>
                             <Setter Property="Focusable" Value="True"/>
@@ -35,12 +35,11 @@
 
                             <Setter Property="Template">
                                 <Setter.Value>
-                                    <ControlTemplate TargetType="ToggleButton">
+                                    <ControlTemplate TargetType="ToggleButtonEx">
 
                                         <Grid Width="460"
                                               Height="259"
-                                              SnapsToDevicePixels="True"
-                                              Effect="{StaticResource ScreenshotThumbShadow}">
+                                              SnapsToDevicePixels="True">
 
                                             <!-- SHAPE USED AS MASK -->
                                             <Border x:Name="CardMask"
@@ -257,6 +256,8 @@
                                   Panel.ZIndex="10">
 
                                 <ListBox x:Name="ThumbGrid"
+                                         Width="1540"
+                                         Height="760"
                                          ItemsSource="{PluginSettings Plugin=ScreenshotsVisualizer, Path=ListScreenshots}"
                                          SelectedIndex="0"
                                          SelectionMode="Single"
@@ -269,11 +270,10 @@
                                          KeyboardNavigation.DirectionalNavigation="Contained"
                                          KeyboardNavigation.TabNavigation="Contained"
                                          KeyboardNavigation.ControlTabNavigation="Contained"
-                                         VirtualizingPanel.IsVirtualizing="True"
-                                         VirtualizingPanel.VirtualizationMode="Recycling"
-                                         VirtualizingPanel.ScrollUnit="Item"
-                                         VirtualizingPanel.CacheLengthUnit="Item"
-                                         VirtualizingPanel.CacheLength="1">
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                         ScrollViewer.CanContentScroll="False"
+                                         VirtualizingPanel.IsVirtualizing="False">
                                     <ListBox.Tag>
                                         <sys:Boolean>False</sys:Boolean>
                                     </ListBox.Tag>
@@ -296,7 +296,7 @@
 
                                     <ListBox.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <WrapPanel Orientation="Horizontal"/>
+                                            <UniformGrid Columns="3"/>
                                         </ItemsPanelTemplate>
                                     </ListBox.ItemsPanel>
 
@@ -306,7 +306,7 @@
                                             <Setter Property="Height" Value="259"/>
                                             <Setter Property="Margin" Value="20"/>
                                             <Setter Property="Focusable" Value="False"/>
-                                            <Setter Property="IsTabStop" Value="True"/>
+                                            <Setter Property="IsTabStop" Value="False"/>
                                             <Setter Property="Padding" Value="0"/>
                                             <Setter Property="Background" Value="Transparent"/>
                                             <Setter Property="BorderThickness" Value="0"/>
@@ -336,11 +336,11 @@
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
 
-                                            <ToggleButton x:Name="CardToggle"
-                                                          Style="{StaticResource ScreenshotThumbToggleStyle}"
-                                                          Width="460"
-                                                          Height="259"
-                                                          IsChecked="{Binding ElementName=ThumbGrid, Path=Tag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            <ToggleButtonEx x:Name="CardToggle"
+                                                            Style="{StaticResource ScreenshotThumbToggleStyle}"
+                                                            Width="460"
+                                                            Height="259"
+                                                            IsChecked="{Binding ElementName=ThumbGrid, Path=Tag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                                                 <Grid Width="460"
                                                       Height="259"
@@ -354,14 +354,23 @@
                                                            Stretch="UniformToFill"
                                                            HorizontalAlignment="Stretch"
                                                            VerticalAlignment="Stretch"
-                                                           RenderOptions.BitmapScalingMode="Fant"
+                                                           RenderOptions.BitmapScalingMode="LowQuality"
                                                            SnapsToDevicePixels="True">
                                                         <Image.Style>
                                                             <Style TargetType="Image">
-                                                                <Setter Property="Source" Value="{Binding ImageThumbnail}"/>
+                                                                <Setter Property="Source">
+                                                                    <Setter.Value>
+                                                                        <Binding Path="ImageThumbnail" IsAsync="True"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+
                                                                 <Style.Triggers>
                                                                     <DataTrigger Binding="{Binding IsVideo}" Value="True">
-                                                                        <Setter Property="Source" Value="{Binding Thumbnail}"/>
+                                                                        <Setter Property="Source">
+                                                                            <Setter.Value>
+                                                                                <Binding Path="Thumbnail" IsAsync="True"/>
+                                                                            </Setter.Value>
+                                                                        </Setter>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
                                                             </Style>
@@ -438,7 +447,7 @@
                                                     </Border>
 
                                                 </Grid>
-                                            </ToggleButton>
+                                            </ToggleButtonEx>
 
                                             <DataTemplate.Triggers>
                                                 <DataTrigger Binding="{Binding IsVideo}" Value="True">
@@ -501,11 +510,16 @@
 
                             <!-- IMAGE FULLSCREEN -->
                             <Image x:Name="FullscreenImage"
-                                   Source="{Binding ElementName=ThumbGrid, Path=SelectedItem.FileName}"
                                    Stretch="Uniform"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
-                                   RenderOptions.BitmapScalingMode="Fant"/>
+                                   RenderOptions.BitmapScalingMode="Fant">
+                                <Image.Source>
+                                    <Binding ElementName="ThumbGrid"
+                                             Path="SelectedItem.FileName"
+                                             IsAsync="True"/>
+                                </Image.Source>
+                            </Image>
 
                             <!-- VIDEO FULLSCREEN -->
                             <MediaElement x:Name="FullscreenVideo"

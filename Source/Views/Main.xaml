@@ -12,6 +12,7 @@
                     xmlns:Behaviors="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
                     xmlns:BehaviorsCore="clr-namespace:Microsoft.Xaml.Behaviors.Core;assembly=Microsoft.Xaml.Behaviors"
                     xmlns:BehaviorsMedia="clr-namespace:Microsoft.Xaml.Behaviors.Media;assembly=Microsoft.Xaml.Behaviors"
+                    xmlns:fullscreen="clr-namespace:Playnite.FullscreenApp.Controls;assembly=Playnite.FullscreenApp"
                     xmlns:playnite="clr-namespace:Playnite;assembly=Playnite"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     mc:Ignorable="d">
@@ -1408,6 +1409,8 @@
                                                         IsTabStop="False"
                                                         FocusVisualStyle="{x:Null}"
                                                         IsChecked="{Binding ElementName=ButtonPower, Path=IsChecked, Mode=TwoWay}" />
+
+
 
                                         </StackPanel>
 
@@ -6921,6 +6924,40 @@
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
 
+
+                                        <CheckBoxEx x:Name="LockScreen"
+                                                    Visibility="Collapsed"
+                                                    Focusable="False"
+                                                    IsTabStop="False"
+                                                    IsChecked="False"
+                                                    Command="{Binding Content.ChangeProperty, ElementName=ThemeOptions_Command}"
+                                                    CommandParameter="[Setter ElementName=Acceuil, Property=IsChecked, Value=False]" />
+
+                                        <ButtonEx x:Name="PART_ButtonNotifications"
+                                                  Visibility="Collapsed"
+                                                  Focusable="False"
+                                                  IsTabStop="False"
+                                                  Padding="0"
+                                                  Height="1"
+                                                  MinWidth="1"
+                                                  Background="Transparent"
+                                                  BorderThickness="0"
+                                                  Style="{DynamicResource TopBarIndicatorButtonStyle}"
+                                                  Grid.Column="1"/>
+
+                                        <ButtonEx x:Name="HiddenOpenAchievementsButton"
+                                                  Width="1"
+                                                  Height="1"
+                                                  Opacity="0"
+                                                  Focusable="False"
+                                                  IsHitTestVisible="False"
+                                                  HorizontalAlignment="Left"
+                                                  VerticalAlignment="Top"
+                                                  Grid.Column="1"
+                                                  Command="{PluginSettings Plugin=PlayniteAchievements, Path=OpenAchievementWindow}" />
+
+
+
                                         <ButtonEx x:Name="NowPlay"
                                                   Content="NowPlay"
                                                   Command="{PluginSettings Plugin=NowPlaying, Path=OpenCustomDialog}"
@@ -7021,11 +7058,11 @@
                                                                    VerticalAlignment="Center"
                                                                    TextAlignment="Center"/>
 
-                                                        <TextBlock Text="&#xec68;"
+                                                        <TextBlock Text="&#xEA8F;"
                                                                    FontSize="20"
                                                                    VerticalAlignment="Center"
-                                                                   Margin="5,8,0,0"
-                                                                   FontFamily="{StaticResource FontIcoFont}"
+                                                                   Margin="5,2,0,0"
+                                                                   FontFamily="{DynamicResource FontIcons}"
                                                                    Foreground="{DynamicResource TextBrush}"/>
                                                     </StackPanel>
                                                 </Border>
@@ -12614,7 +12651,6 @@
                                                     <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[BottomBarVisible]}" Value="True"/>
                                                     <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[CinematicFocusEffect]}" Value="True"/>
                                                     <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PerformanceMode]}" Value="False"/>
-                                                    <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="True"/>
                                                 </MultiDataTrigger.Conditions>
 
                                                 <!-- ON -->
@@ -12695,9 +12731,8 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ElementName=TopMenu, Path=IsKeyboardFocusWithin}" Value="True"/>
-                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[CinematicFocusEffect]}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[CinematicFocusEffectTop]}" Value="True"/>
                                                     <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PerformanceMode]}" Value="False"/>
-                                                    <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="True"/>
                                                 </MultiDataTrigger.Conditions>
 
                                                 <!-- ON -->
@@ -14036,7 +14071,7 @@
                                 </Grid>
 
                                 <!-- FOOTER -->
-                                <TextBlock Text="Aniki ReMake v3.0.2"
+                                <TextBlock Text="Aniki ReMake v3.1.1"
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Bottom"
                                            Margin="0,0,22,18"

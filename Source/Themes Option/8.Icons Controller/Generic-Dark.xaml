@@ -4,21 +4,21 @@
 
     <!-- Définition du style pour les boutons du menu inférieur -->
     <Style x:Key="ButtonBottomMenu" TargetType="ButtonEx">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Focusable" Value="False" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ButtonEx">
                     <Border Background="{TemplateBinding Background}"
                             Margin="20,0,20,0">
-
                         <StackPanel Orientation="Horizontal"
                                     VerticalAlignment="Center">
 
+                            <!-- ICON (default = A) -->
                             <Image x:Name="IconImg"
                                    Width="40"
                                    Height="40"
@@ -26,11 +26,13 @@
                                    RenderOptions.BitmapScalingMode="Fant"
                                    Source="{DynamicResource ImageButtonA-GenericDark}" />
 
+                            <!-- TEXT -->
                             <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
                                        FontSize="18"
                                        VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
                                        Foreground="{DynamicResource ButtonIconLightBrush}">
-                                <ContentPresenter/>
+                                <ContentPresenter />
                             </TextBlock>
 
                         </StackPanel>
@@ -78,7 +80,20 @@
                                     Value="{DynamicResource ImageButtonRS-GenericDark}" />
                         </Trigger>
 
+                        <Trigger Property="Tag" Value="Dpad">
+                            <Setter TargetName="IconImg" Property="Source"
+                                    Value="{DynamicResource ImageButtonDpad-GenericDark}" />
+                        </Trigger>
 
+                        <Trigger Property="Tag" Value="L1">
+                            <Setter TargetName="IconImg" Property="Source"
+                                    Value="{DynamicResource ImageButtonL1-GenericDark}" />
+                        </Trigger>
+
+                        <Trigger Property="Tag" Value="R1">
+                            <Setter TargetName="IconImg" Property="Source"
+                                    Value="{DynamicResource ImageButtonR1-GenericDark}" />
+                        </Trigger>
 
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -87,21 +102,21 @@
     </Style>
 
     <Style x:Key="ButtonBottomMenuDark" TargetType="ButtonEx">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Focusable" Value="False" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ButtonEx">
                     <Border Background="{TemplateBinding Background}"
                             Margin="20,0,20,0">
-
                         <StackPanel Orientation="Horizontal"
                                     VerticalAlignment="Center">
 
+                            <!-- ICON (default = A) -->
                             <Image x:Name="IconImg"
                                    Width="40"
                                    Height="40"
@@ -109,11 +124,13 @@
                                    RenderOptions.BitmapScalingMode="Fant"
                                    Source="{DynamicResource ImageButtonA-GenericDark}" />
 
+                            <!-- TEXT -->
                             <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
                                        FontSize="18"
                                        VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
                                        Foreground="{DynamicResource ButtonIconDarkBrush}">
-                                <ContentPresenter/>
+                                <ContentPresenter />
                             </TextBlock>
 
                         </StackPanel>
@@ -161,13 +178,126 @@
                                     Value="{DynamicResource ImageButtonRS-GenericDark}" />
                         </Trigger>
 
+                        <Trigger Property="Tag" Value="Dpad">
+                            <Setter TargetName="IconImg" Property="Source"
+                                    Value="{DynamicResource ImageButtonDpad-GenericDark}" />
+                        </Trigger>
+
+                        <Trigger Property="Tag" Value="L1">
+                            <Setter TargetName="IconImg" Property="Source"
+                                    Value="{DynamicResource ImageButtonL1-GenericDark}" />
+                        </Trigger>
+
+                        <Trigger Property="Tag" Value="R1">
+                            <Setter TargetName="IconImg" Property="Source"
+                                    Value="{DynamicResource ImageButtonR1-GenericDark}" />
+                        </Trigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <!-- Generic Dark -->
+    <Style x:Key="ButtonBottomMenuShoulders" TargetType="ButtonEx">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Focusable" Value="False" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonEx">
+                    <Border Background="{TemplateBinding Background}"
+                            Margin="20,0,20,0">
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+
+                            <Image Width="46"
+                                   Height="40"
+                                   Margin="0,0,4,0"
+                                   RenderOptions.BitmapScalingMode="Fant"
+                                   Source="{DynamicResource ImageButtonL1-GenericDark}" />
+
+                            <TextBlock Text="/"
+                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                       FontSize="18"
+                                       Margin="0,0,4,0"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource ButtonIconLightBrush}" />
+
+                            <Image Width="46"
+                                   Height="40"
+                                   Margin="0,0,8,0"
+                                   RenderOptions.BitmapScalingMode="Fant"
+                                   Source="{DynamicResource ImageButtonR1-GenericDark}" />
+
+                            <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                       FontSize="18"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       Foreground="{DynamicResource ButtonIconLightBrush}">
+                                <ContentPresenter />
+                            </TextBlock>
+
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ButtonBottomMenuShouldersDark" TargetType="ButtonEx">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Focusable" Value="False" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonEx">
+                    <Border Background="{TemplateBinding Background}"
+                            Margin="20,0,20,0">
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+
+                            <Image Width="46"
+                                   Height="40"
+                                   Margin="0,0,4,0"
+                                   RenderOptions.BitmapScalingMode="Fant"
+                                   Source="{DynamicResource ImageButtonL1-GenericDark}" />
+
+                            <TextBlock Text="/"
+                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                       FontSize="18"
+                                       Margin="0,0,4,0"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource ButtonIconDarkBrush}" />
+
+                            <Image Width="46"
+                                   Height="40"
+                                   Margin="0,0,8,0"
+                                   RenderOptions.BitmapScalingMode="Fant"
+                                   Source="{DynamicResource ImageButtonR1-GenericDark}" />
+
+                            <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                       FontSize="18"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       Foreground="{DynamicResource ButtonIconDarkBrush}">
+                                <ContentPresenter />
+                            </TextBlock>
+
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
     <BitmapImage x:Key="ImageButtonA-GenericDark" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Generic Dark/Button-A.png'}" />
     <BitmapImage x:Key="ImageButtonB-GenericDark" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Generic Dark/Button-B.png'}" />
     <BitmapImage x:Key="ImageButtonX-GenericDark" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Generic Dark/Button-X.png'}" />
@@ -176,7 +306,8 @@
     <BitmapImage x:Key="ImageButtonBack-GenericDark" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Generic Dark/Button-Back.png'}" />
     <BitmapImage x:Key="ImageButtonLS-GenericDark" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Generic Dark/Button-LS.png'}" />
     <BitmapImage x:Key="ImageButtonRS-GenericDark" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Generic Dark/Button-RS.png'}" />
-
-
+    <BitmapImage x:Key="ImageButtonDpad-GenericDark" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Generic Dark/Button-Dpad.png'}" />
+    <BitmapImage x:Key="ImageButtonL1-GenericDark" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Generic Dark/Button-LeftShoulder.png'}" />
+    <BitmapImage x:Key="ImageButtonR1-GenericDark" UriSource="{ThemeFile 'Images/Buttons/Controller/Generic/Generic Dark/Button-RightShoulder.png'}" />
 
 </ResourceDictionary>

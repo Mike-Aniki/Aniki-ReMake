@@ -5,6 +5,7 @@
                     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:pc="clr-namespace:Playnite.Controls;assembly=Playnite"
+                    xmlns:pin="clr-namespace:Playnite.Input;assembly=Playnite"
                     xmlns:pbeh="clr-namespace:Playnite.Behaviors;assembly=Playnite"
                     mc:Ignorable="d">
 
@@ -19,7 +20,13 @@
                         KeyboardNavigation.DirectionalNavigation="Contained"
                         Opacity="0"
                         Background="{DynamicResource SecondaryViewBackground}">
+                        <Grid.InputBindings>
+                            <pin:GameControllerInputBinding Button="RightShoulder"
+                                                            Command="{Binding Command, ElementName=NewsNextTabShortcutButton}" />
 
+                            <pin:GameControllerInputBinding Button="LeftShoulder"
+                                                            Command="{Binding Command, ElementName=NewsPreviousTabShortcutButton}" />
+                        </Grid.InputBindings>
                         <Grid.RenderTransform>
                             <TranslateTransform Y="40"/>
                         </Grid.RenderTransform>
@@ -44,7 +51,21 @@
                             </EventTrigger>
                         </Grid.Triggers>
 
+                        <ButtonEx x:Name="NewsNextTabShortcutButton"
+                                  Width="1"
+                                  Height="1"
+                                  Opacity="0"
+                                  Focusable="False"
+                                  IsHitTestVisible="False"
+                                  Command="{PluginSettings Plugin=AnikiHelper, Path=NextNewsTabCommand}" />
 
+                        <ButtonEx x:Name="NewsPreviousTabShortcutButton"
+                                  Width="1"
+                                  Height="1"
+                                  Opacity="0"
+                                  Focusable="False"
+                                  IsHitTestVisible="False"
+                                  Command="{PluginSettings Plugin=AnikiHelper, Path=PreviousNewsTabCommand}" />
 
                         <Grid>
                             <Border Background="{DynamicResource NewsImageDefault}" Opacity="0.1">
@@ -1454,13 +1475,9 @@
                         <!-- bouton retour -->
 
                         <StackPanel x:Name="BackButton" Orientation="Horizontal"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Effect="{DynamicResource SoftTextShadow}" Margin="0,0,20,10">
-                            <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                      Tag="Dpad"
-                                      Content="{DynamicResource LOCButtonPrompt_Navigate}" />
 
-                            <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                      Tag="A"
-                                      Content="{DynamicResource LOCButtonPrompt_Select}" />
+                            <ButtonEx Style="{DynamicResource ButtonBottomMenuShoulders}"
+                                      Content="Switch section" />
 
                             <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
                                       Tag="B"
