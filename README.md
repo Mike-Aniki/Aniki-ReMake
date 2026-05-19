@@ -166,10 +166,8 @@ You can also join the Discord community for support, feedback, discussions, prev
 
 </div>
 
----
+<div align="center">
 
-<div align="Right">
-
-<img src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/Sign.png?raw=true" alt="Mike Aniki" width="190">
+<img src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/Banner.png?raw=true" alt="Mike Aniki" width="100%">
 
 </div>
