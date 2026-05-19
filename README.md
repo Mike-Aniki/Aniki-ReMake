@@ -1,5 +1,3 @@
-
-
 <div align="center">
 
 <h1 align="center">
@@ -15,16 +13,20 @@
 </div>
 
 <h3 align="center">
-A Console-Like Fullscreen Theme for Playnite
+A Console-Style Fullscreen Experience for Playnite
 </h3>
 
 </div>
 
 <div align="center">
 
-Aniki ReMake is a highly customizable Playnite Fullscreen theme designed to turn your PC library into a modern console-style interface.
+Aniki ReMake is a highly customizable fullscreen theme for Playnite, built to transform your PC library into a modern console-inspired interface.
 
-With multiple layouts, animated login screens, visual packs, color presets, achievement views, profile-style pages, game news, and advanced fullscreen menus, Aniki ReMake focuses on creating a polished, controller-friendly experience for couch gaming and big-screen setups.
+Designed for controller navigation and big-screen setups, it focuses on clean layouts, immersive visuals, smooth fullscreen navigation, and deep customization.
+
+Together with Aniki Helper and supported Playnite extensions, Aniki ReMake can also provide advanced features such as fullscreen menus, media integrations, splash screens, notifications, Steam friends, achievements, statistics, and more.
+
+The goal is simple: make Playnite feel closer to a polished console dashboard while keeping the flexibility of a PC gaming library.
 
 </div>
 
@@ -32,15 +34,15 @@ With multiple layouts, animated login screens, visual packs, color presets, achi
 
 <div align="center">
 
-### **A Console-Inspired Interface for PC**
+### **The Aniki Ecosystem**
 
 </div>
 
-Aniki ReMake is built especially for users who play with a controller in Playnite Fullscreen mode.
+Aniki ReMake is designed to work together with **Aniki Helper** and supported Playnite extensions to provide a deeper fullscreen experience than a standard theme.
 
-The goal is not only to change the look of Playnite, but to make the whole experience feel closer to a real console dashboard, with animated screens, large readable panels, dedicated menus, and multiple interface styles.
+Aniki Helper powers many advanced features of the project, including fullscreen menus, notifications, splash screens, media integrations, audio features, and additional data exposed directly inside the theme.
 
-The theme includes several layouts and visual options, allowing you to customize your library depending on your setup, your screen, and your personal taste.
+This ecosystem allows Aniki ReMake to behave less like a simple visual skin and more like a complete console-style interface for Playnite.
 
 ---
 
@@ -52,47 +54,51 @@ The theme includes several layouts and visual options, allowing you to customize
 
 Aniki ReMake includes many options directly available from the theme settings.
 
-You can customize the interface style, login screen, visual packs, game list layout, cover shape, platform banners, trailers, achievement display, game details and more.
+You can customize:
+- interface layouts,
+- login screens,
+- avatars,
+- visual packs,
+- game list styles,
+- source logos,
+- platform banners,
+- achievement displays,
+- dynamic visual effects,
+- and many other interface elements.
 
-The theme is designed to be modular, so you can keep a clean and simple interface or enable more advanced features depending on what you want.
-
-<div align="center">
-
----
-
-### **Main Features**
-
-</div>
-
-- Multiple console-style layouts for the main library view
-- Animated login screens and customizable background visuals
-- Dedicated Hub screen with quick access sections
-- Multiple game details view 
-- Achievement and trophy-style views
-- Profile and statistics pages
-- Steam news for games
-- Quick Access / Help menus
-- Controller-friendly navigation
-- Many visual presets and interface options
-- Support many optional plugin
-
-<div align="center">
+The theme is designed to be modular, allowing you to keep a clean and simple interface or enable more advanced features depending on your preferences.
 
 ---
 
-### **Theme Guide**
+<div align="center">
+
+### **Built for Fullscreen Gaming**
 
 </div>
 
-For installation instructions, recommended extensions, configuration help, and feature explanations, please check the full guide:
+Aniki ReMake is built around the way Playnite is used in Fullscreen mode.
 
-<div align="center">
+The interface is designed to be readable from a couch, comfortable with a controller, and flexible enough to support both simple libraries and more advanced setups.
 
-### **[Open the Theme Wiki](https://github.com/Mike-Aniki/Aniki-ReMake/wiki/Guide)**
+The goal is to make browsing, launching, and managing your games feel smoother and more natural on a TV or large display.
 
 ---
 
+<div align="center">
+
+### **Documentation & Setup**
+
 </div>
+
+For installation instructions, recommended extensions, configuration help, setup guides, and advanced feature explanations, please visit the Wiki:
+
+<div align="center">
+
+### **[Open the Wiki](https://github.com/Mike-Aniki/Aniki-ReMake/wiki)**
+
+</div>
+
+---
 
 <div align="center">
 
@@ -101,6 +107,8 @@ For installation instructions, recommended extensions, configuration help, and f
 [![Watch the video](https://img.youtube.com/vi/ZzTXwTTJU1g/0.jpg)](https://www.youtube.com/watch?v=ZzTXwTTJU1g)
 
 </div>
+
+---
 
 <div align="center">
 
@@ -118,9 +126,9 @@ For installation instructions, recommended extensions, configuration help, and f
   <img align="top" src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/ViewSuccess.png?raw=true" alt="Aniki ReMake achievements view" width="40%" />
 </p>
 
-<div align="center">
-
 ---
+
+<div align="center">
 
 ### **Support the Project**
 
@@ -128,10 +136,9 @@ For installation instructions, recommended extensions, configuration help, and f
 
 <div align="center">
 
+Aniki ReMake is a personal project developed and maintained during my free time.
 
-Aniki ReMake is a personal project developed and maintained in my free time.
-
-If you enjoy the theme and want to support its development, you can do it here:
+If you enjoy the project and want to support future development:
 
 </div>
 
@@ -143,16 +150,26 @@ If you enjoy the theme and want to support its development, you can do it here:
 
 </div>
 
+---
+
 <div align="center">
+
+### **Need Help?**
+
+For setup instructions, supported extensions, troubleshooting, and advanced configuration:
+
+### **[Open the Wiki](https://github.com/Mike-Aniki/Aniki-ReMake/wiki)**
+
+You can also join the Discord community for support, feedback, discussions, previews, and updates:
+
+### **[Join the Discord](https://discord.com/invite/BrtABqe)**
+
+</div>
 
 ---
 
-### **Need help?**
+<div align="Right">
 
-For setup instructions, recommended extensions and detailed explanations, visit the  
-### **[Theme Wiki](https://github.com/Mike-Aniki/Aniki-ReMake/wiki/Guide)**
-
-You can also join the Discord server for support, feedback, discussions, and updates:
-### **[Join the Discord](https://discord.com/invite/BrtABqe)**
+<img src="https://github.com/Mike-Aniki/Aniki-ReMake/blob/main/Images/Sign.png?raw=true" alt="Mike Aniki" width="190">
 
 </div>
