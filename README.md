@@ -104,7 +104,7 @@ For installation instructions, recommended extensions, configuration help, setup
 
 ### **Preview Video**
 
-[![Watch the video](https://img.youtube.com/vi/ZzTXwTTJU1g/0.jpg)](https://www.youtube.com/watch?v=ZzTXwTTJU1g)
+[![Watch the video](https://img.youtube.com/vi/8wfRWcsnzrg/0.jpg)](https://www.youtube.com/watch?v=8wfRWcsnzrg)
 
 </div>
 
