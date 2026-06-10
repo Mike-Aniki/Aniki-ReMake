@@ -18,110 +18,211 @@
                 <ControlTemplate TargetType="{x:Type GameListItem}">
 
                     <Grid ClipToBounds="False">
-                        <!-- Ombre (en dessous) -->
-                        <Grid x:Name="ShadowLayer" IsHitTestVisible="False" Opacity="0.85">
-                            <Grid.RenderTransform>
-                                <TranslateTransform Y="1" X="1"/>
-                            </Grid.RenderTransform>
-                            <Border Margin="0,0,0,0" CornerRadius="{DynamicResource Corner}" Background="#60000000"/>
-                        </Grid>
+                        <!-- Ombre -->
+
 
                         <Border CornerRadius="{DynamicResource Corner}" ClipToBounds="True">
 
                             <Grid>
-                                <Grid>
-                                    <Grid.Style>
-                                        <Style TargetType="Grid">
-                                            <Setter Property="Margin" Value="0,0,0,0"/>
-                                            <Style.Triggers>
-                                                <!-- BANNIÈRE GAUCHE -->
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding ElementName=SourceBanner, Path=Visibility}" Value="Visible"/>
-                                                        <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True"/>
-                                                        <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="False"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Margin" Value="10,0,0,0"/>
-                                                </MultiDataTrigger>
+                                <Grid x:Name="CoverWithBannerRoot" ClipToBounds="False">
 
-                                                <!-- BANNIÈRE TOP -->
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding ElementName=SourceHorizontal, Path=Visibility}" Value="Visible"/>
-                                                        <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True"/>
-                                                        <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBannerTop]}" Value="True"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Margin" Value="0,20,0,0"/>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Grid.Style>
-                                    <!-- Masque pour l'opacité de l'image -->
-                                    <Border x:Name="Mask" Background="#181A1E" BorderThickness="0" CornerRadius="{DynamicResource Corner}" IsHitTestVisible="False" />
-                                    <!-- Image de couverture du jeu -->
-                                    <Image x:Name="PART_ImageCover" RenderOptions.BitmapScalingMode="Fant" StretchDirection="Both" Stretch="{Settings CoverArtStretch}">
-                                        <Image.Style>
-                                            <Style TargetType="Image">
-                                                <Setter Property="Visibility" Value="Visible"/>
+                                    <Grid.RowDefinitions>
+                                        <!-- Bannière -->
+                                        <RowDefinition Height="30"/>
+                                        <!-- Cover -->
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- BANNIÈRE TOP -->
+                                    <Border x:Name="TopBanner"
+                                            Grid.Row="0"
+                                            Background="Transparent"
+                                            CornerRadius="{DynamicResource Corner}"
+                                            ClipToBounds="True"
+                                            IsHitTestVisible="False">
+
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{PluginStatus Plugin=playnite-backgroundchanger-plugin, Status=Installed}" Value="True"/>
-                                                            <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=HasDataCover}" Value="True"/>
-                                                            <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=EnableCoverImage}" Value="True"/>
+                                                            <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBanner]}" Value="True"/>
                                                         </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Setter Property="Visibility" Value="Visible"/>
                                                     </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>
-                                        </Image.Style>
-                                    </Image>
-                                    <!-- Indicateur visuel de jeu en cours -->
-                                    <Canvas x:Name="Playing" Visibility="Collapsed" IsHitTestVisible="False">
-                                        <Polygon Points="0,0 50,0 0,50" Fill="{DynamicResource GlyphBrush}" Opacity="0.2"/>
-                                    </Canvas>
+                                        </Border.Style>
 
-                                    <!-- Fond sombre pour assombrir l'image -->
-                                    <Border Background="#181A1E" x:Name="BorderDarken" IsHitTestVisible="False" Panel.ZIndex="1" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" Opacity="0.7" />
+                                        <Grid>
+                                            <Image x:Name="SourceHorizontal"
+                                                   RenderOptions.BitmapScalingMode="Fant"
+                                                   Stretch="UniformToFill"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Source="{ThemeFileBinding Game.Source.Name, PathFormat='Icons/Banner/Horizontal/{0}.png', FallbackValue={x:Null}}">
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="Source" Value="{x:Null}">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
 
-                                    <!-- Texte du nom du jeu -->
-                                    <TextBlock Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis"
-                                               Visibility="Collapsed"
-                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                               FontSize="{DynamicResource FontSizeSmall}"
-                                               HorizontalAlignment="Stretch" VerticalAlignment="Top"
-                                               TextAlignment="Center" Padding="0"
-                                               Background="{DynamicResource ControlBackgroundDarkBrush}"/>
+                                            <Image x:Name="PlatformHorizontal"
+                                                   RenderOptions.BitmapScalingMode="Fant"
+                                                   Stretch="UniformToFill"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Source="{ThemeFileBinding Game.Platforms[0].Name, PathFormat='Icons/Banner/Horizontal/{0}.png', FallbackValue={x:Null}}">
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding ElementName=SourceHorizontal, Path=Source}" Value="{x:Null}">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
+                                        </Grid>
+                                    </Border>
 
-                                    <Grid x:Name="BackgroundChanger">
+                                    <!-- COVER -->
+                                    <Grid>
                                         <Grid.Style>
                                             <Style TargetType="Grid">
-                                                <Setter Property="Opacity" Value="0"/>
-                                                <Setter Property="IsHitTestVisible" Value="False"/>
-
+                                                <Setter Property="Grid.Row" Value="0"/>
+                                                <Setter Property="Grid.RowSpan" Value="2"/>
                                                 <Style.Triggers>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{PluginStatus Plugin=playnite-backgroundchanger-plugin, Status=Installed}" Value="True"/>
-                                                            <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=EnableCoverImage}" Value="True"/>
-                                                            <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=HasDataCover}" Value="True"/>
+                                                            <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBanner]}" Value="True"/>
                                                         </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Opacity" Value="1"/>
+                                                        <Setter Property="Grid.Row" Value="1"/>
+                                                        <Setter Property="Grid.RowSpan" Value="1"/>
                                                     </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Grid.Style>
+                                        <Border x:Name="Mask"
+                                                Background="#181A1E"
+                                                BorderThickness="0"
+                                                CornerRadius="{DynamicResource Corner}"
+                                                IsHitTestVisible="False"/>
 
-                                        <ContentControl x:Name="BackgroundChanger_PluginCoverImage"/>
+                                        <Image x:Name="PART_ImageCover"
+                                               RenderOptions.BitmapScalingMode="Fant"
+                                               StretchDirection="Both"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Stretch="{Settings CoverArtStretch}">
+                                            <Image.Style>
+                                                <Style TargetType="Image">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{PluginStatus Plugin=playnite-backgroundchanger-plugin, Status=Installed}" Value="True"/>
+                                                                <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=HasDataCover}" Value="True"/>
+                                                                <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=EnableCoverImage}" Value="True"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+
+                                        <Canvas x:Name="Playing" Visibility="Collapsed" IsHitTestVisible="False">
+                                            <Polygon Points="0,0 50,0 0,50" Fill="{DynamicResource GlyphBrush}" Opacity="0.2"/>
+                                        </Canvas>
+
+                                        <Border x:Name="BorderDarken"
+                                                Background="Black"
+                                                IsHitTestVisible="False"
+                                                Panel.ZIndex="1"
+                                                CornerRadius="{DynamicResource Corner}"
+                                                Visibility="Collapsed"
+                                                Opacity="0.55">
+
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Margin" Value="0"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBanner]}" Value="True"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Margin" Value="0,-30,0,0"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+
+                                        </Border>
+
+                                        <TextBlock Text="{Binding DisplayName}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   Visibility="Collapsed"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   FontSize="{DynamicResource FontSizeSmall}"
+                                                   HorizontalAlignment="Stretch"
+                                                   VerticalAlignment="Top"
+                                                   TextAlignment="Center"
+                                                   Padding="0"
+                                                   Background="{DynamicResource ControlBackgroundDarkBrush}"/>
+
+                                        <Grid x:Name="BackgroundChanger">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Opacity" Value="0"/>
+                                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{PluginStatus Plugin=playnite-backgroundchanger-plugin, Status=Installed}" Value="True"/>
+                                                                <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=EnableCoverImage}" Value="True"/>
+                                                                <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=HasDataCover}" Value="True"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Opacity" Value="1"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+
+                                            <ContentControl x:Name="BackgroundChanger_PluginCoverImage"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalContentAlignment="Center"
+                                                            VerticalContentAlignment="Center"
+                                                            ClipToBounds="True">
+
+                                                <ContentControl.Resources>
+                                                    <Style TargetType="Image">
+                                                        <Setter Property="Stretch" Value="{Settings CoverArtStretch}"/>
+                                                        <Setter Property="StretchDirection" Value="Both"/>
+                                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant"/>
+                                                    </Style>
+                                                </ContentControl.Resources>
+                                            </ContentControl>
+                                        </Grid>
                                     </Grid>
-
                                 </Grid>
 
                                 <Grid Panel.ZIndex="2" IsHitTestVisible="False">
                                     <Grid.Style>
                                         <Style TargetType="Grid">
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[CompletionStatusOnOff]}" Value="False">
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[CompletionStatusOnOff]}" Value="False">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -163,7 +264,7 @@
                                             <Style.Triggers>
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="False"/>
+                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBanner]}" Value="False"/>
                                                         <Condition Binding="{Binding Game.Source.Name}" Value="Xbox Game Pass"/>
                                                     </MultiDataTrigger.Conditions>
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -175,84 +276,6 @@
                                            VerticalAlignment="Top" HorizontalAlignment="Left"
                                            Source="{ThemeFile 'Images/GamePass.png'}"/>
                                 </Grid>
-
-
-
-
-                                <!--Banner Platforms-->
-                                <Grid x:Name="Banner" Margin="0" Panel.ZIndex="2" IsHitTestVisible="False">
-                                    <Grid.Style>
-                                        <Style TargetType="Grid">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PlatformBanner]}" Value="True"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Grid.Style>
-
-                                    <!-- Pas de ColumnDefinitions : on colle la bannière à gauche, hauteur = cover -->
-                                    <Grid ClipToBounds="True" SnapsToDevicePixels="True" UseLayoutRounding="True"
-                                          Width="{Binding ActualWidth, ElementName=CoverImage}"
-                                          Height="{Binding ActualHeight, ElementName=CoverImage}">
-
-                                        <Border HorizontalAlignment="Stretch"
-                                                VerticalAlignment="Top"
-                                                Background="Transparent"
-                                                SnapsToDevicePixels="True"
-                                                Height="25"
-                                                UseLayoutRounding="True">
-                                            <Grid IsHitTestVisible="False">
-                                                <Image x:Name="SourceHorizontal"
-                                                       RenderOptions.BitmapScalingMode="Fant"
-                                                       Stretch="Fill"
-                                                       VerticalAlignment="Top"
-                                                       HorizontalAlignment="Center"
-                                                       Source="{ThemeFileBinding Game.Source.Name, PathFormat='Icons/Banner/Horizontal/{0}.png', FallbackValue={x:Null}}">
-                                                    <Image.Style>
-                                                        <Style TargetType="Image">
-                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                            <Style.Triggers>
-                                                                <Trigger Property="Source" Value="{x:Null}">
-                                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                                </Trigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Image.Style>
-                                                </Image>
-                                                <Image x:Name="PlatformHorizontal"
-                                                       RenderOptions.BitmapScalingMode="Fant"
-                                                       Stretch="Fill"
-                                                       VerticalAlignment="Top"
-                                                       HorizontalAlignment="Center"
-                                                       Source="{ThemeFileBinding Game.Platforms[0].Name, PathFormat='Icons/Banner/Horizontal/{0}.png', FallbackValue={x:Null}}">
-                                                    <Image.Style>
-                                                        <Style TargetType="Image">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ElementName=SourceHorizontal, Path=Source}" Value="{x:Null}">
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Image.Style>
-                                                </Image>
-                                            </Grid>
-                                        </Border>
-                                        <Grid Grid.Row="1"/>
-                                    </Grid>
-                                </Grid>
-
-
-
-
-
-
-
 
 
                                 <!--Back To Game-->

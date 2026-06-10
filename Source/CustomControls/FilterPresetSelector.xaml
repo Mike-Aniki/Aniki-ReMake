@@ -10,72 +10,98 @@
         <Setter Property="Foreground" Value="Transparent" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
+
         <!-- Définition du modèle de contrôle -->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBoxEx">
-                    <!-- Contenu principal du modèle -->
+
                     <Grid x:Name="GridBox">
-                        <!-- Style du conteneur principal -->
+
                         <Grid.Style>
                             <Style TargetType="Grid">
                                 <Setter Property="Margin" Value="10" />
                                 <Setter Property="Height" Value="60" />
-                                <Style.Triggers>
-                                </Style.Triggers>
                             </Style>
                         </Grid.Style>
-                        <!-- Bordure principale -->
-                        <Border x:Name="MainBorder" Margin="0" BorderThickness="3" CornerRadius="{DynamicResource Corner}"
-                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"  Visibility="Collapsed" >
-                        </Border>
-                        <!-- Bordure clignotante pour le menu -->
-                        <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
-                                Tag="False" Visibility="Collapsed"/>
-                        <!-- Icône de filtre -->
-                        <Image x:Name="Filter" RenderOptions.BitmapScalingMode="Fant" RenderTransformOrigin="0.5,0.5"
-                               Source="{ThemeFileBinding Name, PathFormat='Icons/Filter/{0}.png'}" Stretch="Uniform" Height="40" MaxWidth="180" MaxHeight="40"
-                               HorizontalAlignment="Center" VerticalAlignment="Center" >
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Margin" Value="20,10,20,10"/>
-                                    <Style.Triggers>
-                                        <!-- Déclencheurs de visibilité -->
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Source}" Value="{x:Null}">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
 
-                        <StackPanel Orientation="Horizontal" >
-                            <!-- Texte de l'icône -->
-                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       FontFamily="Lato Bold" Foreground="{DynamicResource TextWhiteBrush}" TextAlignment="Center" x:Name="FilterIconText"  >
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Setter Property="Margin" Value="15,10,20,10"/>
-                                        <Setter Property="FontSize" Value="28"/>
-                                        <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
-                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
-                                        <Style.Triggers>
-                                            <!-- Déclencheur de visibilité -->
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding ElementName=FilterIcon, Path=Visibility}" Value="Visible"/>
-                                                </MultiDataTrigger.Conditions>
-                                                <Setter Property="Visibility" Value="Visible" />
-                                            </MultiDataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </StackPanel>
-                        <!-- Texte de contenu -->
-                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   FontFamily="Lato Bold" Foreground="{DynamicResource TextWhiteBrush}" TextAlignment="Center" x:Name="TextContent"  >
+                        <!-- Chemin custom défini dans Aniki Helper -->
+                        <TextBlock x:Name="CustomIconFilterPathText"
+                                   Text="{PluginSettings Plugin=AnikiHelper, Path=CustomFilterIconsFolder}"
+                                   Visibility="Collapsed" />
+
+                        <!-- Chemin final : CustomFolder/NomDuFiltre.png -->
+                        <TextBlock x:Name="CustomIconFilterPath"
+                                   Visibility="Collapsed">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0}/{1}.png">
+                                    <Binding Path="Text" ElementName="CustomIconFilterPathText" />
+                                    <Binding Path="Name" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+
+
+                        <!-- Bordure principale -->
+                        <Border x:Name="MainBorder"
+                                Margin="0"
+                                BorderThickness="3"
+                                CornerRadius="{DynamicResource Corner}"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                Tag="False"
+                                Visibility="Collapsed" />
+
+                        <!-- Bordure clignotante pour le menu -->
+                        <Border x:Name="FlashMenuBorder"
+                                Margin="0"
+                                CornerRadius="{DynamicResource Corner}"
+                                Style="{DynamicResource AnimatedFlashMenu}"
+                                Tag="False"
+                                Visibility="Collapsed" />
+
+                        <!-- Icônes de filtre : custom utilisateur + fallback thème -->
+                        <Grid x:Name="FilterIconContainer"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Margin="20,10,20,10"
+                              MinWidth="70">
+
+                            <!-- Icône par défaut du thème -->
+                            <Image x:Name="Filter"
+                                   RenderOptions.BitmapScalingMode="Fant"
+                                   RenderTransformOrigin="0.5,0.5"
+                                   Source="{ThemeFileBinding Name, PathFormat='Icons/Filter/{0}.png'}"
+                                   Stretch="Uniform"
+                                   Height="40"
+                                   MaxWidth="180"
+                                   MaxHeight="40"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Visibility="Collapsed" />
+
+                            <!-- Icône custom utilisateur -->
+                            <Image x:Name="CustomFilter"
+                                   RenderOptions.BitmapScalingMode="Fant"
+                                   RenderTransformOrigin="0.5,0.5"
+                                   Source="{Binding Text, ElementName=CustomIconFilterPath}"
+                                   Stretch="Uniform"
+                                   Height="40"
+                                   MaxWidth="180"
+                                   MaxHeight="40"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+
+                        </Grid>
+
+                        <!-- Texte fallback si aucune icône n’est disponible -->
+                        <TextBlock x:Name="TextContent"
+                                   Text="{Binding Name}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontFamily="Lato Bold"
+                                   Foreground="{DynamicResource TextWhiteBrush}"
+                                   TextAlignment="Center">
+
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -83,55 +109,71 @@
                                     <Setter Property="FontSize" Value="28"/>
                                     <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
                                     <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
-                                    <Style.Triggers>
-                                        <!-- Déclencheurs de visibilité -->
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding ElementName=Filter, Path=Source}" Value="{x:Null}"/>
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="Visibility" Value="Visible" />
-                                        </MultiDataTrigger>
-                                    </Style.Triggers>
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
+
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <!-- Déclencheur lorsque le contrôle est sélectionné -->
+
+                        <!-- Si l’icône custom n’existe pas, on affiche l’icône du thème -->
+                        <DataTrigger Binding="{Binding ElementName=CustomFilter, Path=Source}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Visible" TargetName="Filter" />
+                        </DataTrigger>
+
+                        <!-- Si l’icône du thème n’existe pas non plus, on affiche le texte -->
+                        <DataTrigger Binding="{Binding ElementName=Filter, Path=Source}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="Filter" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="TextContent" />
+                        </DataTrigger>
+
+                        <!-- Si aucun dossier custom n’est défini, on force le fallback thème -->
+                        <DataTrigger Binding="{Binding ElementName=CustomIconFilterPathText, Path=Text}" Value="">
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="CustomFilter" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="Filter" />
+                        </DataTrigger>
+
+                        <!-- Focus -->
                         <Trigger Property="IsFocused" Value="True">
                             <Setter Property="Opacity" Value="1" TargetName="GridBox" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
-                            <Setter Property="Opacity" Value="1" TargetName="TextContent" />
-                            <Setter Property="Opacity" Value="1" TargetName="FilterIconText" />
-                            <Setter Property="Opacity" Value="1" TargetName="Filter" />
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                             <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+
+                            <Setter Property="Opacity" Value="1" TargetName="TextContent" />
+                            <Setter Property="Opacity" Value="1" TargetName="Filter" />
+                            <Setter Property="Opacity" Value="1" TargetName="CustomFilter" />
                         </Trigger>
-                        <!-- Déclencheur lorsque le contrôle perd le focus -->
+
+                        <!-- Pas focus -->
                         <Trigger Property="IsFocused" Value="False">
                             <Setter Property="Opacity" Value="0.5" TargetName="TextContent" />
-                            <Setter Property="Opacity" Value="0.5" TargetName="FilterIconText" />
                             <Setter Property="Opacity" Value="0.5" TargetName="Filter" />
+                            <Setter Property="Opacity" Value="0.5" TargetName="CustomFilter" />
                         </Trigger>
-                        <!-- Déclencheur lorsque le contrôle est coché -->
+
+                        <!-- Checked -->
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Opacity" Value="1" TargetName="GridBox" />
                             <Setter Property="Opacity" Value="1" TargetName="TextContent" />
-                            <Setter Property="Opacity" Value="1" TargetName="FilterIconText" />
                             <Setter Property="Opacity" Value="1" TargetName="Filter" />
+                            <Setter Property="Opacity" Value="1" TargetName="CustomFilter" />
                             <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                             <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
                         </Trigger>
-                        <!-- Déclencheur lorsque la souris survole le contrôle -->
+
+                        <!-- MouseOver -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Opacity" Value="1" TargetName="GridBox" />
                             <Setter Property="Opacity" Value="1" TargetName="TextContent" />
-                            <Setter Property="Opacity" Value="1" TargetName="FilterIconText" />
                             <Setter Property="Opacity" Value="1" TargetName="Filter" />
+                            <Setter Property="Opacity" Value="1" TargetName="CustomFilter" />
                         </Trigger>
+
                     </ControlTemplate.Triggers>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

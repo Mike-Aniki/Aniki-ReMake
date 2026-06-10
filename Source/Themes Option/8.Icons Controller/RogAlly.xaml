@@ -298,6 +298,112 @@
     </Style>
 
 
+
+    <!-- Dual button: main action + hold action under it -->
+    <Style x:Key="ButtonBottomMenuDual" TargetType="ButtonEx">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Focusable" Value="False" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonEx">
+                    <Border Background="{TemplateBinding Background}"
+                            Margin="18,0,18,0">
+
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+
+                            <!-- Button icon -->
+                            <Image x:Name="IconImg"
+                                   Width="40"
+                                   Height="40"
+                                   Margin="0,0,8,0"
+                                   RenderOptions.BitmapScalingMode="Fant"
+                                   Source="{DynamicResource ImageButtonY-RogAlly}" />
+
+                            <!-- Texts -->
+                            <StackPanel Orientation="Vertical"
+                                        VerticalAlignment="Center">
+
+                                <!-- Main action -->
+                                <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                           FontSize="18"
+                                           Foreground="{DynamicResource ButtonIconLightBrush}"
+                                           Text="{TemplateBinding Content}" />
+
+                                <!-- Long press action -->
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="0,1,0,0"
+                                            Opacity="0.65">
+
+                                    <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="14"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource ButtonIconLightBrush}"
+                                               Text="{DynamicResource LOCHold}" />
+
+                                    <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="14"
+                                               Foreground="{DynamicResource ButtonIconLightBrush}"
+                                               Text=": " />
+
+                                    <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="14"
+                                               Foreground="{DynamicResource ButtonIconLightBrush}"
+                                               Text="{TemplateBinding CommandParameter}" />
+
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="Tag" Value="A">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonA-RogAlly}" />
+                        </Trigger>
+
+                        <Trigger Property="Tag" Value="B">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonB-RogAlly}" />
+                        </Trigger>
+
+                        <Trigger Property="Tag" Value="X">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonX-RogAlly}" />
+                        </Trigger>
+
+                        <Trigger Property="Tag" Value="Y">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonY-RogAlly}" />
+                        </Trigger>
+
+                        <Trigger Property="Tag" Value="Start">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonStart-RogAlly}" />
+                        </Trigger>
+
+                        <Trigger Property="Tag" Value="Back">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonBack-RogAlly}" />
+                        </Trigger>
+
+                        <Trigger Property="Tag" Value="LS">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonLS-RogAlly}" />
+                        </Trigger>
+
+                        <Trigger Property="Tag" Value="RS">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonRS-RogAlly}" />
+                        </Trigger>
+
+                        <Trigger Property="Tag" Value="Dpad">
+                            <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonDpad-RogAlly}" />
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <BitmapImage x:Key="ImageButtonA-RogAlly" UriSource="{ThemeFile 'Images/Buttons/Controller/RogAlly/Button-A.png'}" />
     <BitmapImage x:Key="ImageButtonB-RogAlly" UriSource="{ThemeFile 'Images/Buttons/Controller/RogAlly/Button-B.png'}" />
     <BitmapImage x:Key="ImageButtonX-RogAlly" UriSource="{ThemeFile 'Images/Buttons/Controller/RogAlly/Button-X.png'}" />

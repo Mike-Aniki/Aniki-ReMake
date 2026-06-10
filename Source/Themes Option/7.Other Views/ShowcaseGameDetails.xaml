@@ -86,7 +86,7 @@
                                     <Setter Property="Opacity" Value="1"/>
                                     <Setter Property="Visibility" Value="Visible"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoBarMode]}" Value="True">
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoBarMode]}" Value="True">
                                             <Setter Property="Opacity" Value="0"/>
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
@@ -113,7 +113,7 @@
                                         <Setter Property="VerticalAlignment" Value="Top"/>
                                         <Style.Triggers>
 
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoBarMode]}" Value="True">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoBarMode]}" Value="True">
                                                 <Setter Property="Opacity" Value="0"/>
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
@@ -121,9 +121,9 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible" />
-                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TopButtonAlwaysVisible]}" Value="True"/>
-                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TopOrBottomBar]}" Value="False"/>
-                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PerformanceMode]}" Value="False"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TopButtonAlwaysVisible]}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TopOrBottomBar]}" Value="False"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PerformanceMode]}" Value="False"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.EnterActions>
                                                     <BeginStoryboard>
@@ -147,7 +147,7 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible" />
-                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TopOrBottomBar]}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TopOrBottomBar]}" Value="True"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.Setters>
                                                     <Setter Property="BorderThickness" Value="0,1,0,0"/>
@@ -208,7 +208,7 @@
 
                                                 <Style.Triggers>
                                                     <!-- Si l’option est True => BottomBar -->
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TopOrBottomBar]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TopOrBottomBar]}" Value="True">
                                                         <Setter Property="Background" Value="{DynamicResource BottomBar}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -230,7 +230,7 @@
                                             <Style TargetType="Border">
                                                 <Setter Property="BorderThickness" Value="0,0,0,1"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TopOrBottomBar]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TopOrBottomBar]}" Value="True">
                                                         <Setter Property="BorderThickness" Value="0,1,0,0"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -246,7 +246,7 @@
                                             <Style TargetType="Border">
                                                 <Setter Property="VerticalAlignment" Value="Bottom"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TopOrBottomBar]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TopOrBottomBar]}" Value="True">
                                                         <Setter Property="VerticalAlignment" Value="Top"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -290,130 +290,15 @@
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center">
                                                     <Border.Style>
-                                                        <Style TargetType="Border">
-                                                            <Setter Property="Background" Value="{DynamicResource Avatar0}"/>
+                                                        <Style TargetType="Border"
+                                                               BasedOn="{StaticResource SelectedAvatarBorderStyle}">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
-
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ElementName=UserAvatarHeaderDetail, Path=Source}" Value="{x:Null}">
+                                                                <DataTrigger Binding="{Binding ElementName=UserAvatarHeader, Path=Source}" Value="{x:Null}">
                                                                     <Setter Property="Visibility" Value="Visible"/>
                                                                 </DataTrigger>
-
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="1">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar0}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="2">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar2}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="3">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar3}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="4">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar4}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="5">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar5}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="6">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar6}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="7">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar7}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="8">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar8}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="9">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar9}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="10">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar10}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="11">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar11}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="12">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar12}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="13">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar13}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="14">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar14}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="15">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar15}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="16">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar16}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="17">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar17}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="18">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar18}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="19">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar19}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="20">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar20}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="21">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar21}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="22">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar22}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="23">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar23}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="24">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar24}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="25">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar25}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="26">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar26}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="27">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar27}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="28">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar28}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="29">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar29}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="30">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar30}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="31">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar31}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="32">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar32}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="33">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar33}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="34">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar34}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="35">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar35}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="36">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar36}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="37">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar37}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="38">
-                                                                    <Setter Property="Background" Value="{DynamicResource Avatar38}"/>
-                                                                </DataTrigger>
                                                             </Style.Triggers>
+
                                                         </Style>
                                                     </Border.Style>
                                                 </Border>
@@ -623,7 +508,7 @@
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                         <Setter Property="Margin" Value="0,5,0,5"/>
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoLogo]}" Value="True">
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoLogo]}" Value="True">
                                                                 <Setter Property="Opacity" Value="0"/>
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                             </DataTrigger>
@@ -641,7 +526,7 @@
                                                             <DataTrigger Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsLogoAvailable}" Value="False">
                                                                 <Setter Property="Visibility" Value="Visible"/>
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoLogo]}" Value="True">
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoLogo]}" Value="True">
                                                                 <Setter Property="Visibility" Value="Visible"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -651,29 +536,72 @@
                                         </Grid>
 
                                         <!-- Image de Source -->
-                                        <Border x:Name="SourceIconBorder" HorizontalAlignment="Left" Margin="20,0,0,0" Grid.Column="0" Opacity="1">
+                                        <Border x:Name="SourceIconBorder"
+                                                HorizontalAlignment="Left"
+                                                Margin="20,0,0,0"
+                                                Grid.Column="0"
+                                                Opacity="1">
+
                                             <Border.Style>
                                                 <Style TargetType="Border">
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoSource]}" Value="False">
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoSource]}" Value="False">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </Border.Style>
+
                                             <Grid>
-                                                <Image x:Name="SourceIcons" Source="{ThemeFileBinding Source.Name, PathFormat='Icons/Source/{0}.png'}"
+                                                <!-- Chemin custom défini dans Aniki Helper -->
+                                                <TextBlock x:Name="CustomSourceIconPathText"
+                                                           Text="{PluginSettings Plugin=AnikiHelper, Path=CustomSourceIconsFolder}"
+                                                           Visibility="Collapsed"/>
+
+                                                <!-- Chemin final source : CustomFolder/Source.Name.png -->
+                                                <TextBlock x:Name="CustomSourceIconPath"
+                                                           Visibility="Collapsed">
+                                                    <TextBlock.Text>
+                                                        <MultiBinding StringFormat="{}{0}/{1}.png">
+                                                            <Binding Path="Text" ElementName="CustomSourceIconPathText"/>
+                                                            <Binding Path="Source.Name"/>
+                                                        </MultiBinding>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+
+                                                <!-- Chemin final plateforme : CustomFolder/Platforms[0].Name.png -->
+                                                <TextBlock x:Name="CustomPlatformIconPath"
+                                                           Visibility="Collapsed">
+                                                    <TextBlock.Text>
+                                                        <MultiBinding StringFormat="{}{0}/{1}.png">
+                                                            <Binding Path="Text" ElementName="CustomSourceIconPathText"/>
+                                                            <Binding Path="Platforms[0].Name"/>
+                                                        </MultiBinding>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+
+                                                <!-- 1. Icône source custom utilisateur -->
+                                                <Image x:Name="CustomSourceIcons"
+                                                       Source="{Binding Text, ElementName=CustomSourceIconPath}"
                                                        RenderOptions.BitmapScalingMode="Fant"
                                                        VerticalAlignment="Center"
                                                        HorizontalAlignment="Center"
                                                        MaxHeight="70"
                                                        MaxWidth="180"
                                                        Margin="0,0,40,0">
+
                                                     <Image.Style>
                                                         <Style TargetType="Image">
                                                             <Setter Property="Visibility" Value="Visible"/>
+
                                                             <Style.Triggers>
+                                                                <!-- Aucun dossier custom défini -->
+                                                                <DataTrigger Binding="{Binding ElementName=CustomSourceIconPathText, Path=Text}" Value="">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </DataTrigger>
+
+                                                                <!-- Icône custom source absente -->
                                                                 <Trigger Property="Source" Value="{x:Null}">
                                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                                 </Trigger>
@@ -681,20 +609,103 @@
                                                         </Style>
                                                     </Image.Style>
                                                 </Image>
-                                                <Image x:Name="PlateformIcons" Source="{ThemeFileBinding Platforms[0].Name, PathFormat='Icons/Source/{0}.png'}"
+
+                                                <!-- 2. Icône source par défaut du thème -->
+                                                <Image x:Name="SourceIcons"
+                                                       Source="{ThemeFileBinding Source.Name, PathFormat='Icons/Source/{0}.png'}"
                                                        RenderOptions.BitmapScalingMode="Fant"
                                                        VerticalAlignment="Center"
                                                        HorizontalAlignment="Center"
                                                        MaxHeight="70"
                                                        MaxWidth="180"
                                                        Margin="0,0,40,0">
+
                                                     <Image.Style>
                                                         <Style TargetType="Image">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
+
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ElementName=SourceIcons, Path=Source}" Value="{x:Null}">
+                                                                <!-- Si l’icône custom source est absente, on tente le fallback thème -->
+                                                                <DataTrigger Binding="{Binding ElementName=CustomSourceIcons, Path=Visibility}" Value="Collapsed">
                                                                     <Setter Property="Visibility" Value="Visible"/>
                                                                 </DataTrigger>
+
+                                                                <!-- Icône thème source absente -->
+                                                                <Trigger Property="Source" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+
+                                                <!-- 3. Icône plateforme custom utilisateur -->
+                                                <Image x:Name="CustomPlateformIcons"
+                                                       Source="{Binding Text, ElementName=CustomPlatformIconPath}"
+                                                       RenderOptions.BitmapScalingMode="Fant"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       MaxHeight="70"
+                                                       MaxWidth="180"
+                                                       Margin="0,0,40,0">
+
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                            <Style.Triggers>
+                                                                <!-- Plateforme custom seulement si aucune icône source n’est disponible -->
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding ElementName=CustomSourceIcons, Path=Visibility}" Value="Collapsed"/>
+                                                                        <Condition Binding="{Binding ElementName=SourceIcons, Path=Visibility}" Value="Collapsed"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </MultiDataTrigger>
+
+                                                                <!-- Aucun dossier custom défini -->
+                                                                <DataTrigger Binding="{Binding ElementName=CustomSourceIconPathText, Path=Text}" Value="">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </DataTrigger>
+
+                                                                <!-- Icône custom plateforme absente -->
+                                                                <Trigger Property="Source" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+
+                                                <!-- 4. Icône plateforme par défaut du thème -->
+                                                <Image x:Name="PlateformIcons"
+                                                       Source="{ThemeFileBinding Platforms[0].Name, PathFormat='Icons/Source/{0}.png'}"
+                                                       RenderOptions.BitmapScalingMode="Fant"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       MaxHeight="70"
+                                                       MaxWidth="180"
+                                                       Margin="0,0,40,0">
+
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                            <Style.Triggers>
+                                                                <!-- Fallback plateforme thème si source + plateforme custom absentes -->
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding ElementName=CustomSourceIcons, Path=Visibility}" Value="Collapsed"/>
+                                                                        <Condition Binding="{Binding ElementName=SourceIcons, Path=Visibility}" Value="Collapsed"/>
+                                                                        <Condition Binding="{Binding ElementName=CustomPlateformIcons, Path=Visibility}" Value="Collapsed"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </MultiDataTrigger>
+
+                                                                <!-- Icône thème plateforme absente -->
+                                                                <Trigger Property="Source" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </Trigger>
                                                             </Style.Triggers>
                                                         </Style>
                                                     </Image.Style>
@@ -732,7 +743,7 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible"/>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PerformanceMode]}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PerformanceMode]}" Value="True"/>
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard>
@@ -747,7 +758,7 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible"/>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[PerformanceMode]}" Value="False"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PerformanceMode]}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
 
                                             <MultiDataTrigger.EnterActions>
@@ -846,7 +857,7 @@
                                         <Style TargetType="Border">
                                             <Setter Property="BorderThickness" Value="0,0,0,1"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TopOrBottomBar]}" Value="True">
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TopOrBottomBar]}" Value="True">
                                                     <Setter Property="BorderThickness" Value="0,1,0,0"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -862,7 +873,7 @@
                                         <Style TargetType="Border">
                                             <Setter Property="VerticalAlignment" Value="Bottom"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TopOrBottomBar]}" Value="True">
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TopOrBottomBar]}" Value="True">
                                                     <Setter Property="VerticalAlignment" Value="Top"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -1031,7 +1042,7 @@
                                                       Width="50"
                                                       Margin="10,0,10,0"
                                                       Grid.Row="1"
-                                                      Command="{PluginSettings Plugin=ThemeOptions, Path=OpenWindow[CheckDLCWindowStyle]}"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[CheckDLCWindowStyle]}"
                                                       Tag="{PluginSettings Plugin=CheckDlc, Path=HasData, FallbackValue=False}">
                                                 <ButtonEx.Style>
                                                     <Style TargetType="ButtonEx" BasedOn="{StaticResource GameOptionScaleStyle}">
@@ -1065,15 +1076,23 @@
                                                       Height="50"
                                                       Width="50"
                                                       Margin="10,0,10,0"
-                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[ScreenShotsThumbsWindowStyle]}"
-                                                      Tag="{PluginSettings Plugin=ScreenshotsVisualizer, Path=HasData, FallbackValue=False}">
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenScreenshotsWindowCommand}">
                                                 <ButtonEx.Style>
                                                     <Style TargetType="ButtonEx" BasedOn="{StaticResource GameOptionScaleStyle}">
                                                         <Setter Property="Visibility" Value="Collapsed" />
+
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True">
+
+                                                            <!-- Screenshot Visualizer : affiche seulement si le jeu a des screenshots -->
+                                                            <DataTrigger Binding="{PluginSettings Plugin=ScreenshotsVisualizer, Path=HasData, FallbackValue=False}" Value="True">
                                                                 <Setter Property="Visibility" Value="Visible" />
                                                             </DataTrigger>
+
+                                                            <!-- Screenshot Utilities : temporaire, affiche si le plugin est installé -->
+                                                            <DataTrigger Binding="{PluginStatus Plugin=ScreenshotUtilitiesLocalProvider_a049eff8-fd41-4dbc-9e35-01acc6b1a0cb, Status=Installed}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible" />
+                                                            </DataTrigger>
+
                                                         </Style.Triggers>
                                                     </Style>
                                                 </ButtonEx.Style>
@@ -1103,7 +1122,7 @@
                                                     <Style TargetType="CheckBox" BasedOn="{StaticResource TrailerMuteToggleScaleStyle}">
                                                         <Setter Property="Visibility" Value="Visible" />
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnDetailsView]}" Value="False">
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnDetailsView]}" Value="False">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -1283,7 +1302,7 @@
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </MultiDataTrigger>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoStar]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoStar]}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -1406,10 +1425,10 @@
                                                     <DataTrigger Binding="{Binding ReleaseYear}" Value="{x:Null}">
                                                         <Setter Property="Visibility" Value="Collapsed" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[Alternativ]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[Alternativ]}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoYear]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoYear]}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -1433,7 +1452,7 @@
                                             <Style TargetType="Grid">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoTime]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoTime]}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
                                                     <!-- Si texte vide -> Collapsed -->
@@ -1462,7 +1481,7 @@
                                             <Style TargetType="Grid">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoActivity]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoActivity]}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding ElementName=Played, Path=Text}" Value="">
@@ -1490,7 +1509,7 @@
                                             <Style TargetType="Grid">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoSize]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoSize]}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding ElementName=Siz, Path=Text}" Value="">
@@ -1518,7 +1537,7 @@
                                             <Style TargetType="Grid">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoCompletion]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoCompletion]}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding ElementName=Completed, Path=Text}" Value="">
@@ -1549,7 +1568,7 @@
                                                     <DataTrigger Binding="{PluginSettings Plugin=SuccessStory, Path=HasData}" Value="False">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoTrophyDetails]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoTrophyDetails]}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
                                                     <!-- Si pas de chiffres -> collapse -->
@@ -1617,7 +1636,7 @@
                                             <Style TargetType="Grid">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoGenreDetails]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoGenreDetails]}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Game.Genres}" Value="{x:Null}">
@@ -1689,7 +1708,7 @@
                                                     <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamCurrentPlayersAvailable}" Value="True">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoPlayerDetails]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoPlayerDetails]}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -1745,7 +1764,7 @@
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </MultiDataTrigger>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[NoHLTBDetails]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoHLTBDetails]}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -1783,7 +1802,7 @@
                                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=HasItems}" Value="False">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[FeaturesSteam]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[FeaturesSteam]}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -2410,7 +2429,7 @@
                                                     <Condition Binding="{Binding ElementName=Id, Path=Opacity}" Value="1"/>
                                                     <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible"/>
                                                     <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
-                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnDetailsView]}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnDetailsView]}" Value="True"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.EnterActions>
                                                     <BeginStoryboard>
@@ -2453,10 +2472,10 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnDetailsView]}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnDetailsView]}" Value="True"/>
                                                 <Condition Binding="{Binding ElementName=TrailerContainer, Path=Opacity}" Value="1"/>
                                                 <Condition Binding="{Binding ElementName=PART_ViewHost, Path=ActualWidth}" Value="1728"/>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[MiniTrailer]}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[MiniTrailer]}" Value="True"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Visibility" Value="Visible"/>
                                             <MultiDataTrigger.EnterActions>
@@ -2502,7 +2521,7 @@
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding ElementName=Id, Path=Opacity}" Value="1"/>
                                                 <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnDetailsView]}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnDetailsView]}" Value="True"/>
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard>
@@ -2577,7 +2596,7 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ElementName=Id, Path=Opacity}" Value="1"/>
-                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnDetailsView]}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnDetailsView]}" Value="True"/>
                                                     <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="True"/>
                                                     <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
                                                 </MultiDataTrigger.Conditions>
@@ -2587,7 +2606,7 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ElementName=Id, Path=Opacity}" Value="1"/>
-                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnDetailsView]}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnDetailsView]}" Value="True"/>
                                                     <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="True"/>
                                                     <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
                                                     <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
@@ -2602,7 +2621,7 @@
                                                 </MultiDataTrigger.EnterActions>
 
                                             </MultiDataTrigger>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrailerOnDetailsView]}" Value="True">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnDetailsView]}" Value="True">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="False">
@@ -2717,7 +2736,7 @@
                                             <DataTrigger Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Content.ControlVisibility}" Value="Hidden">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowTrailerTime]}" Value="False">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowTrailerTime]}" Value="False">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -3103,7 +3122,7 @@
                                             <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[LogoTrophy]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[LogoTrophy]}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -3116,7 +3135,7 @@
                                             <Style TargetType="StackPanel">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[LogoTrophy]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[LogoTrophy]}" Value="True">
                                                         <Setter Property="Visibility" Value="Visible" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -3228,7 +3247,7 @@
                                     <Setter Property="Margin" Value="0,0,0,50"/>
                                     <Setter Property="Height" Value="750"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp1610">
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp1610">
                                             <Setter Property="Height" Value="870"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -3304,7 +3323,7 @@
                                                                                         <MultiDataTrigger.Conditions>
                                                                                             <Condition Binding="{Binding IsHidden}" Value="True"/>
                                                                                             <Condition Binding="{Binding Unlocked}" Value="False"/>
-                                                                                            <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowHiddenAchievements]}" Value="False"/>
+                                                                                            <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowHiddenAchievements]}" Value="False"/>
                                                                                         </MultiDataTrigger.Conditions>
                                                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                                                     </MultiDataTrigger>
@@ -3346,7 +3365,7 @@
                                                                                         <MultiDataTrigger.Conditions>
                                                                                             <Condition Binding="{Binding IsHidden}" Value="True"/>
                                                                                             <Condition Binding="{Binding Unlocked}" Value="False"/>
-                                                                                            <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowHiddenAchievements]}" Value="False"/>
+                                                                                            <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowHiddenAchievements]}" Value="False"/>
                                                                                         </MultiDataTrigger.Conditions>
                                                                                         <Setter Property="Visibility" Value="Visible"/>
                                                                                     </MultiDataTrigger>
@@ -3384,7 +3403,7 @@
                                                                                 <MultiDataTrigger.Conditions>
                                                                                     <Condition Binding="{Binding IsHidden}" Value="True"/>
                                                                                     <Condition Binding="{Binding Unlocked}" Value="False"/>
-                                                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowHiddenAchievements]}" Value="False"/>
+                                                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowHiddenAchievements]}" Value="False"/>
                                                                                 </MultiDataTrigger.Conditions>
                                                                                 <Setter Property="Effect">
                                                                                     <Setter.Value>
@@ -3417,7 +3436,7 @@
                                                                                 <MultiDataTrigger.Conditions>
                                                                                     <Condition Binding="{Binding IsHidden}" Value="True"/>
                                                                                     <Condition Binding="{Binding Unlocked}" Value="False"/>
-                                                                                    <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowHiddenAchievements]}" Value="False"/>
+                                                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowHiddenAchievements]}" Value="False"/>
                                                                                 </MultiDataTrigger.Conditions>
                                                                                 <Setter Property="Effect">
                                                                                     <Setter.Value>
@@ -3671,7 +3690,7 @@
 
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[LocalClock]}" Value="False"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[LocalClock]}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.Setters>
                                                 <Setter TargetName="Clock2" Property="Visibility" Value="Visible"/>
@@ -3692,7 +3711,7 @@
                                         <!-- Filtre: Unlocked only -->
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophyFilter]}" Value="Unlocked"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophyFilter]}" Value="Unlocked"/>
                                                 <Condition Binding="{Binding Unlocked}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -3701,7 +3720,7 @@
                                         <!-- MODE LOCKED -->
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophyFilter]}" Value="Locked"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophyFilter]}" Value="Locked"/>
                                                 <Condition Binding="{Binding Unlocked}" Value="True"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -3744,19 +3763,19 @@
                                         <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
                                             <Setter Property="Text" Value="{DynamicResource LOCNewest}"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="Newest">
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="Newest">
                                                     <Setter Property="Text" Value="{DynamicResource LOCNewest}"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="Oldest">
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="Oldest">
                                                     <Setter Property="Text" Value="{DynamicResource LOCOldest}"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="RarityAsc">
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="RarityAsc">
                                                     <Setter Property="Text" Value="{DynamicResource LOCRarityAsc}"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="RarityDesc">
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="RarityDesc">
                                                     <Setter Property="Text" Value="{DynamicResource LOCRarityDesc}"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="DefaultOrder">
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="DefaultOrder">
                                                     <Setter Property="Text" Value="{DynamicResource LOCDefault}"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -3773,13 +3792,13 @@
                                         <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
                                             <Setter Property="Text" Value="{DynamicResource LOCAll}"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophyFilter]}" Value="All">
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophyFilter]}" Value="All">
                                                     <Setter Property="Text" Value="{DynamicResource LOCAll}"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophyFilter]}" Value="Locked">
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophyFilter]}" Value="Locked">
                                                     <Setter Property="Text" Value="{DynamicResource LOCLockedOnly}"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophyFilter]}" Value="Unlocked">
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophyFilter]}" Value="Unlocked">
                                                     <Setter Property="Text" Value="{DynamicResource LOCUnlockedOnly}"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -3821,16 +3840,16 @@
                                     <Style TargetType="ListView" BasedOn="{StaticResource AchievementListBaseStyle}">
                                         <Setter Property="Visibility" Value="Visible"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="Oldest">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="Oldest">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="RarityAsc">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="RarityAsc">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="RarityDesc">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="RarityDesc">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="DefaultOrder">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="DefaultOrder">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -3847,7 +3866,7 @@
                                     <Style TargetType="ListView" BasedOn="{StaticResource AchievementListBaseStyle}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="Oldest">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="Oldest">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -3864,7 +3883,7 @@
                                     <Style TargetType="ListView" BasedOn="{StaticResource AchievementListBaseStyle}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="RarityAsc">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="RarityAsc">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -3881,7 +3900,7 @@
                                     <Style TargetType="ListView" BasedOn="{StaticResource AchievementListBaseStyle}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="RarityDesc">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="RarityDesc">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -3898,7 +3917,7 @@
                                     <Style TargetType="ListView" BasedOn="{StaticResource AchievementListBaseStyle}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="DefaultOrder">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="DefaultOrder">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -3948,10 +3967,10 @@
         </Setter>
 
         <Style.Triggers>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp1610">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp1610">
                 <Setter Property="Margin" Value="0,-60,0,-60"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp219">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp219">
                 <Setter Property="Margin" Value="-320,0,-320,0"/>
             </DataTrigger>
         </Style.Triggers>
@@ -4080,7 +4099,7 @@
                                         <ComboBoxEx pbeh:FocusBahaviors.FocusBinding="True"
                                                     pbeh:FocusBahaviors.OnVisibilityFocus="True"
                                                     SelectedValuePath="Tag"
-                                                    SelectedValue="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort], Mode=TwoWay, TargetNullValue=Newest}"
+                                                    SelectedValue="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort], Mode=TwoWay, TargetNullValue=Newest}"
                                                     Margin="0,10,0,15"
                                                     Height="56">
                                             <ComboBoxItem Content="{DynamicResource LOCNewest}" Tag="Newest"/>
@@ -4101,7 +4120,7 @@
                                                    Margin="0,15,0,10"/>
 
                                         <ComboBoxEx SelectedValuePath="Tag"
-                                                    SelectedValue="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophyFilter], Mode=TwoWay, TargetNullValue=All}"
+                                                    SelectedValue="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophyFilter], Mode=TwoWay, TargetNullValue=All}"
                                                     Margin="0,10,0,15"
                                                     Height="46">
                                             <ComboBoxItem Content="{DynamicResource LOCAll}" Tag="All"/>
@@ -4122,7 +4141,7 @@
                                         <StackPanel Margin="0,10,0,10" Orientation="Vertical">
                                             <CheckBoxEx x:Name="ShowHiddenToggle"
                                                         Content="{DynamicResource LOCShowHiddenAchievements}"
-                                                        IsChecked="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowHiddenAchievements], Mode=TwoWay}"/>
+                                                        IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowHiddenAchievements], Mode=TwoWay}"/>
                                         </StackPanel>
 
                                         <Border Height="1" Background="#22FFFFFF" Margin="0,18,0,16"/>
@@ -4291,7 +4310,7 @@
                                             <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[LogoTrophy]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[LogoTrophy]}" Value="True">
                                                         <Setter Property="Visibility" Value="Collapsed" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -4304,7 +4323,7 @@
                                             <Style TargetType="StackPanel">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[LogoTrophy]}" Value="True">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[LogoTrophy]}" Value="True">
                                                         <Setter Property="Visibility" Value="Visible" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -4414,7 +4433,7 @@
                                     <Setter Property="Margin" Value="0,0,0,50"/>
                                     <Setter Property="Height" Value="750"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp1610">
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp1610">
                                             <Setter Property="Height" Value="870"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -4820,7 +4839,7 @@
                                         <!-- horloge locale -->
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[LocalClock]}" Value="False"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[LocalClock]}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.Setters>
                                                 <Setter TargetName="Clock2" Property="Visibility" Value="Visible"/>
@@ -4839,7 +4858,7 @@
                                         <!-- Filtre: Unlocked only -->
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophyFilter]}" Value="Unlocked"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophyFilter]}" Value="Unlocked"/>
                                                 <Condition Binding="{Binding IsUnlock}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -4848,7 +4867,7 @@
                                         <!-- MODE LOCKED -->
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophyFilter]}" Value="Locked"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophyFilter]}" Value="Locked"/>
                                                 <Condition Binding="{Binding IsUnlock}" Value="True"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -4893,10 +4912,10 @@
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophyFilter]}" Value="Locked">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophyFilter]}" Value="Locked">
                                                 <Setter Property="Text" Value="{DynamicResource LocLockedAchievements}"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophyFilter]}" Value="Unlocked">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophyFilter]}" Value="Unlocked">
                                                 <Setter Property="Text" Value="{DynamicResource LocUnlockedAchievements}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -4989,7 +5008,7 @@
                                                     pbeh:FocusBahaviors.FocusBinding="True"
                                                     pbeh:FocusBahaviors.OnVisibilityFocus="True"
                                                     SelectedValuePath="Tag"
-                                                    SelectedValue="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort], Mode=TwoWay}"
+                                                    SelectedValue="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort], Mode=TwoWay}"
                                                     Width="260">
                                             <ComboBoxItem Content="{DynamicResource LOCNewest}" Tag="Newest"/>
                                             <ComboBoxItem Content="{DynamicResource LOCOldest}" Tag="Oldest"/>
@@ -5012,7 +5031,7 @@
 
                                         <ComboBoxEx Grid.Column="1"
                                                     SelectedValuePath="Tag"
-                                                    SelectedValue="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophyFilter], Mode=TwoWay}"
+                                                    SelectedValue="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophyFilter], Mode=TwoWay}"
                                                     Width="260">
 
                                             <ComboBoxItem Content="{DynamicResource LOCAll}" Tag="All"/>
@@ -5048,10 +5067,10 @@
                                     <Style TargetType="ListView" BasedOn="{StaticResource AchievementListBaseStyle}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="Newest">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="Newest">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="{x:Null}">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="{x:Null}">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -5068,7 +5087,7 @@
                                     <Style TargetType="ListView" BasedOn="{StaticResource AchievementListBaseStyle}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[TrophySort]}" Value="Oldest">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="Oldest">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -5112,10 +5131,10 @@
         </Setter>
 
         <Style.Triggers>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp1610">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp1610">
                 <Setter Property="Margin" Value="0,-60,0,-60"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp219">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp219">
                 <Setter Property="Margin" Value="-320,0,-320,0"/>
             </DataTrigger>
         </Style.Triggers>
@@ -5902,10 +5921,10 @@
         </Setter>
 
         <Style.Triggers>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp1610">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp1610">
                 <Setter Property="Margin" Value="0,-60,0,-60"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp219">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp219">
                 <Setter Property="Margin" Value="-320,0,-320,0"/>
             </DataTrigger>
         </Style.Triggers>

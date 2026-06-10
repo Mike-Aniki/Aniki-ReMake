@@ -62,7 +62,6 @@
         <Setter Property="BorderThickness" Value="0,2,0,0" />
     </Style>
 
-    <!-- Quick Button -->
 
 
     <!-- Quick CheckBox -->
@@ -151,6 +150,462 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- Achievement Memory -->
+    <DataTemplate x:Key="HubAchievementMemoryItemTemplate">
+        <ButtonEx Width="680"
+                  Height="382"
+                  Focusable="True"
+                  FocusVisualStyle="{x:Null}"
+                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenGameDetailsCommand}"
+                  CommandParameter="{Binding GameId}"
+                  Style="{StaticResource HubCardFocusButtonStyle}">
+
+            <Border CornerRadius="20"
+                    Style="{DynamicResource HubCardBorderStyle}">
+
+                <Grid ClipToBounds="True">
+
+                    <Border x:Name="AchievementMemoryMask"
+                            Background="Black"
+                            CornerRadius="20"/>
+
+                    <Grid>
+                        <Grid.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=AchievementMemoryMask}"/>
+                        </Grid.OpacityMask>
+
+                        <Border Background="#181A1E"/>
+
+                        <!-- Game background -->
+                        <Image Source="{Binding GameBackgroundPath}"
+                               Stretch="UniformToFill"
+                               Opacity="0.82"
+                               RenderOptions.BitmapScalingMode="Fant"/>
+
+                        <!-- Dark overlay -->
+                        <Border Background="#44000000"/>
+
+                        <!-- Top game title area -->
+                        <Border VerticalAlignment="Top"
+                                Height="95"
+                                IsHitTestVisible="False">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#D8000000" Offset="0"/>
+                                    <GradientStop Color="#77000000" Offset="0.65"/>
+                                    <GradientStop Color="#00000000" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <StackPanel VerticalAlignment="Top"
+                                    Margin="22,18,22,0">
+
+                            <TextBlock Text="{Binding GameName}"
+                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                       Foreground="{DynamicResource TextHubBannerCardBottomBrush}"
+                                       FontSize="23"
+                                       FontWeight="Bold"
+                                       TextWrapping="Wrap"
+                                       TextTrimming="CharacterEllipsis"
+                                       HorizontalAlignment="Left"
+                                       MaxWidth="540"
+                                       MaxHeight="58"/>
+
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="0,8,0,0">
+
+                                <Border CornerRadius="7"
+                                        Padding="8,2"
+                                        Background="#66000000"
+                                        BorderBrush="#55FFFFFF"
+                                        BorderThickness="1"
+                                        Margin="0,0,6,0">
+                                    <TextBlock Text="{Binding UnlockDateString}"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               Foreground="{DynamicResource TextHubBannerCardBottomBrush}"
+                                               FontSize="13"
+                                               FontWeight="SemiBold"/>
+                                </Border>
+
+                                <Border CornerRadius="7"
+                                        Padding="8,2"
+                                        Background="#66000000"
+                                        BorderBrush="#55FFFFFF"
+                                        BorderThickness="1"
+                                        Margin="0,0,6,0">
+                                    <TextBlock Foreground="{DynamicResource TextHubBannerCardBottomBrush}"
+                                               FontSize="13"
+                                               FontWeight="SemiBold">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                <Setter Property="Text" Value="{Binding Rarity}"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Rarity}" Value="Common">
+                                                        <Setter Property="Text" Value="{DynamicResource LOCTrophyBronzeShort}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Rarity}" Value="Uncommon">
+                                                        <Setter Property="Text" Value="{DynamicResource LOCTrophySilverShort}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Rarity}" Value="Rare">
+                                                        <Setter Property="Text" Value="{DynamicResource LOCTrophyGoldShort}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Rarity}" Value="VeryRare">
+                                                        <Setter Property="Text" Value="{DynamicResource LOCTrophyGoldShort}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Rarity}" Value="UltraRare">
+                                                        <Setter Property="Text" Value="{DynamicResource LOCTrophyGoldShort}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Border>
+
+                                <Border CornerRadius="7"
+                                        Padding="8,2"
+                                        Background="#66000000"
+                                        BorderBrush="#55FFFFFF"
+                                        BorderThickness="1">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding PercentString}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+
+                                    <TextBlock Text="{Binding PercentString}"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               Foreground="{DynamicResource TextHubBannerCardBottomBrush}"
+                                               FontSize="13"
+                                               FontWeight="SemiBold"/>
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- Rarity trophy image -->
+                        <Grid Width="52"
+                              Height="52"
+                              Margin="0,18,18,0"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Top"
+                              Opacity="0.95">
+
+                            <Image Source="{ThemeFile 'Images/Bronze.png'}"
+                                   Stretch="Uniform"
+                                   RenderOptions.BitmapScalingMode="Fant">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Rarity}" Value="Common">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+
+                            <Image Source="{ThemeFile 'Images/Argent.png'}"
+                                   Stretch="Uniform"
+                                   RenderOptions.BitmapScalingMode="Fant">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Rarity}" Value="Uncommon">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+
+                            <Image Source="{ThemeFile 'Images/Or.png'}"
+                                   Stretch="Uniform"
+                                   RenderOptions.BitmapScalingMode="Fant">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Rarity}" Value="Rare">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Rarity}" Value="VeryRare">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Rarity}" Value="UltraRare">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </Grid>
+
+                        <!-- Bottom gradient -->
+                        <Border VerticalAlignment="Bottom"
+                                Height="170"
+                                IsHitTestVisible="False">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#00000000" Offset="0"/>
+                                    <GradientStop Color="#99000000" Offset="0.42"/>
+                                    <GradientStop Color="#F0000000" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <Border VerticalAlignment="Bottom"
+                                Height="104"
+                                CornerRadius="0,0,20,20"
+                                Background="{DynamicResource HubCardBottomBackgroundBrush}"
+                                Opacity="0.80" />
+
+
+                        <!-- Bottom trophy banner -->
+                        <Border VerticalAlignment="Bottom"
+                                Height="104"
+                                CornerRadius="0,0,20,20"
+                                Padding="20,5"
+                                SnapsToDevicePixels="True"
+                                BorderBrush="{DynamicResource HubCardBottomBorderBrush}"
+                                BorderThickness="0,2,0,0">
+
+
+
+                            <Grid VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="74"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Trophy icon inside banner -->
+                                <Border Grid.Column="0"
+                                        Width="58"
+                                        Height="58"
+                                        CornerRadius="10"
+                                        Background="#44000000"
+                                        BorderBrush="#55FFFFFF"
+                                        BorderThickness="1"
+                                        ClipToBounds="True"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Left">
+
+                                    <Image Source="{Binding IconPath}"
+                                           Stretch="UniformToFill"
+                                           RenderOptions.BitmapScalingMode="Fant"/>
+                                </Border>
+
+                                <!-- Trophy text -->
+                                <StackPanel Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Margin="0,0,12,0">
+
+                                    <TextBlock Text="{Binding Title}"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               Foreground="{DynamicResource TextHubBannerCardBottomBrush}"
+                                               FontSize="22"
+                                               FontWeight="Bold"
+                                               TextTrimming="CharacterEllipsis"/>
+
+                                    <TextBlock Text="{Binding Description}"
+                                               Margin="0,5,0,0"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               Foreground="{DynamicResource TextHubBannerCardBottomBrush}"
+                                               FontSize="14"
+                                               FontWeight="SemiBold"
+                                               Opacity="0.74"
+                                               TextTrimming="CharacterEllipsis"/>
+                                </StackPanel>
+
+
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Border>
+        </ButtonEx>
+    </DataTemplate>
+
+    <!-- Screenshot -->
+    <DataTemplate x:Key="HubLatestCaptureItemTemplate">
+        <ButtonEx Width="680"
+                  Height="382"
+                  Focusable="True"
+                  FocusVisualStyle="{x:Null}"
+                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenScreenshotsForMediaItemCommand}"
+                  CommandParameter="{Binding}"
+                  Style="{StaticResource HubCardFocusButtonStyle}">
+
+            <Border CornerRadius="20"
+                    Style="{DynamicResource HubCardBorderStyle}">
+
+                <Grid ClipToBounds="True">
+
+                    <Border x:Name="LatestCaptureImageMask"
+                            Background="Black"
+                            CornerRadius="20"/>
+
+                    <Grid>
+                        <Grid.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=LatestCaptureImageMask}"/>
+                        </Grid.OpacityMask>
+
+                        <Border Background="#181A1E"/>
+
+                        <Image Source="{Binding DisplayThumbnailPath}"
+                               Stretch="UniformToFill"
+                               RenderOptions.BitmapScalingMode="Fant">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasUsableThumbnail}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+
+                        <Grid>
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasUsableThumbnail}" Value="False">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+
+                            <Border Background="#181A1E"/>
+
+                            <StackPanel HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Margin="32">
+
+                                <TextBlock Text="{DynamicResource LOCMediaGalleryVideoPreviewUnavailable}"
+                                           Margin="0,-80,0,0"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           FontSize="18"
+                                           FontWeight="SemiBold"
+                                           Opacity="0.62"
+                                           TextAlignment="Center"
+                                           TextTrimming="CharacterEllipsis"
+                                           MaxWidth="560"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Rectangle x:Name="HubVideoDim"
+                                   Fill="#46000000"
+                                   Visibility="Collapsed"
+                                   IsHitTestVisible="False"
+                                   Panel.ZIndex="20"/>
+
+                        <Image x:Name="HubPlayBadge"
+                               Source="{ThemeFile 'Images/VideoLogo.png'}"
+                               Width="82"
+                               Height="82"
+                               Visibility="Collapsed"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               IsHitTestVisible="False"
+                               RenderOptions.BitmapScalingMode="Fant"
+                               Panel.ZIndex="21"/>
+
+                        <Border x:Name="HubVideoDurationBadge"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Margin="18,18,0,0"
+                                Padding="9,3"
+                                Background="#C8000000"
+                                CornerRadius="8"
+                                Visibility="Collapsed"
+                                Panel.ZIndex="22">
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <TextBlock Text="{DynamicResource LOCMediaDuration}"
+                                           Foreground="White"
+                                           FontSize="14"
+                                           FontWeight="SemiBold"
+                                           Style="{StaticResource TextBlockDetailStyle}"/>
+
+                                <TextBlock Text="{Binding DisplayDurationString}"
+                                           Margin="5,0,0,0"
+                                           Foreground="White"
+                                           FontSize="14"
+                                           FontWeight="SemiBold"
+                                           Style="{StaticResource TextBlockDetailStyle}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border VerticalAlignment="Bottom"
+                                Height="150"
+                                IsHitTestVisible="False">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#00000000" Offset="0"/>
+                                    <GradientStop Color="#77000000" Offset="0.42"/>
+                                    <GradientStop Color="#E6000000" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <Border VerticalAlignment="Bottom"
+                                Height="83"
+                                CornerRadius="0,0,20,20"
+                                Background="{DynamicResource HubCardBottomBackgroundBrush}"
+                                Opacity="0.80" />
+
+                        <!-- Bottom banner -->
+                        <Border VerticalAlignment="Bottom"
+                                Height="83"
+                                CornerRadius="0,0,20,20"
+                                Padding="20,5"
+                                SnapsToDevicePixels="True"
+                                BorderBrush="{DynamicResource HubCardBottomBorderBrush}"
+                                BorderThickness="0,2,0,0">
+
+                            <StackPanel VerticalAlignment="Center">
+
+                                <TextBlock Text="{Binding GameName}"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           Foreground="{DynamicResource TextHubBannerCardBottomBrush}"
+                                           FontSize="24"
+                                           FontWeight="SemiBold"
+                                           TextTrimming="CharacterEllipsis"/>
+
+                                <TextBlock Text="{Binding CaptureDateString}"
+                                           Margin="0,5,0,0"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           Foreground="{DynamicResource TextHubBannerCardBottomBrush}"
+                                           FontSize="16"
+                                           FontWeight="SemiBold"
+                                           Opacity="0.68"
+                                           TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Border>
+        </ButtonEx>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsVideo}" Value="True">
+                <Setter TargetName="HubVideoDim" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="HubPlayBadge" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="HubVideoDurationBadge" Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
 
     <!-- Trophées : derniers succès SS -->
     <DataTemplate x:Key="HubTrophyRecentTemplate">
@@ -317,7 +772,7 @@
     <DataTemplate x:Key="HubTrophyRecentTemplatePA">
         <ButtonEx Command="{Binding OpenAchievementWindow}"
                   Style="{DynamicResource ButtonTrophyviewitem}"
-                  Focusable="True"
+                  Focusable="False"
                   Background="Transparent"
                   Margin="10,5,10,5"
                   HorizontalContentAlignment="Stretch"
@@ -459,7 +914,7 @@
     <DataTemplate x:Key="HubTrophyRareTemplatePA">
         <ButtonEx Command="{Binding OpenAchievementWindow}"
                   Style="{DynamicResource ButtonTrophyviewitem}"
-                  Focusable="True"
+                  Focusable="False"
                   Background="Transparent"
                   Margin="10,5,10,5"
                   HorizontalContentAlignment="Stretch"

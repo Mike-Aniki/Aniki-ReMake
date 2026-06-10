@@ -13,9 +13,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ContentControl">
 
-                    <Grid KeyboardNavigation.TabNavigation="Contained"
-                          KeyboardNavigation.DirectionalNavigation="Contained"
-                          KeyboardNavigation.ControlTabNavigation="Contained"
+                    <Grid KeyboardNavigation.TabNavigation="Cycle"
+                          KeyboardNavigation.DirectionalNavigation="Cycle"
+                          KeyboardNavigation.ControlTabNavigation="Cycle"
+                          d:DesignHeight="{StaticResource DesignHeight}"
+
                           FocusManager.FocusedElement="{Binding ElementName=QuickProfileButton}">
                         <Grid.Resources>
 
@@ -392,16 +394,14 @@
                         </Grid.Resources>
 
 
-                        <!-- FULLSCREEN DARK BACKDROP -->
-                        <Border Background="#99000000"
-                                Opacity="0"/>
+
 
                         <!-- MAIN PANEL -->
                         <Grid x:Name="QuickAccessPanel"
                               Width="520"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Top"
-                              Margin="42,88,0,0"
+                              Margin="42,20,0,0"
                               Opacity="0"
                               RenderTransformOrigin="0.5,0">
 
@@ -481,6 +481,175 @@
                                                       Opacity="0.55"
                                                       Color="#000000"/>
                                 </Border.Effect>
+
+                            </Border>
+
+                            <Border>
+                                <Border.OpacityMask>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#00FFFFFF" Offset="0"/>
+                                        <GradientStop Color="#FFFFFFFF" Offset="0.1"/>
+                                        <GradientStop Color="#FFFFFFFF" Offset="0.9"/>
+                                        <GradientStop Color="#00FFFFFF" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.OpacityMask>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Tag" Value="{DynamicResource BackgroundImageIndex}" />
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="Opacity" Value="0.1"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="100">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage100}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="101">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage101}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="102">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage102}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="103">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage103}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="104">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage104}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="105">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage105}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="106">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage106}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="107">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage107}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="108">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage108}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="109">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage109}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="110">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage110}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="111">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage111}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="112">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage112}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="113">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage113}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="114">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage114}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="115">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage115}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="116">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage116}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="117">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage117}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="118">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage118}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="119">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage119}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="120">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage120}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="121">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage121}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="122">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage122}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="123">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage123}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="124">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage124}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="125">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage125}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="126">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage126}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="127">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage127}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="128">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage128}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="129">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage129}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="130">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage130}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="131">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage131}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="132">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage132}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="133">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage133}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="134">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage134}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="135">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage135}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="136">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage136}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="137">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage137}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="138">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage138}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="139">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage139}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="140">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage140}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="141">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage140}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="142">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage140}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="143">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage140}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="144">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage140}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="145">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage140}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="146">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage140}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="147">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage140}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="148">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage140}" />
+                                            </DataTrigger>
+
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                             </Border>
 
 
@@ -596,189 +765,292 @@
                                                VerticalAlignment="Center"
                                                TextTrimming="CharacterEllipsis"/>
 
+                                    <!-- QUICK HEADER ACTIONS + STATUS -->
+                                    <StackPanel Grid.Column="3"
+                                                Orientation="Horizontal"
+                                                VerticalAlignment="Center">
 
-                                    <!-- STATUS BADGE BUTTON -->
-                                    <ButtonEx x:Name="UserStatusBadgeButton"
-                                              Grid.Column="3"
-                                              Height="44"
-                                              MinWidth="104"
-                                              Padding="0"
-                                              Focusable="True"
-                                              IsTabStop="True"
-                                              FocusVisualStyle="{x:Null}"
-                                              Background="Transparent"
-                                              BorderBrush="Transparent"
-                                              BorderThickness="0"
-                                              VerticalAlignment="Center"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[SteamStatusMenuWindowStyle]}">
+                                        <ButtonEx x:Name="QuickRandomGameButton"
+                                                  Width="40"
+                                                  Height="40"
+                                                  Margin="0,0,8,0"
+                                                  Focusable="True"
+                                                  IsTabStop="True"
+                                                  FocusVisualStyle="{x:Null}"
+                                                  Background="Transparent"
+                                                  BorderBrush="Transparent"
+                                                  BorderThickness="0"
+                                                  Tag="&#xE8B1;"
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenRandomGameCommand}">
+                                            <ButtonEx.Template>
+                                                <ControlTemplate TargetType="ButtonEx">
+                                                    <Grid>
+                                                        <Border x:Name="Bg" CornerRadius="22"
+                                                                Background="Transparent"
+                                                                BorderBrush="Transparent"
+                                                                BorderThickness="1"/>
 
-                                        <ButtonEx.Style>
-                                            <Style TargetType="ButtonEx">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginStatus Plugin=SteamFriendsFullscreen_d8d67c7e-a797-45d7-ae44-3d53ddecc8d1, Status=Installed}" Value="True">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </ButtonEx.Style>
+                                                        <TextBlock Text="{TemplateBinding Tag}"
+                                                                   FontFamily="{DynamicResource FontIcons}"
+                                                                   FontSize="22"
+                                                                   Foreground="{DynamicResource TextBrush}"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"/>
 
-                                        <ButtonEx.Template>
-                                            <ControlTemplate TargetType="ButtonEx">
+                                                        <Border x:Name="FocusBorder"
+                                                                CornerRadius="22"
+                                                                BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                                BorderThickness="2"
+                                                                Visibility="Collapsed"/>
+                                                    </Grid>
 
-                                                <Grid>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsFocused" Value="True">
+                                                            <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible"/>
+                                                            <Setter TargetName="Bg" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsPressed" Value="True">
+                                                            <Setter Property="Opacity" Value="0.85"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </ButtonEx.Template>
+                                        </ButtonEx>
 
-                                                    <!-- STATUS BADGE BACKGROUND -->
-                                                    <Border x:Name="UserStatusBadge"
-                                                            Height="34"
-                                                            MinWidth="104"
-                                                            Padding="14,0"
-                                                            CornerRadius="17"
-                                                            Background="#1819F28B"
-                                                            BorderBrush="#5519F28B"
-                                                            BorderThickness="1"
-                                                            VerticalAlignment="Center">
+                                        <ButtonEx x:Name="QuickUpdateLibraryButton"
+                                                  Width="40"
+                                                  Height="40"
+                                                  Margin="0,0,8,0"
+                                                  Focusable="True"
+                                                  IsTabStop="True"
+                                                  FocusVisualStyle="{x:Null}"
+                                                  Background="Transparent"
+                                                  BorderBrush="Transparent"
+                                                  BorderThickness="0"
+                                                  Tag="&#xE72C;"
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=UpdateGameLibraryCommand}">
+                                            <ButtonEx.Template>
+                                                <ControlTemplate TargetType="ButtonEx">
+                                                    <Grid>
+                                                        <Border x:Name="Bg" CornerRadius="22"
+                                                                Background="Transparent"
+                                                                BorderBrush="Transparent"
+                                                                BorderThickness="1"/>
 
-                                                        <Border.Style>
-                                                            <Style TargetType="Border">
-                                                                <Setter Property="Background" Value="#1819F28B"/>
-                                                                <Setter Property="BorderBrush" Value="#5519F28B"/>
+                                                        <TextBlock Text="{TemplateBinding Tag}"
+                                                                   FontFamily="{DynamicResource FontIcons}"
+                                                                   FontSize="22"
+                                                                   Foreground="{DynamicResource TextBrush}"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"/>
 
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="online">
-                                                                        <Setter Property="Background" Value="#1819F28B"/>
-                                                                        <Setter Property="BorderBrush" Value="#5519F28B"/>
-                                                                    </DataTrigger>
+                                                        <Border x:Name="FocusBorder"
+                                                                CornerRadius="22"
+                                                                BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                                BorderThickness="2"
+                                                                Visibility="Collapsed"/>
+                                                    </Grid>
 
-                                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="offline">
-                                                                        <Setter Property="Background" Value="#182D3748"/>
-                                                                        <Setter Property="BorderBrush" Value="#554A5A68"/>
-                                                                    </DataTrigger>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsFocused" Value="True">
+                                                            <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible"/>
+                                                            <Setter TargetName="Bg" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsPressed" Value="True">
+                                                            <Setter Property="Opacity" Value="0.85"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </ButtonEx.Template>
+                                        </ButtonEx>
 
-                                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="away">
-                                                                        <Setter Property="Background" Value="#18FFC857"/>
-                                                                        <Setter Property="BorderBrush" Value="#55FFC857"/>
-                                                                    </DataTrigger>
+                                        <!-- STATUS BADGE BUTTON -->
+                                        <ButtonEx x:Name="UserStatusBadgeButton"
+                                                  Height="44"
+                                                  MinWidth="104"
+                                                  Padding="0"
+                                                  Focusable="True"
+                                                  IsTabStop="True"
+                                                  FocusVisualStyle="{x:Null}"
+                                                  Background="Transparent"
+                                                  BorderBrush="Transparent"
+                                                  BorderThickness="0"
+                                                  VerticalAlignment="Center"
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[SteamStatusMenuWindowStyle]}">
 
-                                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="busy">
-                                                                        <Setter Property="Background" Value="#18FF4D5A"/>
-                                                                        <Setter Property="BorderBrush" Value="#55FF4D5A"/>
-                                                                    </DataTrigger>
+                                            <ButtonEx.Style>
+                                                <Style TargetType="ButtonEx">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginStatus Plugin=SteamFriendsFullscreen_d8d67c7e-a797-45d7-ae44-3d53ddecc8d1, Status=Installed}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ButtonEx.Style>
 
-                                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="ingame">
-                                                                        <Setter Property="Background" Value="#1846D9FF"/>
-                                                                        <Setter Property="BorderBrush" Value="#5546D9FF"/>
-                                                                    </DataTrigger>
+                                            <ButtonEx.Template>
+                                                <ControlTemplate TargetType="ButtonEx">
 
-                                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="notrunning">
-                                                                        <Setter Property="Background" Value="#185A7D9A"/>
-                                                                        <Setter Property="BorderBrush" Value="#555A7D9A"/>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </Border.Style>
+                                                    <Grid>
 
-                                                        <StackPanel Orientation="Horizontal"
-                                                                    VerticalAlignment="Center"
-                                                                    HorizontalAlignment="Center">
+                                                        <!-- STATUS BADGE BACKGROUND -->
+                                                        <Border x:Name="UserStatusBadge"
+                                                                Height="34"
+                                                                MinWidth="104"
+                                                                Padding="14,0"
+                                                                CornerRadius="17"
+                                                                Background="#1819F28B"
+                                                                BorderBrush="#5519F28B"
+                                                                BorderThickness="1"
+                                                                VerticalAlignment="Center">
 
-                                                            <!-- DOT -->
-                                                            <Border x:Name="UserStatusDot"
-                                                                    Width="9"
-                                                                    Height="9"
-                                                                    CornerRadius="4.5"
-                                                                    Margin="0,0,7,0"
-                                                                    VerticalAlignment="Center"
-                                                                    BorderThickness="1"
-                                                                    BorderBrush="#B0000000">
+                                                            <Border.Style>
+                                                                <Style TargetType="Border">
+                                                                    <Setter Property="Background" Value="#1819F28B"/>
+                                                                    <Setter Property="BorderBrush" Value="#5519F28B"/>
 
-                                                                <Border.Style>
-                                                                    <Style TargetType="Border">
-                                                                        <Setter Property="Background" Value="{DynamicResource StatusOnlineBrush}"/>
-                                                                        <Setter Property="Opacity" Value="0.96"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="online">
+                                                                            <Setter Property="Background" Value="#1819F28B"/>
+                                                                            <Setter Property="BorderBrush" Value="#5519F28B"/>
+                                                                        </DataTrigger>
 
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="online">
-                                                                                <Setter Property="Background" Value="{DynamicResource StatusOnlineBrush}"/>
-                                                                            </DataTrigger>
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="offline">
+                                                                            <Setter Property="Background" Value="#182D3748"/>
+                                                                            <Setter Property="BorderBrush" Value="#554A5A68"/>
+                                                                        </DataTrigger>
 
-                                                                            <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="offline">
-                                                                                <Setter Property="Background" Value="{DynamicResource StatusOfflineBrush}"/>
-                                                                            </DataTrigger>
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="away">
+                                                                            <Setter Property="Background" Value="#18FFC857"/>
+                                                                            <Setter Property="BorderBrush" Value="#55FFC857"/>
+                                                                        </DataTrigger>
 
-                                                                            <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="away">
-                                                                                <Setter Property="Background" Value="{DynamicResource StatusAwayBrush}"/>
-                                                                            </DataTrigger>
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="busy">
+                                                                            <Setter Property="Background" Value="#18FF4D5A"/>
+                                                                            <Setter Property="BorderBrush" Value="#55FF4D5A"/>
+                                                                        </DataTrigger>
 
-                                                                            <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="busy">
-                                                                                <Setter Property="Background" Value="{DynamicResource StatusBusyBrush}"/>
-                                                                            </DataTrigger>
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="ingame">
+                                                                            <Setter Property="Background" Value="#1846D9FF"/>
+                                                                            <Setter Property="BorderBrush" Value="#5546D9FF"/>
+                                                                        </DataTrigger>
 
-                                                                            <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="ingame">
-                                                                                <Setter Property="Background" Value="{DynamicResource StatusInGameBrush}"/>
-                                                                            </DataTrigger>
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="notrunning">
+                                                                            <Setter Property="Background" Value="#185A7D9A"/>
+                                                                            <Setter Property="BorderBrush" Value="#555A7D9A"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
 
-                                                                            <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="notrunning">
-                                                                                <Setter Property="Background" Value="#5A7D9A"/>
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </Border.Style>
-                                                            </Border>
+                                                            <StackPanel Orientation="Horizontal"
+                                                                        VerticalAlignment="Center"
+                                                                        HorizontalAlignment="Center">
 
-                                                            <!-- TEXT -->
-                                                            <TextBlock x:Name="UserStatusHeader"
-                                                                       FontSize="14"
-                                                                       FontWeight="SemiBold"
-                                                                       Opacity="0.95"
-                                                                       Style="{DynamicResource TextBlockBaseStyle}"
-                                                                       VerticalAlignment="Center"
-                                                                       Text="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfStateLoc}"
-                                                                       TextTrimming="CharacterEllipsis"/>
+                                                                <!-- DOT -->
+                                                                <Border x:Name="UserStatusDot"
+                                                                        Width="9"
+                                                                        Height="9"
+                                                                        CornerRadius="4.5"
+                                                                        Margin="0,0,7,0"
+                                                                        VerticalAlignment="Center"
+                                                                        BorderThickness="1"
+                                                                        BorderBrush="#B0000000">
 
-                                                        </StackPanel>
-                                                    </Border>
+                                                                    <Border.Style>
+                                                                        <Style TargetType="Border">
+                                                                            <Setter Property="Background" Value="{DynamicResource StatusOnlineBrush}"/>
+                                                                            <Setter Property="Opacity" Value="0.96"/>
 
-                                                    <!-- FOCUS BORDER -->
-                                                    <Border x:Name="FocusBorder"
-                                                            Height="38"
-                                                            MinWidth="108"
-                                                            CornerRadius="19"
-                                                            BorderBrush="{DynamicResource FocusGameBorderBrush}"
-                                                            BorderThickness="2"
-                                                            Visibility="Collapsed"
-                                                            IsHitTestVisible="False"/>
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="online">
+                                                                                    <Setter Property="Background" Value="{DynamicResource StatusOnlineBrush}"/>
+                                                                                </DataTrigger>
 
-                                                </Grid>
+                                                                                <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="offline">
+                                                                                    <Setter Property="Background" Value="{DynamicResource StatusOfflineBrush}"/>
+                                                                                </DataTrigger>
 
-                                                <ControlTemplate.Triggers>
+                                                                                <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="away">
+                                                                                    <Setter Property="Background" Value="{DynamicResource StatusAwayBrush}"/>
+                                                                                </DataTrigger>
 
-                                                    <Trigger Property="IsFocused" Value="True">
-                                                        <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible"/>
-                                                    </Trigger>
+                                                                                <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="busy">
+                                                                                    <Setter Property="Background" Value="{DynamicResource StatusBusyBrush}"/>
+                                                                                </DataTrigger>
 
-                                                    <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                                                        <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible"/>
-                                                    </Trigger>
+                                                                                <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="ingame">
+                                                                                    <Setter Property="Background" Value="{DynamicResource StatusInGameBrush}"/>
+                                                                                </DataTrigger>
 
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible"/>
-                                                    </Trigger>
+                                                                                <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="notrunning">
+                                                                                    <Setter Property="Background" Value="#5A7D9A"/>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Border.Style>
+                                                                </Border>
 
-                                                    <Trigger Property="IsPressed" Value="True">
-                                                        <Setter Property="Opacity" Value="0.85"/>
-                                                    </Trigger>
+                                                                <!-- TEXT -->
+                                                                <TextBlock x:Name="UserStatusHeader"
+                                                                           FontSize="14"
+                                                                           FontWeight="SemiBold"
+                                                                           Opacity="0.95"
+                                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                                           VerticalAlignment="Center"
+                                                                           Text="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfStateLoc}"
+                                                                           TextTrimming="CharacterEllipsis"/>
 
-                                                    <Trigger Property="IsEnabled" Value="False">
-                                                        <Setter Property="Opacity" Value="0.35"/>
-                                                    </Trigger>
+                                                            </StackPanel>
+                                                        </Border>
 
-                                                </ControlTemplate.Triggers>
+                                                        <!-- FOCUS BORDER -->
+                                                        <Border x:Name="FocusBorder"
+                                                                Height="38"
+                                                                MinWidth="108"
+                                                                CornerRadius="19"
+                                                                BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                                BorderThickness="2"
+                                                                Visibility="Collapsed"
+                                                                IsHitTestVisible="False"/>
 
-                                            </ControlTemplate>
-                                        </ButtonEx.Template>
-                                    </ButtonEx>
+                                                    </Grid>
 
+                                                    <ControlTemplate.Triggers>
+
+                                                        <Trigger Property="IsFocused" Value="True">
+                                                            <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible"/>
+                                                        </Trigger>
+
+                                                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                            <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible"/>
+                                                        </Trigger>
+
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible"/>
+                                                        </Trigger>
+
+                                                        <Trigger Property="IsPressed" Value="True">
+                                                            <Setter Property="Opacity" Value="0.85"/>
+                                                        </Trigger>
+
+                                                        <Trigger Property="IsEnabled" Value="False">
+                                                            <Setter Property="Opacity" Value="0.35"/>
+                                                        </Trigger>
+
+                                                    </ControlTemplate.Triggers>
+
+                                                </ControlTemplate>
+                                            </ButtonEx.Template>
+                                        </ButtonEx>
+                                    </StackPanel>
                                 </Grid>
 
 
@@ -793,9 +1065,7 @@
                                 <StackPanel Grid.Row="2"
                                             Orientation="Vertical"
                                             FocusVisualStyle="{x:Null}"
-                                            Margin="16,12,16,12"
-                                            KeyboardNavigation.TabNavigation="Contained"
-                                            KeyboardNavigation.DirectionalNavigation="Continue">
+                                            Margin="16,12,16,12">
 
                                     <ButtonEx x:Name="QuickProfileButton"
                                               Style="{StaticResource QuickAccessButtonStyle}"
@@ -803,7 +1073,7 @@
                                               Tag="&#xE77B;"
                                               FocusVisualStyle="{x:Null}"
                                               Content="{DynamicResource LOCProfile}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[PlayerProfileWindowStyle]}"/>
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[PlayerProfileWindowStyle|MostPlayedCard]}"/>
 
                                     <ButtonEx x:Name="QuickNotificationButton"
                                               Style="{StaticResource QuickAccessButtonStyle}"
@@ -818,11 +1088,47 @@
                                               Content="{DynamicResource LOCSteamFriendsTitle}"
                                               Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle]}"/>
 
-                                    <ButtonEx x:Name="QuickAchievementsButton"
-                                              Style="{StaticResource QuickAccessButtonStyle2}"
+                                    <ButtonEx x:Name="QuickAchievementsButton_PA"
                                               Tag="&#xedd7;"
                                               Content="{DynamicResource LOCAchievements}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenAchievementsCommand}"/>
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenAchievementsCommand}">
+                                        <ButtonEx.Style>
+                                            <Style TargetType="ButtonEx" BasedOn="{StaticResource QuickAccessButtonStyle2}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ButtonEx.Style>
+                                    </ButtonEx>
+
+                                    <ButtonEx x:Name="QuickAchievementsButton_SS"
+                                              Tag="&#xedd7;"
+                                              Content="{DynamicResource LOCAchievements}"
+                                              Command="{PluginSettings Plugin=SuccessStoryFullscreenHelper, Path=OpenAchievementsCommand}">
+                                        <ButtonEx.Style>
+                                            <Style TargetType="ButtonEx" BasedOn="{StaticResource QuickAccessButtonStyle2}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{PluginStatus Plugin=SuccessStory, Status=Installed}" Value="True"/>
+                                                            <Condition Binding="{PluginStatus Plugin=SuccessStoryFullscreenHelper, Status=Installed}" Value="True"/>
+                                                            <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="False"/>
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </MultiDataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ButtonEx.Style>
+                                    </ButtonEx>
+
+                                    <ButtonEx Tag="&#xE91B;"
+                                              Content="{DynamicResource LOCMediaGallery}"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenMediaGalleryGamesWindowCommand}"
+                                              Style="{StaticResource QuickAccessButtonStyle}"/>
 
                                     <ButtonEx x:Name="QuickNewsButton"
                                               Style="{StaticResource QuickAccessButtonStyle2}"
@@ -836,12 +1142,6 @@
                                               Content="{DynamicResource LOCSteamStoreTitle}"
                                               Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[SteamStoreStyle]}"/>
 
-                                    <ButtonEx x:Name="QuickHelpButton"
-                                              Style="{StaticResource QuickAccessButtonStyle}"
-                                              Tag="&#xE897;"
-                                              Content="{DynamicResource LOCHelpAndRessource}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[HelpWindowStyle]}"/>
-
 
                                     <!-- SEPARATOR -->
                                     <Border Height="1"
@@ -854,6 +1154,20 @@
                                               Tag="&#xE72E;"
                                               Content="{DynamicResource LOCLockScreen}"
                                               Command="{PluginSettings Plugin=AnikiHelper, Path=OpenLockScreenCommand}" />
+
+                                    <ButtonEx x:Name="QuickHelpButton"
+                                              Style="{StaticResource QuickAccessButtonStyle}"
+                                              Tag="&#xE897;"
+                                              Content="{DynamicResource LOCHelpAndRessource}"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[HelpWindowStyle]}"/>
+
+                                    <ButtonEx x:Name="QuickMenuButton"
+                                              Style="{StaticResource QuickAccessButtonStyle}"
+                                              FocusVisualStyle="{x:Null}"
+                                              Tag="&#xE713;"
+                                              Content="{DynamicResource LOCMenusTitle}"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenPlayniteSettingsCommand}"/>
+
 
                                     <ButtonEx x:Name="QuickAccessPowerButton"
                                               FocusVisualStyle="{x:Null}"
@@ -885,7 +1199,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Text="{DynamicResource LOCQUICKACCESS}"
+                                    <TextBlock Text="{DynamicResource LOCMainMenu}"
                                                FontSize="13"
                                                FontWeight="Bold"
                                                Style="{DynamicResource TextBlockBaseStyle}"
@@ -915,11 +1229,11 @@
 
         <Style.Triggers>
 
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp1610">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp1610">
                 <Setter Property="Margin" Value="0,-60,0,-60"/>
             </DataTrigger>
 
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp219">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp219">
                 <Setter Property="Margin" Value="-320,0,-320,0"/>
             </DataTrigger>
 

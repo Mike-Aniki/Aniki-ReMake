@@ -5,100 +5,70 @@
     <!-- Style pour le cadre du menu principal -->
     <Style x:Key="MainMenuBorder" TargetType="Border">
         <Setter Property="Tag" Value="{DynamicResource BackgroundImageIndex}" />
-        <Setter Property="Height" Value="1080" />
-        <Setter Property="Width" Value="500" />
-        <Setter Property="CornerRadius" Value="0"/>
-        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="MinHeight" Value="1000" />
+        <Setter Property="Width" Value="520" />
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Margin" Value="42,20,0,0" />
         <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="Background" Value="{DynamicResource OverlayMenu}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}"/>
-        <Setter Property="BorderThickness" Value="0,0,2,0"/>
-        <Setter Property="Opacity" Value="0.9"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Opacity" Value="1"/>
         <Setter Property="RenderTransform">
             <Setter.Value>
                 <TransformGroup>
-                    <ScaleTransform ScaleX="0.985" ScaleY="0.985"/>
-                    <TranslateTransform X="-540"/>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                    <TranslateTransform X="0" Y="0"/>
                 </TransformGroup>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <!-- ✅ placement DROITE (état) -->
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ChangeMenuPlacement]}" Value="True">
-                <Setter Property="HorizontalAlignment" Value="Right"/>
-                <Setter Property="Grid.ColumnSpan" Value="2"/>
-                <Setter Property="BorderThickness" Value="2,0,0,0"/>
-                <!-- état initial offscreen côté droit -->
-                <Setter Property="RenderTransform">
-                    <Setter.Value>
-                        <TransformGroup>
-                            <ScaleTransform ScaleX="0.985" ScaleY="0.985"/>
-                            <TranslateTransform X="540"/>
-                        </TransformGroup>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
+            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                <BeginStoryboard x:Name="SB_MenuIn_Left">
+                    <Storyboard FillBehavior="HoldEnd">
+                        <!-- colonne gauche -->
+                        <Int32Animation Storyboard.TargetProperty="(Grid.Column)"
+                                        Duration="0:0:0" To="0"/>
 
-            <!-- ✅ anim entrée GAUCHE -->
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ChangeMenuPlacement]}" Value="False">
-                <DataTrigger.EnterActions>
-                    <BeginStoryboard x:Name="SB_MenuIn_Left">
-                        <Storyboard FillBehavior="HoldEnd">
-                            <!-- colonne gauche -->
-                            <Int32Animation Storyboard.TargetProperty="(Grid.Column)"
-                                            Duration="0:0:0" To="0"/>
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                         From="0"
+                                         To="1"
+                                         Duration="0:0:0.22"/>
 
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                             From="0"
-                                             Duration="0:0:0.24"/>
+                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"
+                                         From="-40" To="0"
+                                         Duration="0:0:0.30">
+                            <DoubleAnimation.EasingFunction>
+                                <CubicEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
 
-                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"
-                                             From="-540" To="0"
-                                             Duration="0:0:0.36">
-                                <DoubleAnimation.EasingFunction>
-                                    <CubicEase EasingMode="EaseOut"/>
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
+                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.Y)"
+                                         From="-20" To="0"
+                                         Duration="0:0:0.30">
+                            <DoubleAnimation.EasingFunction>
+                                <CubicEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
 
-                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
-                                             From="0.985" To="1"
-                                             Duration="0:0:0.26"/>
-                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
-                                             From="0.985" To="1"
-                                             Duration="0:0:0.26"/>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </DataTrigger.EnterActions>
-            </DataTrigger>
-
-            <!-- ✅ anim entrée DROITE -->
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ChangeMenuPlacement]}" Value="True">
-                <DataTrigger.EnterActions>
-                    <BeginStoryboard x:Name="SB_MenuIn_Right">
-                        <Storyboard FillBehavior="HoldEnd">
-
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                             From="0"
-                                             Duration="0:0:0.24"/>
-
-                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)"
-                                             From="540" To="0"
-                                             Duration="0:0:0.36">
-                                <DoubleAnimation.EasingFunction>
-                                    <CubicEase EasingMode="EaseOut"/>
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-
-                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
-                                             From="0.985" To="1"
-                                             Duration="0:0:0.26"/>
-                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
-                                             From="0.985" To="1"
-                                             Duration="0:0:0.26"/>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </DataTrigger.EnterActions>
-            </DataTrigger>
+                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                         From="0.96" To="1"
+                                         Duration="0:0:0.28">
+                            <DoubleAnimation.EasingFunction>
+                                <CubicEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                                         From="0.96" To="1"
+                                         Duration="0:0:0.28">
+                            <DoubleAnimation.EasingFunction>
+                                <CubicEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="100">
                 <Setter Property="Background" Value="{DynamicResource MainMenuActiveVisualPackBackground}" />
                 <Setter Property="Opacity" Value="1" />
@@ -263,71 +233,126 @@
                 <Setter Property="Background" Value="{DynamicResource MainMenuActiveVisualPackBackground}" />
                 <Setter Property="Opacity" Value="1" />
             </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="141">
+                <Setter Property="Background" Value="{DynamicResource MainMenuActiveVisualPackBackground}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="142">
+                <Setter Property="Background" Value="{DynamicResource MainMenuActiveVisualPackBackground}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="143">
+                <Setter Property="Background" Value="{DynamicResource MainMenuActiveVisualPackBackground}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="144">
+                <Setter Property="Background" Value="{DynamicResource MainMenuActiveVisualPackBackground}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="145">
+                <Setter Property="Background" Value="{DynamicResource MainMenuActiveVisualPackBackground}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="146">
+                <Setter Property="Background" Value="{DynamicResource MainMenuActiveVisualPackBackground}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="147">
+                <Setter Property="Background" Value="{DynamicResource MainMenuActiveVisualPackBackground}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="148">
+                <Setter Property="Background" Value="{DynamicResource MainMenuActiveVisualPackBackground}" />
+                <Setter Property="Opacity" Value="1" />
+            </DataTrigger>
         </Style.Triggers>
     </Style>
 
     <!-- Style pour les boutons du menu principal -->
     <Style x:Key="MainMenuButton" BasedOn="{StaticResource {x:Type ButtonEx}}" TargetType="ButtonEx">
-        <Setter Property="Margin" Value="10,10,10,0" />
-        <Setter Property="Height" Value="60" />
-        <Setter Property="MinWidth" Value="350" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Height" Value="68"/>
+        <Setter Property="Margin" Value="18,0,18,2"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Focusable" Value="True"/>
+        <Setter Property="IsTabStop" Value="True"/>
+        <Setter Property="KeyboardNavigation.IsTabStop" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Grid Background="{TemplateBinding Background}">
-                        <Border CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" Background="{DynamicResource ButtonBackgroundFocus}"
-                                x:Name="MainBackground"/>
-                        <Border x:Name="MainBorder" Margin="0"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
-                                BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
-                        <TextBlock x:Name="Text" Style="{DynamicResource ButtonTextBlockBaseStyle}"
-                                   Foreground="{TemplateBinding Foreground}" FontSize="24"
-                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                   Margin="25,0">
-                            <ContentPresenter />
-                        </TextBlock>
+                <ControlTemplate TargetType="ButtonEx">
+                    <Grid Background="{TemplateBinding Background}"
+                          ClipToBounds="True"
+                          SnapsToDevicePixels="True">
+
+                        <Border x:Name="MainBackground"
+                                Margin="0"
+                                CornerRadius="4"
+                                Background="{DynamicResource ButtonBackgroundFocus}"
+                                Visibility="Collapsed"/>
+
+                        <Border x:Name="MainBorder"
+                                Margin="0"
+                                BorderThickness="2"
+                                CornerRadius="4"
+                                BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                Visibility="Collapsed"/>
+
+                        <Border x:Name="FlashMenuBorder"
+                                Margin="0"
+                                CornerRadius="4"
+                                Style="{DynamicResource AnimatedFlashMenu}"
+                                Tag="False"
+                                Visibility="Collapsed"/>
+
+                        <ContentPresenter Margin="24,0,26,0"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Left"
+                                          RecognizesAccessKey="True"
+                                          TextElement.FontFamily="{DynamicResource FontMain}"
+                                          TextElement.FontSize="22"
+                                          TextElement.FontWeight="SemiBold"
+                                          TextElement.Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}"/>
                     </Grid>
+
                     <ControlTemplate.Triggers>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding Name, RelativeSource={RelativeSource Self}}" Value="PART_ButtonKofi"/>
-                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowKoFiMenu]}" Value="Collapsed"/>
-                            </MultiDataTrigger.Conditions>
+                        <Trigger Property="Name" Value="PART_ButtonKofi">
                             <Setter Property="Visibility" Value="Collapsed" />
-                        </MultiDataTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding Name, RelativeSource={RelativeSource Self}}" Value="PART_ButtonPatreon"/>
-                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowParteonMenu]}" Value="Collapsed"/>
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </MultiDataTrigger>
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding Name, RelativeSource={RelativeSource Self}}" Value="PART_ButtonFeedback"/>
-                                <Condition Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[ShowHelpMenu]}" Value="Collapsed"/>
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </MultiDataTrigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.5" />
                         </Trigger>
+                        <Trigger Property="Name" Value="PART_ButtonPatreon">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Name" Value="PART_ButtonFeedback">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.35"/>
+                        </Trigger>
+
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground"  />
+                            <Setter TargetName="MainBackground" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="MainBorder" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="FlashMenuBorder" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="FlashMenuBorder" Property="Tag" Value="True"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
                         </Trigger>
+
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-                            <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
+                            <Setter TargetName="MainBackground" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="MainBorder" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="FlashMenuBorder" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="FlashMenuBorder" Property="Tag" Value="True"/>
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="Transparent" />
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Opacity" Value="0.85"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -368,6 +393,7 @@
     <!-- Modèle de bouton pour accéder aux paramètres -->
     <DataTemplate x:Key="MainMenuSettingsButtonTemplate">
         <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE713;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCSettingsLabel}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
@@ -375,6 +401,7 @@
     <!-- Modèle de bouton pour mettre à jour la bibliothèque -->
     <DataTemplate x:Key="MainMenuLibUpdateButtonTemplate">
         <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE72C;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCMenuReloadLibrary}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
@@ -382,6 +409,7 @@
     <!-- Modèle de bouton pour annuler la mise à jour de la bibliothèque -->
     <DataTemplate x:Key="MainMenuCancelLibUpdateButtonTemplate">
         <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE711;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCMenuCancelLibraryUpdate}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
@@ -389,6 +417,7 @@
     <!-- Modèle de bouton pour quitter Playnite -->
     <DataTemplate x:Key="MainMenuExitPlayniteButtonTemplate">
         <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE8BB;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCExitPlaynite}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
@@ -396,6 +425,7 @@
     <!-- Modèle de bouton pour basculer vers le bureau -->
     <DataTemplate x:Key="MainMenuSwithDesktopButtonTemplate">
         <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE977;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCBackToDesktopMode}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
@@ -403,13 +433,15 @@
     <!-- Modèle de bouton pour sélectionner un jeu aléatoire -->
     <DataTemplate x:Key="MainMenuRandomGameButtonTemplate">
         <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE8B1;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCMenuSelectRandomGame}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
 
     <!-- Modèle de bouton pour arrêter le système -->
     <DataTemplate x:Key="MainMenuShutdowButtonTemplate">
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Visibility="Collapsed">
+            <TextBlock Text="&#xE7E8;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCMenuShutdownSystem}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
@@ -417,6 +449,7 @@
     <!-- Modèle de bouton pour suspendre le système -->
     <DataTemplate x:Key="MainMenuSuspendButtonTemplate">
         <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE708;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCMenuSuspendSystem}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
@@ -424,6 +457,7 @@
     <!-- Modèle de bouton pour hiberner le système -->
     <DataTemplate x:Key="MainMenuHibernateButtonTemplate">
         <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE823;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCMenuHibernateSystem}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
@@ -431,12 +465,14 @@
     <!-- Modèle de bouton pour redémarrer le système -->
     <DataTemplate x:Key="MainMenuRestartButtonTemplate">
         <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE72C;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCMenuRestartSystem}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
 
     <DataTemplate x:Key="MainMenuMinimizeButtonTemplate">
         <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE921;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCMinimize}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
@@ -444,13 +480,15 @@
     <!-- Modèle de bouton pour accéder à l'aide -->
     <DataTemplate x:Key="MainMenuHelpButtonTemplate">
         <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE897;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCMenuHelpTitle}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
 
     <!-- Modèle de bouton pour supporter sur Patreon -->
-    <DataTemplate x:Key="MainMenuPatreonButtonTemplate" >
+    <DataTemplate x:Key="MainMenuPatreonButtonTemplate">
         <StackPanel Orientation="Horizontal" Focusable="False">
+            <TextBlock Text="&#xEB52;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCMenuPatreonSupport}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
@@ -458,6 +496,7 @@
     <!-- Modèle de bouton pour les Clients Externe -->
     <DataTemplate x:Key="MainMenuClientsButtonTemplate">
         <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE8CC;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCMenuOpenClient}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
@@ -465,6 +504,7 @@
     <!-- Modèle de bouton pour les Outils -->
     <DataTemplate x:Key="MainMenuToolsButtonTemplate">
         <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE90F;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCMenuTools}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
@@ -472,7 +512,22 @@
     <!-- Modèle de bouton pour les extensions -->
     <DataTemplate x:Key="MainMenuExtensionsButtonTemplate">
         <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xECAA;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
             <TextBlock Text="{DynamicResource LOCExtensions}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MainMenuLockSystemButtonTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE72E;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
+            <TextBlock Text="{DynamicResource LOCMenuLockSystem}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MainMenuLogoutUserButtonTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE7E8;" FontFamily="Segoe Fluent Icons" FontSize="24" Width="58" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource TextBrush}"/>
+            <TextBlock Text="{DynamicResource LOCMenuLogoutUser}" Style="{DynamicResource ButtonTextBlockBaseStyle}" VerticalAlignment="Center" />
         </StackPanel>
     </DataTemplate>
 

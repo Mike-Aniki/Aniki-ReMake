@@ -7,7 +7,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Height" Value="50" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="HorizontalContentAlignment" Value="Right" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
@@ -28,8 +28,8 @@
                             <ToggleButton.Template>
                                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                                     <DockPanel LastChildFill="False" Background="Transparent">
-                                        <Viewbox DockPanel.Dock="Right" Height="32">
-                                            <TextBlock Text="&#xea99;" FontFamily="{DynamicResource FontIcoFont}"
+                                        <Viewbox DockPanel.Dock="Right" Height="18">
+                                            <TextBlock Text="&#xE972;" FontFamily="{DynamicResource FontIcons}" FontWeight="Regular"
                                                        Foreground="{DynamicResource SelectionLightBrush}"
                                                        VerticalAlignment="Center" />
                                         </Viewbox>
@@ -41,8 +41,11 @@
                         <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
                                    IsHitTestVisible="False"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                   VerticalAlignment="Center" FontSize="22"
-                                   x:Name="TextContent" Margin="20,0,10,0">
+                                   VerticalAlignment="Center"
+                                   FontSize="22"
+                                   FontWeight="Regular"
+                                   x:Name="TextContent"
+                                   Margin="10,0,60,0">
                             <ContentPresenter IsHitTestVisible="False"
                                               Content="{TemplateBinding SelectionBoxItem}"
                                               ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
@@ -55,7 +58,7 @@
                                   MinWidth="{TemplateBinding ActualWidth}"
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                                 <Border CornerRadius="{DynamicResource Corner}" Padding="2" BorderBrush="{DynamicResource ComboBoxBorderBrush}" BorderThickness="2"
-                                        Background="{DynamicResource OverlayMenu}" >
+                                        Background="{DynamicResource BackgroundMenu}" >
                                     <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                                                   VerticalScrollBarVisibility="Visible">
                                         <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
@@ -113,7 +116,7 @@
                         <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
                                 Tag="False" Visibility="Collapsed">
                         </Border>
-                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}" FontWeight="Regular"
                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                    x:Name="TextContent" Margin="10,5,10,5" FontSize="22" >

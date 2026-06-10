@@ -186,6 +186,46 @@
                             </Border>
                         </Grid>
 
+                        <!-- LOADING -->
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Panel.ZIndex="20">
+
+                            <TextBlock Text="{DynamicResource LOCLoading}"
+                                       FontSize="34"
+                                       FontWeight="SemiBold"
+                                       HorizontalAlignment="Center">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=CurrentGameMediaLoading}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+                            <ProgressBar Width="360"
+                                         Height="6"
+                                         Margin="0,18,0,0"
+                                         IsIndeterminate="True">
+                                <ProgressBar.Style>
+                                    <Style TargetType="ProgressBar">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=CurrentGameMediaLoading}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ProgressBar.Style>
+                            </ProgressBar>
+
+                        </StackPanel>
+
+
                         <!-- MAIN CONTENT -->
                         <Grid>
                             <Grid.RowDefinitions>
@@ -193,6 +233,17 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="80"/>
                             </Grid.RowDefinitions>
+
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=CurrentGameMediaLoading}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
 
                             <!-- HEADER -->
                             <Grid Grid.Row="0"
@@ -212,27 +263,12 @@
                                                 Margin="0,12,0,0"
                                                 Effect="{DynamicResource SoftTextShadow}">
 
-                                        <TextBlock Text="{Binding ElementName=ThumbGrid, Path=Items.Count}"
-                                                   Style="{DynamicResource TextBlockDetailStyle}"
-                                                   FontSize="19"
-                                                   Opacity="0.72"/>
-
-                                        <TextBlock Text="{DynamicResource LOCcaptures}"
-                                                   Margin="5,0,0,0"
-                                                   Style="{DynamicResource TextBlockDetailStyle}"
-                                                   FontSize="19"
-                                                   Opacity="0.72"/>
-
-                                        <TextBlock Text="  •  "
-                                                   Style="{DynamicResource TextBlockDetailStyle}"
-                                                   FontSize="19"
-                                                   Opacity="0.42"/>
-
-                                        <TextBlock Text="{Binding ElementName=ThumbGrid, Path=SelectedItem.FileNameOnly}"
+                                        <!-- Selected file name -->
+                                        <TextBlock Text="{Binding ElementName=ThumbGrid, Path=SelectedItem.FileName}"
                                                    Style="{DynamicResource TextBlockDetailStyle}"
                                                    FontSize="19"
                                                    Opacity="0.78"
-                                                   MaxWidth="760"
+                                                   MaxWidth="900"
                                                    TextTrimming="CharacterEllipsis"/>
 
                                         <TextBlock Text="  •  "
@@ -240,10 +276,12 @@
                                                    FontSize="19"
                                                    Opacity="0.42"/>
 
+                                        <!-- Selected file size -->
                                         <TextBlock Text="{Binding ElementName=ThumbGrid, Path=SelectedItem.FileSizeString}"
                                                    Style="{DynamicResource TextBlockDetailStyle}"
                                                    FontSize="19"
                                                    Opacity="0.78"/>
+
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>
@@ -258,7 +296,7 @@
                                 <ListBox x:Name="ThumbGrid"
                                          Width="1540"
                                          Height="760"
-                                         ItemsSource="{PluginSettings Plugin=ScreenshotsVisualizer, Path=ListScreenshots}"
+                                         ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=VisibleCurrentGameMediaItems}"
                                          SelectedIndex="0"
                                          SelectionMode="Single"
                                          Background="Transparent"
@@ -355,27 +393,8 @@
                                                            HorizontalAlignment="Stretch"
                                                            VerticalAlignment="Stretch"
                                                            RenderOptions.BitmapScalingMode="LowQuality"
-                                                           SnapsToDevicePixels="True">
-                                                        <Image.Style>
-                                                            <Style TargetType="Image">
-                                                                <Setter Property="Source">
-                                                                    <Setter.Value>
-                                                                        <Binding Path="ImageThumbnail" IsAsync="True"/>
-                                                                    </Setter.Value>
-                                                                </Setter>
-
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding IsVideo}" Value="True">
-                                                                        <Setter Property="Source">
-                                                                            <Setter.Value>
-                                                                                <Binding Path="Thumbnail" IsAsync="True"/>
-                                                                            </Setter.Value>
-                                                                        </Setter>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </Image.Style>
-                                                    </Image>
+                                                           SnapsToDevicePixels="True"
+                                                           Source="{Binding ThumbnailOrFilePath, IsAsync=True}"/>
 
                                                     <!-- Dégradé haut -->
                                                     <Border VerticalAlignment="Top"
@@ -399,18 +418,11 @@
                                                             CornerRadius="8"
                                                             Panel.ZIndex="5">
                                                         <TextBlock Foreground="White"
-                                                                   FontSize="14"
+                                                                   FontSize="17"
                                                                    FontWeight="SemiBold"
-                                                                   Style="{StaticResource TextBlockDetailStyle}">
-                                                            <TextBlock.Text>
-                                                                <MultiBinding StringFormat="{}{0}/{1}">
-                                                                    <Binding RelativeSource="{RelativeSource AncestorType=ListBoxItem}"
-                                                                             Path="(ItemsControl.AlternationIndex)"/>
-                                                                    <Binding ElementName="ThumbGrid"
-                                                                             Path="Items.Count"/>
-                                                                </MultiBinding>
-                                                            </TextBlock.Text>
-                                                        </TextBlock>
+                                                                   Text="{Binding MediaIndexString}"
+                                                                   Style="{StaticResource TextBlockDetailStyle}"/>
+
                                                     </Border>
 
                                                     <!-- VIDEO OVERLAY -->
@@ -440,10 +452,23 @@
                                                             CornerRadius="8"
                                                             Visibility="Collapsed"
                                                             Panel.ZIndex="5">
-                                                        <TextBlock Text="{Binding DurationString}"
-                                                                   Foreground="White"
-                                                                   FontSize="13"
-                                                                   Style="{StaticResource TextBlockDetailStyle}"/>
+
+                                                        <StackPanel Orientation="Horizontal">
+
+                                                            <TextBlock Text="{DynamicResource LOCMediaDuration}"
+                                                                       Foreground="White"
+                                                                       FontSize="14"
+                                                                       FontWeight="SemiBold"
+                                                                       Style="{StaticResource TextBlockDetailStyle}"/>
+
+                                                            <TextBlock Text="{Binding DisplayDurationString}"
+                                                                       Margin="5,0,0,0"
+                                                                       Foreground="White"
+                                                                       FontSize="14"
+                                                                       FontWeight="SemiBold"
+                                                                       Style="{StaticResource TextBlockDetailStyle}"/>
+                                                        </StackPanel>
+
                                                     </Border>
 
                                                 </Grid>
@@ -516,7 +541,7 @@
                                    RenderOptions.BitmapScalingMode="Fant">
                                 <Image.Source>
                                     <Binding ElementName="ThumbGrid"
-                                             Path="SelectedItem.FileName"
+                                             Path="SelectedItem.FilePath"
                                              IsAsync="True"/>
                                 </Image.Source>
                             </Image>
@@ -576,7 +601,7 @@
                         <DataTrigger Binding="{Binding ElementName=ThumbGrid, Path=SelectedItem.IsVideo}" Value="True">
                             <Setter TargetName="FullscreenImage" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="FullscreenVideo" Property="Visibility" Value="Visible"/>
-                            <Setter TargetName="FullscreenVideo" Property="Source" Value="{Binding ElementName=ThumbGrid, Path=SelectedItem.FileName}"/>
+                            <Setter TargetName="FullscreenVideo" Property="Source" Value="{Binding ElementName=ThumbGrid, Path=SelectedItem.FilePath}"/>
                         </DataTrigger>
 
                         <DataTrigger Binding="{Binding ElementName=ThumbGrid, Path=SelectedItem.IsVideo}" Value="False">
@@ -600,11 +625,11 @@
         </Setter>
 
         <Style.Triggers>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp1610">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp1610">
                 <Setter Property="Margin" Value="0,-60,0,-60"/>
             </DataTrigger>
 
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=AspectRatio}" Value="dsp219">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp219">
                 <Setter Property="Margin" Value="-320,0,-320,0"/>
             </DataTrigger>
         </Style.Triggers>
