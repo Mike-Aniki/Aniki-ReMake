@@ -1007,7 +1007,7 @@
                                             CornerRadius="22"
                                             Padding="16"
                                             Background="{DynamicResource GlassSignatureBrush}"
-                                            BorderBrush="{DynamicResource GlassSignatureInnerLineBrush}"
+                                            BorderBrush="{DynamicResource GlassInnerLineBrush}"
                                             BorderThickness="1"
                                             SnapsToDevicePixels="True"
                                             Panel.ZIndex="1">
@@ -1573,7 +1573,7 @@
                                                         <StackPanel>
                                                             <TextBlock Text="Size" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
                                                             <TextBlock x:Name="Siz"
-                                                                       Text="{Binding InstallSize, Converter={StaticResource NullableUlongBytesSizeToStringConverter}, StringFormat={}{0}}"
+                                                                       Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameInstallSizeNoDecimal}"
                                                                        Style="{StaticResource ClassicPremiumCardValueStyle}"/>
                                                         </StackPanel>
                                                     </Border>
@@ -1649,6 +1649,9 @@
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                                     </DataTrigger>
                                                                     <DataTrigger Binding="{Binding Game.Categories[0]}" Value="">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoCategory]}" Value="True">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>

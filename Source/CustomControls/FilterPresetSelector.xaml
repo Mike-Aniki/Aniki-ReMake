@@ -117,22 +117,29 @@
 
                     <ControlTemplate.Triggers>
 
-                        <!-- Si l’icône custom n’existe pas, on affiche l’icône du thème -->
-                        <DataTrigger Binding="{Binding ElementName=CustomFilter, Path=Source}" Value="{x:Null}">
-                            <Setter Property="Visibility" Value="Visible" TargetName="Filter" />
-                        </DataTrigger>
-
-                        <!-- Si l’icône du thème n’existe pas non plus, on affiche le texte -->
-                        <DataTrigger Binding="{Binding ElementName=Filter, Path=Source}" Value="{x:Null}">
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="Filter" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="TextContent" />
-                        </DataTrigger>
-
-                        <!-- Si aucun dossier custom n’est défini, on force le fallback thème -->
+                        <!-- Si aucun dossier custom n’est défini, on masque l’image custom -->
                         <DataTrigger Binding="{Binding ElementName=CustomIconFilterPathText, Path=Text}" Value="">
                             <Setter Property="Visibility" Value="Collapsed" TargetName="CustomFilter" />
                             <Setter Property="Visibility" Value="Visible" TargetName="Filter" />
                         </DataTrigger>
+
+                        <!-- Si l’icône custom n’existe pas, on affiche l’icône du thème -->
+                        <DataTrigger Binding="{Binding ElementName=CustomFilter, Path=Source}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="CustomFilter" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="Filter" />
+                        </DataTrigger>
+
+                        <!-- Texte uniquement si custom ET thème sont absents -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=CustomFilter, Path=Source}" Value="{x:Null}" />
+                                <Condition Binding="{Binding ElementName=Filter, Path=Source}" Value="{x:Null}" />
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="CustomFilter" />
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="Filter" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="TextContent" />
+                        </MultiDataTrigger>
 
                         <!-- Focus -->
                         <Trigger Property="IsFocused" Value="True">

@@ -1468,8 +1468,8 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <TextBlock Grid.Column="0" Text="&#xec4e;" Style="{StaticResource InfoGlyphStyle}"/>
-                                        <TextBlock Grid.Column="2" x:Name="PlayedTime"
+                                        <TextBlock Grid.Column="0" Text="&#xE81C;" FontSize="22" FontFamily="{DynamicResource FontIcons}" Style="{StaticResource InfoGlyphStyle}"/>
+                                        <TextBlock Grid.Column="2" x:Name="PlayedTime" FontWeight="Regular" FontSize="26"
                                                    Text="{Binding Playtime, Converter={StaticResource PlayTimeToStringConverter}}"
                                                    Style="{StaticResource InfoValueStyle}"
                                                    TextTrimming="CharacterEllipsis"/>
@@ -1496,8 +1496,8 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <TextBlock Grid.Column="0" Text="&#xec45;" Style="{StaticResource InfoGlyphStyle}"/>
-                                        <TextBlock Grid.Column="2" x:Name="Played"
+                                        <TextBlock Grid.Column="0" Text="&#xE787;" FontSize="22" FontFamily="{DynamicResource FontIcons}"  Style="{StaticResource InfoGlyphStyle}"/>
+                                        <TextBlock Grid.Column="2" x:Name="Played" FontWeight="Regular" FontSize="26"
                                                    Text="{Binding LastActivity, StringFormat='{}{0:dd MMMM yyyy}'}"
                                                    Style="{StaticResource InfoValueStyle}"
                                                    TextTrimming="CharacterEllipsis"/>
@@ -1524,9 +1524,9 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <TextBlock Grid.Column="0" Text="&#xef43;" Style="{StaticResource InfoGlyphStyle}"/>
-                                        <TextBlock Grid.Column="2" x:Name="Siz"
-                                                   Text="{Binding InstallSize, Converter={StaticResource NullableUlongBytesSizeToStringConverter}}"
+                                        <TextBlock Grid.Column="0" Text="&#xe904;" FontSize="22" FontFamily="{DynamicResource FontIcomoon}" Style="{StaticResource InfoGlyphStyle}"/>
+                                        <TextBlock Grid.Column="2" x:Name="Siz" FontWeight="Regular" FontSize="26"
+                                                   Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameInstallSizeNoDecimal}"
                                                    Style="{StaticResource InfoValueStyle}"
                                                    TextTrimming="CharacterEllipsis"/>
                                     </Grid>
@@ -1552,36 +1552,35 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <TextBlock Grid.Column="0" Text="&#xec4c;" Style="{StaticResource InfoGlyphStyle}"/>
-                                        <TextBlock Grid.Column="2" x:Name="Completed"
+                                        <TextBlock Grid.Column="0" Text="&#xe926;" FontSize="22" FontFamily="{DynamicResource FontIcomoon}" Style="{StaticResource InfoGlyphStyle}"/>
+                                        <TextBlock Grid.Column="2" x:Name="Completed" FontWeight="Regular"
                                                    Text="{Binding CompletionStatus, Converter={StaticResource ListToStringConverter}}"
                                                    Style="{StaticResource InfoValueStyle}"
                                                    TextTrimming="CharacterEllipsis"/>
                                     </Grid>
 
-                                    <!-- Trophées (sécurisé) -->
+                                    <!-- Trophée - PlayniteAchievements prioritaire -->
                                     <Grid Margin="0,4,0,0">
                                         <Grid.Style>
                                             <Style TargetType="Grid">
-                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=SuccessStory, Path=HasData}" Value="False">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoTrophyDetails]}" Value="True">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                    </DataTrigger>
-                                                    <!-- Si pas de chiffres -> collapse -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{PluginSettings Plugin=SuccessStory, Path=Unlocked}" Value="{x:Null}"/>
-                                                            <Condition Binding="{PluginSettings Plugin=SuccessStory, Path=Total}"    Value="{x:Null}"/>
+                                                            <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="True"/>
+                                                            <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=HasData, FallbackValue=False}" Value="True"/>
+                                                            <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoTrophyDetails]}" Value="False"/>
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </MultiDataTrigger>
+
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Unlocked}" Value="{x:Null}"/>
+                                                            <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Total}" Value="{x:Null}"/>
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                     </MultiDataTrigger>
-                                                    <DataTrigger Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="False">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                    </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Grid.Style>
@@ -1592,9 +1591,75 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <!-- Icône: glyph par défaut, platine si 100% -->
                                         <Grid Grid.Column="0">
-                                            <TextBlock Text="&#xedd7;">
+                                            <TextBlock Text="&#xe903;" FontSize="22" FontFamily="{DynamicResource FontIcomoon}">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource InfoGlyphStyle}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Percent}" Value="100">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <Image Width="28" Height="28" VerticalAlignment="Center" Source="{ThemeFile 'Images/platinum.png'}">
+                                                <Image.Style>
+                                                    <Style TargetType="Image">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Percent}" Value="100">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
+                                        </Grid>
+
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                            <TextBlock FontWeight="Regular" Text="{PluginSettings Plugin=PlayniteAchievements, Path=Unlocked, FallbackValue='-'}" FontSize="26" Margin="0,0,2,0" Style="{StaticResource InfoValueStyle}"/>
+                                            <TextBlock FontWeight="Regular" Text="/" Margin="0,0,2,0" Style="{StaticResource InfoValueStyle}" FontSize="26" Opacity="0.8"/>
+                                            <TextBlock FontWeight="Regular" Text="{PluginSettings Plugin=PlayniteAchievements, Path=Total, FallbackValue='-'}" FontSize="26" Style="{StaticResource InfoValueStyle}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <!-- Trophée - SuccessStory fallback -->
+                                    <Grid Margin="0,4,0,0">
+                                        <Grid.Style>
+                                            <Style TargetType="Grid">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="True"/>
+                                                            <Condition Binding="{PluginSettings Plugin=SuccessStory, Path=HasData, FallbackValue=False}" Value="True"/>
+                                                            <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="False"/>
+                                                            <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoTrophyDetails]}" Value="False"/>
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </MultiDataTrigger>
+
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{PluginSettings Plugin=SuccessStory, Path=Unlocked}" Value="{x:Null}"/>
+                                                            <Condition Binding="{PluginSettings Plugin=SuccessStory, Path=Total}" Value="{x:Null}"/>
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </MultiDataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="34" SharedSizeGroup="InfoIcon"/>
+                                            <ColumnDefinition Width="10" SharedSizeGroup="InfoGap"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Column="0">
+                                            <TextBlock Text="&#xe903;" FontSize="22" FontFamily="{DynamicResource FontIcomoon}">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock" BasedOn="{StaticResource InfoGlyphStyle}">
                                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1606,8 +1671,8 @@
                                                     </Style>
                                                 </TextBlock.Style>
                                             </TextBlock>
-                                            <Image Width="28" Height="28" VerticalAlignment="Center"
-                                                   Source="{ThemeFile 'Images/platinum.png'}">
+
+                                            <Image Width="28" Height="28" VerticalAlignment="Center" Source="{ThemeFile 'Images/platinum.png'}">
                                                 <Image.Style>
                                                     <Style TargetType="Image">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1622,11 +1687,9 @@
                                         </Grid>
 
                                         <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                            <TextBlock Text="{PluginSettings Plugin=SuccessStory, Path=Unlocked, FallbackValue='-'}"
-                                                       Margin="0,0,2,0" Style="{StaticResource InfoValueStyle}"/>
-                                            <TextBlock Text="/" Margin="0,0,2,0" Style="{StaticResource InfoValueStyle}" Opacity="0.8"/>
-                                            <TextBlock Text="{PluginSettings Plugin=SuccessStory, Path=Total, FallbackValue='-'}"
-                                                       Style="{StaticResource InfoValueStyle}"/>
+                                            <TextBlock FontWeight="Regular" Text="{PluginSettings Plugin=SuccessStory, Path=Unlocked, FallbackValue='-'}" FontSize="26" Margin="0,0,2,0" Style="{StaticResource InfoValueStyle}"/>
+                                            <TextBlock FontWeight="Regular" Text="/" Margin="0,0,2,0" Style="{StaticResource InfoValueStyle}" FontSize="26" Opacity="0.8"/>
+                                            <TextBlock FontWeight="Regular" Text="{PluginSettings Plugin=SuccessStory, Path=Total, FallbackValue='-'}" FontSize="26" Style="{StaticResource InfoValueStyle}"/>
                                         </StackPanel>
                                     </Grid>
 
@@ -1651,7 +1714,7 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <TextBlock Grid.Column="0" Text="&#xef65;" Style="{StaticResource InfoGlyphStyle}"/>
+                                        <TextBlock Grid.Column="0" Text="&#xE8EC;" FontSize="22" FontFamily="{DynamicResource FontIcons}" Style="{StaticResource InfoGlyphStyle}"/>
                                         <Grid Grid.Column="2" HorizontalAlignment="Left">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
@@ -1665,11 +1728,11 @@
                                             <!-- Genre 0 -->
                                             <TextBlock Grid.Column="0"
                                                        Style="{StaticResource InfoValueStyle}"
-                                                       FontSize="26"
+                                                       FontSize="26" FontWeight="Regular"
                                                        Text="{Binding Game.Genres.[0], TargetNullValue='', FallbackValue=''}"/>
 
                                             <!-- Slash séparateur -->
-                                            <TextBlock Grid.Column="1"
+                                            <TextBlock Grid.Column="1" FontWeight="Regular"
                                                        FontSize="26"
                                                        Text=" &amp; ">
                                                 <TextBlock.Style>
@@ -1688,7 +1751,7 @@
                                             </TextBlock>
 
                                             <!-- Genre 1 (ellipsé) -->
-                                            <TextBlock Grid.Column="2"
+                                            <TextBlock Grid.Column="2" FontWeight="Regular"
                                                        Style="{StaticResource InfoValueStyle}"
                                                        FontSize="26"
                                                        TextTrimming="CharacterEllipsis"
@@ -1723,7 +1786,9 @@
 
                                         <!-- Icône -->
                                         <TextBlock Grid.Column="0"
-                                                   Text="&#xecf9;"
+                                                   Text="&#xE716;"
+                                                   FontSize="22"
+                                                   FontFamily="{DynamicResource FontIcons}"
                                                    Style="{StaticResource InfoGlyphStyle}"/>
 
                                         <StackPanel Grid.Column="2"
@@ -1735,14 +1800,14 @@
                                             <!-- Nombre de joueurs (depuis AnikiHelper) -->
                                             <TextBlock VerticalAlignment="Center"
                                                        Style="{StaticResource InfoValueStyle}"
-                                                       FontSize="26"
+                                                       FontSize="26" FontWeight="Regular"
                                                        Text="{PluginSettings Plugin=AnikiHelper, Path=SteamCurrentPlayersString}"/>
 
                                             <!-- Label "in game" -->
                                             <TextBlock Margin="6,0,0,0"
                                                        VerticalAlignment="Center"
                                                        Style="{StaticResource InfoValueStyle}"
-                                                       FontSize="26"
+                                                       FontSize="26" FontWeight="Regular"
                                                        Text="{DynamicResource LOCPlayerInGame}"/>
                                         </StackPanel>
                                     </Grid>
@@ -1777,13 +1842,13 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <TextBlock Grid.Column="0" Text="&#xef49;" Style="{StaticResource InfoGlyphStyle}"/>
+                                        <TextBlock Grid.Column="0" Text="&#xe906;" FontSize="22" FontFamily="{DynamicResource FontIcomoon}" Style="{StaticResource InfoGlyphStyle}"/>
                                         <StackPanel Grid.Column="2" VerticalAlignment="Top" Orientation="Horizontal">
-                                            <TextBlock Text="{PluginSettings Plugin=HowLongToBeat, Path=MainStoryFormat}" Style="{StaticResource InfoValueStyle}"/>
-                                            <TextBlock Text="&#xec79;" Margin="6,0,4,2" Style="{StaticResource InfoGlyphStyle}" Opacity="0.95"/>
-                                            <TextBlock Text="{PluginSettings Plugin=HowLongToBeat, Path=MainExtraFormat}" Margin="5,0" Style="{StaticResource InfoValueStyle}"/>
-                                            <TextBlock Text="&#xeeaa;" Margin="0,0,4,1" Style="{StaticResource InfoGlyphStyle}" Opacity="0.95"/>
-                                            <TextBlock Text="{PluginSettings Plugin=HowLongToBeat, Path=CompletionistFormat}" Style="{StaticResource InfoValueStyle}" />
+                                            <TextBlock Text="{PluginSettings Plugin=HowLongToBeat, Path=MainStoryFormat}" FontSize="26" FontWeight="Regular" Style="{StaticResource InfoValueStyle}"/>
+                                            <TextBlock Text="&#xe909;" FontSize="22" FontFamily="{DynamicResource FontIcomoon}" Margin="6,0,4,2" Style="{StaticResource InfoGlyphStyle}" Opacity="0.95"/>
+                                            <TextBlock Text="{PluginSettings Plugin=HowLongToBeat, Path=MainExtraFormat}" FontSize="26" FontWeight="Regular" Margin="5,0" Style="{StaticResource InfoValueStyle}"/>
+                                            <TextBlock Text="&#xe910;" FontSize="22" FontFamily="{DynamicResource FontIcomoon}" Margin="0,0,4,1" Style="{StaticResource InfoGlyphStyle}" Opacity="0.95"/>
+                                            <TextBlock Text="{PluginSettings Plugin=HowLongToBeat, Path=CompletionistFormat}" FontSize="26" FontWeight="Regular" Style="{StaticResource InfoValueStyle}" />
                                         </StackPanel>
                                     </Grid>
 

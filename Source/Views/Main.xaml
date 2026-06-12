@@ -5440,6 +5440,91 @@
                             </StackPanel>
                         </Border>
 
+                        <Border x:Name="GameClosingPanelAniki"
+                                Background="{DynamicResource NotificationBackgroundBrush}"
+                                CornerRadius="{DynamicResource Corner}"
+                                BorderBrush="{DynamicResource NotificationBorder}"
+                                Height="70"
+                                BorderThickness="2"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right"
+                                Panel.ZIndex="1"
+                                RenderTransformOrigin="1,0.5">
+                            <Border.Effect>
+                                <DropShadowEffect  ShadowDepth="2" Color="Black" Opacity="0.5"/>
+                            </Border.Effect>
+                            <Border.RenderTransform>
+                                <TranslateTransform x:Name="SlideTransform" X="500"/>
+                            </Border.RenderTransform>
+
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Setter Property="Margin" Value="0,130,20,0"/>
+                                    <Setter Property="Grid.Row" Value="1"/>
+                                    <Setter Property="Grid.ColumnSpan" Value="3"/>
+                                    <Style.Triggers>
+
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=GameClosing}" Value="True"/>
+                                                <Condition Binding="{Binding ElementName=GlobalToastPanel, Path=Opacity}" Value="0"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.Setters>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Setter Property="Opacity" Value="1"/>
+                                            </MultiDataTrigger.Setters>
+                                            <MultiDataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                         From="500" To="0" Duration="0:0:0.3"
+                                                                         AccelerationRatio="0.3" DecelerationRatio="0.7"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </MultiDataTrigger.EnterActions>
+                                        </MultiDataTrigger>
+
+
+                                        <DataTrigger Binding="{Binding ElementName=GlobalToastPanel, Path=Opacity}" Value="1">
+                                            <Setter Property="Opacity" Value="0"/>
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+
+
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="12,0,12,0"
+                                        VerticalAlignment="Center">
+                                <TextBlock Margin="0,0,10,0" VerticalAlignment="Center" FontSize="20" Style="{DynamicResource TextBlockBaseStyle}" Text="Closing " />
+                                <TextBlock FontSize="20"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           MaxWidth="250"
+                                           TextTrimming="None"
+                                           TextWrapping="NoWrap"
+                                           ClipToBounds="True"
+                                           Text="{PluginSettings Plugin=AnikiHelper, Path=ClosingGameName}" />
+                                <TextBlock FontSize="20" Margin="5,0,0,0" Width="30" TextAlignment="Left" Style="{DynamicResource TextBlockBaseStyle}">
+                                    <TextBlock.Triggers>
+                                        <EventTrigger RoutedEvent="Loaded">
+                                            <BeginStoryboard>
+                                                <Storyboard RepeatBehavior="Forever">
+                                                    <StringAnimationUsingKeyFrames Storyboard.TargetProperty="Text" Duration="0:0:1.2" RepeatBehavior="Forever">
+                                                        <DiscreteStringKeyFrame KeyTime="0:0:0.0" Value="." />
+                                                        <DiscreteStringKeyFrame KeyTime="0:0:0.4" Value=".." />
+                                                        <DiscreteStringKeyFrame KeyTime="0:0:0.8" Value="..." />
+                                                    </StringAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </TextBlock.Triggers>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
                         <!-- GLOBAL TOAST (AnikiHelper) -->
                         <Border x:Name="GlobalToastPanel"
                                 Background="{DynamicResource NotificationBackgroundBrush}"
@@ -6064,11 +6149,6 @@
                                                 </MultiDataTrigger.Setters>
                                             </MultiDataTrigger>
 
-                                            <!-- Afficher si Accueil ou pas -->
-                                            <DataTrigger Binding="{Binding Source={StaticResource AcceuilOrNot}}" Value="False">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-
                                             <!-- Cacher si ControlCenter est visible -->
                                             <DataTrigger Binding="{Binding ElementName=ControlCenter, Path=Visibility}" Value="Visible">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -6503,6 +6583,7 @@
                                             </Style>
                                         </Grid.Style>
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
@@ -7195,9 +7276,30 @@
                                             </StackPanel>
                                         </ButtonEx>
 
+                                        <!-- AUDIO SWITCHER -->
+                                        <ButtonEx x:Name="AudioSwitcherButton"
+                                                  Grid.Column="5"
+                                                  Height="40"
+                                                  MinWidth="50"
+                                                  Margin="0,0,7,0"
+                                                  Padding="0"
+                                                  Focusable="True"
+                                                  IsTabStop="True"
+                                                  Command="{PluginSettings Plugin=AudioSwitcher, Path=ToggleSelectorCommand}"
+                                                  Style="{DynamicResource TopBarIndicatorButtonStyle}">
+
+                                            <TextBlock Text="&#xE767;"
+                                                       FontFamily="{DynamicResource FontIcons}"
+                                                       FontSize="22"
+                                                       Foreground="{DynamicResource TextBrush}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
+
                                         <!-- QUICK SETTINGS / SYSTEM STATUS -->
                                         <ButtonEx x:Name="QuickMenu"
-                                                  Grid.Column="5"
+                                                  Grid.Column="6"
                                                   VerticalAlignment="Center"
                                                   HorizontalContentAlignment="Center"
                                                   HorizontalAlignment="Center"
@@ -7417,6 +7519,8 @@
                                             </StackPanel>
                                         </ButtonEx>
                                     </Grid>
+
+
 
                                 </Grid>
                             </Grid>
@@ -9407,7 +9511,7 @@
                                                            Style="{DynamicResource TextBlockBaseStyle}"
                                                            FontSize="15"
                                                            Opacity="0.62"/>
-                                                <TextBlock Text="{Binding InstallSize, Converter={StaticResource NullableUlongBytesSizeToStringConverter}, ConverterParameter=' / '}"
+                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameInstallSizeNoDecimal}"
                                                            Style="{DynamicResource TextBlockBaseStyle}"
                                                            FontSize="23"
                                                            Margin="0,4,0,0"
@@ -10499,6 +10603,56 @@
                                 </ContentControl>
                             </Border >
 
+                            <Grid Grid.Row="0"
+                                  Grid.RowSpan="5"
+                                  Grid.ColumnSpan="3"
+                                  HorizontalAlignment="Right"
+                                  VerticalAlignment="Top"
+                                  Margin="0,80,80,0"
+                                  Panel.ZIndex="999">
+
+                                <Border FocusManager.IsFocusScope="True"
+                                        KeyboardNavigation.DirectionalNavigation="Contained"
+                                        KeyboardNavigation.TabNavigation="Cycle">
+
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Setter Property="Background" Value="{DynamicResource OverlayMenu}"/>
+                                            <Setter Property="CornerRadius" Value="16"/>
+                                            <Setter Property="Padding" Value="30,25"/>
+                                            <Setter Property="BorderThickness" Value="1.5"/>
+                                            <Setter Property="BorderBrush" Value="{DynamicResource StaticBorderBrush}"/>
+                                            <Setter Property="MinWidth" Value="620"/>
+                                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                            <Setter Property="UseLayoutRounding" Value="True"/>
+
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{PluginSettings Plugin=AudioSwitcher, Path=IsSelectorOpen}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+
+                                    <StackPanel>
+                                        <TextBlock Text="Audio Output"
+                                                   FontSize="26"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource TextBrush}"
+                                                   Margin="0,0,0,16"/>
+
+                                        <!-- SEPARATOR -->
+                                        <Border Grid.Row="1"
+                                                Height="1"
+                                                Margin="22,0"
+                                                Background="#20FFFFFF"/>
+
+                                        <ContentControl x:Name="AudioSwitcher_DeviceList"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
                             <!--Info Alternatif -->
                             <Grid x:Name="DetailedSideInfoPanelContent" Grid.Row="0" Grid.RowSpan="5" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,-45,100" >
                                 <Grid.Style>
@@ -10600,6 +10754,7 @@
                                         <!-- CONTENU -->
                                         <Border CornerRadius="{DynamicResource Corner}" Background="Transparent" Padding="18,14">
                                             <StackPanel Orientation="Vertical">
+
                                                 <!-- TROPHÉES -->
                                                 <StackPanel Orientation="Horizontal" Margin="0,8,0,8">
                                                     <StackPanel.Style>
@@ -10617,11 +10772,11 @@
                                                         </Style>
                                                     </StackPanel.Style>
 
-                                                    <TextBlock Text="&#xedd7;"
+                                                    <TextBlock Text="&#xe903;"
                                                                FontSize="22"
                                                                VerticalAlignment="Center"
                                                                Margin="14,0,0,0"
-                                                               FontFamily="{StaticResource FontIcoFont}"
+                                                               FontFamily="{StaticResource FontIcomoon}"
                                                                Foreground="{DynamicResource TextBrush}"/>
 
                                                     <TextBlock Margin="14,0,2,2"
@@ -10658,11 +10813,11 @@
                                                         </Style>
                                                     </StackPanel.Style>
 
-                                                    <TextBlock Text="&#xedd7;"
+                                                    <TextBlock Text="&#xe903;"
                                                                FontSize="22"
                                                                VerticalAlignment="Center"
                                                                Margin="14,0,0,0"
-                                                               FontFamily="{StaticResource FontIcoFont}"
+                                                               FontFamily="{StaticResource FontIcomoon}"
                                                                Foreground="{DynamicResource TextBrush}"/>
 
                                                     <TextBlock Margin="14,0,2,2"
@@ -10683,32 +10838,6 @@
                                                                FontSize="22"/>
                                                 </StackPanel>
 
-
-                                                <!-- % COMPLETION -->
-                                                <StackPanel Orientation="Horizontal" Margin="0,8,0,8">
-                                                    <StackPanel.Style>
-                                                        <Style TargetType="StackPanel">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=SuccessStory, Path=HasData}" Value="True">
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </StackPanel.Style>
-
-                                                    <TextBlock Text="&#xec4c;"
-                                                               FontSize="22"
-                                                               VerticalAlignment="Center"
-                                                               Margin="14,0,0,0"
-                                                               FontFamily="{StaticResource FontIcoFont}"
-                                                               Foreground="{DynamicResource TextBrush}"/>
-
-                                                    <TextBlock Margin="14,0,16,2"
-                                                               Text="{PluginSettings Plugin=SuccessStory, Path=Percent, StringFormat={}{0}%}"
-                                                               VerticalAlignment="Center" Style="{DynamicResource TextBlockBaseStyle}" FontSize="22"/>
-                                                </StackPanel>
-
                                                 <!-- Playtime -->
                                                 <StackPanel Orientation="Horizontal" Margin="0,8,0,8"
                                                             Tag="{Binding SelectedGame.Playtime, Converter={StaticResource PlayTimeToStringConverter}}">
@@ -10723,11 +10852,11 @@
                                                         </Style>
                                                     </StackPanel.Style>
 
-                                                    <TextBlock Text="&#xec4e;"
+                                                    <TextBlock Text="&#xE81C;"
                                                                FontSize="22"
                                                                VerticalAlignment="Center"
                                                                Margin="14,0,0,0"
-                                                               FontFamily="{StaticResource FontIcoFont}"
+                                                               FontFamily="{StaticResource FontIcons}"
                                                                Foreground="{DynamicResource TextBrush}"/>
 
                                                     <TextBlock Margin="14,0,16,2"
@@ -10748,11 +10877,11 @@
                                                         </Style>
                                                     </StackPanel.Style>
 
-                                                    <TextBlock Text="&#xec45;"
+                                                    <TextBlock Text="&#xE787;"
                                                                FontSize="22"
                                                                VerticalAlignment="Center"
                                                                Margin="14,0,0,0"
-                                                               FontFamily="{StaticResource FontIcoFont}"
+                                                               FontFamily="{StaticResource FontIcons}"
                                                                Foreground="{DynamicResource TextBrush}"/>
 
                                                     <TextBlock x:Name="ReleaseDate" Margin="14,0,16,2"
@@ -10761,28 +10890,27 @@
                                                 </StackPanel>
 
                                                 <!-- Install size -->
-                                                <StackPanel Orientation="Horizontal" Margin="0,8,0,8"
-                                                            Tag="{Binding SelectedGame.InstallSize, Converter={StaticResource NullableUlongBytesSizeToStringConverter}, ConverterParameter=' / '}">
+                                                <StackPanel Orientation="Horizontal" Margin="0,8,0,8">
                                                     <StackPanel.Style>
                                                         <Style TargetType="StackPanel">
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="">
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameInstallSizeNoDecimal}" Value="">
                                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                                 </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>
                                                     </StackPanel.Style>
 
-                                                    <TextBlock Text="&#xef43;"
+                                                    <TextBlock Text="&#xe904;"
                                                                FontSize="22"
                                                                VerticalAlignment="Center"
                                                                Margin="14,0,0,0"
-                                                               FontFamily="{StaticResource FontIcoFont}"
+                                                               FontFamily="{StaticResource FontIcomoon}"
                                                                Foreground="{DynamicResource TextBrush}"/>
 
                                                     <TextBlock Margin="14,0,16,2"
-                                                               Text="{Binding SelectedGame.InstallSize, Converter={StaticResource NullableUlongBytesSizeToStringConverter}, ConverterParameter=' / '}"
+                                                               Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameInstallSizeNoDecimal}"
                                                                VerticalAlignment="Center" Style="{DynamicResource TextBlockBaseStyle}" FontSize="22"/>
                                                 </StackPanel>
 
@@ -10799,19 +10927,17 @@
                                                         </Style>
                                                     </StackPanel.Style>
 
-                                                    <TextBlock Text="&#xec85;"
+                                                    <TextBlock Text="&#xE8EC;"
                                                                FontSize="22"
                                                                VerticalAlignment="Center"
                                                                Margin="14,0,0,0"
-                                                               FontFamily="{StaticResource FontIcoFont}"
+                                                               FontFamily="{StaticResource FontIcons}"
                                                                Foreground="{DynamicResource TextBrush}"/>
 
                                                     <TextBlock x:Name="Genres" Margin="14,0,16,2"
                                                                Text="{Binding SelectedGame.Genres[0]}"
                                                                VerticalAlignment="Center" Style="{DynamicResource TextBlockBaseStyle}" FontSize="22"/>
                                                 </StackPanel>
-
-
 
                                                 <!-- Age ratings -->
                                                 <StackPanel Orientation="Horizontal" Margin="0,8,0,8"
@@ -10856,7 +10982,6 @@
                                                 </StackPanel>
 
                                                 <!-- Features -->
-
                                                 <StackPanel Orientation="Horizontal" Margin="0,8,0,8">
                                                     <ItemsControl x:Name="Features" Margin="14,0,16,2"
                                                                   ItemsSource="{Binding SelectedGame.Features}"
@@ -11662,38 +11787,35 @@
                                         <!-- separator -->
                                         <Rectangle Width="1" Height="26" Fill="{DynamicResource SeparatorBrush}" Margin="10,0,10,0" Visibility="{Binding ElementName=StackPanelGenre, Path=Visibility}"/>
 
-                                        <!-- LAST PLAYED -->
-                                        <StackPanel x:Name="StackPanelLastPlayedDate" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,10,0">
+                                        <!-- DATE RELEASE -->
+                                        <StackPanel x:Name="StackPanelDateRelease" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,10,0">
                                             <StackPanel.Style>
                                                 <Style TargetType="StackPanel">
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding ElementName=LastPlayedDate, Path=Text}" Value="">
+                                                        <DataTrigger Binding="{Binding ElementName=DateRelease, Path=Text}" Value="">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </StackPanel.Style>
-                                            <TextBlock Text="&#xec45;"
-                                                       FontFamily="{DynamicResource FontIcoFont}"
+
+                                            <TextBlock Text="&#xE787;"
+                                                       FontFamily="{DynamicResource FontIcons}"
                                                        Style="{StaticResource TextBlockBaseStyle}"
                                                        FontSize="22"
                                                        Opacity="0.9"
                                                        Margin="0,0,6,0"
                                                        VerticalAlignment="Center"/>
 
-                                            <!-- Date -->
-                                            <TextBlock x:Name="LastPlayedDate"
-                                                       Margin="10,0,0,1"
-                                                       Text="{Binding SelectedGame.LastActivity, StringFormat={}{0:dd MMM yyyy}}"
-                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                            <TextBlock x:Name="DateRelease" Margin="10,0,0,1"
+                                                       Text="{Binding SelectedGame.ReleaseDate, Converter={StaticResource ReleaseDateToStringConverter}}"                                                       Style="{DynamicResource TextBlockBaseStyle}"
                                                        FontSize="22"
                                                        FontWeight="SemiBold"/>
-
                                         </StackPanel>
 
                                         <!-- separator -->
-                                        <Rectangle Width="1" Height="26" Fill="{DynamicResource SeparatorBrush}" Margin="10,0,10,0" Visibility="{Binding ElementName=StackPanelLastPlayedDate, Path=Visibility}"/>
+                                        <Rectangle Width="1" Height="26" Fill="{DynamicResource SeparatorBrush}" Margin="10,0,10,0" Visibility="{Binding ElementName=StackPanelDateRelease, Path=Visibility}"/>
 
                                         <!-- CRITIC SCORE -->
                                         <StackPanel x:Name="CriticScoreBlock" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,10,0">
@@ -11707,8 +11829,8 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </StackPanel.Style>
-                                            <TextBlock Text="&#xec7c;"
-                                                       FontFamily="{DynamicResource FontIcoFont}"
+                                            <TextBlock Text="&#xE735;"
+                                                       FontFamily="{DynamicResource FontIcons}"
                                                        Style="{StaticResource TextBlockBaseStyle}"
                                                        FontSize="22"
                                                        Opacity="0.9"
@@ -11746,8 +11868,8 @@
                                                 </Style>
                                             </StackPanel.Style>
 
-                                            <TextBlock Text="&#xedd7;"
-                                                       FontFamily="{DynamicResource FontIcoFont}"
+                                            <TextBlock Text="&#xe903;"
+                                                       FontFamily="{DynamicResource FontIcomoon}"
                                                        Style="{StaticResource TextBlockBaseStyle}"
                                                        FontSize="22"
                                                        Opacity="0.9"
@@ -11815,8 +11937,8 @@
                                                 </Style>
                                             </StackPanel.Style>
 
-                                            <TextBlock Text="&#xedd7;"
-                                                       FontFamily="{DynamicResource FontIcoFont}"
+                                            <TextBlock Text="&#xe903;"
+                                                       FontFamily="{DynamicResource FontIcomoon}"
                                                        Style="{StaticResource TextBlockBaseStyle}"
                                                        FontSize="22"
                                                        Opacity="0.9"
@@ -11882,8 +12004,8 @@
                                                 </Style>
                                             </StackPanel.Style>
 
-                                            <TextBlock Text="&#xec4e;"
-                                                       FontFamily="{DynamicResource FontIcoFont}"
+                                            <TextBlock Text="&#xE81C;"
+                                                       FontFamily="{DynamicResource FontIcons}"
                                                        Style="{StaticResource TextBlockBaseStyle}"
                                                        FontSize="22"
                                                        Opacity="0.9"
@@ -11902,26 +12024,26 @@
                                         <Rectangle Width="1" Height="26" Fill="{DynamicResource SeparatorBrush}" Margin="10,0,10,0" Visibility="{Binding ElementName=StackPanelPlayTime, Path=Visibility}"/>
 
                                         <!--  INSTALL SIZE  -->
-                                        <StackPanel x:Name="StackPanelInstall" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,10,0" Tag="{Binding SelectedGame.InstallSize, Converter={StaticResource NullableUlongBytesSizeToStringConverter}, ConverterParameter=' / '}">
+                                        <StackPanel x:Name="StackPanelInstall" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,10,0">
                                             <StackPanel.Style>
                                                 <Style TargetType="StackPanel">
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="">
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameInstallSizeNoDecimal}" Value="">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </StackPanel.Style>
-                                            <TextBlock Text="&#xef43;"
-                                                       FontFamily="{DynamicResource FontIcoFont}"
+                                            <TextBlock Text="&#xe904;"
+                                                       FontFamily="{DynamicResource FontIcomoon}"
                                                        Style="{StaticResource TextBlockBaseStyle}"
                                                        FontSize="22"
                                                        Opacity="0.9"
                                                        Margin="0,0,6,0"
                                                        VerticalAlignment="Center"/>
                                             <TextBlock Margin="10,0,0,1"
-                                                       Text="{Binding SelectedGame.InstallSize, Converter={StaticResource NullableUlongBytesSizeToStringConverter}, ConverterParameter=' / '}"
+                                                       Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameInstallSizeNoDecimal}"
                                                        VerticalAlignment="Center"
                                                        Style="{DynamicResource TextBlockBaseStyle}"
                                                        FontSize="22"
@@ -13669,6 +13791,9 @@
                                         <DataTrigger Binding="{Binding ElementName=TOMissing, Path=Visibility}" Value="Visible">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
 
                                     </Style.Triggers>
                                 </Style>
@@ -14425,7 +14550,7 @@
                                 </Grid>
 
                                 <!-- FOOTER -->
-                                <TextBlock Text="Aniki ReMake v3.1.1"
+                                <TextBlock Text="Aniki ReMake v3.2.1"
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Bottom"
                                            Margin="0,0,22,18"
@@ -14499,7 +14624,7 @@
 
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding Source={StaticResource AcceuilOrNot}}" Value="False"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AcceuilOrNot]}" Value="False"/>
                                                 <Condition Binding="{Binding ElementName=LockScreen, Path=IsChecked}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -14691,6 +14816,130 @@
                                   KeyboardNavigation.TabNavigation="Cycle"
                                   KeyboardNavigation.DirectionalNavigation="Contained"
                                   KeyboardNavigation.ControlTabNavigation="Contained">
+                                <Grid.Resources>
+                                    <Style x:Key="PowerButtonStyle" TargetType="ButtonEx">
+                                        <Setter Property="Height" Value="72"/>
+                                        <Setter Property="Margin" Value="0,0,0,4"/>
+                                        <Setter Property="Padding" Value="0"/>
+                                        <Setter Property="Focusable" Value="True"/>
+                                        <Setter Property="IsTabStop" Value="True"/>
+                                        <Setter Property="KeyboardNavigation.IsTabStop" Value="True"/>
+                                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="BorderBrush" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ButtonEx">
+
+                                                    <Grid Background="{TemplateBinding Background}"
+                                                          ClipToBounds="True"
+                                                          SnapsToDevicePixels="True">
+
+                                                        <!-- FOCUS BACKGROUND -->
+                                                        <Border x:Name="MainBackground"
+                                                                Margin="0"
+                                                                CornerRadius="4"
+                                                                Background="{DynamicResource ButtonBackgroundFocus}"
+                                                                Visibility="Collapsed"/>
+
+                                                        <!-- FOCUS BORDER -->
+                                                        <Border x:Name="MainBorder"
+                                                                Margin="0"
+                                                                BorderThickness="2"
+                                                                CornerRadius="4"
+                                                                BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                                Visibility="Collapsed"/>
+
+                                                        <!-- FLASH FX -->
+                                                        <Border x:Name="FlashMenuBorder"
+                                                                Margin="0"
+                                                                CornerRadius="4"
+                                                                Style="{DynamicResource AnimatedFlashMenu}"
+                                                                Tag="False"
+                                                                Visibility="Collapsed"/>
+
+                                                        <!-- CONTENT -->
+                                                        <Grid Margin="18,0">
+
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="48"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="30"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <!-- ICON -->
+                                                            <TextBlock Grid.Column="0"
+                                                                       Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
+                                                                       FontFamily="{StaticResource FontIcons}"
+                                                                       FontSize="25"
+                                                                       Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}"
+                                                                       HorizontalAlignment="Center"
+                                                                       VerticalAlignment="Center"
+                                                                       TextOptions.TextFormattingMode="Display"
+                                                                       SnapsToDevicePixels="True"/>
+
+                                                            <!-- LABEL -->
+                                                            <ContentPresenter Grid.Column="1"
+                                                                              Margin="18,0,0,0"
+                                                                              VerticalAlignment="Center"
+                                                                              HorizontalAlignment="Left"
+                                                                              RecognizesAccessKey="True"
+                                                                              TextElement.FontFamily="{DynamicResource FontMain}"
+                                                                              TextElement.FontSize="22"
+                                                                              TextElement.FontWeight="SemiBold"
+                                                                              TextElement.Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}"/>
+
+                                                            <!-- CHEVRON / EMPTY SLOT -->
+                                                            <TextBlock Grid.Column="2"
+                                                                       Text="&#xE76C;"
+                                                                       FontFamily="{DynamicResource FontIcons}"
+                                                                       FontSize="16"
+                                                                       Opacity="0"
+                                                                       Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}"
+                                                                       HorizontalAlignment="Right"
+                                                                       VerticalAlignment="Center"/>
+
+                                                        </Grid>
+
+                                                    </Grid>
+
+                                                    <ControlTemplate.Triggers>
+
+                                                        <Trigger Property="IsEnabled" Value="False">
+                                                            <Setter Property="Opacity" Value="0.35"/>
+                                                        </Trigger>
+
+                                                        <Trigger Property="IsFocused" Value="True">
+                                                            <Setter TargetName="MainBackground" Property="Visibility" Value="Visible"/>
+                                                            <Setter TargetName="MainBorder" Property="Visibility" Value="Visible"/>
+                                                            <Setter TargetName="FlashMenuBorder" Property="Visibility" Value="Visible"/>
+                                                            <Setter TargetName="FlashMenuBorder" Property="Tag" Value="True"/>
+                                                            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                                                        </Trigger>
+
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="MainBackground" Property="Visibility" Value="Visible"/>
+                                                            <Setter TargetName="MainBorder" Property="Visibility" Value="Visible"/>
+                                                            <Setter TargetName="FlashMenuBorder" Property="Visibility" Value="Visible"/>
+                                                            <Setter TargetName="FlashMenuBorder" Property="Tag" Value="True"/>
+                                                        </Trigger>
+
+                                                        <Trigger Property="IsPressed" Value="True">
+                                                            <Setter Property="Opacity" Value="0.85"/>
+                                                        </Trigger>
+
+                                                    </ControlTemplate.Triggers>
+
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Grid.Resources>
 
                                 <Grid.RenderTransform>
                                     <TranslateTransform X="0"/>
@@ -14815,334 +15064,182 @@
 
                                         <StackPanel Orientation="Vertical"
                                                     KeyboardNavigation.TabNavigation="Cycle"
-                                                    KeyboardNavigation.DirectionalNavigation="Contained">
+                                                    KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                    KeyboardNavigation.ControlTabNavigation="Cycle">
 
                                             <!-- EXIT PLAYNITE -->
                                             <ButtonEx x:Name="ExitCommand"
                                                       pbeh:FocusBahaviors.OnVisibilityFocus="True"
-                                                      Style="{StaticResource PowerMenuButtonStyle}"
-                                                      Command="{Binding Data.MainMenu.ExitCommand, Source={StaticResource ANIKIHELPER_Commands}}">
-
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="52"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <TextBlock Grid.Column="0"
-                                                               Text="&#xE8BB;"
-                                                               FontFamily="{DynamicResource FontIcons}"
-                                                               FontSize="25"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-
-                                                    <TextBlock Grid.Column="1"
-                                                               Text="{DynamicResource LOCExitPlaynite}"
-                                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                                               FontSize="22"
-                                                               FontWeight="SemiBold"
-                                                               VerticalAlignment="Center"
-                                                               TextTrimming="CharacterEllipsis"/>
-                                                </Grid>
-                                            </ButtonEx>
-
+                                                      Tag="&#xE8BB;"
+                                                      Content="{DynamicResource LOCExitPlaynite}"
+                                                      Command="{Binding Data.MainMenu.ExitCommand, Source={StaticResource ANIKIHELPER_Commands}}"
+                                                      Style="{StaticResource PowerButtonStyle}"/>
 
                                             <!-- MINIMIZE -->
                                             <ButtonEx x:Name="MinimizeCommand"
+                                                      Tag="&#xE921;"
+                                                      Content="{DynamicResource LOCMinimize}"
                                                       Command="{Binding Data.MainMenu.MinimizeCommand, Source={StaticResource ANIKIHELPER_Commands}}">
-
                                                 <ButtonEx.Style>
-                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource PowerMenuButtonStyle}">
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource PowerButtonStyle}">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowMinimizeButton]}" Value="False">
+                                                            <DataTrigger Binding="{Settings Fullscreen.MainMenuShowMinimize}" Value="False">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </ButtonEx.Style>
-
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="52"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <TextBlock Grid.Column="0"
-                                                               Text="&#xE921;"
-                                                               FontFamily="{DynamicResource FontIcons}"
-                                                               FontSize="25"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-
-                                                    <TextBlock Grid.Column="1"
-                                                               Text="{DynamicResource LOCMinimize}"
-                                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                                               FontSize="22"
-                                                               FontWeight="SemiBold"
-                                                               VerticalAlignment="Center"
-                                                               TextTrimming="CharacterEllipsis"/>
-                                                </Grid>
                                             </ButtonEx>
-
 
                                             <!-- DESKTOP MODE -->
                                             <ButtonEx x:Name="DesktopCommand"
-                                                      Command="{Binding SwitchToDesktopCommand}">
+                                                      Tag="&#xEC4E;"
+                                                      Content="{DynamicResource LOCBackToDesktopMode}"
+                                                      Command="{Binding SwitchToDesktopCommand}"
+                                                      Style="{StaticResource PowerButtonStyle}"/>
 
-                                                <ButtonEx.Style>
-                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource PowerMenuButtonStyle}">
+                                            <!-- SEPARATOR -->
+                                            <Border Height="1"
+                                                    Margin="22,5,22,5"
+                                                    Background="#20FFFFFF">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowDesktopButton]}" Value="False">
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{Binding ElementName=LockCommand, Path=Visibility}" Value="Collapsed"/>
+                                                                    <Condition Binding="{Binding ElementName=LogoutCommand, Path=Visibility}" Value="Collapsed"/>
+                                                                </MultiDataTrigger.Conditions>
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
-                                                            </DataTrigger>
+                                                            </MultiDataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
-                                                </ButtonEx.Style>
-
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="52"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <TextBlock Grid.Column="0"
-                                                               Text="&#xEC4E;"
-                                                               FontFamily="{DynamicResource FontIcons}"
-                                                               FontSize="25"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-
-                                                    <TextBlock Grid.Column="1"
-                                                               Text="{DynamicResource LOCBackToDesktopMode}"
-                                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                                               FontSize="22"
-                                                               FontWeight="SemiBold"
-                                                               VerticalAlignment="Center"
-                                                               TextTrimming="CharacterEllipsis"/>
-                                                </Grid>
-                                            </ButtonEx>
-
-
-                                            <!-- RESTART SYSTEM -->
-                                            <ButtonEx x:Name="RestartCommand"
-                                                      Command="{Binding Data.MainMenu.RestartSystemCommand, Source={StaticResource ANIKIHELPER_Commands}}">
-
-                                                <ButtonEx.Style>
-                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource PowerMenuButtonStyle}">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowRestartButton]}" Value="False">
-                                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </ButtonEx.Style>
-
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="52"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <TextBlock Grid.Column="0"
-                                                               Text="&#xE72C;"
-                                                               FontFamily="{DynamicResource FontIcons}"
-                                                               FontSize="25"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-
-                                                    <TextBlock Grid.Column="1"
-                                                               Text="{DynamicResource LOCMenuRestartSystem}"
-                                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                                               FontSize="22"
-                                                               FontWeight="SemiBold"
-                                                               VerticalAlignment="Center"
-                                                               TextTrimming="CharacterEllipsis"/>
-                                                </Grid>
-                                            </ButtonEx>
-
-
-                                            <!-- SHUTDOWN SYSTEM -->
-                                            <ButtonEx x:Name="ShutdownCommand"
-                                                      Command="{Binding Data.MainMenu.ShutdownSystemCommand, Source={StaticResource ANIKIHELPER_Commands}}">
-
-                                                <ButtonEx.Style>
-                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource PowerMenuButtonStyle}">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowShutdownButton]}" Value="False">
-                                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </ButtonEx.Style>
-
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="52"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <TextBlock Grid.Column="0"
-                                                               Text="&#xE7E8;"
-                                                               FontFamily="{DynamicResource FontIcons}"
-                                                               FontSize="27"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-
-                                                    <TextBlock Grid.Column="1"
-                                                               Text="{DynamicResource LOCMenuShutdownSystem}"
-                                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                                               FontSize="22"
-                                                               FontWeight="SemiBold"
-                                                               VerticalAlignment="Center"
-                                                               TextTrimming="CharacterEllipsis"/>
-                                                </Grid>
-                                            </ButtonEx>
+                                                </Border.Style>
+                                            </Border>
 
                                             <!-- LOCK SYSTEM -->
                                             <ButtonEx x:Name="LockCommand"
-                                                      Command="{Binding Data.MainMenu.LockSystemCommand, Source={StaticResource ANIKIHELPER_Commands}}"
-                                                      Style="{StaticResource PowerMenuButtonStyle}">
-
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="52"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <TextBlock Grid.Column="0"
-                                                               Text="&#xE72E;"
-                                                               FontFamily="{DynamicResource FontIcons}"
-                                                               FontSize="25"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-
-                                                    <TextBlock Grid.Column="1"
-                                                               Text="{DynamicResource LOCMenuLockSystem}"
-                                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                                               FontSize="22"
-                                                               FontWeight="SemiBold"
-                                                               VerticalAlignment="Center"
-                                                               TextTrimming="CharacterEllipsis"/>
-                                                </Grid>
+                                                      Tag="&#xE72E;"
+                                                      Content="{DynamicResource LOCMenuLockSystem}"
+                                                      Command="{Binding Data.MainMenu.LockSystemCommand, Source={StaticResource ANIKIHELPER_Commands}}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource PowerButtonStyle}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Settings Fullscreen.MainMenuShowLock}" Value="False">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
                                             </ButtonEx>
 
                                             <!-- LOG OUT USER -->
                                             <ButtonEx x:Name="LogoutCommand"
-                                                      Command="{Binding Data.MainMenu.LogoutUserCommand, Source={StaticResource ANIKIHELPER_Commands}}"
-                                                      Style="{StaticResource PowerMenuButtonStyle}">
-
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="52"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <TextBlock Grid.Column="0"
-                                                               Text="&#xE8AC;"
-                                                               FontFamily="{DynamicResource FontIcons}"
-                                                               FontSize="25"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-
-                                                    <TextBlock Grid.Column="1"
-                                                               Text="{DynamicResource LOCMenuLogoutUser}"
-                                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                                               FontSize="22"
-                                                               FontWeight="SemiBold"
-                                                               VerticalAlignment="Center"
-                                                               TextTrimming="CharacterEllipsis"/>
-                                                </Grid>
+                                                      Tag="&#xE8AC;"
+                                                      Content="{DynamicResource LOCMenuLogoutUser}"
+                                                      Command="{Binding Data.MainMenu.LogoutUserCommand, Source={StaticResource ANIKIHELPER_Commands}}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource PowerButtonStyle}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Settings Fullscreen.MainMenuShowLogout}" Value="False">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
                                             </ButtonEx>
 
+                                            <Border Height="1"
+                                                    Margin="22,5,22,5"
+                                                    Background="#20FFFFFF">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{Binding ElementName=SleepCommand, Path=Visibility}" Value="Collapsed"/>
+                                                                    <Condition Binding="{Binding ElementName=HibernateCommand, Path=Visibility}" Value="Collapsed"/>
+                                                                    <Condition Binding="{Binding ElementName=RestartCommand, Path=Visibility}" Value="Collapsed"/>
+                                                                    <Condition Binding="{Binding ElementName=ShutdownCommand, Path=Visibility}" Value="Collapsed"/>
+                                                                </MultiDataTrigger.Conditions>
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                            </Border>
 
                                             <!-- SLEEP SYSTEM -->
                                             <ButtonEx x:Name="SleepCommand"
+                                                      Tag="&#xE708;"
+                                                      Content="{DynamicResource LOCMenuSuspendSystem}"
                                                       Command="{Binding Data.MainMenu.SleepSystemCommand, Source={StaticResource ANIKIHELPER_Commands}}">
-
                                                 <ButtonEx.Style>
-                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource PowerMenuButtonStyle}">
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource PowerButtonStyle}">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowSleepButton]}" Value="False">
+                                                            <DataTrigger Binding="{Settings Fullscreen.MainMenuShowSuspend}" Value="False">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </ButtonEx.Style>
-
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="52"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <TextBlock Grid.Column="0"
-                                                               Text="&#xE708;"
-                                                               FontFamily="{DynamicResource FontIcons}"
-                                                               FontSize="27"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-
-                                                    <TextBlock Grid.Column="1"
-                                                               Text="{DynamicResource LOCMenuSuspendSystem}"
-                                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                                               FontSize="22"
-                                                               FontWeight="SemiBold"
-                                                               VerticalAlignment="Center"
-                                                               TextTrimming="CharacterEllipsis"/>
-                                                </Grid>
                                             </ButtonEx>
-
 
                                             <!-- HIBERNATE SYSTEM -->
                                             <ButtonEx x:Name="HibernateCommand"
+                                                      Tag="&#xE823;"
+                                                      Content="{DynamicResource LOCMenuHibernateSystem}"
                                                       Command="{Binding Data.MainMenu.HibernateSystemCommand, Source={StaticResource ANIKIHELPER_Commands}}">
-
                                                 <ButtonEx.Style>
-                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource PowerMenuButtonStyle}">
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource PowerButtonStyle}">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowHibernateButton]}" Value="False">
+                                                            <DataTrigger Binding="{Settings Fullscreen.MainMenuShowHibernate}" Value="False">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </ButtonEx.Style>
+                                            </ButtonEx>
 
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="52"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
+                                            <!-- RESTART SYSTEM -->
+                                            <ButtonEx x:Name="RestartCommand"
+                                                      Tag="&#xE72C;"
+                                                      Content="{DynamicResource LOCMenuRestartSystem}"
+                                                      Command="{Binding Data.MainMenu.RestartSystemCommand, Source={StaticResource ANIKIHELPER_Commands}}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource PowerButtonStyle}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Settings Fullscreen.MainMenuShowRestart}" Value="False">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
 
-                                                    <TextBlock Grid.Column="0"
-                                                               Text="&#xE823;"
-                                                               FontFamily="{DynamicResource FontIcons}"
-                                                               FontSize="25"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-
-                                                    <TextBlock Grid.Column="1"
-                                                               Text="{DynamicResource LOCMenuHibernateSystem}"
-                                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                                               FontSize="22"
-                                                               FontWeight="SemiBold"
-                                                               VerticalAlignment="Center"
-                                                               TextTrimming="CharacterEllipsis"/>
-                                                </Grid>
+                                            <!-- SHUTDOWN SYSTEM -->
+                                            <ButtonEx x:Name="ShutdownCommand"
+                                                      Tag="&#xE7E8;"
+                                                      Content="{DynamicResource LOCMenuShutdownSystem}"
+                                                      Command="{Binding Data.MainMenu.ShutdownSystemCommand, Source={StaticResource ANIKIHELPER_Commands}}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource PowerButtonStyle}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Settings Fullscreen.MainMenuShowShutdown}" Value="False">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
                                             </ButtonEx>
 
                                         </StackPanel>
@@ -15296,7 +15393,7 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding ElementName=AcceuilSettings, Path=Visibility}" Value="Visible"/>
-                                                <Condition Binding="{Binding Source={StaticResource AcceuilOrNot}}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AcceuilOrNot]}" Value="True"/>
                                                 <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="True"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="LoadedBehavior" Value="Play"/>
@@ -15305,7 +15402,7 @@
                                         <DataTrigger Binding="{Binding ElementName=AcceuilSettings, Path=Visibility}" Value="Collapsed">
                                             <Setter Property="LoadedBehavior" Value="Close"/>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding Source={StaticResource AcceuilOrNot}}" Value="False">
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AcceuilOrNot]}" Value="False">
                                             <Setter Property="LoadedBehavior" Value="Close"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="False">

@@ -268,6 +268,129 @@
                                 </Setter>
                             </Style>
 
+                            <Style x:Key="QuickAccessButtonStyle3" TargetType="ButtonEx">
+                                <Setter Property="Height" Value="72"/>
+                                <Setter Property="Margin" Value="0,0,0,4"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Focusable" Value="True"/>
+                                <Setter Property="IsTabStop" Value="True"/>
+                                <Setter Property="KeyboardNavigation.IsTabStop" Value="True"/>
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ButtonEx">
+
+                                            <Grid Background="{TemplateBinding Background}"
+                                                  ClipToBounds="True"
+                                                  SnapsToDevicePixels="True">
+
+                                                <!-- FOCUS BACKGROUND -->
+                                                <Border x:Name="MainBackground"
+                                                        Margin="0"
+                                                        CornerRadius="4"
+                                                        Background="{DynamicResource ButtonBackgroundFocus}"
+                                                        Visibility="Collapsed"/>
+
+                                                <!-- FOCUS BORDER -->
+                                                <Border x:Name="MainBorder"
+                                                        Margin="0"
+                                                        BorderThickness="2"
+                                                        CornerRadius="4"
+                                                        BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                        Visibility="Collapsed"/>
+
+                                                <!-- FLASH FX -->
+                                                <Border x:Name="FlashMenuBorder"
+                                                        Margin="0"
+                                                        CornerRadius="4"
+                                                        Style="{DynamicResource AnimatedFlashMenu}"
+                                                        Tag="False"
+                                                        Visibility="Collapsed"/>
+
+                                                <!-- CONTENT -->
+                                                <Grid Margin="18,0">
+
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="48"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="30"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!-- ICON -->
+                                                    <TextBlock Grid.Column="0"
+                                                               Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}"
+                                                               FontFamily="{StaticResource FontIcomoon}"
+                                                               FontSize="25"
+                                                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"
+                                                               TextOptions.TextFormattingMode="Display"
+                                                               SnapsToDevicePixels="True"/>
+
+                                                    <!-- LABEL -->
+                                                    <ContentPresenter Grid.Column="1"
+                                                                      Margin="18,0,0,0"
+                                                                      VerticalAlignment="Center"
+                                                                      HorizontalAlignment="Left"
+                                                                      RecognizesAccessKey="True"
+                                                                      TextElement.FontFamily="{DynamicResource FontMain}"
+                                                                      TextElement.FontSize="22"
+                                                                      TextElement.FontWeight="SemiBold"
+                                                                      TextElement.Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}"/>
+
+                                                    <!-- CHEVRON / EMPTY SLOT -->
+                                                    <TextBlock Grid.Column="2"
+                                                               Text="&#xE76C;"
+                                                               FontFamily="{DynamicResource FontIcons}"
+                                                               FontSize="16"
+                                                               Opacity="0"
+                                                               Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}"
+                                                               HorizontalAlignment="Right"
+                                                               VerticalAlignment="Center"/>
+
+                                                </Grid>
+
+                                            </Grid>
+
+                                            <ControlTemplate.Triggers>
+
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Opacity" Value="0.35"/>
+                                                </Trigger>
+
+                                                <Trigger Property="IsFocused" Value="True">
+                                                    <Setter TargetName="MainBackground" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="MainBorder" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="FlashMenuBorder" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="FlashMenuBorder" Property="Tag" Value="True"/>
+                                                    <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                                                </Trigger>
+
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="MainBackground" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="MainBorder" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="FlashMenuBorder" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="FlashMenuBorder" Property="Tag" Value="True"/>
+                                                </Trigger>
+
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Opacity" Value="0.85"/>
+                                                </Trigger>
+
+                                            </ControlTemplate.Triggers>
+
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+
                             <Style x:Key="QuickAccessCheckBoxExStyle" TargetType="CheckBoxEx">
                                 <Setter Property="Height" Value="72"/>
                                 <Setter Property="Margin" Value="0,0,0,4"/>
@@ -830,7 +953,7 @@
                                                   Background="Transparent"
                                                   BorderBrush="Transparent"
                                                   BorderThickness="0"
-                                                  Tag="&#xE72C;"
+                                                  Tag="&#xE895;"
                                                   Command="{PluginSettings Plugin=AnikiHelper, Path=UpdateGameLibraryCommand}">
                                             <ButtonEx.Template>
                                                 <ControlTemplate TargetType="ButtonEx">
@@ -1084,16 +1207,16 @@
 
                                     <ButtonEx x:Name="QuickFriendsButton"
                                               Style="{StaticResource QuickAccessButtonStyle}"
-                                              Tag="&#xE902;"
+                                              Tag="&#xE716;"
                                               Content="{DynamicResource LOCSteamFriendsTitle}"
                                               Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle]}"/>
 
                                     <ButtonEx x:Name="QuickAchievementsButton_PA"
-                                              Tag="&#xedd7;"
+                                              Tag="&#xe903;"
                                               Content="{DynamicResource LOCAchievements}"
                                               Command="{PluginSettings Plugin=AnikiHelper, Path=OpenAchievementsCommand}">
                                         <ButtonEx.Style>
-                                            <Style TargetType="ButtonEx" BasedOn="{StaticResource QuickAccessButtonStyle2}">
+                                            <Style TargetType="ButtonEx" BasedOn="{StaticResource QuickAccessButtonStyle3}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="True">
@@ -1105,11 +1228,11 @@
                                     </ButtonEx>
 
                                     <ButtonEx x:Name="QuickAchievementsButton_SS"
-                                              Tag="&#xedd7;"
+                                              Tag="&#xe903;"
                                               Content="{DynamicResource LOCAchievements}"
                                               Command="{PluginSettings Plugin=SuccessStoryFullscreenHelper, Path=OpenAchievementsCommand}">
                                         <ButtonEx.Style>
-                                            <Style TargetType="ButtonEx" BasedOn="{StaticResource QuickAccessButtonStyle2}">
+                                            <Style TargetType="ButtonEx" BasedOn="{StaticResource QuickAccessButtonStyle3}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
                                                     <MultiDataTrigger>

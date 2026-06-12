@@ -1688,10 +1688,114 @@
                                             </StackPanel>
 
                                             <TextBlock Grid.Column="1"
-                                                       Text="{Binding InstallSize, Converter={StaticResource NullableUlongBytesSizeToStringConverter}}"
+                                                       Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameInstallSizeNoDecimal}"
                                                        Style="{StaticResource TextBlockAltDetailStyle}"
                                                        FontSize="22"
                                                        Margin="0,10,0,0"/>
+                                        </Grid>
+
+                                        <!-- Achievements / Trophies -->
+                                        <Grid>
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+
+                                                        <!-- PA prioritaire -->
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="True"/>
+                                                                <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=HasData, FallbackValue=False}" Value="True"/>
+                                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoTrophyDetails]}" Value="False"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </MultiDataTrigger>
+
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Orientation="Horizontal" Margin="0,10,5,0" Grid.Column="0">
+                                                <TextBlock Text="{DynamicResource LOCAchievements}"
+                                                           Style="{StaticResource TextBlockDetailStyle}"
+                                                           Opacity="0.8"
+                                                           FontSize="24"/>
+                                                <TextBlock Text=" : "
+                                                           Style="{StaticResource TextBlockDetailStyle}"
+                                                           Opacity="0.8"
+                                                           FontSize="24"/>
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,10,0,0">
+                                                <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=Unlocked, FallbackValue='-'}"
+                                                           Style="{StaticResource TextBlockAltDetailStyle}"
+                                                           FontSize="22"/>
+                                                <TextBlock Text="/"
+                                                           Style="{StaticResource TextBlockAltDetailStyle}"
+                                                           FontSize="22"
+                                                           Margin="4,0"/>
+                                                <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=Total, FallbackValue='-'}"
+                                                           Style="{StaticResource TextBlockAltDetailStyle}"
+                                                           FontSize="22"/>
+                                            </StackPanel>
+                                        </Grid>
+
+
+                                        <!-- Achievements / Trophies - SuccessStory fallback -->
+                                        <Grid>
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+
+                                                        <!-- SuccessStory seulement si PA absent -->
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="True"/>
+                                                                <Condition Binding="{PluginSettings Plugin=SuccessStory, Path=HasData, FallbackValue=False}" Value="True"/>
+                                                                <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="False"/>
+                                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoTrophyDetails]}" Value="False"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </MultiDataTrigger>
+
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Orientation="Horizontal" Margin="0,10,5,0" Grid.Column="0">
+                                                <TextBlock Text="{DynamicResource LOCAchievements}"
+                                                           Style="{StaticResource TextBlockDetailStyle}"
+                                                           Opacity="0.8"
+                                                           FontSize="24"/>
+                                                <TextBlock Text=" : "
+                                                           Style="{StaticResource TextBlockDetailStyle}"
+                                                           Opacity="0.8"
+                                                           FontSize="24"/>
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,10,0,0">
+                                                <TextBlock Text="{PluginSettings Plugin=SuccessStory, Path=Unlocked, FallbackValue='-'}"
+                                                           Style="{StaticResource TextBlockAltDetailStyle}"
+                                                           FontSize="22"/>
+                                                <TextBlock Text="/"
+                                                           Style="{StaticResource TextBlockAltDetailStyle}"
+                                                           FontSize="22"
+                                                           Margin="4,0"/>
+                                                <TextBlock Text="{PluginSettings Plugin=SuccessStory, Path=Total, FallbackValue='-'}"
+                                                           Style="{StaticResource TextBlockAltDetailStyle}"
+                                                           FontSize="22"/>
+                                            </StackPanel>
                                         </Grid>
 
                                         <!-- Critic Score -->
@@ -1819,6 +1923,9 @@
                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                         </DataTrigger>
                                                         <DataTrigger Binding="{Binding Game.Categories[0]}" Value="">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoCategory]}" Value="True">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
@@ -2126,10 +2233,11 @@
                                                 <Style TargetType="Grid">
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding CompletionStatus}" Value="{x:Null}">
+                                                        <DataTrigger Binding="{Binding CompletionStatus.Name}" Value="{x:Null}">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                         </DataTrigger>
-                                                        <DataTrigger Binding="{Binding CompletionStatus}" Value="">
+
+                                                        <DataTrigger Binding="{Binding CompletionStatus.Name}" Value="">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
@@ -2153,7 +2261,7 @@
                                             </StackPanel>
 
                                             <TextBlock Grid.Column="1"
-                                                       Text="{Binding CompletionStatus}"
+                                                       Text="{Binding CompletionStatus.Name}"
                                                        Style="{StaticResource TextBlockAltDetailStyle}"
                                                        FontSize="22"/>
                                         </Grid>

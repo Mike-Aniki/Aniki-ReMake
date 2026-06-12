@@ -1511,7 +1511,7 @@
                                                             <ColumnDefinition Width="*"/>
                                                         </Grid.ColumnDefinitions>
 
-                                                        <TextBlock Grid.Column="0" Text="&#xec4e;" Style="{StaticResource InfoGlyphStyle}"/>
+                                                        <TextBlock Grid.Column="0" Text="&#xE81C;" FontSize="22" FontFamily="{DynamicResource FontIcons}" Style="{StaticResource InfoGlyphStyle}"/>
                                                         <TextBlock Grid.Column="2" x:Name="PlayedTime"
                                                                    Text="{Binding Playtime, Converter={StaticResource PlayTimeToStringConverter}}"
                                                                    Style="{StaticResource TextBlockBaseStyle}"
@@ -1539,7 +1539,7 @@
                                                             <ColumnDefinition Width="*"/>
                                                         </Grid.ColumnDefinitions>
 
-                                                        <TextBlock Grid.Column="0" Text="&#xec45;" Style="{StaticResource InfoGlyphStyle}"/>
+                                                        <TextBlock Grid.Column="0" Text="&#xE787;" FontSize="22" FontFamily="{DynamicResource FontIcons}"  Style="{StaticResource InfoGlyphStyle}"/>
                                                         <TextBlock Grid.Column="2" x:Name="Played"
                                                                    Text="{Binding LastActivity, StringFormat='{}{0:dd MMMM yyyy}'}"
                                                                    Style="{StaticResource TextBlockBaseStyle}"
@@ -1567,9 +1567,9 @@
                                                             <ColumnDefinition Width="*"/>
                                                         </Grid.ColumnDefinitions>
 
-                                                        <TextBlock Grid.Column="0" Text="&#xef43;" Style="{StaticResource InfoGlyphStyle}"/>
+                                                        <TextBlock Grid.Column="0" Text="&#xe904;" FontSize="22" FontFamily="{DynamicResource FontIcomoon}" Style="{StaticResource InfoGlyphStyle}"/>
                                                         <TextBlock Grid.Column="2" x:Name="Siz"
-                                                                   Text="{Binding InstallSize, Converter={StaticResource NullableUlongBytesSizeToStringConverter}}"
+                                                                   Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameInstallSizeNoDecimal}"
                                                                    Style="{StaticResource TextBlockBaseStyle}"
                                                                    TextTrimming="CharacterEllipsis"/>
                                                     </Grid>
@@ -1595,7 +1595,7 @@
                                                             <ColumnDefinition Width="*"/>
                                                         </Grid.ColumnDefinitions>
 
-                                                        <TextBlock Grid.Column="0" Text="&#xec4c;" Style="{StaticResource InfoGlyphStyle}"/>
+                                                        <TextBlock Grid.Column="0" Text="&#xe926;" FontSize="22" FontFamily="{DynamicResource FontIcomoon}" Style="{StaticResource InfoGlyphStyle}"/>
                                                         <TextBlock Grid.Column="2" x:Name="Completed"
                                                                    Text="{Binding CompletionStatus, Converter={StaticResource ListToStringConverter}}"
                                                                    Style="{StaticResource TextBlockBaseStyle}"
@@ -1636,7 +1636,7 @@
 
                                                         <!-- Icône: glyph par défaut, platine si 100% -->
                                                         <Grid Grid.Column="0">
-                                                            <TextBlock Text="&#xedd7;">
+                                                            <TextBlock Text="&#xe903;" FontSize="22" FontFamily="{DynamicResource FontIcomoon}">
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="TextBlock" BasedOn="{StaticResource InfoGlyphStyle}">
                                                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1709,7 +1709,7 @@
 
                                                         <!-- Icône: glyph par défaut, platine si 100% -->
                                                         <Grid Grid.Column="0">
-                                                            <TextBlock Text="&#xedd7;">
+                                                            <TextBlock Text="&#xe903;" FontSize="22" FontFamily="{DynamicResource FontIcomoon}">
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="TextBlock" BasedOn="{StaticResource InfoGlyphStyle}">
                                                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1746,8 +1746,6 @@
                                                         </StackPanel>
                                                     </Grid>
 
-
-
                                                     <!-- Genres -->
                                                     <Grid Margin="0,4,0,0" x:Name="Genres">
                                                         <Grid.Style>
@@ -1769,7 +1767,7 @@
                                                             <ColumnDefinition Width="*"/>
                                                         </Grid.ColumnDefinitions>
 
-                                                        <TextBlock Grid.Column="0" Text="&#xef65;" Style="{StaticResource InfoGlyphStyle}"/>
+                                                        <TextBlock Grid.Column="0" Text="&#xE8EC;" FontSize="22" FontFamily="{DynamicResource FontIcons}" Style="{StaticResource InfoGlyphStyle}"/>
                                                         <Grid Grid.Column="2" HorizontalAlignment="Left" MaxWidth="{Binding ElementName=MainButton, Path=ActualWidth}">
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="Auto"/>
@@ -1824,6 +1822,9 @@
                                                                     <DataTrigger Binding="{Binding Game.Categories[0]}" Value="">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                                     </DataTrigger>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoCategory]}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                    </DataTrigger>
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </Grid.Style>
@@ -1834,7 +1835,7 @@
                                                         </Grid.ColumnDefinitions>
 
 
-                                                        <TextBlock Grid.Column="0" Text="&#xef5a;" Style="{StaticResource InfoGlyphStyle}"/>
+                                                        <TextBlock Grid.Column="0" Text="&#xe902;" FontSize="22" FontFamily="{DynamicResource FontIcomoon}" Style="{StaticResource InfoGlyphStyle}"/>
                                                         <Grid Grid.Column="2" HorizontalAlignment="Left" MaxWidth="{Binding ElementName=MainButton, Path=ActualWidth}">
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="Auto"/>
@@ -1900,7 +1901,9 @@
 
                                                         <!-- Icône -->
                                                         <TextBlock Grid.Column="0"
-                                                                   Text="&#xecf9;"
+                                                                   Text="&#xE716;"
+                                                                   FontSize="22"
+                                                                   FontFamily="{DynamicResource FontIcons}"
                                                                    Style="{StaticResource InfoGlyphStyle}"/>
 
                                                         <StackPanel Grid.Column="2"
@@ -1912,14 +1915,12 @@
                                                             <!-- Nombre de joueurs (depuis AnikiHelper) -->
                                                             <TextBlock VerticalAlignment="Center"
                                                                        Style="{StaticResource TextBlockBaseStyle}"
-                                                                       FontSize="26"
                                                                        Text="{PluginSettings Plugin=AnikiHelper, Path=SteamCurrentPlayersString}"/>
 
                                                             <!-- Label "in game" -->
                                                             <TextBlock Margin="6,0,0,0"
                                                                        VerticalAlignment="Center"
                                                                        Style="{StaticResource TextBlockBaseStyle}"
-                                                                       FontSize="26"
                                                                        Text="{DynamicResource LOCPlayerInGame}"/>
                                                         </StackPanel>
                                                     </Grid>
@@ -1955,12 +1956,12 @@
                                                             <ColumnDefinition Width="*"/>
                                                         </Grid.ColumnDefinitions>
 
-                                                        <TextBlock Grid.Column="0" Text="&#xef49;" Style="{StaticResource InfoGlyphStyle}"/>
+                                                        <TextBlock Grid.Column="0" Text="&#xe906;" FontSize="22" FontFamily="{DynamicResource FontIcomoon}" Style="{StaticResource InfoGlyphStyle}"/>
                                                         <StackPanel Grid.Column="2" VerticalAlignment="Top" Orientation="Horizontal">
                                                             <TextBlock Text="{PluginSettings Plugin=HowLongToBeat, Path=MainStoryFormat}" Style="{StaticResource TextBlockBaseStyle}"/>
-                                                            <TextBlock Text="&#xec79;" Margin="6,0,4,2" Style="{StaticResource InfoGlyphStyle}" Opacity="0.95"/>
+                                                            <TextBlock Text="&#xe909;" FontSize="22" FontFamily="{DynamicResource FontIcomoon}" Margin="6,0,4,2" Style="{StaticResource InfoGlyphStyle}" Opacity="0.95"/>
                                                             <TextBlock Text="{PluginSettings Plugin=HowLongToBeat, Path=MainExtraFormat}" Margin="5,0" Style="{StaticResource TextBlockBaseStyle}"/>
-                                                            <TextBlock Text="&#xeeaa;" Margin="0,0,4,1" Style="{StaticResource InfoGlyphStyle}" Opacity="0.95"/>
+                                                            <TextBlock Text="&#xe910;" FontSize="22" Margin="0,0,4,1" FontFamily="{DynamicResource FontIcomoon}" Style="{StaticResource InfoGlyphStyle}" Opacity="0.95"/>
                                                             <TextBlock Text="{PluginSettings Plugin=HowLongToBeat, Path=CompletionistFormat}" Style="{StaticResource TextBlockBaseStyle}" />
                                                         </StackPanel>
                                                     </Grid>

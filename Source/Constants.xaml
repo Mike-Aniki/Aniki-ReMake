@@ -11,7 +11,7 @@
     1) Misc
     ========================================================== -->
     <sys:Boolean x:Key="Aniki_ThemeMarker">True</sys:Boolean>
-    <sys:String x:Key="RequiredAnikiHelperVersion">1.3.4</sys:String>
+    <sys:String x:Key="RequiredAnikiHelperVersion">1.4.1</sys:String>
     <sys:Boolean x:Key="UseAbsoluteExtraMetadataPath">True</sys:Boolean>
     <sys:String x:Key="ExtraMetadataPath">C:\Users\Mike Aniki\AppData\Roaming\Playnite</sys:String>
     <sys:Boolean x:Key="DynamicAutoEnabled">False</sys:Boolean>
@@ -37,6 +37,11 @@
 
     <FontFamily x:Key="FontIcons">./Themes Option/9.Fonts/FontIcons/#Segoe Fluent Icons</FontFamily>
     <FontFamily x:Key="FontMain">./Themes Option/9.Fonts/Exo 2/#Exo 2</FontFamily>
+<FontFamily x:Key="FontIcomoon">./Themes Option/9.Fonts/FontIcons/#icomoon</FontFamily>
+
+
+
+
 
     <!-- ==========================================================
     2) COLOR BANK
@@ -78,6 +83,14 @@
     <Color x:Key="GlassWindow_Top">#18FFFFFF</Color>
     <Color x:Key="GlassWindow_Mid">#00000000</Color>
     <Color x:Key="GlassWindow_Bot">#12000000</Color>
+
+    <Color x:Key="GlassSignature_Top">#36000000</Color>
+    <Color x:Key="GlassSignature_Mid">#18000000</Color>
+    <Color x:Key="GlassSignature_Bot">#20FFFFFF</Color>
+
+    <Color x:Key="GlassSignatureInnerLine_Left">#08FFFFFF</Color>
+    <Color x:Key="GlassSignatureInnerLine_Mid">#FFE0BE79</Color>
+    <Color x:Key="GlassSignatureInnerLine_Right">#08FFFFFF</Color>
 
     <!-- Text Global -->
     <Color x:Key="TextColor">#FFF5F1EA</Color>
@@ -652,6 +665,18 @@
         <GradientStop Color="{DynamicResource GlassMain_Bot}" Offset="1.00"/>
     </LinearGradientBrush>
 
+    <LinearGradientBrush x:Key="GlassSignatureBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{DynamicResource GlassSignature_Top}" Offset="0.00"/>
+        <GradientStop Color="{DynamicResource GlassSignature_Mid}" Offset="0.45"/>
+        <GradientStop Color="{DynamicResource GlassSignature_Bot}" Offset="1.00"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="GlassSignatureInnerLineBrush" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Color="{DynamicResource GlassSignatureInnerLine_Left}" Offset="0.00"/>
+        <GradientStop Color="{DynamicResource GlassSignatureInnerLine_Mid}" Offset="0.50"/>
+        <GradientStop Color="{DynamicResource GlassSignatureInnerLine_Right}" Offset="1.00"/>
+    </LinearGradientBrush>
+
     <LinearGradientBrush x:Key="GlassWindowBrush" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Color="{DynamicResource GlassWindow_Top}" Offset="0.00"/>
         <GradientStop Color="{DynamicResource GlassWindow_Mid}" Offset="0.50"/>
@@ -668,6 +693,11 @@
 
     <!-- == SHADE == -->
     <LinearGradientBrush x:Key="ShadeBackground" StartPoint="0,1" EndPoint="0,0">
+        <GradientStop Color="{DynamicResource ShadeBackground_Stop0}" Offset="0.00"/>
+        <GradientStop Color="{DynamicResource Transparent}" Offset="1.00"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ShadeBackgroundButton" StartPoint="0,1" EndPoint="0,0">
         <GradientStop Color="{DynamicResource ShadeBackground_Stop0}" Offset="0.00"/>
         <GradientStop Color="{DynamicResource ShadeBackground_Stop1}" Offset="0.30"/>
         <GradientStop Color="{DynamicResource ShadeBackground_Stop2}" Offset="0.45"/>
@@ -694,9 +724,9 @@
 
     <LinearGradientBrush x:Key="ShadeBottom" StartPoint="0,1" EndPoint="0,0">
         <GradientStop Color="{DynamicResource ShadeBottom_Stop0}" Offset="0.00"/>
-        <GradientStop Color="{DynamicResource ShadeBottom_Stop1}" Offset="0.10"/>
-        <GradientStop Color="{DynamicResource ShadeBottom_Stop2}" Offset="0.22"/>
-        <GradientStop Color="{DynamicResource ShadeBottom_Stop3}" Offset="0.35"/>
+        <GradientStop Color="{DynamicResource ShadeBottom_Stop1}" Offset="0.22"/>
+        <GradientStop Color="{DynamicResource ShadeBottom_Stop2}" Offset="0.35"/>
+        <GradientStop Color="{DynamicResource ShadeBottom_Stop3}" Offset="0.45"/>
         <GradientStop Color="{DynamicResource ShadeBottom_Stop4}" Offset="0.55"/>
     </LinearGradientBrush>
 
@@ -840,12 +870,13 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
 
+
     <!-- ==========================================================
-    THEME OPTIONS
+    ANIKI THEME SETTINGS - YAML STYLE ALIASES
     ========================================================== -->
 
     <!-- TITRE DE SECTION PRINCIPAL -->
-    <Style x:Key="TextThemeOptionStyle"
+    <Style x:Key="AnikiThemeSettingsTextTitleStyle"
            TargetType="TextBlock"
            BasedOn="{StaticResource TextBlockBaseStyle}">
         <Setter Property="TextWrapping" Value="Wrap"/>
@@ -863,15 +894,15 @@
     </Style>
 
     <!-- DESCRIPTION / NOTE MINI -->
-    <Style x:Key="TextThemeOptionStyleMini"
+    <Style x:Key="AnikiThemeSettingsTextMiniStyle"
            TargetType="TextBlock"
            BasedOn="{StaticResource TextBlockBaseStyle}">
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="Foreground" Value="{DynamicResource TextAltBrush}"/>
-        <Setter Property="Opacity" Value="0.75"/>
-        <Setter Property="LineHeight" Value="18"/>
+        <Setter Property="Opacity" Value="0.8"/>
+        <Setter Property="LineHeight" Value="14"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="TextAlignment" Value="Left"/>
         <Setter Property="TextTrimming" Value="None"/>
@@ -883,7 +914,7 @@
     </Style>
 
     <!-- SOUS-TITRE -->
-    <Style x:Key="TextThemeOptionStyleSousTitre"
+    <Style x:Key="AnikiThemeSettingsTextSubtitleStyle"
            TargetType="TextBlock"
            BasedOn="{StaticResource TextBlockBaseStyle}">
         <Setter Property="TextWrapping" Value="Wrap"/>
@@ -902,12 +933,12 @@
         <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
     </Style>
 
-    <Style x:Key="HeaderDockPanelStyle"
+    <Style x:Key="AnikiThemeSettingsHeaderDockPanelStyle"
            TargetType="DockPanel">
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="LastChildFill" Value="False"/>
-        <Setter Property="Margin" Value="0,34,0,24"/>
+        <Setter Property="Margin" Value="0,0,0,20"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="IsHitTestVisible" Value="False"/>
         <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
@@ -924,7 +955,7 @@
         <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
     </Style>
 
-    <Style x:Key="HeaderDockPanelStyleMini"
+    <Style x:Key="AnikiThemeSettingsHeaderDockPanelMiniStyle"
            TargetType="DockPanel">
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
@@ -935,11 +966,11 @@
         <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
     </Style>
 
-    <Style x:Key="ThemeOptionsSeparatorDockPanelStyle"
+    <Style x:Key="AnikiThemeSettingsSeparatorDockPanelStyle"
            TargetType="DockPanel">
         <Setter Property="Height" Value="2"/>
         <Setter Property="MinHeight" Value="2"/>
-        <Setter Property="Margin" Value="160,28,160,12"/>
+        <Setter Property="Margin" Value="160,12,160,12"/>
         <Setter Property="Background" Value="{DynamicResource SeparatorTopBarBrush}"/>
         <Setter Property="Opacity" Value="0.55"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -948,12 +979,23 @@
         <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
     </Style>
 
-    <Style x:Key="ThemeOptionsSeparatorTextStyle"
+    <Style x:Key="AnikiThemeSettingsSeparatorTextStyle"
            TargetType="TextBlock"
            BasedOn="{StaticResource TextBlockBaseStyle}">
         <Setter Property="Visibility" Value="Collapsed"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="IsHitTestVisible" Value="False"/>
+        <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
+    </Style>
+
+
+
+
+    <Style x:Key="AnikiThemeSettingsOffsetDockPanelStyle"
+           TargetType="DockPanel">
+        <Setter Property="Margin" Value="0,0,0,0"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Focusable" Value="False"/>
         <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
     </Style>
 
@@ -1386,6 +1428,7 @@
     <ImageBrush x:Key="StatViewImage100" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/100.Mario/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage100" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/100.Mario/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage100" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/100.Mario/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage100" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/100.Mario/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
 
     <!-- 101.Sonic -->
@@ -1400,7 +1443,7 @@
     <ImageBrush x:Key="StatViewImage101" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/101.Sonic/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage101" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/101.Sonic/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage101" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/101.Sonic/Login.jpg'}" Stretch="UniformToFill"/>
-
+    <ImageBrush x:Key="QuickAccessImage101" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/101.Sonic/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 102.DragonQuest -->
     <ImageBrush x:Key="MainMenuImage102" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/102.DragonQuest/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1414,6 +1457,7 @@
     <ImageBrush x:Key="StatViewImage102" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/102.DragonQuest/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage102" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/102.DragonQuest/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage102" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/102.DragonQuest/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage102" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/102.DragonQuest/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 103.ZeldaClassic -->
     <ImageBrush x:Key="MainMenuImage103" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/103.ZeldaClassic/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1427,6 +1471,7 @@
     <ImageBrush x:Key="StatViewImage103" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/103.ZeldaClassic/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage103" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/103.ZeldaClassic/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage103" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/103.ZeldaClassic/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage103" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/103.ZeldaClassic/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 104.ZeldaBOTW -->
     <ImageBrush x:Key="MainMenuImage104" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/104.ZeldaBOTW/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1440,6 +1485,7 @@
     <ImageBrush x:Key="StatViewImage104" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/104.ZeldaBOTW/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage104" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/104.ZeldaBOTW/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage104" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/104.ZeldaBOTW/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage104" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/104.ZeldaBOTW/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 105.FF7Original -->
     <ImageBrush x:Key="MainMenuImage105" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/105.FF7Original/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1453,6 +1499,7 @@
     <ImageBrush x:Key="StatViewImage105" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/105.FF7Original/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage105" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/105.FF7Original/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage105" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/105.FF7Original/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage105" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/105.FF7Original/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 106.FF7Remake -->
     <ImageBrush x:Key="MainMenuImage106" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/106.FF7Remake/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1466,6 +1513,7 @@
     <ImageBrush x:Key="StatViewImage106" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/106.FF7Remake/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage106" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/106.FF7Remake/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage106" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/106.FF7Remake/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage106" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/106.FF7Remake/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 107.FF8 -->
     <ImageBrush x:Key="MainMenuImage107" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/107.FF8/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1479,6 +1527,7 @@
     <ImageBrush x:Key="StatViewImage107" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/107.FF8/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage107" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/107.FF8/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage107" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/107.FF8/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage107" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/107.FF8/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 108.FFX -->
     <ImageBrush x:Key="MainMenuImage108" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/108.FFX/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1492,6 +1541,7 @@
     <ImageBrush x:Key="StatViewImage108" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/108.FFX/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage108" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/108.FFX/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage108" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/108.FFX/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage108" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/108.FFX/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 109.Persona3 -->
     <ImageBrush x:Key="MainMenuImage109" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/109.Persona3/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1505,6 +1555,7 @@
     <ImageBrush x:Key="StatViewImage109" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/109.Persona3/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage109" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/109.Persona3/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage109" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/109.Persona3/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage109" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/109.Persona3/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 110.Persona4 -->
     <ImageBrush x:Key="MainMenuImage110" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/110.Persona4/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1518,6 +1569,7 @@
     <ImageBrush x:Key="StatViewImage110" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/110.Persona4/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage110" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/110.Persona4/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage110" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/110.Persona4/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage110" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/110.Persona4/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 111.Persona5 -->
     <ImageBrush x:Key="MainMenuImage111" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/111.Persona5/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1531,6 +1583,7 @@
     <ImageBrush x:Key="StatViewImage111" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/111.Persona5/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage111" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/111.Persona5/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage111" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/111.Persona5/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage111" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/111.Persona5/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 112.ClairObscur -->
     <ImageBrush x:Key="MainMenuImage112" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/112.ClairObscur/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1544,6 +1597,7 @@
     <ImageBrush x:Key="StatViewImage112" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/112.ClairObscur/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage112" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/112.ClairObscur/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage112" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/112.ClairObscur/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage112" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/112.ClairObscur/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 113.Witcher -->
     <ImageBrush x:Key="MainMenuImage113" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/113.Witcher/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1557,6 +1611,7 @@
     <ImageBrush x:Key="StatViewImage113" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/113.Witcher/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage113" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/113.Witcher/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage113" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/113.Witcher/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage113" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/113.Witcher/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 114.EldenRing -->
     <ImageBrush x:Key="MainMenuImage114" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/114.EldenRing/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1570,6 +1625,7 @@
     <ImageBrush x:Key="StatViewImage114" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/114.EldenRing/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage114" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/114.EldenRing/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage114" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/114.EldenRing/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage114" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/114.EldenRing/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 115.MGS1 -->
     <ImageBrush x:Key="MainMenuImage115" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/115.MGS1/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1583,6 +1639,7 @@
     <ImageBrush x:Key="StatViewImage115" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/115.MGS1/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage115" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/115.MGS1/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage115" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/115.MGS1/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage115" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/115.MGS1/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 116.Sekiro -->
     <ImageBrush x:Key="MainMenuImage116" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/116.Sekiro/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1596,6 +1653,7 @@
     <ImageBrush x:Key="StatViewImage116" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/116.Sekiro/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage116" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/116.Sekiro/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage116" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/116.Sekiro/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage116" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/116.Sekiro/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 117.DarkSoul -->
     <ImageBrush x:Key="MainMenuImage117" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/117.DarkSoul/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1609,6 +1667,7 @@
     <ImageBrush x:Key="StatViewImage117" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/117.DarkSoul/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage117" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/117.DarkSoul/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage117" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/117.DarkSoul/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage117" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/117.DarkSoul/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 118.Yakuza -->
     <ImageBrush x:Key="MainMenuImage118" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/118.Yakuza/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1622,6 +1681,7 @@
     <ImageBrush x:Key="StatViewImage118" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/118.Yakuza/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage118" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/118.Yakuza/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage118" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/118.Yakuza/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage118" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/118.Yakuza/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 119.Berserk -->
     <ImageBrush x:Key="MainMenuImage119" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/119.Berserk/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1635,6 +1695,7 @@
     <ImageBrush x:Key="StatViewImage119" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/119.Berserk/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage119" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/119.Berserk/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage119" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/119.Berserk/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage119" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/119.Berserk/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 120.LikeADragon -->
     <ImageBrush x:Key="MainMenuImage120" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/120.LikeADragon/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1648,6 +1709,7 @@
     <ImageBrush x:Key="StatViewImage120" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/120.LikeADragon/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage120" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/120.LikeADragon/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage120" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/120.LikeADragon/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage120" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/120.LikeADragon/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 121.DBZ -->
     <ImageBrush x:Key="MainMenuImage121" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/121.DBZ/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1661,6 +1723,7 @@
     <ImageBrush x:Key="StatViewImage121" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/121.DBZ/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage121" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/121.DBZ/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage121" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/121.DBZ/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage121" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/121.DBZ/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 122.UzumakiClan -->
     <ImageBrush x:Key="MainMenuImage122" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/122.UzumakiClan/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1674,6 +1737,7 @@
     <ImageBrush x:Key="StatViewImage122" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/122.UzumakiClan/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage122" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/122.UzumakiClan/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage122" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/122.UzumakiClan/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage122" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/122.UzumakiClan/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 123.UchiwaClan -->
     <ImageBrush x:Key="MainMenuImage123" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/123.UchiwaClan/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1687,6 +1751,7 @@
     <ImageBrush x:Key="StatViewImage123" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/123.UchiwaClan/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage123" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/123.UchiwaClan/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage123" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/123.UchiwaClan/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage123" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/123.UchiwaClan/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 124.Akatsuki -->
     <ImageBrush x:Key="MainMenuImage124" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/124.Akatsuki/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1700,6 +1765,7 @@
     <ImageBrush x:Key="StatViewImage124" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/124.Akatsuki/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage124" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/124.Akatsuki/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage124" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/124.Akatsuki/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage124" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/124.Akatsuki/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 125.OnePiece -->
     <ImageBrush x:Key="MainMenuImage125" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/125.OnePiece/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1713,6 +1779,7 @@
     <ImageBrush x:Key="StatViewImage125" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/125.OnePiece/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage125" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/125.OnePiece/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage125" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/125.OnePiece/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage125" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/125.OnePiece/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 126.Bleach -->
     <ImageBrush x:Key="MainMenuImage126" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/126.Bleach/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1726,6 +1793,7 @@
     <ImageBrush x:Key="StatViewImage126" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/126.Bleach/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage126" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/126.Bleach/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage126" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/126.Bleach/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage126" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/126.Bleach/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 127.DemonSlayer -->
     <ImageBrush x:Key="MainMenuImage127" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/127.DemonSlayer/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1739,6 +1807,7 @@
     <ImageBrush x:Key="StatViewImage127" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/127.DemonSlayer/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage127" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/127.DemonSlayer/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage127" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/127.DemonSlayer/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage127" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/127.DemonSlayer/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 128.Batman -->
     <ImageBrush x:Key="MainMenuImage128" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/128.Batman/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1752,6 +1821,7 @@
     <ImageBrush x:Key="StatViewImage128" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/128.Batman/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage128" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/128.Batman/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage128" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/128.Batman/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage128" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/128.Batman/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 129.Joker -->
     <ImageBrush x:Key="MainMenuImage129" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/129.Joker/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1765,6 +1835,7 @@
     <ImageBrush x:Key="StatViewImage129" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/129.Joker/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage129" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/129.Joker/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage129" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/129.Joker/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage129" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/129.Joker/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 130.HarleyQuinn -->
     <ImageBrush x:Key="MainMenuImage130" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/130.HarleyQuinn/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1778,6 +1849,7 @@
     <ImageBrush x:Key="StatViewImage130" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/130.HarleyQuinn/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage130" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/130.HarleyQuinn/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage130" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/130.HarleyQuinn/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage130" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/130.HarleyQuinn/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 131.Superman -->
     <ImageBrush x:Key="MainMenuImage131" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/131.Superman/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1791,6 +1863,7 @@
     <ImageBrush x:Key="StatViewImage131" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/131.Superman/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage131" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/131.Superman/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage131" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/131.Superman/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage131" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/131.Superman/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 132.Spiderman -->
     <ImageBrush x:Key="MainMenuImage132" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/132.Spiderman/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1804,6 +1877,7 @@
     <ImageBrush x:Key="StatViewImage132" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/132.Spiderman/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage132" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/132.Spiderman/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage132" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/132.Spiderman/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage132" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/132.Spiderman/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 133.NFS -->
     <ImageBrush x:Key="MainMenuImage133" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/133.NFS/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1817,6 +1891,7 @@
     <ImageBrush x:Key="StatViewImage133" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/133.NFS/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage133" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/133.NFS/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage133" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/133.NFS/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage133" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/133.NFS/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 134.Forza -->
     <ImageBrush x:Key="MainMenuImage134" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/134.Forza/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1830,6 +1905,7 @@
     <ImageBrush x:Key="StatViewImage134" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/134.Forza/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage134" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/134.Forza/FriendsView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage134" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/134.Forza/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage134" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/134.Forza/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 135.PlayStation -->
     <ImageBrush x:Key="MainMenuImage135" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/135.PlayStation/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1842,6 +1918,7 @@
     <ImageBrush x:Key="StatViewImage135" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/135.PlayStation/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage135" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/FriendsImageDefault.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage135" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/135.PlayStation/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage135" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/135.PlayStation/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 136.Sega -->
     <ImageBrush x:Key="MainMenuImage136" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/136.Sega/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1854,6 +1931,7 @@
     <ImageBrush x:Key="StatViewImage136" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/136.Sega/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage136" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/FriendsImageDefault.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage136" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/136.Sega/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage136" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/136.Sega/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 137.Nintendo -->
     <ImageBrush x:Key="MainMenuImage137" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/137.Nintendo/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1866,6 +1944,7 @@
     <ImageBrush x:Key="StatViewImage137" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/137.Nintendo/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage137" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/FriendsImageDefault.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage137" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/137.Nintendo/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage137" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/137.Nintendo/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 138.Xbox -->
     <ImageBrush x:Key="MainMenuImage138" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/138.Xbox/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1878,6 +1957,7 @@
     <ImageBrush x:Key="StatViewImage138" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/138.Xbox/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage138" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/FriendsImageDefault.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage138" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/138.Xbox/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage138" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/138.Xbox/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- 139.AllyX -->
     <ImageBrush x:Key="MainMenuImage139" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/139.RogAlly/MainMenu.jpg'}" Stretch="UniformToFill"/>
@@ -1890,8 +1970,124 @@
     <ImageBrush x:Key="StatViewImage139" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/139.RogAlly/StatView.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="FriendsViewImage139" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/FriendsImageDefault.jpg'}" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginImage139" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/139.RogAlly/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage139" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/139.RogAlly/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
+    <!-- 140.Endless Horizons -->
+    <ImageBrush x:Key="MainMenuImage140" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/140.Endless Horizons/MainMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="SettingImage140" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/140.Endless Horizons/SettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FrameSettingImage140" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/140.Endless Horizons/FrameSettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="BoxMessageImage140" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/140.Endless Horizons/MessageBox.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="GameMenuImage140" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/140.Endless Horizons/GameMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="ItemMenuImage140" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/140.Endless Horizons/ItemMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="WelcomeImage140" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/140.Endless Horizons/Welcome.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="StatViewImage140" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/140.Endless Horizons/StatView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FriendsViewImage140" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/140.Endless Horizons/FriendsView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="LoginImage140" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/140.Endless Horizons/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage140" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/140.Endless Horizons/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
+    <!-- 141.Avatar -->
+    <ImageBrush x:Key="MainMenuImage141" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/141.Avatar/MainMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="SettingImage141" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/141.Avatar/SettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FrameSettingImage141" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/141.Avatar/FrameSettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="BoxMessageImage141" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/141.Avatar/MessageBox.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="GameMenuImage141" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/141.Avatar/GameMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="ItemMenuImage141" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/141.Avatar/ItemMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="WelcomeImage141" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/141.Avatar/Welcome.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="StatViewImage141" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/141.Avatar/StatView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FriendsViewImage141" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/141.Avatar/FriendsView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="LoginImage141" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/141.Avatar/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage141" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/141.Avatar/QuickAccess.jpg'}" Stretch="UniformToFill"/>
+
+    <!-- 142.LA Noire -->
+    <ImageBrush x:Key="MainMenuImage142" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/142.LA Noire/MainMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="SettingImage142" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/142.LA Noire/SettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FrameSettingImage142" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/142.LA Noire/FrameSettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="BoxMessageImage142" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/142.LA Noire/MessageBox.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="GameMenuImage142" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/142.LA Noire/GameMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="ItemMenuImage142" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/142.LA Noire/ItemMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="WelcomeImage142" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/142.LA Noire/Welcome.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="StatViewImage142" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/142.LA Noire/StatView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FriendsViewImage142" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/142.LA Noire/FriendsView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="LoginImage142" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/142.LA Noire/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage142" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/142.LA Noire/QuickAccess.jpg'}" Stretch="UniformToFill"/>
+
+    <!-- 143.Your Name -->
+    <ImageBrush x:Key="MainMenuImage143" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/143.Your Name/MainMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="SettingImage143" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/143.Your Name/SettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FrameSettingImage143" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/143.Your Name/FrameSettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="BoxMessageImage143" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/143.Your Name/MessageBox.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="GameMenuImage143" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/143.Your Name/GameMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="ItemMenuImage143" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/143.Your Name/ItemMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="WelcomeImage143" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/143.Your Name/Welcome.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="StatViewImage143" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/143.Your Name/StatView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FriendsViewImage143" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/143.Your Name/FriendsView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="LoginImage143" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/143.Your Name/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage143" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/143.Your Name/QuickAccess.jpg'}" Stretch="UniformToFill"/>
+
+    <!-- 144.Steins Gate -->
+    <ImageBrush x:Key="MainMenuImage144" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/144.Steins Gate/MainMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="SettingImage144" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/144.Steins Gate/SettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FrameSettingImage144" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/144.Steins Gate/FrameSettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="BoxMessageImage144" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/144.Steins Gate/MessageBox.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="GameMenuImage144" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/144.Steins Gate/GameMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="ItemMenuImage144" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/144.Steins Gate/ItemMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="WelcomeImage144" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/144.Steins Gate/Welcome.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="StatViewImage144" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/144.Steins Gate/StatView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FriendsViewImage144" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/144.Steins Gate/FriendsView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="LoginImage144" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/144.Steins Gate/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage144" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/144.Steins Gate/QuickAccess.jpg'}" Stretch="UniformToFill"/>
+
+    <!-- 145.Assassins Creed -->
+    <ImageBrush x:Key="MainMenuImage145" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/145.Assassins Creed/MainMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="SettingImage145" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/145.Assassins Creed/SettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FrameSettingImage145" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/145.Assassins Creed/FrameSettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="BoxMessageImage145" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/145.Assassins Creed/MessageBox.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="GameMenuImage145" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/145.Assassins Creed/GameMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="ItemMenuImage145" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/145.Assassins Creed/ItemMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="WelcomeImage145" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/145.Assassins Creed/Welcome.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="StatViewImage145" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/145.Assassins Creed/StatView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FriendsViewImage145" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/145.Assassins Creed/FriendsView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="LoginImage145" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/145.Assassins Creed/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage145" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/145.Assassins Creed/QuickAccess.jpg'}" Stretch="UniformToFill"/>
+
+    <!-- 146.Re Zero -->
+    <ImageBrush x:Key="MainMenuImage146" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/146.Re Zero/MainMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="SettingImage146" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/146.Re Zero/SettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FrameSettingImage146" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/146.Re Zero/FrameSettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="BoxMessageImage146" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/146.Re Zero/MessageBox.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="GameMenuImage146" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/146.Re Zero/GameMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="ItemMenuImage146" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/146.Re Zero/ItemMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="WelcomeImage146" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/146.Re Zero/Welcome.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="StatViewImage146" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/146.Re Zero/StatView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FriendsViewImage146" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/146.Re Zero/FriendsView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="LoginImage146" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/146.Re Zero/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage146" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/146.Re Zero/QuickAccess.jpg'}" Stretch="UniformToFill"/>
+
+    <!-- 147.RetroFlux -->
+    <ImageBrush x:Key="MainMenuImage147" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/147.RetroFlux/MainMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="SettingImage147" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/147.RetroFlux/SettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FrameSettingImage147" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/147.RetroFlux/FrameSettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="BoxMessageImage147" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/147.RetroFlux/MessageBox.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="GameMenuImage147" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/147.RetroFlux/GameMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="ItemMenuImage147" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/147.RetroFlux/ItemMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="WelcomeImage147" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/147.RetroFlux/Welcome.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="StatViewImage147" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/147.RetroFlux/StatView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FriendsViewImage147" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/147.RetroFlux/FriendsView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="LoginImage147" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/147.RetroFlux/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage147" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/147.RetroFlux/QuickAccess.jpg'}" Stretch="UniformToFill"/>
+
+    <!-- 148.Street Fighter -->
+    <ImageBrush x:Key="MainMenuImage148" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/148.Street Fighter/MainMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="SettingImage148" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/148.Street Fighter/SettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FrameSettingImage148" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/148.Street Fighter/FrameSettingsBackground.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="BoxMessageImage148" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/148.Street Fighter/MessageBox.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="GameMenuImage148" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/148.Street Fighter/GameMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="ItemMenuImage148" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/148.Street Fighter/ItemMenu.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="WelcomeImage148" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/148.Street Fighter/Welcome.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="StatViewImage148" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/148.Street Fighter/StatView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="FriendsViewImage148" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/148.Street Fighter/FriendsView.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="LoginImage148" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/148.Street Fighter/Login.jpg'}" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="QuickAccessImage148" ImageSource="{ThemeFile 'Themes Option/2.Interface/Images/148.Street Fighter/QuickAccess.jpg'}" Stretch="UniformToFill"/>
 
     <!-- =========================
     Controller
@@ -1919,7 +2115,44 @@
     <BitmapImage x:Key="ImageButtonRS-PS" UriSource="{ThemeFile 'Images/Buttons/Controller/PlayStation/Button-RS.png'}" />
     <BitmapImage x:Key="ImageButtonDpad-PS" UriSource="{ThemeFile 'Images/Buttons/Controller/PlayStation/Button-Dpad.png'}" />
 
+    <!-- USER LEVEL -->
+    <ImageBrush x:Key="PA_Level_Bronze1" ImageSource="{ThemeFile 'Images/UserLevel/Bronze1.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_Level_Bronze2" ImageSource="{ThemeFile 'Images/UserLevel/Bronze2.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_Level_Bronze3" ImageSource="{ThemeFile 'Images/UserLevel/Bronze3.png'}" Stretch="Uniform"/>
 
+    <ImageBrush x:Key="PA_Level_Silver1" ImageSource="{ThemeFile 'Images/UserLevel/Silver1.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_Level_Silver2" ImageSource="{ThemeFile 'Images/UserLevel/Silver2.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_Level_Silver3" ImageSource="{ThemeFile 'Images/UserLevel/Silver3.png'}" Stretch="Uniform"/>
+
+    <ImageBrush x:Key="PA_Level_Gold1" ImageSource="{ThemeFile 'Images/UserLevel/Gold1.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_Level_Gold2" ImageSource="{ThemeFile 'Images/UserLevel/Gold2.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_Level_Gold3" ImageSource="{ThemeFile 'Images/UserLevel/Gold3.png'}" Stretch="Uniform"/>
+
+    <ImageBrush x:Key="PA_Level_Plat1" ImageSource="{ThemeFile 'Images/UserLevel/Plat1.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_Level_Plat2" ImageSource="{ThemeFile 'Images/UserLevel/Plat2.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_Level_Plat3" ImageSource="{ThemeFile 'Images/UserLevel/Plat3.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_Level_Plat"  ImageSource="{ThemeFile 'Images/UserLevel/Plat.png'}" Stretch="Uniform"/>
+
+
+    <!-- GAMERSCORE -->
+    <ImageBrush x:Key="PA_GS_1K" ImageSource="{ThemeFile 'Images/UserLevel/GamerScore/1K.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_GS_3K" ImageSource="{ThemeFile 'Images/UserLevel/GamerScore/3K.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_GS_5K" ImageSource="{ThemeFile 'Images/UserLevel/GamerScore/5K.png'}" Stretch="Uniform"/>
+
+    <ImageBrush x:Key="PA_GS_10K" ImageSource="{ThemeFile 'Images/UserLevel/GamerScore/10K.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_GS_20K" ImageSource="{ThemeFile 'Images/UserLevel/GamerScore/20K.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_GS_35K" ImageSource="{ThemeFile 'Images/UserLevel/GamerScore/35K.png'}" Stretch="Uniform"/>
+
+    <ImageBrush x:Key="PA_GS_50K" ImageSource="{ThemeFile 'Images/UserLevel/GamerScore/50K.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_GS_75K" ImageSource="{ThemeFile 'Images/UserLevel/GamerScore/75K.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_GS_100K" ImageSource="{ThemeFile 'Images/UserLevel/GamerScore/100K.png'}" Stretch="Uniform"/>
+
+    <ImageBrush x:Key="PA_GS_200K" ImageSource="{ThemeFile 'Images/UserLevel/GamerScore/200K.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_GS_500K" ImageSource="{ThemeFile 'Images/UserLevel/GamerScore/500K.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_GS_1M" ImageSource="{ThemeFile 'Images/UserLevel/GamerScore/1M.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_GS_3M" ImageSource="{ThemeFile 'Images/UserLevel/GamerScore/3M.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_GS_5M" ImageSource="{ThemeFile 'Images/UserLevel/GamerScore/5M.png'}" Stretch="Uniform"/>
+    <ImageBrush x:Key="PA_GS_10M" ImageSource="{ThemeFile 'Images/UserLevel/GamerScore/10M.png'}" Stretch="Uniform"/>
 
     <!-- =========================
     AVATAR STYLE
@@ -1929,192 +2162,633 @@
     <Style x:Key="SelectedAvatarBorderStyle" TargetType="Border">
         <Setter Property="Background" Value="{DynamicResource Avatar0}"/>
         <Style.Triggers>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="1">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="1">
                 <Setter Property="Background" Value="{DynamicResource Avatar0}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="2">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="2">
                 <Setter Property="Background" Value="{DynamicResource Avatar2}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="3">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="3">
                 <Setter Property="Background" Value="{DynamicResource Avatar3}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="4">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="4">
                 <Setter Property="Background" Value="{DynamicResource Avatar4}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="5">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="5">
                 <Setter Property="Background" Value="{DynamicResource Avatar5}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="6">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="6">
                 <Setter Property="Background" Value="{DynamicResource Avatar6}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="7">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="7">
                 <Setter Property="Background" Value="{DynamicResource Avatar7}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="8">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="8">
                 <Setter Property="Background" Value="{DynamicResource Avatar8}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="9">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="9">
                 <Setter Property="Background" Value="{DynamicResource Avatar9}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="10">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="10">
                 <Setter Property="Background" Value="{DynamicResource Avatar10}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="11">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="11">
                 <Setter Property="Background" Value="{DynamicResource Avatar11}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="12">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="12">
                 <Setter Property="Background" Value="{DynamicResource Avatar12}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="13">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="13">
                 <Setter Property="Background" Value="{DynamicResource Avatar13}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="14">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="14">
                 <Setter Property="Background" Value="{DynamicResource Avatar14}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="15">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="15">
                 <Setter Property="Background" Value="{DynamicResource Avatar15}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="16">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="16">
                 <Setter Property="Background" Value="{DynamicResource Avatar16}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="17">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="17">
                 <Setter Property="Background" Value="{DynamicResource Avatar17}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="18">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="18">
                 <Setter Property="Background" Value="{DynamicResource Avatar18}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="19">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="19">
                 <Setter Property="Background" Value="{DynamicResource Avatar19}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="20">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="20">
                 <Setter Property="Background" Value="{DynamicResource Avatar20}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="21">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="21">
                 <Setter Property="Background" Value="{DynamicResource Avatar21}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="22">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="22">
                 <Setter Property="Background" Value="{DynamicResource Avatar22}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="23">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="23">
                 <Setter Property="Background" Value="{DynamicResource Avatar23}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="24">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="24">
                 <Setter Property="Background" Value="{DynamicResource Avatar24}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="25">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="25">
                 <Setter Property="Background" Value="{DynamicResource Avatar25}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="26">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="26">
                 <Setter Property="Background" Value="{DynamicResource Avatar26}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="27">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="27">
                 <Setter Property="Background" Value="{DynamicResource Avatar27}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="28">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="28">
                 <Setter Property="Background" Value="{DynamicResource Avatar28}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="29">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="29">
                 <Setter Property="Background" Value="{DynamicResource Avatar29}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="30">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="30">
                 <Setter Property="Background" Value="{DynamicResource Avatar30}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="31">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="31">
                 <Setter Property="Background" Value="{DynamicResource Avatar31}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="32">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="32">
                 <Setter Property="Background" Value="{DynamicResource Avatar32}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="33">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="33">
                 <Setter Property="Background" Value="{DynamicResource Avatar33}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="34">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="34">
                 <Setter Property="Background" Value="{DynamicResource Avatar34}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="35">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="35">
                 <Setter Property="Background" Value="{DynamicResource Avatar35}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="36">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="36">
                 <Setter Property="Background" Value="{DynamicResource Avatar36}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="37">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="37">
                 <Setter Property="Background" Value="{DynamicResource Avatar37}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="38">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="38">
                 <Setter Property="Background" Value="{DynamicResource Avatar38}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="39">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="39">
                 <Setter Property="Background" Value="{DynamicResource Avatar39}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="40">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="40">
                 <Setter Property="Background" Value="{DynamicResource Avatar40}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="41">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="41">
                 <Setter Property="Background" Value="{DynamicResource Avatar41}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="42">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="42">
                 <Setter Property="Background" Value="{DynamicResource Avatar42}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="43">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="43">
                 <Setter Property="Background" Value="{DynamicResource Avatar43}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="44">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="44">
                 <Setter Property="Background" Value="{DynamicResource Avatar44}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="45">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="45">
                 <Setter Property="Background" Value="{DynamicResource Avatar45}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="46">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="46">
                 <Setter Property="Background" Value="{DynamicResource Avatar46}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="47">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="47">
                 <Setter Property="Background" Value="{DynamicResource Avatar47}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="48">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="48">
                 <Setter Property="Background" Value="{DynamicResource Avatar48}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="49">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="49">
                 <Setter Property="Background" Value="{DynamicResource Avatar49}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="50">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="50">
                 <Setter Property="Background" Value="{DynamicResource Avatar50}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="51">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="51">
                 <Setter Property="Background" Value="{DynamicResource Avatar51}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="52">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="52">
                 <Setter Property="Background" Value="{DynamicResource Avatar52}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="53">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="53">
                 <Setter Property="Background" Value="{DynamicResource Avatar53}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="54">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="54">
                 <Setter Property="Background" Value="{DynamicResource Avatar54}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="55">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="55">
                 <Setter Property="Background" Value="{DynamicResource Avatar55}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="56">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="56">
                 <Setter Property="Background" Value="{DynamicResource Avatar56}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="57">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="57">
                 <Setter Property="Background" Value="{DynamicResource Avatar57}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="58">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="58">
                 <Setter Property="Background" Value="{DynamicResource Avatar58}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="59">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="59">
                 <Setter Property="Background" Value="{DynamicResource Avatar59}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="60">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="60">
                 <Setter Property="Background" Value="{DynamicResource Avatar60}"/>
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=ThemeOptions, Path=Options[AvatarImageIndex]}" Value="60">
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AvatarImageIndex]}" Value="61">
                 <Setter Property="Background" Value="{DynamicResource Avatar61}"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>
 
+
+    <Style x:Key="PA_UserLevelBorderStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource PA_Level_Bronze1}"/>
+
+        <Style.Triggers>
+
+            <!-- NORMAL LEVEL MODE -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Bronze1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Bronze1}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Bronze2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Bronze2}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Bronze3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Bronze3}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Silver1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Silver1}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Silver2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Silver2}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Silver3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Silver3}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Gold1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Gold1}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Gold2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Gold2}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Gold3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Gold3}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Plat1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Plat1}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Plat2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Plat2}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Plat3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Plat3}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Plat"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Plat}"/>
+            </MultiDataTrigger>
+
+
+            <!-- GAMERSCORE IMAGE MODE -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Bronze1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_1K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Bronze2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_5K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Bronze3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_10K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Silver1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_20K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Silver2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_35K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Silver3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_50K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Gold1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_75K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Gold2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_100K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Gold3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_200K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Plat1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_500K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Plat2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_1M}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Plat3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_3M}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=CollectorRank}" Value="Plat"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_5M}"/>
+            </MultiDataTrigger>
+
+        </Style.Triggers>
+    </Style>
+
+
+
+    <!-- USER LEVEL / GAMERSCORE BORDER STYLE : SSHELPER -->
+    <Style x:Key="SSHelper_UserLevelBorderStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource PA_Level_Bronze1}"/>
+
+        <Style.Triggers>
+
+            <!-- NORMAL LEVEL MODE -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Bronze1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Bronze1}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Bronze2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Bronze2}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Bronze3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Bronze3}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Silver1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Silver1}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Silver2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Silver2}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Silver3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Silver3}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Gold1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Gold1}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Gold2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Gold2}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Gold3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Gold3}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Plat1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Plat1}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Plat2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Plat2}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Plat3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Plat3}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Plat"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_Level_Plat}"/>
+            </MultiDataTrigger>
+
+
+            <!-- GAMERSCORE IMAGE MODE -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Bronze1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_1K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Bronze2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_5K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Bronze3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_10K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Silver1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_20K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Silver2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_35K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Silver3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_50K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Gold1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_75K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Gold2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_100K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Gold3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_200K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Plat1"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_500K}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Plat2"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_1M}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Plat3"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_3M}"/>
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
+                    <Condition Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Plat"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background" Value="{StaticResource PA_GS_5M}"/>
+            </MultiDataTrigger>
+
+        </Style.Triggers>
+    </Style>
 
 
 </ResourceDictionary>

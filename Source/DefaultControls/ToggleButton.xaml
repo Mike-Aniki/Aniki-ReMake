@@ -1622,19 +1622,15 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{DynamicResource FocusGameBorderBrush}" Tag="False"
                                 BorderThickness="3" CornerRadius="{DynamicResource Corner}" Visibility="Collapsed" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <StackPanel x:Name="OFF" VerticalAlignment="Center" HorizontalAlignment="Center" >
-                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-                                    <Image Source="{ThemeFile 'Images/Buttons/SortDesc.png'}" RenderOptions.BitmapScalingMode="Fant" Stretch="Uniform" Height="35" />
-                                </StackPanel>
-                            </StackPanel>
-                            <StackPanel x:Name="ON" VerticalAlignment="Center" HorizontalAlignment="Center" >
-                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
-                                    <Image Source="{ThemeFile 'Images/Buttons/SortDesc.png'}" RenderOptions.BitmapScalingMode="Fant" Stretch="Uniform" Height="35" />
-                                </StackPanel>
-
-
-                            </StackPanel>
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <TextBlock Text="&#xE713;"
+                                       FontFamily="{DynamicResource FontIcons}"
+                                       FontSize="28"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
                         </StackPanel>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -1647,30 +1643,18 @@
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
                             <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
                             <Setter Property="Background" Value="{DynamicResource OverlayMenu}" TargetName="MainBackground" />
-                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
-                            <Setter Property="Opacity" Value="1" TargetName="ON" />
                             <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
                         </Trigger>
-                        <Trigger Property="IsFocused" Value="False">
-                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
-                            <Setter Property="Opacity" Value="1" TargetName="ON" />
-                        </Trigger>
+
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
                             <Setter Property="Foreground" Value="{DynamicResource TextBrushDark}" />
                             <Setter Property="Opacity" Value="1" TargetName="MainBackground" />
                             <Setter Property="Tag" Value="True" TargetName="MainBorder" />
-                            <Setter Property="Opacity" Value="1" TargetName="OFF" />
-                            <Setter Property="Opacity" Value="1" TargetName="ON" />
+
                             <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
                             <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
-                        </Trigger>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="Visibility" TargetName="ON" Value="Collapsed"/>
-                        </Trigger>
-                        <Trigger Property="IsChecked" Value="False">
-                            <Setter Property="Visibility" TargetName="OFF" Value="Collapsed"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="IsChecked" Value="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
