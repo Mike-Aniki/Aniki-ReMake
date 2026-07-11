@@ -1,0 +1,670 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctrl="clr-namespace:Playnite.FullscreenApp.Controls;assembly=Playnite.FullscreenApp">
+
+    <!-- Music player small icon buttons -->
+    <Style x:Key="AnikiMusicGhostButtonStyle" TargetType="ButtonEx">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="Width" Value="50" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="MinWidth" Value="50" />
+        <Setter Property="FontSize" Value="23" />
+        <Setter Property="FontFamily" Value="{DynamicResource FontIcons}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="#00FFFFFF" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonEx">
+                    <Grid Width="{TemplateBinding Width}"
+                          Height="{TemplateBinding Height}"
+                          Background="Transparent">
+
+                        <Ellipse x:Name="FocusRing"
+                                 Width="48"
+                                 Height="48"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Fill="#00000000"
+                                 Stroke="#00FFFFFF"
+                                 StrokeThickness="1.2"
+                                 Opacity="0" />
+
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"
+                                          TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                          TextElement.Foreground="{TemplateBinding Foreground}"
+                                          TextElement.FontSize="{TemplateBinding FontSize}"
+                                          TextElement.FontWeight="{TemplateBinding FontWeight}" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="FocusRing" Property="Opacity" Value="0.55" />
+                            <Setter TargetName="FocusRing" Property="Fill" Value="{DynamicResource ButtonBackgroundFocus}" />
+                            <Setter TargetName="FocusRing" Property="Stroke" Value="{DynamicResource FocusGameBorderBrush}" />
+                        </Trigger>
+
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="FocusRing" Property="Opacity" Value="1" />
+                            <Setter TargetName="FocusRing" Property="Fill" Value="{DynamicResource ButtonBackgroundFocus}" />
+                            <Setter TargetName="FocusRing" Property="Stroke" Value="{DynamicResource FocusGameBorderBrush}" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="FocusRing" Property="Fill" Value="#2AD0B06A" />
+                            <Setter TargetName="FocusRing" Property="Opacity" Value="1" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.35" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="AnikiMusicIconCheckBoxStyle" TargetType="CheckBoxEx">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
+        <Setter Property="Width" Value="50" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="MinWidth" Value="50" />
+        <Setter Property="FontSize" Value="23" />
+        <Setter Property="FontFamily" Value="{DynamicResource FontIcons}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="#00FFFFFF" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBoxEx">
+                    <Grid Width="{TemplateBinding Width}"
+                          Height="{TemplateBinding Height}"
+                          Background="Transparent">
+
+                        <Ellipse x:Name="FocusRing"
+                                 Width="48"
+                                 Height="48"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Fill="#00000000"
+                                 Stroke="#00FFFFFF"
+                                 StrokeThickness="1.2"
+                                 Opacity="0" />
+
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"
+                                          TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                          TextElement.Foreground="{TemplateBinding Foreground}"
+                                          TextElement.FontSize="{TemplateBinding FontSize}"
+                                          TextElement.FontWeight="{TemplateBinding FontWeight}" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="FocusRing" Property="Opacity" Value="0.85" />
+                            <Setter TargetName="FocusRing" Property="Fill" Value="#18D0B06A" />
+                            <Setter TargetName="FocusRing" Property="Stroke" Value="#70D0B06A" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}" />
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="FocusRing" Property="Opacity" Value="0.55" />
+                            <Setter TargetName="FocusRing" Property="Fill" Value="{DynamicResource ButtonBackgroundFocus}" />
+                            <Setter TargetName="FocusRing" Property="Stroke" Value="{DynamicResource FocusGameBorderBrush}" />
+                        </Trigger>
+
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="FocusRing" Property="Opacity" Value="1" />
+                            <Setter TargetName="FocusRing" Property="Fill" Value="{DynamicResource ButtonBackgroundFocus}" />
+                            <Setter TargetName="FocusRing" Property="Stroke" Value="{DynamicResource FocusGameBorderBrush}" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="FocusRing" Property="Fill" Value="#2AD0B06A" />
+                            <Setter TargetName="FocusRing" Property="Opacity" Value="1" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.35" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Music player main play/pause button -->
+    <Style x:Key="AnikiMusicPlayButtonStyle" TargetType="ButtonEx">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="Width" Value="64" />
+        <Setter Property="Height" Value="64" />
+        <Setter Property="MinWidth" Value="64" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontFamily" Value="{DynamicResource FontIcons}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Background" Value="#12000000" />
+        <Setter Property="BorderBrush" Value="#D9D0B06A" />
+        <Setter Property="BorderThickness" Value="1.4" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonEx">
+                    <Grid Width="{TemplateBinding Width}"
+                          Height="{TemplateBinding Height}"
+                          Background="Transparent">
+
+                        <Ellipse x:Name="ButtonCircle"
+                                 Width="62"
+                                 Height="62"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Fill="#00000000"
+                                 Stroke="#00FFFFFF"
+                                 StrokeThickness="{TemplateBinding BorderThickness}" />
+
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"
+                                          TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                          TextElement.Foreground="{TemplateBinding Foreground}"
+                                          TextElement.FontSize="{TemplateBinding FontSize}"
+                                          TextElement.FontWeight="{TemplateBinding FontWeight}" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonCircle" Property="Fill" Value="{DynamicResource ButtonBackgroundFocus}" />
+                        </Trigger>
+
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="ButtonCircle" Property="Fill" Value="{DynamicResource ButtonBackgroundFocus}" />
+                            <Setter TargetName="ButtonCircle" Property="Stroke" Value="{DynamicResource FocusGameBorderBrush}" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ButtonCircle" Property="Fill" Value="#3AD0B06A" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.35" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Compact UPS / Spotify toggle for the music player -->
+    <Style x:Key="AnikiMusicSourceCheckBoxStyle" TargetType="CheckBoxEx">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
+        <Setter Property="Width" Value="86" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="MinWidth" Value="86" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="#20FFFFFF" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBoxEx">
+                    <Border x:Name="Pill"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            CornerRadius="15"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Pill" Property="Background" Value="#0AD0B06A"/>
+                            <Setter TargetName="Pill" Property="BorderBrush" Value="#30D0B06A"/>
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Pill" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                            <Setter TargetName="Pill" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Pill" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                            <Setter TargetName="Pill" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="Pill" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                            <Setter TargetName="Pill" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Pill" Property="Background" Value="#2AD0B06A"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.35"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Fullscreen child window opened by the in-game overlay Music button. -->
+    <Style x:Key="MusicPlayerWindowStyle" TargetType="ContentControl">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid Width="1920"
+                          Height="1080"
+                          Background="Transparent"
+                          Focusable="False">
+
+                        <!-- Bottom gradient dim: black at the bottom, transparent toward the middle -->
+                        <Rectangle IsHitTestVisible="False">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0.5,1" EndPoint="0.5,0">
+                                    <GradientStop Color="#F0000000" Offset="0.00"/>
+                                    <GradientStop Color="#C8000000" Offset="0.18"/>
+                                    <GradientStop Color="#78000000" Offset="0.34"/>
+                                    <GradientStop Color="#30000000" Offset="0.50"/>
+                                    <GradientStop Color="#00000000" Offset="0.66"/>
+                                    <GradientStop Color="#00000000" Offset="1.00"/>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+
+                        <Border Width="840"
+                                Height="250"
+                                Margin="0,0,0,66"
+                                Padding="26,22"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                CornerRadius="34"
+                                Opacity="0.9"
+                                Background="{DynamicResource BackgroundMenu}"
+                                BorderThickness="1"
+                                Effect="{DynamicResource SoftTextShadow}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="280"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Cover -->
+                                <Grid Grid.Column="0"
+                                      Height="250"
+                                      MaxWidth="250"
+                                      Margin="-25,-21,0,-21"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Stretch"
+                                      ClipToBounds="True">
+
+
+
+                                    <!-- Mask pour arrondir uniquement le côté gauche -->
+                                    <Border x:Name="MusicPlayerCoverMask"
+                                            Background="Black"
+                                            CornerRadius="26,0,0,26"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"/>
+
+
+                                    <!-- Zone image masquée -->
+                                    <Grid ClipToBounds="True">
+                                        <Grid.OpacityMask>
+                                            <VisualBrush Visual="{Binding ElementName=MusicPlayerCoverMask}" />
+                                        </Grid.OpacityMask>
+
+                                        <!-- Fallback -->
+                                        <Image Stretch="Uniform"
+                                               Height="250"
+                                               HorizontalAlignment="Left"
+                                               RenderOptions.BitmapScalingMode="Fant"
+                                               Source="{ThemeFile 'Images/NoCover.png'}">
+
+                                            <Image.Style>
+                                                <Style TargetType="Image">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=NowPlayingAlbumArtPath}" Value="{x:Null}">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=NowPlayingAlbumArtPath}" Value="">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+
+                                        <!-- Cover live UPS -->
+                                        <Image Source="{PluginSettings Plugin=UniPlaySong, Path=NowPlayingAlbumArtPath}"
+                                               Stretch="Uniform"
+                                               HorizontalAlignment="Left"
+                                               Height="250"
+                                               RenderOptions.BitmapScalingMode="Fant"/>
+
+
+
+                                    </Grid>
+
+                                    <Border BorderBrush="{DynamicResource StaticBorderBrush}"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            BorderThickness="0,0,1,0" />
+                                </Grid>
+
+                                <!-- Main infos -->
+                                <Grid Grid.Column="1"
+                                      Margin="-20,0,0,0"
+                                      VerticalAlignment="Center">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="16"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="6"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0"
+                                               HorizontalAlignment="Center"
+                                               Text="{PluginSettings Plugin=UniPlaySong, Path=NowPlayingTitle}"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="26"
+                                               FontWeight="SemiBold"
+                                               TextTrimming="CharacterEllipsis"
+                                               Margin="0,6,0,0"/>
+
+                                    <StackPanel Grid.Row="1" Margin="0,6,0,0" HorizontalAlignment="Center">
+                                        <TextBlock Text="{PluginSettings Plugin=UniPlaySong, Path=NowPlayingArtist}"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   HorizontalAlignment="Center"
+                                                   FontSize="17"
+                                                   Opacity="0.86"
+                                                   TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text="{PluginSettings Plugin=UniPlaySong, Path=NowPlayingAlbum}"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   HorizontalAlignment="Center"
+                                                   FontSize="15"
+                                                   Opacity="0.56"
+                                                   Margin="0,3,0,0"
+                                                   TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+
+
+
+                                    <StackPanel Grid.Row="4">
+
+                                        <Grid Height="6">
+                                            <Border CornerRadius="3"
+                                                    Background="#30FFFFFF"/>
+
+                                            <ProgressBar Height="6"
+                                                         Minimum="0"
+                                                         Maximum="100"
+                                                         Value="{PluginSettings Plugin=UniPlaySong, Path=ActiveMediaProgress}"
+                                                         Background="#00FFFFFF"
+                                                         Foreground="#D0B06A"
+                                                         BorderThickness="0"/>
+                                        </Grid>
+
+                                        <Grid Margin="0,8,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Text="{PluginSettings Plugin=UniPlaySong, Path=ActiveMediaPositionText}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="15"
+                                                       Opacity="0.78"/>
+
+                                            <!-- Mode info badge, centré entre les deux temps -->
+                                            <StackPanel Grid.Column="1"
+                                                        Orientation="Horizontal"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        IsHitTestVisible="False">
+
+                                                <!-- Radio mode info -->
+                                                <Border Margin="0,0,8,0"
+                                                        Padding="10,2"
+                                                        CornerRadius="9"
+                                                        Background="#55000000">
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+
+                                                    <TextBlock FontFamily="{DynamicResource FontMain}"
+                                                               FontSize="10"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{DynamicResource TextDetailBrush}">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Text" Value="{DynamicResource LOCRadioUPS}"/>
+
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=SwitchRadioMode}" Value="True">
+                                                                        <Setter Property="Text" Value="{DynamicResource LOCRadioSpotify}"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </Border>
+
+                                                <!-- Night mode info -->
+                                                <Border Padding="10,2"
+                                                        CornerRadius="9"
+                                                        Background="#55000000">
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=CalmDownModeEnabled}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+
+                                                    <TextBlock Text="{DynamicResource LOCNightModeON}"
+                                                               FontFamily="{DynamicResource FontMain}"
+                                                               FontSize="10"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{DynamicResource TextDetailBrush}"/>
+                                                </Border>
+
+                                            </StackPanel>
+
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{PluginSettings Plugin=UniPlaySong, Path=ActiveMediaDurationText}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="15"
+                                                       Opacity="0.78"/>
+                                        </Grid>
+
+                                    </StackPanel>
+
+
+
+                                    <Grid Grid.Row="6"
+                                          Margin="0,-6,0,0"
+                                          Height="68"
+                                          VerticalAlignment="Top"
+                                          KeyboardNavigation.TabNavigation="Contained"
+                                          KeyboardNavigation.DirectionalNavigation="Contained"
+                                          KeyboardNavigation.ControlTabNavigation="Contained"
+                                          FocusManager.FocusedElement="{Binding ElementName=MusicRadioSourceToggle}">
+
+                                        <!-- UPS / Spotify source toggle -->
+                                        <StackPanel HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center"
+                                                    Orientation="Horizontal">
+
+                                            <!-- Radio mode ON/OFF -->
+                                            <CheckBoxEx x:Name="MusicRadioModeToggle"
+                                                        Style="{DynamicResource AnikiMusicIconCheckBoxStyle}"
+                                                        Margin="0,0,8,0"
+                                                        IsChecked="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled, Mode=TwoWay}">
+                                                <TextBlock Text="&#xE93E;"
+                                                           FontFamily="{DynamicResource FontIcons}"
+                                                           FontSize="21"/>
+                                            </CheckBoxEx>
+
+                                            <!-- Switch UPS / Spotify -->
+                                            <CheckBoxEx x:Name="MusicRadioSourceToggle"
+                                                        Style="{DynamicResource AnikiMusicIconCheckBoxStyle}"
+                                                        IsChecked="{PluginSettings Plugin=UniPlaySong, Path=SwitchRadioMode, Mode=TwoWay}">
+                                                <TextBlock Text="&#xF1CB;"
+                                                           FontFamily="{DynamicResource FontIcons}"
+                                                           FontSize="21"/>
+                                            </CheckBoxEx>
+                                        </StackPanel>
+
+                                        <!-- Groupe central centré sur la progress bar -->
+                                        <StackPanel Orientation="Horizontal"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center">
+
+                                            <ButtonEx Style="{DynamicResource AnikiMusicGhostButtonStyle}"
+                                                      Content="&#xE892;"
+                                                      Margin="0,0,22,0"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=MusicTransport[Previous]}"/>
+
+                                            <ButtonEx Margin="0,0,22,0"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=MusicTransport[PlayPause]}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource AnikiMusicPlayButtonStyle}">
+                                                        <!-- Par défaut : Play -->
+                                                        <Setter Property="Content" Value="&#xE768;"/>
+
+                                                        <Style.Triggers>
+                                                            <!-- Si UPS / Spotify est en lecture : Pause -->
+                                                            <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=ActiveMediaIsPlaying}" Value="True">
+                                                                <Setter Property="Content" Value="&#xE769;"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+
+                                            <ButtonEx Style="{DynamicResource AnikiMusicGhostButtonStyle}"
+                                                      Content="&#xE893;"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=MusicTransport[Next]}"/>
+                                        </StackPanel>
+
+                                        <!-- UPS / Spotify source toggle -->
+                                        <StackPanel HorizontalAlignment="Right"
+                                                    VerticalAlignment="Center"
+                                                    Orientation="Horizontal">
+
+                                            <CheckBoxEx x:Name="MusicNightModeToggle"
+                                                        Margin="0,0,8,0"
+                                                        Style="{DynamicResource AnikiMusicIconCheckBoxStyle}"
+                                                        IsChecked="{PluginSettings Plugin=UniPlaySong, Path=CalmDownModeEnabled, Mode=TwoWay}">
+                                                <TextBlock Text="&#xE708;"
+                                                           FontFamily="{DynamicResource FontIcons}"
+                                                           FontSize="21"/>
+                                            </CheckBoxEx>
+
+                                            <!-- Mute aligné avec la fin de la progress bar -->
+                                            <ButtonEx
+                                                Margin="0,0,0,0"
+                                                Command="{PluginSettings Plugin=AnikiHelper, Path=MusicTransport[Mute]}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource AnikiMusicGhostButtonStyle}">
+                                                        <!-- Par défaut : volume actif -->
+                                                        <Setter Property="Content" Value="&#xE995;"/>
+
+                                                        <Style.Triggers>
+                                                            <!-- Si le volume UPS est à 0 : mute -->
+                                                            <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=ActiveMediaVolume}" Value="0">
+                                                                <Setter Property="Content" Value="&#xE74F;"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+
+                                <Border BorderBrush="{DynamicResource StaticBorderBrush}"
+                                        CornerRadius="34"
+                                        BorderThickness="1"
+                                        Margin="-26,-22,-26,-22"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"/>
+
+                            </Grid>
+                        </Border>
+
+                        <Grid HorizontalAlignment="Stretch"
+                              VerticalAlignment="Bottom"
+                              Height="90">
+                            <StackPanel Orientation="Horizontal"
+                                        VerticalAlignment="Center"
+                                        Effect="{DynamicResource SoftTextShadow}"
+                                        HorizontalAlignment="Right"
+                                        Margin="0,0,24,0">
+                                <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                          Tag="B"
+                                          Content="{DynamicResource LOCBackLabel}"
+                                          Focusable="False"
+                                          IsTabStop="False"
+                                          IsHitTestVisible="False" />
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

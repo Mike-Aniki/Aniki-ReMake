@@ -24,7 +24,7 @@
                           VerticalAlignment="Stretch"
                           Background="{DynamicResource SecondaryViewBackground}">
                         <Grid.RenderTransform>
-                            <TranslateTransform Y="-30"/>
+                            <TranslateTransform Y="0"/>
                         </Grid.RenderTransform>
 
                         <Grid.Triggers>
@@ -32,11 +32,14 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                         From="0" To="1"
-                                                         Duration="0:0:0.30"/>
+                                                         From="0"
+                                                         To="1"
+                                                         Duration="0:0:0.25"/>
+
                                         <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                                         From="-30" To="0"
-                                                         Duration="0:0:0.40">
+                                                         From="24"
+                                                         To="0"
+                                                         Duration="0:0:0.35">
                                             <DoubleAnimation.EasingFunction>
                                                 <CubicEase EasingMode="EaseOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -296,23 +299,7 @@
                                         Background="Black"
                                         CornerRadius="48"/>
 
-                                <Border Width="96"
-                                        Height="96"
-                                        CornerRadius="48"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center">
-                                    <Border.Style>
-                                        <Style TargetType="Border"
-                                               BasedOn="{StaticResource SelectedAvatarBorderStyle}">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding ElementName=UserAvatar, Path=Source}" Value="{x:Null}">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Border.Style>
-                                </Border>
+                                
 
                                 <TextBlock x:Name="ProfilePicturePath"
                                            Tag="{Api Paths.ConfigurationPath}"
@@ -338,12 +325,14 @@
                                         <VisualBrush Visual="{Binding ElementName=AvatarMask}" />
                                     </Grid.OpacityMask>
 
-                                    <Image x:Name="UserAvatar"
-                                           Source="{Binding ElementName=ProfilePicturePath, Path=Text}"
-                                           Stretch="UniformToFill"
-                                           RenderOptions.BitmapScalingMode="Fant"
-                                           Width="96"
-                                           Height="96"/>
+                                    <Control x:Name="UserAvatar"
+                                             Tag="{Binding ElementName=ProfilePicturePath, Path=Text}"
+                                             Width="96"
+                                             Height="96"
+                                             Template="{StaticResource SteamSelfAvatarTemplate}"
+                                             Focusable="False"
+                                             IsTabStop="False"
+                                             IsHitTestVisible="False"/>
                                 </Grid>
 
                                 <Border Width="96"
@@ -430,165 +419,9 @@
                                     <Border Grid.Column="0"
                                             Width="46"
                                             Height="46"
-                                            ClipToBounds="True">
-                                        <StackPanel>
-                                            <Image Height="46" Source="{ThemeFile 'Images/UserLevel/Bronze1.png'}" HorizontalAlignment="Center">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Bronze1">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Image.Style>
-                                            </Image>
-                                            <Image Height="46" Source="{ThemeFile 'Images/UserLevel/Bronze2.png'}" HorizontalAlignment="Center">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Bronze2">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Image.Style>
-                                            </Image>
-                                            <Image Height="46" Source="{ThemeFile 'Images/UserLevel/Bronze3.png'}" HorizontalAlignment="Center">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Bronze3">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Image.Style>
-                                            </Image>
-                                            <Image Height="46" Source="{ThemeFile 'Images/UserLevel/Silver1.png'}" HorizontalAlignment="Center">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Silver1">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Image.Style>
-                                            </Image>
-                                            <Image Height="46" Source="{ThemeFile 'Images/UserLevel/Silver2.png'}" HorizontalAlignment="Center">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Silver2">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Image.Style>
-                                            </Image>
-                                            <Image Height="46" Source="{ThemeFile 'Images/UserLevel/Silver3.png'}" HorizontalAlignment="Center">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Silver3">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Image.Style>
-                                            </Image>
-                                            <Image Height="46" Source="{ThemeFile 'Images/UserLevel/Gold1.png'}" HorizontalAlignment="Center">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Gold1">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Image.Style>
-                                            </Image>
-                                            <Image Height="46" Source="{ThemeFile 'Images/UserLevel/Gold2.png'}" HorizontalAlignment="Center">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Gold2">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Image.Style>
-                                            </Image>
-                                            <Image Height="46" Source="{ThemeFile 'Images/UserLevel/Gold3.png'}" HorizontalAlignment="Center">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Gold3">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Image.Style>
-                                            </Image>
-                                            <Image Height="46" Source="{ThemeFile 'Images/UserLevel/Plat1.png'}" HorizontalAlignment="Center">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Plat1">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Image.Style>
-                                            </Image>
-                                            <Image Height="46" Source="{ThemeFile 'Images/UserLevel/Plat2.png'}" HorizontalAlignment="Center">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Plat2">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Image.Style>
-                                            </Image>
-                                            <Image Height="46" Source="{ThemeFile 'Images/UserLevel/Plat3.png'}" HorizontalAlignment="Center">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Plat3">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Image.Style>
-                                            </Image>
-                                            <Image Height="46" Source="{ThemeFile 'Images/UserLevel/Plat.png'}" HorizontalAlignment="Center">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SSHelper, Path=GSRank}" Value="Plat">
-                                                                <Setter Property="Visibility" Value="Visible" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Image.Style>
-                                            </Image>
-                                        </StackPanel>
+                                            ClipToBounds="True"
+                                            Style="{StaticResource SSHelper_UserLevelBorderStyle}">
+
                                     </Border>
 
                                     <TextBlock Grid.Column="2"

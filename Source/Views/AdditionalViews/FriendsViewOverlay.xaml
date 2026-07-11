@@ -1,0 +1,377 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Fullscreen child window opened by the in-game overlay Friends button. -->
+    <Style x:Key="FriendsWindowStyle" TargetType="ContentControl">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid Width="1920"
+                          Height="1080"
+                          Background="Transparent"
+                          Focusable="False">
+
+                        <!-- Strong modal dim behind the friends panel -->
+                        <Rectangle IsHitTestVisible="False" Fill="#96000000"/>
+
+                        <Border Width="920"
+                                Height="720"
+                                Padding="34,28"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                CornerRadius="28"
+                                Background="{DynamicResource BackgroundMenu}"
+                                BorderBrush="{DynamicResource StaticBorderBrush}"
+                                BorderThickness="1"
+                                Effect="{DynamicResource SoftTextShadow}">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="22"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="22"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Header -->
+                                <StackPanel Grid.Row="0" HorizontalAlignment="Center">
+                                    <Border Width="64"
+                                            Height="64"
+                                            CornerRadius="32"
+                                            HorizontalAlignment="Center"
+                                            Background="#18000000"
+                                            BorderBrush="#80D0B06A"
+                                            BorderThickness="1">
+                                        <TextBlock Text="&#xE716;"
+                                                   FontFamily="{DynamicResource FontIcons}"
+                                                   FontSize="28"
+                                                   Foreground="{DynamicResource TextBrush}"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <TextBlock Text="{DynamicResource LOCFriendsAchievementsFriends}"
+                                               Margin="0,14,0,0"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="36"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"/>
+
+                                    <Border Width="260"
+                                            Height="1"
+                                            Margin="0,16,0,0"
+                                            Background="#55D0B06A"/>
+                                </StackPanel>
+
+                                <!-- Counters -->
+                                <Grid Grid.Row="2" HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="14"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="14"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" CornerRadius="16" Background="#14000000" BorderBrush="#20FFFFFF" BorderThickness="1" Padding="18,12">
+                                        <StackPanel>
+                                            <TextBlock Text="{DynamicResource LOCSteamOnline}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="11" FontWeight="Bold" Opacity="0.72"/>
+                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OnlineCount}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="28" FontWeight="Bold" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Grid.Column="2" CornerRadius="16" Background="#14000000" BorderBrush="#20FFFFFF" BorderThickness="1" Padding="18,12">
+                                        <StackPanel>
+                                            <TextBlock Text="{DynamicResource LOCSteamInGame}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="11" FontWeight="Bold"  Opacity="0.72"/>
+                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=InGameCount}" FontSize="28" FontWeight="Bold" Style="{DynamicResource TextBlockBaseStyle}" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Grid.Column="4" CornerRadius="16" Background="#14000000" BorderBrush="#20FFFFFF" BorderThickness="1" Padding="18,12">
+                                        <StackPanel>
+                                            <TextBlock Text="{DynamicResource LOCSteamOffline}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="11" FontWeight="Bold"  Opacity="0.72"/>
+                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OfflineCount}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="28" FontWeight="Bold" Opacity="0.72" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Friends list -->
+                                <Border Grid.Row="4"
+                                        CornerRadius="20"
+                                        Background="#10000000"
+                                        BorderBrush="#28FFFFFF"
+                                        BorderThickness="1"
+                                        Padding="18,16">
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="12"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel>
+                                                <TextBlock Text="{DynamicResource LOCFriendsConnectedNow}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="16"
+                                                           FontWeight="Bold"
+                                                           Opacity="0.85"/>
+                                                <TextBlock Text="{DynamicResource LOCFriendsConnectedNowDescription}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="14"
+                                                           Opacity="0.58"
+                                                           Margin="0,4,0,0"/>
+                                            </StackPanel>
+
+                                        </Grid>
+
+                                        <ScrollViewer Grid.Row="2"
+                                                      VerticalScrollBarVisibility="Auto"
+                                                      HorizontalScrollBarVisibility="Disabled"
+                                                      CanContentScroll="False">
+                                            <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=Friends}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <ButtonEx Height="78"
+                                                                  Margin="0,0,0,10"
+                                                                  Padding="0"
+                                                                  HorizontalContentAlignment="Stretch"
+                                                                  VerticalContentAlignment="Stretch"
+                                                                  Focusable="True"
+                                                                  IsTabStop="True"
+                                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenFriendProfileWindowCommand}"
+                                                                  CommandParameter="{Binding steamid}">
+                                                            <ButtonEx.Style>
+                                                                <Style TargetType="ButtonEx">
+                                                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                                                    <Setter Property="Background" Value="Transparent"/>
+                                                                    <Setter Property="BorderBrush" Value="#00FFFFFF"/>
+                                                                    <Setter Property="BorderThickness" Value="0"/>
+                                                                    <Setter Property="Template">
+                                                                        <Setter.Value>
+                                                                            <ControlTemplate TargetType="ButtonEx">
+                                                                                <Border x:Name="FriendCard"
+                                                                                        CornerRadius="18"
+                                                                                        Background="#0A000000"
+                                                                                        BorderBrush="#00FFFFFF"
+                                                                                        BorderThickness="1">
+                                                                                    <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                                                                </Border>
+                                                                                <ControlTemplate.Triggers>
+                                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                                        <Setter TargetName="FriendCard" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                                                        <Setter TargetName="FriendCard" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                                    </Trigger>
+                                                                                    <Trigger Property="IsFocused" Value="True">
+                                                                                        <Setter TargetName="FriendCard" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                                                        <Setter TargetName="FriendCard" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                                    </Trigger>
+                                                                                    <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                                                        <Setter TargetName="FriendCard" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                                                        <Setter TargetName="FriendCard" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                                    </Trigger>
+                                                                                </ControlTemplate.Triggers>
+                                                                            </ControlTemplate>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding state}" Value="offline">
+                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                            <Setter Property="Focusable" Value="False"/>
+                                                                            <Setter Property="IsTabStop" Value="False"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ButtonEx.Style>
+
+                                                            <Grid Margin="18,0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="58"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="Auto"/>
+                                                                </Grid.ColumnDefinitions>
+
+                                                                <!-- Avatar -->
+                                                                <Grid Grid.Column="0" Width="48" Height="48" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                                    <Ellipse Fill="#22000000" Stroke="#30FFFFFF" StrokeThickness="1"/>
+                                                                    <TextBlock Text="&#xE77B;"
+                                                                               FontFamily="{DynamicResource FontIcons}"
+                                                                               FontSize="20"
+                                                                               Foreground="{DynamicResource TextDetailBrush}"
+                                                                               HorizontalAlignment="Center"
+                                                                               VerticalAlignment="Center"
+                                                                               Opacity="0.75"/>
+                                                                    <Ellipse>
+                                                                        <Ellipse.Fill>
+                                                                            <ImageBrush ImageSource="{Binding avatar}" Stretch="UniformToFill"/>
+                                                                        </Ellipse.Fill>
+                                                                    </Ellipse>
+                                                                    <Border Width="12" Height="12" CornerRadius="6" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderBrush="{DynamicResource BackgroundMenu}" BorderThickness="2">
+                                                                        <Border.Style>
+                                                                            <Style TargetType="Border">
+                                                                                <Setter Property="Background" Value="#8EA0A6"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding state}" Value="online">
+                                                                                        <Setter Property="Background" Value="#4FD46B"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding state}" Value="away">
+                                                                                        <Setter Property="Background" Value="#D9B35F"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding state}" Value="busy">
+                                                                                        <Setter Property="Background" Value="#D85C5C"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding state}" Value="ingame">
+                                                                                        <Setter Property="Background" Value="#60C6FF"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Border.Style>
+                                                                    </Border>
+                                                                </Grid>
+
+                                                                <!-- Friend info -->
+                                                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="4,0,16,0">
+                                                                    <TextBlock Text="{Binding name}"
+                                                                               FontSize="20"
+                                                                               FontWeight="Bold"
+                                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                                               TextTrimming="CharacterEllipsis"/>
+
+                                                                    <TextBlock Text="{Binding game}"
+                                                                               FontFamily="{DynamicResource FontMain}"
+                                                                               FontSize="14"
+                                                                               Foreground="{DynamicResource TextHighlightBrush}"
+                                                                               TextTrimming="CharacterEllipsis"
+                                                                               Margin="0,4,0,0">
+                                                                        <TextBlock.Style>
+                                                                            <Style TargetType="TextBlock">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding state}" Value="ingame">
+                                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </TextBlock.Style>
+                                                                    </TextBlock>
+
+                                                                    <TextBlock Text="{Binding stateLoc}"
+                                                                               FontFamily="{DynamicResource FontMain}"
+                                                                               FontSize="14"
+                                                                               Foreground="{DynamicResource TextHighlightBrush}"
+                                                                               Opacity="0.72"
+                                                                               TextTrimming="CharacterEllipsis"
+                                                                               Margin="0,4,0,0">
+                                                                        <TextBlock.Style>
+                                                                            <Style TargetType="TextBlock">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding state}" Value="ingame">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </TextBlock.Style>
+                                                                    </TextBlock>
+                                                                </StackPanel>
+
+                                                                <!-- Status pill -->
+                                                                <Border Grid.Column="2"
+                                                                        MinWidth="86"
+                                                                        Height="28"
+                                                                        CornerRadius="14"
+                                                                        Background="#14000000"
+                                                                        BorderBrush="#20FFFFFF"
+                                                                        BorderThickness="1"
+                                                                        HorizontalAlignment="Right"
+                                                                        VerticalAlignment="Center">
+                                                                    <TextBlock Text="{Binding stateLoc}"
+                                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                                               FontSize="12"
+                                                                               FontWeight="Bold"
+                                                                               HorizontalAlignment="Center"
+                                                                               VerticalAlignment="Center"
+                                                                               Margin="10,0"/>
+                                                                </Border>
+                                                            </Grid>
+                                                        </ButtonEx>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+
+                                        <!-- Empty state -->
+                                        <Border Grid.Row="2"
+                                                CornerRadius="18"
+                                                Background="#08000000"
+                                                BorderBrush="#18FFFFFF"
+                                                BorderThickness="1"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch"
+                                                Padding="28">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=OnlineCount}" Value="0">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <TextBlock Text="&#xE716;"
+                                                           FontFamily="{DynamicResource FontIcons}"
+                                                           FontSize="34"
+                                                           Foreground="{DynamicResource TextDetailBrush}"
+                                                           HorizontalAlignment="Center"
+                                                           Opacity="0.65"/>
+                                                <TextBlock Text="{DynamicResource LOCNoFriendsOnline}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="22"
+                                                           FontWeight="Bold"
+                                                           HorizontalAlignment="Center"
+                                                           Margin="0,14,0,0"/>
+                                                <TextBlock Text="{DynamicResource LOCNoFriendsOnlineDescription}"
+                                                           FontSize="14"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           HorizontalAlignment="Center"
+                                                           TextAlignment="Center"
+                                                           Opacity="0.65"
+                                                           Margin="0,6,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Back hint -->
+                                <StackPanel Grid.Row="5"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Bottom"
+                                            Margin="0,18,4,0">
+                                    <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                              Tag="CancelAction"
+                                              Content="{DynamicResource LOCBackLabel}"
+                                              Focusable="False"
+                                              IsTabStop="False"
+                                              IsHitTestVisible="False" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

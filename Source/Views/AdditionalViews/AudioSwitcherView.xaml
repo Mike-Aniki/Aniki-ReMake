@@ -1,0 +1,730 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:pc="clr-namespace:Playnite.Controls;assembly=Playnite"
+                    xmlns:pbeh="clr-namespace:Playnite.Behaviors;assembly=Playnite"
+                    mc:Ignorable="d">
+
+    <!-- Audio Switcher Menu - Premium console layout v7 - frameless volume slider -->
+    <Style x:Key="AudioSwitcherWindowStyle" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+
+                    <Grid KeyboardNavigation.TabNavigation="Contained"
+                          KeyboardNavigation.DirectionalNavigation="Contained"
+                          KeyboardNavigation.ControlTabNavigation="Contained">
+
+                        <Grid.Resources>
+
+                            <!-- Compact action button used for device rows, mute row and volume focus row. -->
+                            <Style x:Key="AudioSwitcherPremiumButtonStyle" TargetType="ButtonEx">
+                                <Setter Property="Height" Value="56"/>
+                                <Setter Property="MinHeight" Value="56"/>
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Focusable" Value="True"/>
+                                <Setter Property="IsTabStop" Value="True"/>
+                                <Setter Property="KeyboardNavigation.IsTabStop" Value="True"/>
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ButtonEx">
+                                            <Grid Background="Transparent"
+                                                  SnapsToDevicePixels="True">
+
+                                                <Border x:Name="MainBackground"
+                                                        CornerRadius="13"
+                                                        Background="{DynamicResource ButtonBackgroundFocus}"
+                                                        Visibility="Collapsed"
+                                                        Opacity="0.78"/>
+
+                                                <Border x:Name="FlashMenuBorder"
+                                                        CornerRadius="13"
+                                                        Style="{DynamicResource AnimatedFlashMenu}"
+                                                        Tag="False"
+                                                        Visibility="Collapsed"
+                                                        IsHitTestVisible="False"/>
+
+                                                <Border x:Name="MainBorder"
+                                                        BorderThickness="2"
+                                                        CornerRadius="13"
+                                                        BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                        Visibility="Collapsed"
+                                                        IsHitTestVisible="False"/>
+
+                                                <ContentPresenter Margin="16,0"
+                                                                  HorizontalAlignment="Stretch"
+                                                                  VerticalAlignment="Center"
+                                                                  RecognizesAccessKey="True"/>
+                                            </Grid>
+
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Opacity" Value="0.35"/>
+                                                </Trigger>
+
+                                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                    <Setter TargetName="MainBackground" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="MainBorder" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="FlashMenuBorder" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="FlashMenuBorder" Property="Tag" Value="True"/>
+                                                </Trigger>
+
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="MainBackground" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="MainBackground" Property="Opacity" Value="0.45"/>
+                                                    <Setter TargetName="MainBorder" Property="Visibility" Value="Visible"/>
+                                                </Trigger>
+
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Opacity" Value="0.82"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+
+                            <!-- Device icon mapping from AudioSwitcher plugin. -->
+                            <Style x:Key="AudioSwitcherDeviceIconStyle" TargetType="TextBlock">
+                                <Setter Property="Text" Value="&#xE994;"/>
+                                <Setter Property="FontFamily" Value="{DynamicResource FontIcons}"/>
+                                <Setter Property="FontSize" Value="24"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Icon}" Value="volume">
+                                        <Setter Property="Text" Value="&#xE994;"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Icon}" Value="volume-1">
+                                        <Setter Property="Text" Value="&#xE993;"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Icon}" Value="volume-2">
+                                        <Setter Property="Text" Value="&#xE995;"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Icon}" Value="headphones">
+                                        <Setter Property="Text" Value="&#xE7F6;"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Icon}" Value="speaker">
+                                        <Setter Property="Text" Value="&#xE7F5;"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Icon}" Value="tv">
+                                        <Setter Property="Text" Value="&#xE7F4;"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Icon}" Value="monitor">
+                                        <Setter Property="Text" Value="&#xEC4E;"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Icon}" Value="gamepad">
+                                        <Setter Property="Text" Value="&#xE7FC;"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Icon}" Value="gamepad-1">
+                                        <Setter Property="Text" Value="&#xE7FC;"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Icon}" Value="gamepad-2">
+                                        <Setter Property="Text" Value="&#xE7FC;"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Icon}" Value="bluetooth">
+                                        <Setter Property="Text" Value="&#xE702;"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Icon}" Value="usb">
+                                        <Setter Property="Text" Value="&#xE88E;"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+
+                        </Grid.Resources>
+
+                        <!-- Strong modal dim. -->
+                        <Border Background="#96000000"/>
+
+                        <!-- Main centered console modal. -->
+                        <Grid x:Name="AudioSwitcherPanelHost"
+                              Width="770"
+                              MaxHeight="1000"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Opacity="0"
+                              RenderTransformOrigin="0.5,0.5"
+                              KeyboardNavigation.TabNavigation="Contained"
+                              KeyboardNavigation.DirectionalNavigation="Contained"
+                              KeyboardNavigation.ControlTabNavigation="Contained">
+
+                            <Grid.RenderTransform>
+                                <ScaleTransform ScaleX="0.965" ScaleY="0.965"/>
+                            </Grid.RenderTransform>
+
+                            <Grid.Triggers>
+                                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="AudioSwitcherPanelHost"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             From="0"
+                                                             To="1"
+                                                             Duration="0:0:0.18"/>
+
+                                            <DoubleAnimation Storyboard.TargetName="AudioSwitcherPanelHost"
+                                                             Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                                             From="0.965"
+                                                             To="1"
+                                                             Duration="0:0:0.24">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+
+                                            <DoubleAnimation Storyboard.TargetName="AudioSwitcherPanelHost"
+                                                             Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                                             From="0.965"
+                                                             To="1"
+                                                             Duration="0:0:0.24">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Grid.Triggers>
+
+                            <Border Background="{DynamicResource OverlayMenu}"
+                                    BorderBrush="{DynamicResource StaticBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="20"/>
+
+                            <Border Background="{DynamicResource GlassMainBrush}"
+                                    CornerRadius="20"
+                                    Opacity="0.22"
+                                    IsHitTestVisible="False"/>
+
+                            <Border BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="20"
+                                    Opacity="0.22"
+                                    IsHitTestVisible="False"/>
+
+                            <Grid Margin="34,24,34,22">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Header -->
+                                <StackPanel Grid.Row="0"
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,28"
+                                            Effect="{DynamicResource SoftTextShadow}">
+
+                                    <Border Width="54"
+                                            Height="54"
+                                            CornerRadius="27"
+                                            Background="{DynamicResource ButtonBackgroundFocus}"
+                                            BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                            BorderThickness="1"
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,13">
+                                        <TextBlock Text="&#xE995;"
+                                                   FontFamily="{DynamicResource FontIcons}"
+                                                   FontSize="27"
+                                                   Foreground="{DynamicResource TextBrush}"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <TextBlock Text="{DynamicResource LOCAudioSwitcher}"
+                                               FontFamily="{DynamicResource FontMain}"
+                                               FontSize="34"
+                                               FontWeight="Bold"
+                                               Foreground="{DynamicResource TextBrush}"
+                                               HorizontalAlignment="Center"/>
+
+                                    <Border Width="230"
+                                            Height="1"
+                                            Background="{DynamicResource FocusGameBorderBrush}"
+                                            Opacity="0.48"
+                                            HorizontalAlignment="Center"
+                                            Margin="0,16,0,0"/>
+                                </StackPanel>
+
+                                <!-- Volume: premium frameless section. -->
+                                <Grid Grid.Row="1"
+                                      Margin="4,0,4,30"
+                                      KeyboardNavigation.TabNavigation="Continue"
+                                      KeyboardNavigation.DirectionalNavigation="Continue"
+                                      KeyboardNavigation.ControlTabNavigation="Continue">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="52"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0"
+                                               Text="&#xE995;"
+                                               FontFamily="{DynamicResource FontIcons}"
+                                               FontSize="25"
+                                               Foreground="{DynamicResource TextBrush}"
+                                               Opacity="0.92"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Top"
+                                               Margin="4,5,0,0"/>
+
+                                    <Grid Grid.Column="1"
+                                          KeyboardNavigation.TabNavigation="Continue"
+                                          KeyboardNavigation.DirectionalNavigation="Continue"
+                                          KeyboardNavigation.ControlTabNavigation="Continue">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{DynamicResource LOCSystemVolume}"
+                                                       FontFamily="{DynamicResource FontMain}"
+                                                       FontSize="22"
+                                                       FontWeight="Bold"
+                                                       Foreground="{DynamicResource TextBrush}"
+                                                       VerticalAlignment="Center"/>
+
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{PluginSettings Plugin=AudioSwitcher, Path=CurrentVolumeLabel}"
+                                                       FontFamily="{DynamicResource FontMain}"
+                                                       FontSize="30"
+                                                       FontWeight="Bold"
+                                                       Foreground="{DynamicResource TextHighlightBrush}"
+                                                       HorizontalAlignment="Right"
+                                                       VerticalAlignment="Center"/>
+                                        </Grid>
+
+                                        <SliderEx x:Name="AudioVolumeSlider"
+                                                  Grid.Row="1"
+                                                  Minimum="0"
+                                                  Maximum="100"
+                                                  SmallChange="{PluginSettings Plugin=AudioSwitcher, Path=VolumeStepPercent}"
+                                                  LargeChange="{PluginSettings Plugin=AudioSwitcher, Path=VolumeStepPercent}"
+                                                  Value="{PluginSettings Plugin=AudioSwitcher, Path=CurrentVolumePercent, Mode=TwoWay}"
+                                                  Focusable="True"
+                                                  IsTabStop="True"
+                                                  FocusVisualStyle="{x:Null}"
+                                                  KeyboardNavigation.IsTabStop="True"
+                                                  KeyboardNavigation.TabIndex="0"
+                                                  KeyboardNavigation.TabNavigation="Continue"
+                                                  KeyboardNavigation.DirectionalNavigation="Continue"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Stretch"
+                                                  Margin="0,16,0,0"/>
+
+                                        <TextBlock Grid.Row="2"
+                                                   Text="{DynamicResource LOCSystemVolumeDesc}"
+                                                   FontFamily="{DynamicResource FontMain}"
+                                                   FontSize="12"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Opacity="0.62"
+                                                   Margin="0,8,0,0"/>
+                                    </Grid>
+                                </Grid>
+
+                                <!-- Current game volume -->
+                                <Border Grid.Row="2"
+                                        Padding="20,16,20,18"
+                                        Background="{DynamicResource BackgroundMenu}"
+                                        BorderBrush="{DynamicResource SeparatorBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="16"
+                                        Margin="0,0,0,22">
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Header -->
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Game audio icon -->
+                                            <TextBlock Grid.Column="0"
+                                                       Text="&#xE7FC;"
+                                                       FontFamily="{DynamicResource FontIcons}"
+                                                       FontSize="24"
+                                                       Foreground="{DynamicResource TextBrush}"
+                                                       VerticalAlignment="Center"
+                                                       Margin="0,0,14,0"/>
+
+                                            <!-- Game name and state -->
+                                            <StackPanel Grid.Column="1"
+                                                        VerticalAlignment="Center">
+
+                                                <TextBlock Text="{DynamicResource LOCGameVolume}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="13"
+                                                           FontWeight="SemiBold"
+                                                           Opacity="0.88"/>
+
+                                                <Grid Margin="0,3,0,0">
+
+                                                    <!-- No active audio session -->
+                                                    <TextBlock Text="{DynamicResource LOCNoActiveGameAudioSession}"
+                                                               FontFamily="{DynamicResource FontMain}"
+                                                               FontSize="16"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{DynamicResource TextDetailBrush}"
+                                                               TextTrimming="CharacterEllipsis">
+
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AudioSwitcher, Path=HasActiveGameAudioSession}"
+                                                                                 Value="True">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+
+                                                    <!-- Current game name -->
+                                                    <TextBlock Text="{PluginSettings Plugin=AudioSwitcher, Path=CurrentGameName}"
+                                                               FontFamily="{DynamicResource FontMain}"
+                                                               FontSize="16"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{DynamicResource TextBrush}"
+                                                               TextTrimming="CharacterEllipsis">
+
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AudioSwitcher, Path=HasActiveGameAudioSession}"
+                                                                                 Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+
+                                                </Grid>
+                                            </StackPanel>
+
+                                            <!-- Game volume value -->
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{PluginSettings Plugin=AudioSwitcher, Path=CurrentGameVolumeLabel}"
+                                                       FontFamily="{DynamicResource FontMain}"
+                                                       FontSize="27"
+                                                       FontWeight="Bold"
+                                                       Foreground="{DynamicResource TextHighlightBrush}"
+                                                       HorizontalAlignment="Right"
+                                                       VerticalAlignment="Center"
+                                                       Margin="16,0,0,0"/>
+                                        </Grid>
+
+                                        <!-- Game volume slider -->
+                                        <SliderEx x:Name="AudioSwitcherGameVolumeSlider"
+                                                  Grid.Row="1"
+                                                  Minimum="0"
+                                                  Maximum="100"
+                                                  SmallChange="{PluginSettings Plugin=AudioSwitcher, Path=VolumeStepPercent}"
+                                                  LargeChange="{PluginSettings Plugin=AudioSwitcher, Path=VolumeStepPercent}"
+                                                  Value="{PluginSettings Plugin=AudioSwitcher, Path=CurrentGameVolumePercent, Mode=TwoWay}"
+                                                  IsEnabled="{PluginSettings Plugin=AudioSwitcher, Path=HasActiveGameAudioSession}"
+                                                  Focusable="True"
+                                                  IsTabStop="True"
+                                                  FocusVisualStyle="{x:Null}"
+                                                  KeyboardNavigation.IsTabStop="True"
+                                                  KeyboardNavigation.TabIndex="1"
+                                                  KeyboardNavigation.TabNavigation="Continue"
+                                                  KeyboardNavigation.DirectionalNavigation="Continue"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Stretch"
+                                                  Margin="0,16,0,0"/>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Mute / unmute: clean action row. -->
+                                <ButtonEx Grid.Row="3"
+                                          Height="68"
+                                          Style="{StaticResource AudioSwitcherPremiumButtonStyle}"
+                                          Command="{PluginSettings Plugin=AudioSwitcher, Path=ToggleMuteCommand}"
+                                          KeyboardNavigation.TabIndex="2"
+                                          Margin="4,0,4,26">
+
+                                    <Grid VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="52"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0"
+                                                   FontFamily="{DynamicResource FontIcons}"
+                                                   FontSize="25"
+                                                   Foreground="{DynamicResource TextBrush}"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   Margin="4,0,0,0">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Text" Value="&#xE994;"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AudioSwitcher, Path=IsMuted}" Value="True">
+                                                            <Setter Property="Text" Value="&#xE74F;"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+
+                                        <StackPanel Grid.Column="1"
+                                                    Margin="14,0,0,0"
+                                                    VerticalAlignment="Center">
+                                            <TextBlock FontFamily="{DynamicResource FontMain}"
+                                                       FontSize="19"
+                                                       FontWeight="Bold"
+                                                       Foreground="{DynamicResource TextBrush}"
+                                                       TextTrimming="CharacterEllipsis">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Text" Value="{DynamicResource LOCMuteAudio}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AudioSwitcher, Path=IsMuted}" Value="True">
+                                                                <Setter Property="Text" Value="{DynamicResource LOCUnmuteAudio}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+
+                                            <TextBlock Text="{DynamicResource LOCMuteVolumeDesc}"
+                                                       FontFamily="{DynamicResource FontMain}"
+                                                       FontSize="12"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       Opacity="0.60"
+                                                       Margin="0,3,0,0"/>
+                                        </StackPanel>
+
+                                        <Border Grid.Column="2"
+                                                MinWidth="76"
+                                                Height="28"
+                                                CornerRadius="14"
+                                                Background="{DynamicResource ButtonBackgroundNoFocus}"
+                                                BorderBrush="{DynamicResource SeparatorBrush}"
+                                                BorderThickness="1"
+                                                VerticalAlignment="Center"
+                                                Margin="14,0,4,0">
+                                            <TextBlock FontFamily="{DynamicResource FontMain}"
+                                                       FontSize="12"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="{DynamicResource TextDetailBrush}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                        <Setter Property="Text" Value="{DynamicResource LOCActive}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AudioSwitcher, Path=IsMuted}" Value="True">
+                                                                <Setter Property="Text" Value="{DynamicResource LOCMuted}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Border>
+                                    </Grid>
+                                </ButtonEx>
+
+                                <!-- Output selector: the only permanent framed section. -->
+                                <Border Grid.Row="4"
+                                        Padding="20,16,20,18"
+                                        Background="{DynamicResource BackgroundMenu}"
+                                        BorderBrush="{DynamicResource SeparatorBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="16"
+                                        Margin="0,0,0,22">
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0" Margin="0,0,0,14">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Text="{DynamicResource LOCOutputDevice}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="13"
+                                                           FontWeight="SemiBold"
+                                                           Opacity="0.88"/>
+
+                                                <TextBlock Text="{DynamicResource LOCOutputDeviceDesc}"
+                                                           FontSize="11"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           Opacity="0.52"
+                                                           Margin="0,3,0,0"/>
+                                            </StackPanel>
+
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{DynamicResource LOCCurrent}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="11"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="{DynamicResource TextHighlightBrush}"
+                                                       Opacity="0.82"
+                                                       VerticalAlignment="Top"/>
+                                        </Grid>
+
+                                        <Border Grid.Row="1"
+                                                Height="198"
+                                                Background="Transparent"
+                                                ClipToBounds="True">
+
+                                            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                                          HorizontalScrollBarVisibility="Disabled"
+                                                          CanContentScroll="True"
+                                                          Focusable="False"
+                                                          Height="198">
+
+                                                <ItemsControl ItemsSource="{PluginSettings Plugin=AudioSwitcher, Path=Devices}"
+                                                              Focusable="False"
+                                                              KeyboardNavigation.DirectionalNavigation="Continue"
+                                                              KeyboardNavigation.TabNavigation="Continue">
+
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Vertical"/>
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <ButtonEx Style="{StaticResource AudioSwitcherPremiumButtonStyle}"
+                                                                      Height="62"
+                                                                      KeyboardNavigation.TabIndex="3"
+                                                                      Command="{PluginSettings Plugin=AudioSwitcher, Path=SetDeviceCommand}"
+                                                                      CommandParameter="{Binding Id}">
+
+                                                                <Grid VerticalAlignment="Center">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="46"/>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                        <ColumnDefinition Width="Auto"/>
+                                                                    </Grid.ColumnDefinitions>
+
+                                                                    <TextBlock Grid.Column="0"
+                                                                               Style="{StaticResource AudioSwitcherDeviceIconStyle}"
+                                                                               FontSize="22"
+                                                                               HorizontalAlignment="Center"/>
+
+                                                                    <StackPanel Grid.Column="1"
+                                                                                Margin="12,0,14,0"
+                                                                                VerticalAlignment="Center">
+                                                                        <TextBlock Text="{Binding Name}"
+                                                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                                                   FontSize="16"
+                                                                                   FontWeight="SemiBold"
+                                                                                   TextTrimming="CharacterEllipsis"/>
+
+                                                                        <TextBlock Text="{Binding WindowsName}"
+                                                                                   FontSize="11"
+                                                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                                                   Opacity="0.52"
+                                                                                   Margin="0,2,0,0"
+                                                                                   TextTrimming="CharacterEllipsis"/>
+                                                                    </StackPanel>
+
+                                                                    <Border Grid.Column="2"
+                                                                            Width="10"
+                                                                            Height="10"
+                                                                            CornerRadius="5"
+                                                                            Background="{DynamicResource TextHighlightBrush}"
+                                                                            VerticalAlignment="Center"
+                                                                            Margin="0,0,12,0">
+                                                                        <Border.Style>
+                                                                            <Style TargetType="Border">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding IsCurrent}" Value="True">
+                                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Border.Style>
+                                                                    </Border>
+                                                                </Grid>
+                                                            </ButtonEx>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </ScrollViewer>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+
+                                <!-- Footer -->
+                                <StackPanel Grid.Row="5"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            Margin="0,-2,2,0"
+                                            Effect="{DynamicResource SoftTextShadow}">
+
+                                    <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                              Tag="CancelAction"
+                                              Command="{Binding CloseCommand}"
+                                              Content="{DynamicResource LOCBackLabel}" />
+                                </StackPanel>
+
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp1610">
+                <Setter Property="Margin" Value="0,-50,0,-50"/>
+            </DataTrigger>
+
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp219">
+                <Setter Property="Margin" Value="-300,0,-300,0"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

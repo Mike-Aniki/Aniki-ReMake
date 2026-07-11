@@ -268,24 +268,7 @@
                                                 Background="Black"
                                                 CornerRadius="28"/>
 
-                                        <!-- FALLBACK AVATAR -->
-                                        <Border Width="56"
-                                                Height="56"
-                                                CornerRadius="28"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center">
-                                            <Border.Style>
-                                                <Style TargetType="Border"
-                                                       BasedOn="{StaticResource SelectedAvatarBorderStyle}">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding ElementName=SteamStatusUserAvatar, Path=Source}" Value="{x:Null}">
-                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-                                        </Border>
+
 
                                         <!-- AVATAR PATH -->
                                         <TextBlock x:Name="SteamStatusProfilePicturePath"
@@ -313,12 +296,14 @@
                                                 <VisualBrush Visual="{Binding ElementName=SteamStatusAvatarMask}" />
                                             </Grid.OpacityMask>
 
-                                            <Image x:Name="SteamStatusUserAvatar"
-                                                   Source="{Binding ElementName=SteamStatusProfilePicturePath, Path=Text}"
-                                                   Stretch="UniformToFill"
-                                                   RenderOptions.BitmapScalingMode="Fant"
-                                                   Width="56"
-                                                   Height="56"/>
+                                            <Control x:Name="SteamStatusUserAvatar"
+                                                     Tag="{Binding ElementName=SteamStatusProfilePicturePath, Path=Text}"
+                                                     Width="56"
+                                                     Height="56"
+                                                     Template="{StaticResource SteamSelfAvatarTemplate}"
+                                                     Focusable="False"
+                                                     IsTabStop="False"
+                                                     IsHitTestVisible="False"/>
                                         </Grid>
 
                                         <!-- AVATAR BORDER -->
@@ -343,7 +328,7 @@
                                                    FontWeight="SemiBold"
                                                    TextTrimming="CharacterEllipsis"/>
 
-                                        <TextBlock Text="Change your Steam presence"
+                                        <TextBlock Text="{DynamicResource LOCSteamPresence}"
                                                    Style="{DynamicResource TextBlockBaseStyle}"
                                                    FontSize="14"
                                                    Opacity="0.70"
@@ -372,36 +357,36 @@
                                                 <Setter Property="BorderBrush" Value="#5519F28B"/>
 
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginStatus Plugin=SteamFriendsFullscreen_d8d67c7e-a797-45d7-ae44-3d53ddecc8d1, Status=Installed}" Value="True">
+                                                    <DataTrigger Binding="{PluginStatus Plugin=AnikiHelper_96a983a3-3f13-4dce-a474-4052b718bb52, Status=Installed}" Value="True">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                     </DataTrigger>
 
-                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="online">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="online">
                                                         <Setter Property="Background" Value="#1819F28B"/>
                                                         <Setter Property="BorderBrush" Value="#5519F28B"/>
                                                     </DataTrigger>
 
-                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="offline">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="offline">
                                                         <Setter Property="Background" Value="#182D3748"/>
                                                         <Setter Property="BorderBrush" Value="#554A5A68"/>
                                                     </DataTrigger>
 
-                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="away">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="away">
                                                         <Setter Property="Background" Value="#18FFC857"/>
                                                         <Setter Property="BorderBrush" Value="#55FFC857"/>
                                                     </DataTrigger>
 
-                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="busy">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="busy">
                                                         <Setter Property="Background" Value="#18FF4D5A"/>
                                                         <Setter Property="BorderBrush" Value="#55FF4D5A"/>
                                                     </DataTrigger>
 
-                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="ingame">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="ingame">
                                                         <Setter Property="Background" Value="#1846D9FF"/>
                                                         <Setter Property="BorderBrush" Value="#5546D9FF"/>
                                                     </DataTrigger>
 
-                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="notrunning">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="notrunning">
                                                         <Setter Property="Background" Value="#185A7D9A"/>
                                                         <Setter Property="BorderBrush" Value="#555A7D9A"/>
                                                     </DataTrigger>
@@ -428,27 +413,27 @@
                                                         <Setter Property="Opacity" Value="0.96"/>
 
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="online">
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="online">
                                                                 <Setter Property="Background" Value="{DynamicResource StatusOnlineBrush}"/>
                                                             </DataTrigger>
 
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="offline">
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="offline">
                                                                 <Setter Property="Background" Value="{DynamicResource StatusOfflineBrush}"/>
                                                             </DataTrigger>
 
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="away">
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="away">
                                                                 <Setter Property="Background" Value="{DynamicResource StatusAwayBrush}"/>
                                                             </DataTrigger>
 
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="busy">
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="busy">
                                                                 <Setter Property="Background" Value="{DynamicResource StatusBusyBrush}"/>
                                                             </DataTrigger>
 
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="ingame">
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="ingame">
                                                                 <Setter Property="Background" Value="{DynamicResource StatusInGameBrush}"/>
                                                             </DataTrigger>
 
-                                                            <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="notrunning">
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="notrunning">
                                                                 <Setter Property="Background" Value="{DynamicResource StatusNotRunningBrush}"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -462,7 +447,7 @@
                                                        Opacity="0.95"
                                                        Style="{DynamicResource TextBlockBaseStyle}"
                                                        VerticalAlignment="Center"
-                                                       Text="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfStateLoc}"
+                                                       Text="{PluginSettings Plugin=AnikiHelper, Path=SteamFriendsStatusButtonText}"
                                                        TextTrimming="CharacterEllipsis"/>
 
                                         </StackPanel>
@@ -493,10 +478,10 @@
 
                                         <StackPanel.Style>
                                             <Style TargetType="StackPanel">
-                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=IsSteamRunning}" Value="False">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamFriendsChangeStatusVisibility}" Value="Visible">
+                                                        <Setter Property="Visibility" Value="Visible"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -509,7 +494,7 @@
                                                   Tag="{DynamicResource StatusOnlineBrush}"
                                                   Content="{DynamicResource LOCSteamOnline}"
                                                   pbeh:FocusBahaviors.FocusBinding="{Binding ElementName=SteamStatusButtons, Path=IsVisible}"
-                                                  Command="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SetStatusOnlineCommand}"/>
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=SetStatusOnlineCommand}"/>
 
                                         <!-- AWAY -->
                                         <ButtonEx x:Name="SteamStatusAwayButton"
@@ -517,7 +502,7 @@
                                                   FocusVisualStyle="{x:Null}"
                                                   Tag="{DynamicResource StatusAwayBrush}"
                                                   Content="{DynamicResource LOCSteamAway}"
-                                                  Command="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SetStatusAwayCommand}"/>
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=SetStatusAwayCommand}"/>
 
                                         <!-- INVISIBLE / OFFLINE -->
                                         <ButtonEx x:Name="SteamStatusOfflineButton"
@@ -525,10 +510,59 @@
                                                   FocusVisualStyle="{x:Null}"
                                                   Tag="{DynamicResource StatusOfflineBrush}"
                                                   Content="{DynamicResource LOCSteamOffline}"
-                                                  Command="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SetStatusInvisibleCommand}"/>
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=SetStatusInvisibleCommand}"/>
 
                                     </StackPanel>
 
+                                    <!-- STEAM FRIENDS SETUP MESSAGE -->
+                                    <StackPanel x:Name="SteamSetupMessage"
+                                                Orientation="Vertical"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center">
+
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamFriendsSetupMessageVisibility}" Value="Visible">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+
+                                        <Border Width="460"
+                                                MinHeight="270"
+                                                CornerRadius="8"
+                                                Padding="24"
+                                                Background="#14000000"
+                                                BorderBrush="#22FFFFFF"
+                                                BorderThickness="1">
+
+                                            <StackPanel HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center">
+
+                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamFriendsSetupTitle}"
+                                                           Style="{StaticResource TextBlockBaseStyle}"
+                                                           FontSize="24"
+                                                           Foreground="{DynamicResource TextHighlightBrush}"
+                                                           TextAlignment="Center"
+                                                           HorizontalAlignment="Center"
+                                                           TextWrapping="Wrap"/>
+
+                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamFriendsSetupMessage}"
+                                                           Style="{StaticResource TextBlockBaseStyle}"
+                                                           Margin="0,14,0,0"
+                                                           FontSize="17"
+                                                           Opacity="0.82"
+                                                           TextAlignment="Center"
+                                                           TextWrapping="Wrap"
+                                                           Width="390"
+                                                           HorizontalAlignment="Center"/>
+
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
 
                                     <!-- STEAM CLOSED MESSAGE -->
                                     <StackPanel x:Name="SteamClosedMessage"
@@ -540,7 +574,7 @@
                                             <Style TargetType="StackPanel">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=IsSteamRunning}" Value="False">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamFriendsOpenSteamButtonVisibility}" Value="Visible">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -570,7 +604,7 @@
                                                         <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=IsSteamLaunching}" Value="True">
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSteamLaunching}" Value="True">
                                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                                 </DataTrigger>
                                                             </Style.Triggers>
@@ -580,7 +614,7 @@
 
 
                                                 <!-- LAUNCHING MESSAGE -->
-                                                <TextBlock Text="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SteamLaunchMessage}"
+                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamLaunchMessage}"
                                                            Margin="0,10,0,0"
                                                            FontSize="22"
                                                            TextAlignment="Center">
@@ -589,7 +623,7 @@
                                                         <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=IsSteamLaunching}" Value="True">
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSteamLaunching}" Value="True">
                                                                     <Setter Property="Visibility" Value="Visible"/>
                                                                 </DataTrigger>
                                                             </Style.Triggers>
@@ -607,13 +641,13 @@
                                                           Tag="{DynamicResource StatusOnlineBrush}"
                                                           Content="{DynamicResource LOCOpenSteam}"
                                                           pbeh:FocusBahaviors.FocusBinding="{Binding ElementName=SteamClosedMessage, Path=IsVisible}"
-                                                          Command="{PluginSettings Plugin=SteamFriendsFullscreen, Path=OpenSteamCommand}">
+                                                          Command="{PluginSettings Plugin=AnikiHelper, Path=OpenSteamCommand}">
 
                                                     <ButtonEx.Style>
                                                         <Style TargetType="ButtonEx" BasedOn="{StaticResource SteamStatusButtonStyle}">
                                                             <Setter Property="IsEnabled" Value="True"/>
                                                             <Style.Triggers>
-                                                                <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=IsSteamLaunching}" Value="True">
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSteamLaunching}" Value="True">
                                                                     <Setter Property="IsEnabled" Value="False"/>
                                                                     <Setter Property="Opacity" Value="0.5"/>
                                                                 </DataTrigger>
@@ -646,7 +680,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Text="STEAM STATUS"
+                                    <TextBlock Text="{DynamicResource LOCSTEAMSTATUS}"
                                                FontSize="13"
                                                FontWeight="Bold"
                                                Style="{DynamicResource TextBlockBaseStyle}"

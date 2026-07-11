@@ -9,7 +9,7 @@
                     xmlns:pbeh="clr-namespace:Playnite.Behaviors;assembly=Playnite"
                     mc:Ignorable="d">
 
-    <!-- Vue ControlCenter -->
+    <!-- Vue ControlCenter - Quick Options compact v3 -->
     <Style x:Key="ControlCenterWindowStyle" TargetType="ContentControl">
         <Setter Property="Template">
             <Setter.Value>
@@ -57,7 +57,7 @@
                             <Style x:Key="QuickSettingsPageStyle" TargetType="Grid">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                                <Setter Property="VerticalAlignment" Value="Top"/>
+                                <Setter Property="VerticalAlignment" Value="Stretch"/>
                                 <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue"/>
                                 <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Continue"/>
                                 <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Continue"/>
@@ -290,7 +290,7 @@
 
                             <!-- glass shell -->
                             <Border Grid.RowSpan="4" Background="{DynamicResource OverlayMenu}" BorderBrush="{DynamicResource StaticBorderBrush}" BorderThickness="1,0,0,0"
-                                    Opacity="0.93"/>
+                                    Opacity="1"/>
 
                             <!-- TOGGLES INTERNES -->
                             <ToggleButtonEx x:Name="ModeSystemInternal" Visibility="Collapsed" IsChecked="True" />
@@ -726,44 +726,43 @@
                                         HorizontalAlignment="Center"
                                         Orientation="Vertical">
 
-                                <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
-                                           FontSize="28" HorizontalAlignment="Center"
+                                <TextBlock FontSize="28" HorizontalAlignment="Center"
                                            Foreground="{DynamicResource TextHighlightBrush}"
                                            Margin="0,0,0,2">
                                     <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Text" Value="{DynamicResource LOCSettingsFSSectionGeneral}" />
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                            <Setter Property="Text" Value="{DynamicResource LOCQuickOptionsSystemTitle}" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding ElementName=ModeThemeInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="{DynamicResource LOCThemOptsMain}" />
+                                                    <Setter Property="Text" Value="{DynamicResource LOCQuickOptionsMainTitle}" />
                                                 </DataTrigger>
 
                                                 <DataTrigger Binding="{Binding ElementName=ModeDetailsInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="{DynamicResource LOCThemOptsDetails}" />
+                                                    <Setter Property="Text" Value="{DynamicResource LOCQuickOptionsDetailsTitle}" />
                                                 </DataTrigger>
 
                                                 <DataTrigger Binding="{Binding ElementName=ModeTrailerInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="{DynamicResource LOCTrailerControlCenter}" />
+                                                    <Setter Property="Text" Value="{DynamicResource LOCQuickOptionsMediaTitle}" />
                                                 </DataTrigger>
 
                                                 <DataTrigger Binding="{Binding ElementName=ModeSystemInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="{DynamicResource LOCSettingsFSSectionGeneral}" />
+                                                    <Setter Property="Text" Value="{DynamicResource LOCQuickOptionsSystemTitle}" />
                                                 </DataTrigger>
 
                                                 <DataTrigger Binding="{Binding ElementName=ModeVisualInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="{DynamicResource LOCVisualEffectsHeader}" />
+                                                    <Setter Property="Text" Value="{DynamicResource LOCQuickOptionsVisualTitle}" />
                                                 </DataTrigger>
 
                                                 <DataTrigger Binding="{Binding ElementName=ModeDataInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="Details view data" />
+                                                    <Setter Property="Text" Value="{DynamicResource LOCQuickOptionsDataTitle}" />
                                                 </DataTrigger>
 
                                                 <DataTrigger Binding="{Binding ElementName=ModeAudioInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="{DynamicResource LOCSettingsFSSectionAudio}" />
+                                                    <Setter Property="Text" Value="{DynamicResource LOCQuickOptionsAudioTitle}" />
                                                 </DataTrigger>
 
                                                 <DataTrigger Binding="{Binding ElementName=ModeLayoutInternal, Path=IsChecked}" Value="True">
-                                                    <Setter Property="Text" Value="{DynamicResource LOCSettingsFSSectionLayout}" />
+                                                    <Setter Property="Text" Value="{DynamicResource LOCQuickOptionsLayoutTitle}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -796,44 +795,68 @@
 
                                     <StackPanel Margin="50,20,50,40" Orientation="Vertical">
 
-                                        <CheckBoxEx x:Name="ThemeOptButton1"
-                                                    Margin="0,10,0,0"
+                                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   Margin="0,10,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="22"
+                                                   Text="{DynamicResource LOCQuickOptionsMainNavigation}" />
+
+                                        <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
+
+                                        <CheckBoxEx x:Name="ThemeOptButton1" Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCDetailedSideInfoPanel}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[DetailedSideInfoPanel]}"
+                                                    Content="{DynamicResource LOCAutoHideTopButtonBar}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[AutoHideTopButtonBar]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-                                                    CommandParameter="DetailedSideInfoPanel" />
-
-                                        <CheckBoxEx HorizontalAlignment="Stretch"
-                                                    Margin="0,10,0,0"
+                                                    CommandParameter="AutoHideTopButtonBar" />
+                                        <CheckBoxEx Margin="0,10,0,0"
+                                                    HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCCompactGameInfoBar}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[CompactGameInfoBar]}"
+                                                    Content="{DynamicResource LOCAutoHideBottomFilterBar}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[AutoHideBottomFilterBar]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-                                                    CommandParameter="CompactGameInfoBar" />
+                                                    CommandParameter="AutoHideBottomFilterBar" />
+                                        <CheckBoxEx Margin="0,10,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingsSectionCheckbox}"
+                                                    Content="{DynamicResource LOCDisableCenterTopButtons}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[DisableCenterTopButtons]}"
+                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
+                                                    CommandParameter="DisableCenterTopButtons" />
+                                        <CheckBoxEx Margin="0,10,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingsSectionCheckbox}"
+                                                    Content="{DynamicResource LOCDisableFilterBottomBar}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[DisableFilterBottomBar]}"
+                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
+                                                    CommandParameter="DisableFilterBottomBar" />
 
+
+                                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   Margin="0,20,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="22"
+                                                   Text="{DynamicResource LOCQuickOptionsMainInfoLayout}" />
+
+                                        <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
 
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCMainDesc}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[MainDesc]}"
+                                                    Content="{DynamicResource LOCSourceLogoOnMainScreen}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[SourceLogoOnMainScreen]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-                                                    CommandParameter="MainDesc" />
-
-                                        <CheckBoxEx Margin="0,10,0,0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Center"
-                                                    Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCControllerShortcutBar}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[ControllerShortcutBar]}"
-                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-                                                    CommandParameter="ControllerShortcutBar" />
-
+                                                    CommandParameter="SourceLogoOnMainScreen" />
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
@@ -842,7 +865,6 @@
                                                     IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBanner]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
                                                     CommandParameter="PlatformBanner" />
-
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
@@ -851,7 +873,6 @@
                                                     IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[AgeRatingOnMainScreen]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
                                                     CommandParameter="AgeRatingOnMainScreen" />
-
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
@@ -860,7 +881,6 @@
                                                     IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[CompletionStatusOnOff]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
                                                     CommandParameter="CompletionStatusOnOff" />
-
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
@@ -869,7 +889,6 @@
                                                     IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[SuccessOnMainMenu]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
                                                     CommandParameter="SuccessOnMainMenu" />
-
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
@@ -878,29 +897,6 @@
                                                     IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[FeaturesSteamMain]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
                                                     CommandParameter="FeaturesSteamMain" />
-
-                                        <CheckBoxEx HorizontalAlignment="Stretch"
-                                                    Margin="0,10,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCAutoHideTopButtonBar}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[AutoHideTopButtonBar]}"
-                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-                                                    CommandParameter="AutoHideTopButtonBar" />
-
-
-
-                                        <CheckBoxEx HorizontalAlignment="Stretch"
-                                                    Margin="0,10,0,0"
-                                                    VerticalAlignment="Center"
-                                                    Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCAutoHideBottomFilterBar}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[AutoHideBottomFilterBar]}"
-                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-                                                    CommandParameter="AutoHideBottomFilterBar" />
-
-
-
                                     </StackPanel>
                                 </Grid>
 
@@ -918,8 +914,60 @@
 
                                     <StackPanel Margin="50,20,50,40" Orientation="Vertical">
 
-                                        <CheckBoxEx x:Name="ButtonThemeOptionDetails1"
-                                                    Margin="0,10,0,0"
+                                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   Margin="0,10,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="22"
+                                                   Text="{DynamicResource LOCQuickOptionsDetailsLayout}" />
+
+                                        <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
+
+                                        <CheckBoxEx x:Name="ButtonThemeOptionDetails1" Margin="0,10,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingsSectionCheckbox}"
+                                                    Content="{DynamicResource LOCEnterDetailsZoom}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[EnterDetailsZoom]}"
+                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
+                                                    CommandParameter="EnterDetailsZoom" />
+                                        <CheckBoxEx Margin="0,10,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingsSectionCheckbox}"
+                                                    Content="{DynamicResource LOCAnimationPanel}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[AnimationPanel]}"
+                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
+                                                    CommandParameter="AnimationPanel" />
+                                        <CheckBoxEx Margin="0,10,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingsSectionCheckbox}"
+                                                    Content="{DynamicResource LOCTopOrBottomBar}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[TopOrBottomBar]}"
+                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
+                                                    CommandParameter="TopOrBottomBar" />
+                                        <CheckBoxEx Margin="0,10,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingsSectionCheckbox}"
+                                                    Content="{DynamicResource LOCNoBarMode}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[NoBarMode]}"
+                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
+                                                    CommandParameter="NoBarMode" />
+
+                                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   Margin="0,20,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="22"
+                                                   Text="{DynamicResource LOCQuickOptionsDetailsHeader}" />
+
+                                        <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
+
+                                        <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
@@ -927,7 +975,6 @@
                                                     IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[NoSource]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
                                                     CommandParameter="NoSource" />
-
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
@@ -937,38 +984,44 @@
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
                                                     CommandParameter="NoLogo" />
 
-                                        <CheckBoxEx Margin="0,10,0,0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Center"
-                                                    Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCEnterDetailsZoom}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[EnterDetailsZoom]}"
-                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-                                                    CommandParameter="EnterDetailsZoom" />
+                                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   Margin="0,10,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="22"
+                                                   Text="{DynamicResource LOCQuickOptionsDetailsData}" />
+
+                                        <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
 
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCAnimationPanel}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[AnimationPanel]}"
+                                                    Content="{DynamicResource LOCFeaturesSteam}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[FeaturesSteam]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-                                                    CommandParameter="AnimationPanel" />
-
-
+                                                    CommandParameter="FeaturesSteam" />
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCTopOrBottomBar}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[TopOrBottomBar]}"
+                                                    Content="{DynamicResource LOCNoHLTBDetails}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[NoHLTBDetails]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-                                                    CommandParameter="TopOrBottomBar" />
-
+                                                    CommandParameter="NoHLTBDetails" />
+                                        <CheckBoxEx Margin="0,10,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingsSectionCheckbox}"
+                                                    Content="{DynamicResource LOCNoTrophyDetails}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[NoTrophyDetails]}"
+                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
+                                                    CommandParameter="NoTrophyDetails" />
                                     </StackPanel>
                                 </Grid>
 
-                                <!-- TRAILER OPTIONS -->
+                                <!-- MEDIA OPTIONS -->
                                 <Grid x:Name="TrailerOption">
                                     <Grid.Style>
                                         <Style TargetType="Grid" BasedOn="{StaticResource QuickSettingsPageStyle}">
@@ -980,40 +1033,61 @@
                                         </Style>
                                     </Grid.Style>
 
-
-
                                     <StackPanel Margin="50,20,50,40" Orientation="Vertical">
 
-                                        <CheckBoxEx x:Name="ButtonTrailer1"
-                                                    Margin="0,10,0,0"
+                                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   Margin="0,10,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="22"
+                                                   Text="{DynamicResource LOCQuickOptionsBackgrounds}" />
+
+                                        <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
+
+                                        <CheckBoxEx x:Name="ButtonTrailer1" Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCTrailerOptionMainCC}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnMainView]}"
+                                                    Content="{DynamicResource LOCSteamGridDBHeroMode}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[SteamBanner]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-                                                    CommandParameter="TrailerOnMainView" />
+                                                    CommandParameter="SteamBanner" />
+
+                                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   Margin="0,20,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="22"
+                                                   Text="{DynamicResource LOCQuickOptionsTrailers}" />
+
+                                        <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
 
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCTrailerOptionDetailsCC}"
+                                                    Content="{DynamicResource LOCTrailerOnMainView}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnMainView]}"
+                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
+                                                    CommandParameter="TrailerOnMainView" />
+                                        <CheckBoxEx Margin="0,10,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingsSectionCheckbox}"
+                                                    Content="{DynamicResource LOCTrailerOnDetailsView}"
                                                     IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnDetailsView]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
                                                     CommandParameter="TrailerOnDetailsView" />
-
-                                        <CheckBoxEx HorizontalAlignment="Stretch"
-                                                    Margin="0,10,0,0"
+                                        <CheckBoxEx Margin="0,10,0,0"
+                                                    HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCMiniTrailerCC}"
+                                                    Content="{DynamicResource LOCMiniTrailer}"
                                                     IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[MiniTrailer]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
                                                     CommandParameter="MiniTrailer" />
-
-
-
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
@@ -1025,7 +1099,7 @@
                                     </StackPanel>
                                 </Grid>
 
-                                <!-- VisualOption ControlCenter -->
+                                <!-- VISUAL EFFECTS -->
                                 <Grid x:Name="VisualOption">
                                     <Grid.Style>
                                         <Style TargetType="Grid" BasedOn="{StaticResource QuickSettingsPageStyle}">
@@ -1039,15 +1113,31 @@
 
                                     <StackPanel Margin="50,20,50,40" Orientation="Vertical">
 
+                                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   Margin="0,10,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="22"
+                                                   Text="{DynamicResource LOCQuickOptionsFocusEffects}" />
+
+                                        <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
+
+                                        <CheckBoxEx Margin="0,10,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingsSectionCheckbox}"
+                                                    Content="{DynamicResource LOCCinematicFocusEffectTop}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[CinematicFocusEffectTop]}"
+                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
+                                                    CommandParameter="CinematicFocusEffectTop" />
                                         <StackPanel Margin="0,10,0,0" Orientation="Vertical">
                                             <CheckBoxEx HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Center"
                                                         Style="{DynamicResource SettingsSectionCheckbox}"
                                                         Content="{DynamicResource LOCCinematicFocusEffect}"
                                                         IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[CinematicFocusEffect]}"
-
                                                         Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-
                                                         CommandParameter="CinematicFocusEffect" />
 
                                             <TextBlock Style="{DynamicResource TextBlockMiniStyle}"
@@ -1060,15 +1150,23 @@
                                                        Text="{DynamicResource LOCCinematicFocusEffectInfo}" />
                                         </StackPanel>
 
+                                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   Margin="0,20,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="22"
+                                                   Text="{DynamicResource LOCQuickOptionsMotionEffects}" />
+
+                                        <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
+
                                         <StackPanel Margin="0,10,0,0" Orientation="Vertical">
                                             <CheckBoxEx HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Center"
                                                         Style="{DynamicResource SettingsSectionCheckbox}"
                                                         Content="{DynamicResource LOCAnimationBackground}"
                                                         IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[AnimationBackground]}"
-
                                                         Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-
                                                         CommandParameter="AnimationBackground" />
 
                                             <TextBlock Style="{DynamicResource TextBlockMiniStyle}"
@@ -1080,18 +1178,13 @@
                                                        FontSize="14"
                                                        Text="{DynamicResource LOCAnimationBackgroundInfo}" />
                                         </StackPanel>
-
-
-
                                         <StackPanel Margin="0,10,0,0" Orientation="Vertical">
                                             <CheckBoxEx HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Center"
                                                         Style="{DynamicResource SettingsSectionCheckbox}"
                                                         Content="{DynamicResource LOCGameLogoAnimationOnMainView}"
                                                         IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[LogoAnimation]}"
-
                                                         Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-
                                                         CommandParameter="LogoAnimation" />
 
                                             <TextBlock Style="{DynamicResource TextBlockMiniStyle}"
@@ -1101,18 +1194,8 @@
                                                        TextWrapping="Wrap"
                                                        TextTrimming="CharacterEllipsis"
                                                        FontSize="14"
-                                                       Text="Restart Playnite" />
+                                                       Text="{DynamicResource LOCRestartPlayniteRequired}" />
                                         </StackPanel>
-
-
-
-                                        <CheckBoxEx Margin="0,10,0,0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Center"
-                                                    Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCSettingsDarkenUninstalledGridCovers}"
-                                                    IsChecked="{Settings Fullscreen.MainBackgroundImageDarkAmount, Mode=TwoWay}" />
-
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
@@ -1123,7 +1206,7 @@
                                     </StackPanel>
                                 </Grid>
 
-                                <!-- Details data -->
+                                <!-- ACHIEVEMENTS -->
                                 <Grid x:Name="DataOption">
                                     <Grid.Style>
                                         <Style TargetType="Grid" BasedOn="{StaticResource QuickSettingsPageStyle}">
@@ -1135,136 +1218,53 @@
                                         </Style>
                                     </Grid.Style>
 
-
                                     <StackPanel Margin="50,20,50,40" Orientation="Vertical">
+
+
+
+                                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   Margin="0,20,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="22"
+                                                   Text="{DynamicResource LOCQuickOptionsAchievements}" />
+
+                                        <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
 
                                         <CheckBoxEx x:Name="ButtonData1"
                                                     Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCFeaturesSteam}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[FeaturesSteam]}"
-
+                                                    Content="{DynamicResource LOCGamerscoreInsteadOfLevel}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-
-                                                    CommandParameter="FeaturesSteam" />
-
+                                                    CommandParameter="UseGamerscoreInsteadOfLevel" />
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCNoGenreDetails}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[NoGenreDetails]}"
-
+                                                    Content="{DynamicResource LOCLogoInTrophy}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[LogoTrophy]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-
-                                                    CommandParameter="NoGenreDetails" />
-
+                                                    CommandParameter="LogoTrophy" />
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCNoYear}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[NoYear]}"
-
+                                                    Content="{DynamicResource LOCShowHiddenAchievements}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowHiddenAchievements]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-
-                                                    CommandParameter="NoYear" />
-
-
+                                                    CommandParameter="ShowHiddenAchievements" />
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCNoTime}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[NoTime]}"
-
+                                                    Content="{DynamicResource LOCLocalClock}"
+                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[LocalClock]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-
-                                                    CommandParameter="NoTime" />
-
-
-                                        <CheckBoxEx Margin="0,10,0,0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Center"
-                                                    Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCNoActivity}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[NoActivity]}"
-
-                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-
-                                                    CommandParameter="NoActivity" />
-
-                                        <CheckBoxEx Margin="0,10,0,0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Center"
-                                                    Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCNoSize}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[NoSize]}"
-
-                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-
-                                                    CommandParameter="NoSize" />
-
-
-                                        <CheckBoxEx Margin="0,10,0,0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Center"
-                                                    Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCNoHLTBDetails}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[NoHLTBDetails]}"
-
-                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-
-                                                    CommandParameter="NoHLTBDetails" />
-
-
-
-                                        <CheckBoxEx Margin="0,10,0,0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Center"
-                                                    Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCNoCompletion}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[NoCompletion]}"
-
-                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-
-                                                    CommandParameter="NoCompletion" />
-
-                                        <CheckBoxEx Margin="0,10,0,0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Center"
-                                                    Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCNoStar}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[NoStar]}"
-
-                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-
-                                                    CommandParameter="NoStar" />
-
-                                        <CheckBoxEx Margin="0,10,0,0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Center"
-                                                    Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCNoTrophyDetails}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[NoTrophyDetails]}"
-
-                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-
-                                                    CommandParameter="NoTrophyDetails" />
-
-                                        <CheckBoxEx Margin="0,10,0,0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Center"
-                                                    Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCNoPlayerDetails}"
-                                                    IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[NoPlayerDetails]}"
-
-                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
-
-                                                    CommandParameter="NoPlayerDetails" />
-
+                                                    CommandParameter="LocalClock" />
                                     </StackPanel>
                                 </Grid>
 
@@ -1282,27 +1282,73 @@
 
                                     <StackPanel Margin="50,20,50,40" Orientation="Vertical">
 
-                                        <CheckBoxEx x:Name="Batt"
-                                                    Margin="0,10,0,0"
+                                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   Margin="0,10,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="22"
+                                                   Text="{DynamicResource LOCQuickOptionsNativeDisplay}" />
+
+                                        <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
+
+                                        <CheckBoxEx x:Name="Batt" Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
                                                     Content="{DynamicResource LOCSettingsShowBatteryStatus}"
                                                     IsChecked="{Settings Fullscreen.ShowBattery, Mode=TwoWay}" />
-
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCSettingsShowBatteryPercentage}"
-                                                    IsChecked="{Settings Fullscreen.ShowBatteryPercentage, Mode=TwoWay}" />
-
+                                                    Content="{DynamicResource LOCSettingsShowBatteryStatus}"
+                                                    IsChecked="{Settings Fullscreen.ShowBattery, Mode=TwoWay}" />
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingsSectionCheckbox}"
                                                     Content="{DynamicResource LOCSettingsShowClock}"
                                                     IsChecked="{Settings Fullscreen.ShowClock, Mode=TwoWay}" />
+
+                                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   Margin="0,20,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="22"
+                                                   Text="{DynamicResource LOCQuickOptionsPlayniteBehavior}" />
+
+                                        <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
+
+                                        <CheckBoxEx Margin="0,10,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingsSectionCheckbox}"
+                                                    Content="{DynamicResource LOCSettingsMinimizeAfterStartingGame}"
+                                                    IsChecked="{Settings Fullscreen.MinimizeAfterGameStartup, Mode=TwoWay}" />
+                                        <CheckBoxEx Margin="0,10,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingsSectionCheckbox}"
+                                                    Content="{DynamicResource LOCSettingsHideMouseCursor}"
+                                                    IsChecked="{Settings Fullscreen.HideMouserCursor, Mode=TwoWay}" />
+                                        <CheckBoxEx Margin="0,10,0,0"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingsSectionCheckbox}"
+                                                    Content="{DynamicResource LOCSettingsRefocusOnGuidButton}"
+                                                    IsChecked="{Settings Fullscreen.GuideButtonFocus, Mode=TwoWay}" />
+
+                                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   Margin="0,20,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="22"
+                                                   Text="{DynamicResource LOCQuickOptionsMoData}" />
+
+                                        <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
 
                                         <CheckBoxEx Margin="0,10,0,0"
                                                     HorizontalAlignment="Stretch"
@@ -1312,32 +1358,10 @@
                                                     IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowMoData]}"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
                                                     CommandParameter="ShowMoData" />
-
-                                        <CheckBoxEx Margin="0,10,0,0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Center"
-                                                    Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCSettingsMinimizeAfterStartingGame}"
-                                                    IsChecked="{Settings Fullscreen.MinimizeAfterGameStartup, Mode=TwoWay}" />
-
-                                        <CheckBoxEx Margin="0,10,0,0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Center"
-                                                    Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCSettingsHideMouseCursor}"
-                                                    IsChecked="{Settings Fullscreen.HideMouserCursor, Mode=TwoWay}" />
-
-                                        <CheckBoxEx Margin="0,10,0,0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Center"
-                                                    Style="{DynamicResource SettingsSectionCheckbox}"
-                                                    Content="{DynamicResource LOCSettingsRefocusOnGuidButton}"
-                                                    IsChecked="{Settings Fullscreen.GuideButtonFocus, Mode=TwoWay}" />
-
                                     </StackPanel>
                                 </Grid>
 
-                                <!-- Audio ControlCenter -->
+                                <!-- AUDIO -->
                                 <Grid x:Name="Volume">
                                     <Grid.Style>
                                         <Style TargetType="Grid" BasedOn="{StaticResource QuickSettingsPageStyle}">
@@ -1349,8 +1373,17 @@
                                         </Style>
                                     </Grid.Style>
 
+                                    <StackPanel Margin="50,0,50,0" Orientation="Vertical">
 
-                                    <StackPanel Margin="50,20,50,40" Orientation="Vertical">
+                                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   Margin="0,15,0,0"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="22"
+                                                   Text="{DynamicResource LOCQuickOptionsThemeAudio}" />
+
+                                        <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
 
                                         <Grid Margin="0,20,0,0">
                                             <Grid.ColumnDefinitions>
@@ -1378,8 +1411,6 @@
                                             <StackPanel Grid.Column="1"
                                                         HorizontalAlignment="Right"
                                                         Orientation="Horizontal">
-
-
                                                 <SliderEx x:Name="SliderElement"
                                                           HorizontalAlignment="Right"
                                                           VerticalAlignment="Center"
@@ -1435,6 +1466,105 @@
                                             </StackPanel>
                                         </Grid>
 
+                                        <StackPanel Margin="0,20,0,0" Orientation="Vertical">
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginStatus Plugin=PlayniteAudioSwitcher_708b6ec4-bf96-4c0d-bd9d-fe0aa04d6bf1, Status=Installed}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+
+                                            <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                       Foreground="{DynamicResource TextHighlightBrush}"
+                                                       Margin="10,10,0,0"
+                                                       HorizontalAlignment="Left"
+                                                       VerticalAlignment="Center"
+                                                       FontSize="22"
+                                                       Text="{DynamicResource LOCSystemAudioSwitcher}" />
+
+                                            <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
+
+                                            <Grid Margin="0,10,0,0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid.Style>
+                                                    <Style TargetType="Grid">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginStatus Plugin=PlayniteAudioSwitcher_708b6ec4-bf96-4c0d-bd9d-fe0aa04d6bf1, Status=Installed}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Grid.Style>
+
+                                                <StackPanel Grid.Column="0"
+                                                            HorizontalAlignment="Left"
+                                                            Orientation="Horizontal">
+                                                    <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                               Margin="10,0,20,0"
+                                                               HorizontalAlignment="Left"
+                                                               VerticalAlignment="Center"
+                                                               FontSize="24"
+                                                               Text="{DynamicResource LOCSystemVolume}" />
+                                                    <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                                               Margin="0,0,20,0"
+                                                               HorizontalAlignment="Left"
+                                                               VerticalAlignment="Center"
+                                                               FontSize="24"
+                                                               Text="{PluginSettings Plugin=AudioSwitcher, Path=CurrentVolumeLabel}" />
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="1"
+                                                            HorizontalAlignment="Right"
+                                                            Orientation="Horizontal">
+                                                    <SliderEx HorizontalAlignment="Right"
+                                                              VerticalAlignment="Center"
+                                                              IsSnapToTickEnabled="True"
+                                                              Width="300"
+                                                              Style="{DynamicResource SettingsSectionSlider}"
+                                                              TickFrequency="0.10"
+                                                              Minimum="0"
+                                                              Maximum="100"
+                                                              SmallChange="{PluginSettings Plugin=AudioSwitcher, Path=VolumeStepPercent}"
+                                                              LargeChange="{PluginSettings Plugin=AudioSwitcher, Path=VolumeStepPercent}"
+                                                              Value="{PluginSettings Plugin=AudioSwitcher, Path=CurrentVolumePercent, Mode=TwoWay}"
+                                                              Focusable="True"
+                                                              IsTabStop="True"
+                                                              KeyboardNavigation.IsTabStop="True"
+                                                              KeyboardNavigation.DirectionalNavigation="Continue" />
+                                                </StackPanel>
+
+
+                                            </Grid>
+
+                                            <ButtonEx x:Name="QuickAudioSwitcherButton"
+                                                      Margin="0,10,0,0"
+                                                      Content="{DynamicResource LOCSystemAudioOutput}"
+                                                      HorizontalAlignment="Center"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[AudioSwitcherWindowStyle|FocusFirst|RefocusAfterClick]}">
+
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource MenuButtonAniki}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginStatus Plugin=PlayniteAudioSwitcher_708b6ec4-bf96-4c0d-bd9d-fe0aa04d6bf1, Status=Installed}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+                                        </StackPanel>
+
                                         <StackPanel Margin="0,10,0,0" Orientation="Vertical">
                                             <StackPanel.Style>
                                                 <Style TargetType="StackPanel">
@@ -1446,13 +1576,14 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </StackPanel.Style>
+
                                             <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
                                                        Foreground="{DynamicResource TextHighlightBrush}"
                                                        Margin="10,10,0,0"
-                                                       HorizontalAlignment="Center"
+                                                       HorizontalAlignment="Left"
                                                        VerticalAlignment="Center"
-                                                       FontSize="30"
-                                                       Text="UniPlaySong Settings" />
+                                                       FontSize="22"
+                                                       Text="{DynamicResource LOCQuickOptionsGameMusic}" />
 
                                             <Border Style="{DynamicResource AnikiHelperSettingsSectionSeparatorStyle}" />
 
@@ -1460,34 +1591,20 @@
                                                         HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Center"
                                                         Style="{DynamicResource SettingsSectionCheckbox}"
-                                                        Content="Enable Game Music"
+                                                        Content="{DynamicResource LOCEnableGameMusic}"
                                                         IsChecked="{PluginSettings Plugin=UniPlaySong, Path=EnableMusic, Mode=TwoWay}" />
 
                                             <CheckBoxEx Margin="0,10,0,0"
                                                         HorizontalAlignment="Stretch"
                                                         VerticalAlignment="Center"
                                                         Style="{DynamicResource SettingsSectionCheckbox}"
-                                                        Content="Enable Default Music"
+                                                        Content="{DynamicResource LOCEnableDefaultMusic}"
                                                         IsChecked="{PluginSettings Plugin=UniPlaySong, Path=EnableDefaultMusic, Mode=TwoWay}" />
-
-                                            <CheckBoxEx Margin="0,10,0,0"
-                                                        HorizontalAlignment="Stretch"
-                                                        VerticalAlignment="Center"
-                                                        Style="{DynamicResource SettingsSectionCheckbox}"
-                                                        Content="Radio Mode"
-                                                        IsChecked="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled, Mode=TwoWay}" />
-
-                                            <CheckBoxEx Margin="0,10,0,0"
-                                                        HorizontalAlignment="Stretch"
-                                                        VerticalAlignment="Center"
-                                                        Style="{DynamicResource SettingsSectionCheckbox}"
-                                                        Content="Play Only on Game Select"
-                                                        IsChecked="{PluginSettings Plugin=UniPlaySong, Path=PlayOnlyOnGameSelect, Mode=TwoWay}" />
 
                                             <StackPanel Margin="0,10,0,0" Orientation="Vertical">
                                                 <CheckBoxEx Margin="0,0,0,0"
                                                             Style="{DynamicResource SettingsSectionCheckbox}"
-                                                            Content="Night Music Mode"
+                                                            Content="{DynamicResource LOCNightMusicMode}"
                                                             IsChecked="{PluginSettings Plugin=UniPlaySong, Path=CalmDownModeEnabled, Mode=TwoWay}" />
 
                                                 <TextBlock Style="{DynamicResource TextBlockMiniStyle}"
@@ -1500,8 +1617,6 @@
                                                            FontSize="14"
                                                            Text="{DynamicResource LOCNightMusicModeHelp}" />
                                             </StackPanel>
-
-
                                         </StackPanel>
 
                                     </StackPanel>
@@ -1642,7 +1757,6 @@
                                                           Value="{Settings Fullscreen.Rows, Mode=TwoWay}" />
                                             </StackPanel>
                                         </Grid>
-
                                     </StackPanel>
                                 </Grid>
 
@@ -1662,7 +1776,7 @@
 
                                     <ButtonEx Style="{DynamicResource ButtonBottomMenuShoulders}"
                                               Grid.Column="0"
-                                              Content="Switch section" />
+                                              Content="{DynamicResource LOCSwitchSection}" />
 
                                     <StackPanel Grid.Column="1"
                                                 Orientation="Horizontal"

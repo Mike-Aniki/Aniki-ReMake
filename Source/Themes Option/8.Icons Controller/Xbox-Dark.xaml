@@ -18,13 +18,26 @@
                         <StackPanel Orientation="Horizontal"
                                     VerticalAlignment="Center">
 
-                            <!-- ICON (default = A) -->
-                            <Image x:Name="IconImg"
-                                   Width="40"
-                                   Height="40"
-                                   Margin="0,0,5,0"
-                                   RenderOptions.BitmapScalingMode="Fant"
-                                   Source="{DynamicResource ImageButtonA-XboxDark}" />
+                            <!-- ICON: native Playnite InputHint first, Tag fallback second -->
+                            <Grid Width="40"
+                                  Height="40"
+                                  Margin="0,0,5,0">
+
+                                <!-- Playnite changes InputHint automatically when Swap Play/Details is enabled -->
+                                <ContentControl x:Name="InputHintIcon"
+                                                Width="40"
+                                                Height="40"
+                                                Focusable="False"
+                                                ContentTemplate="{TemplateBinding InputHint}" />
+
+                                <!-- Fallback for your custom Tag system -->
+                                <Image x:Name="IconImg"
+                                       Width="40"
+                                       Height="40"
+                                       RenderOptions.BitmapScalingMode="Fant"
+                                       Source="{DynamicResource ImageButtonA-XboxDark}"
+                                       Visibility="Collapsed" />
+                            </Grid>
 
                             <!-- TEXT -->
                             <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
@@ -39,6 +52,14 @@
                     </Border>
 
                     <ControlTemplate.Triggers>
+
+                        <!-- If InputHint is null, use the old Tag-based image system.
+                        If InputHint is set, it wins. This lets Playnite's native swap update icons. -->
+                        <Trigger Property="InputHint" Value="{x:Null}">
+                            <Setter TargetName="InputHintIcon" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="IconImg" Property="Visibility" Value="Visible" />
+                        </Trigger>
+
 
                         <Trigger Property="Tag" Value="A">
                             <Setter TargetName="IconImg" Property="Source"
@@ -99,6 +120,74 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+
+        <Style.Triggers>
+            <!-- Semantic tags for Play / Details. Useful if the button is not managed by Playnite code. -->
+            <Trigger Property="Tag" Value="PlayAction">
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptX}" />
+            </Trigger>
+            <Trigger Property="Tag" Value="DetailsAction">
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptA}" />
+            </Trigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="PlayAction" />
+                    <Condition Binding="{Settings Fullscreen.SwapStartDetailsAction}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptA}" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="DetailsAction" />
+                    <Condition Binding="{Settings Fullscreen.SwapStartDetailsAction}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptX}" />
+            </MultiDataTrigger>
+
+            <!-- Semantic tags for Confirm / Cancel. -->
+            <Trigger Property="Tag" Value="ConfirmAction">
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptA}" />
+            </Trigger>
+            <Trigger Property="Tag" Value="CancelAction">
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptB}" />
+            </Trigger>
+
+            <!-- Native A/B swap. Also works for simple Tag="A" / Tag="B" buttons. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="A" />
+                    <Condition Binding="{Settings Fullscreen.SwapConfirmCancelButtons}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptB}" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="B" />
+                    <Condition Binding="{Settings Fullscreen.SwapConfirmCancelButtons}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptA}" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="ConfirmAction" />
+                    <Condition Binding="{Settings Fullscreen.SwapConfirmCancelButtons}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptB}" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="CancelAction" />
+                    <Condition Binding="{Settings Fullscreen.SwapConfirmCancelButtons}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptA}" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+
     </Style>
 
     <Style x:Key="ButtonBottomMenuDark" TargetType="ButtonEx">
@@ -116,13 +205,26 @@
                         <StackPanel Orientation="Horizontal"
                                     VerticalAlignment="Center">
 
-                            <!-- ICON (default = A) -->
-                            <Image x:Name="IconImg"
-                                   Width="40"
-                                   Height="40"
-                                   Margin="0,0,5,0"
-                                   RenderOptions.BitmapScalingMode="Fant"
-                                   Source="{DynamicResource ImageButtonA-XboxDark}" />
+                            <!-- ICON: native Playnite InputHint first, Tag fallback second -->
+                            <Grid Width="40"
+                                  Height="40"
+                                  Margin="0,0,5,0">
+
+                                <!-- Playnite changes InputHint automatically when Swap Play/Details is enabled -->
+                                <ContentControl x:Name="InputHintIcon"
+                                                Width="40"
+                                                Height="40"
+                                                Focusable="False"
+                                                ContentTemplate="{TemplateBinding InputHint}" />
+
+                                <!-- Fallback for your custom Tag system -->
+                                <Image x:Name="IconImg"
+                                       Width="40"
+                                       Height="40"
+                                       RenderOptions.BitmapScalingMode="Fant"
+                                       Source="{DynamicResource ImageButtonA-XboxDark}"
+                                       Visibility="Collapsed" />
+                            </Grid>
 
                             <!-- TEXT -->
                             <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
@@ -137,6 +239,14 @@
                     </Border>
 
                     <ControlTemplate.Triggers>
+
+                        <!-- If InputHint is null, use the old Tag-based image system.
+                        If InputHint is set, it wins. This lets Playnite's native swap update icons. -->
+                        <Trigger Property="InputHint" Value="{x:Null}">
+                            <Setter TargetName="InputHintIcon" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="IconImg" Property="Visibility" Value="Visible" />
+                        </Trigger>
+
 
                         <Trigger Property="Tag" Value="A">
                             <Setter TargetName="IconImg" Property="Source"
@@ -197,6 +307,74 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+
+        <Style.Triggers>
+            <!-- Semantic tags for Play / Details. Useful if the button is not managed by Playnite code. -->
+            <Trigger Property="Tag" Value="PlayAction">
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptX}" />
+            </Trigger>
+            <Trigger Property="Tag" Value="DetailsAction">
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptA}" />
+            </Trigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="PlayAction" />
+                    <Condition Binding="{Settings Fullscreen.SwapStartDetailsAction}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptA}" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="DetailsAction" />
+                    <Condition Binding="{Settings Fullscreen.SwapStartDetailsAction}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptX}" />
+            </MultiDataTrigger>
+
+            <!-- Semantic tags for Confirm / Cancel. -->
+            <Trigger Property="Tag" Value="ConfirmAction">
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptA}" />
+            </Trigger>
+            <Trigger Property="Tag" Value="CancelAction">
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptB}" />
+            </Trigger>
+
+            <!-- Native A/B swap. Also works for simple Tag="A" / Tag="B" buttons. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="A" />
+                    <Condition Binding="{Settings Fullscreen.SwapConfirmCancelButtons}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptB}" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="B" />
+                    <Condition Binding="{Settings Fullscreen.SwapConfirmCancelButtons}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptA}" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="ConfirmAction" />
+                    <Condition Binding="{Settings Fullscreen.SwapConfirmCancelButtons}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptB}" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="CancelAction" />
+                    <Condition Binding="{Settings Fullscreen.SwapConfirmCancelButtons}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptA}" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+
     </Style>
 
     <Style x:Key="ButtonBottomMenuShoulders" TargetType="ButtonEx">
@@ -316,13 +494,26 @@
                         <StackPanel Orientation="Horizontal"
                                     VerticalAlignment="Center">
 
-                            <!-- Button icon -->
-                            <Image x:Name="IconImg"
-                                   Width="40"
-                                   Height="40"
-                                   Margin="0,0,8,0"
-                                   RenderOptions.BitmapScalingMode="Fant"
-                                   Source="{DynamicResource ImageButtonY-XboxDark}" />
+                            <!-- ICON: native Playnite InputHint first, Tag fallback second -->
+                            <Grid Width="40"
+                                  Height="40"
+                                  Margin="0,0,8,0">
+
+                                <!-- Playnite/custom style can set InputHint dynamically -->
+                                <ContentControl x:Name="InputHintIcon"
+                                                Width="40"
+                                                Height="40"
+                                                Focusable="False"
+                                                ContentTemplate="{TemplateBinding InputHint}" />
+
+                                <!-- Fallback for your custom Tag system -->
+                                <Image x:Name="IconImg"
+                                       Width="40"
+                                       Height="40"
+                                       RenderOptions.BitmapScalingMode="Fant"
+                                       Source="{DynamicResource ImageButtonY-XboxDark}"
+                                       Visibility="Collapsed" />
+                            </Grid>
 
                             <!-- Texts -->
                             <StackPanel Orientation="Vertical"
@@ -361,6 +552,14 @@
                     </Border>
 
                     <ControlTemplate.Triggers>
+
+                        <!-- If InputHint is null, use the old Tag-based image system.
+                        If InputHint is set, it wins. This lets Playnite's native swap update icons. -->
+                        <Trigger Property="InputHint" Value="{x:Null}">
+                            <Setter TargetName="InputHintIcon" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="IconImg" Property="Visibility" Value="Visible" />
+                        </Trigger>
+
 
                         <Trigger Property="Tag" Value="A">
                             <Setter TargetName="IconImg" Property="Source" Value="{DynamicResource ImageButtonA-XboxDark}" />
@@ -402,7 +601,118 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+
+        <Style.Triggers>
+            <!-- Semantic tags for Play / Details. Useful if the button is not managed by Playnite code. -->
+            <Trigger Property="Tag" Value="PlayAction">
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptX}" />
+            </Trigger>
+            <Trigger Property="Tag" Value="DetailsAction">
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptA}" />
+            </Trigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="PlayAction" />
+                    <Condition Binding="{Settings Fullscreen.SwapStartDetailsAction}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptA}" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="DetailsAction" />
+                    <Condition Binding="{Settings Fullscreen.SwapStartDetailsAction}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptX}" />
+            </MultiDataTrigger>
+
+            <!-- Semantic tags for Confirm / Cancel. -->
+            <Trigger Property="Tag" Value="ConfirmAction">
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptA}" />
+            </Trigger>
+            <Trigger Property="Tag" Value="CancelAction">
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptB}" />
+            </Trigger>
+
+            <!-- Native A/B swap. Also works for simple Tag="A" / Tag="B" buttons. -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="A" />
+                    <Condition Binding="{Settings Fullscreen.SwapConfirmCancelButtons}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptB}" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="B" />
+                    <Condition Binding="{Settings Fullscreen.SwapConfirmCancelButtons}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptA}" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="ConfirmAction" />
+                    <Condition Binding="{Settings Fullscreen.SwapConfirmCancelButtons}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptB}" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="CancelAction" />
+                    <Condition Binding="{Settings Fullscreen.SwapConfirmCancelButtons}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="InputHint" Value="{DynamicResource ButtonPromptA}" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+
     </Style>
+
+
+    <!-- Native Playnite prompt resources overridden with Aniki custom images.
+    Playnite sets ButtonEx.InputHint to these resources and updates them when X/A is swapped. -->
+    <DataTemplate x:Key="ButtonPromptA">
+        <Image Width="40" Height="40" RenderOptions.BitmapScalingMode="Fant" Source="{DynamicResource ImageButtonA-XboxDark}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="ButtonPromptB">
+        <Image Width="40" Height="40" RenderOptions.BitmapScalingMode="Fant" Source="{DynamicResource ImageButtonB-XboxDark}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="ButtonPromptX">
+        <Image Width="40" Height="40" RenderOptions.BitmapScalingMode="Fant" Source="{DynamicResource ImageButtonX-XboxDark}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="ButtonPromptY">
+        <Image Width="40" Height="40" RenderOptions.BitmapScalingMode="Fant" Source="{DynamicResource ImageButtonY-XboxDark}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="ButtonPromptStart">
+        <Image Width="40" Height="40" RenderOptions.BitmapScalingMode="Fant" Source="{DynamicResource ImageButtonStart-XboxDark}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="ButtonPromptBack">
+        <Image Width="40" Height="40" RenderOptions.BitmapScalingMode="Fant" Source="{DynamicResource ImageButtonBack-XboxDark}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="ButtonPromptLS">
+        <Image Width="40" Height="40" RenderOptions.BitmapScalingMode="Fant" Source="{DynamicResource ImageButtonLS-XboxDark}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="ButtonPromptRS">
+        <Image Width="40" Height="40" RenderOptions.BitmapScalingMode="Fant" Source="{DynamicResource ImageButtonRS-XboxDark}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="ButtonPromptLB">
+        <Image Width="46" Height="40" RenderOptions.BitmapScalingMode="Fant" Source="{DynamicResource ImageButtonL1-XboxDark}" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="ButtonPromptRB">
+        <Image Width="46" Height="40" RenderOptions.BitmapScalingMode="Fant" Source="{DynamicResource ImageButtonR1-XboxDark}" />
+    </DataTemplate>
 
     <BitmapImage x:Key="ImageButtonA-XboxDark" UriSource="{ThemeFile 'Images/Buttons/Controller/Xbox/Xbox Dark/Button-A.png'}" />
     <BitmapImage x:Key="ImageButtonB-XboxDark" UriSource="{ThemeFile 'Images/Buttons/Controller/Xbox/Xbox Dark/Button-B.png'}" />

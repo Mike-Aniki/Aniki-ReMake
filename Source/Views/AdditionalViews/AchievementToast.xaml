@@ -1,0 +1,136 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:pc="clr-namespace:Playnite.Controls;assembly=Playnite"
+                    xmlns:pbeh="clr-namespace:Playnite.Behaviors;assembly=Playnite"
+                    xmlns:vm="clr-namespace:PlayniteAchievements.ViewModels;assembly=PlayniteAchievements"
+                    mc:Ignorable="d">
+
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/PlayniteAchievements;component/Resources/AchievementResources.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- Position du toast -->
+    <sys:String x:Key="PlayAch.Toast.Position">TopRight</sys:String>
+
+    <!-- Durée d'affichage en secondes -->
+    <sys:String x:Key="PlayAch.Toast.DurationSeconds">7</sys:String>
+
+    <!-- Animation d'entrée -->
+    <Storyboard x:Key="PlayAch.Storyboard.ToastSlideIn">
+        <DoubleAnimation Storyboard.TargetProperty="(Window.Top)"
+                         Duration="0:0:0.28"
+                         FillBehavior="HoldEnd">
+            <DoubleAnimation.EasingFunction>
+                <BackEase EasingMode="EaseOut" Amplitude="0.35"/>
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+    </Storyboard>
+
+    <!-- Animation de sortie -->
+    <Storyboard x:Key="PlayAch.Storyboard.ToastSlideOut">
+        <DoubleAnimation Storyboard.TargetProperty="(Window.Top)"
+                         Duration="0:0:0.20"
+                         FillBehavior="HoldEnd">
+            <DoubleAnimation.EasingFunction>
+                <CubicEase EasingMode="EaseIn"/>
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+    </Storyboard>
+
+    <!-- Animation de la barre de temps -->
+    <Storyboard x:Key="PlayAch.Storyboard.ToastCountdown">
+        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                         From="1"
+                         To="0"
+                         FillBehavior="HoldEnd">
+            <DoubleAnimation.EasingFunction>
+                <CubicEase EasingMode="EaseOut"/>
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+    </Storyboard>
+
+    <!-- Template visuel du toast -->
+    <DataTemplate x:Key="PlayAch.Template.AchievementToast"
+                  DataType="{x:Type vm:AchievementToastViewModel}">
+
+        <Grid Width="610"
+              Height="104"
+              SnapsToDevicePixels="True">
+
+            <!-- Ombre -->
+            <Border CornerRadius="9"
+                    Background="#70000000"
+                    Margin="0,4,0,-4"
+                    Opacity="0.55"/>
+
+            <!-- Carte principale -->
+            <Border CornerRadius="9"
+                    Background="#EE171D27"
+                    BorderBrush="#55FFFFFF"
+                    BorderThickness="1"
+                    Padding="10">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="78"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="70"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Icône succès -->
+                    <Border Grid.Column="0"
+                            Width="68"
+                            Height="68"
+                            CornerRadius="2"
+                            Background="#22000000"
+                            BorderBrush="#55FFFFFF"
+                            BorderThickness="1"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            ClipToBounds="True">
+
+                        <Image Source="{Binding IconPath}"
+                               Stretch="UniformToFill"/>
+                    </Border>
+
+                    <!-- Texte -->
+                    <StackPanel Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Margin="0,0,12,0">
+
+                        <TextBlock Text="{Binding TitleText}"
+                                   Foreground="#F2FFFFFF"
+                                   FontFamily="Segoe UI"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="NoWrap"/>
+
+                        <TextBlock Text="{Binding Description}"
+                                   Foreground="#CCD7DEE8"
+                                   FontFamily="Segoe UI"
+                                   FontSize="13"
+                                   FontWeight="SemiBold"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="NoWrap"
+                                   Margin="0,8,0,0"/>
+                    </StackPanel>
+
+                    <!-- Trophée à droite -->
+                    <TextBlock Grid.Column="2"
+                               Text="🏆"
+                               FontSize="38"
+                               Foreground="#CCD7DEE8"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Opacity="0.85"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

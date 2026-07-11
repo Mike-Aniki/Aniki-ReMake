@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -21,22 +21,24 @@
                             FocusManager.FocusedElement="{Binding ElementName=SelfStatusButton}"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch">
-                        <Border.Style>
-                            <Style TargetType="Border">
-                                <Setter Property="Visibility" Value="Visible" />
-                                <Style.Triggers>
 
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
+                        <Border.RenderTransform>
+                            <TranslateTransform Y="0"/>
+                        </Border.RenderTransform>
 
                         <Border.Triggers>
                             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                         From="0" To="1"
-                                                         Duration="0:0:0.25">
+                                                         From="0"
+                                                         To="1"
+                                                         Duration="0:0:0.25"/>
+
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                                         From="24"
+                                                         To="0"
+                                                         Duration="0:0:0.35">
                                             <DoubleAnimation.EasingFunction>
                                                 <CubicEase EasingMode="EaseOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -264,7 +266,11 @@
                                                     <Setter Property="Opacity" Value="0.15"/>
                                                 </DataTrigger>
 
-
+                                                <!-- Rare / Lucky Mode background override -->
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="True">
+                                                    <Setter Property="Background" Value="{DynamicResource FriendsViewImage150}"/>
+                                                    <Setter Property="Opacity" Value="0.15"/>
+                                                </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </Border.Style>
@@ -310,7 +316,7 @@
                                     <Style TargetType="Grid">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=IsFriendProfileOpen}" Value="True">
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsFriendProfileOpen}" Value="True">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -352,9 +358,10 @@
                                                         BorderBrush="#30FFFFFF"
                                                         BorderThickness="1"
                                                         Background="#18000000">
-                                                    <Image Source="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.avatar}"
+                                                    <Image Source="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.avatar}"
                                                            Stretch="UniformToFill"
                                                            RenderOptions.BitmapScalingMode="Fant"/>
+
                                                 </Border>
 
                                                 <StackPanel Grid.Column="1"
@@ -362,7 +369,7 @@
                                                             VerticalAlignment="Center">
 
                                                     <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.name}"
+                                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.name}"
                                                                    Style="{DynamicResource TextBlockBaseStyle}"
                                                                    FontSize="28"
                                                                    FontWeight="SemiBold"
@@ -378,39 +385,40 @@
                                                                 <Style TargetType="Border">
                                                                     <Setter Property="Background" Value="{DynamicResource BadgeStatusFriendsBrush}"/>
                                                                     <Style.Triggers>
-                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.state}" Value="online">
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.state}" Value="online">
                                                                             <Setter Property="Background" Value="#604CD964"/>
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.state}" Value="ingame">
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.state}" Value="ingame">
                                                                             <Setter Property="Background" Value="#703DFF7A"/>
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.state}" Value="away">
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.state}" Value="away">
                                                                             <Setter Property="Background" Value="#60FF9800"/>
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.state}" Value="busy">
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.state}" Value="busy">
                                                                             <Setter Property="Background" Value="#60B00020"/>
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.state}" Value="offline">
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.state}" Value="offline">
                                                                             <Setter Property="Background" Value="#55B0B0B0"/>
                                                                         </DataTrigger>
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </Border.Style>
 
-                                                            <TextBlock Text="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.stateLoc}"
+                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.stateLoc}"
                                                                        Style="{DynamicResource TextBlockBaseStyle}"
                                                                        FontSize="15"
                                                                        FontWeight="SemiBold"/>
                                                         </Border>
                                                     </StackPanel>
 
-                                                    <TextBlock Text="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.game}"
+                                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.game}"
                                                                Style="{DynamicResource TextBlockBaseStyle}"
                                                                FontSize="18"
                                                                Opacity="0.76"
                                                                Margin="0,6,0,0"
                                                                TextTrimming="CharacterEllipsis"/>
                                                 </StackPanel>
+
 
 
                                             </Grid>
@@ -450,7 +458,7 @@
                                                                    FontSize="16"
                                                                    Opacity="0.62"/>
 
-                                                        <TextBlock Text="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.friendSinceUtc, StringFormat={}{0:dd/MM/yyyy}}"
+                                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.friendSinceUtc, StringFormat={}{0:dd/MM/yyyy}}"
                                                                    Style="{DynamicResource TextBlockBaseStyle}"
                                                                    FontSize="21"
                                                                    FontWeight="SemiBold"
@@ -462,7 +470,7 @@
                                                                    FontSize="16"
                                                                    Opacity="0.62"/>
 
-                                                        <TextBlock Text="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.lastLogoffUtc, StringFormat={}{0:dd/MM/yyyy HH:mm}}"
+                                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.lastLogoffUtc, StringFormat={}{0:dd/MM/yyyy HH:mm}}"
                                                                    Style="{DynamicResource TextBlockBaseStyle}"
                                                                    FontSize="21"
                                                                    FontWeight="SemiBold"
@@ -474,7 +482,7 @@
                                                                    FontSize="16"
                                                                    Opacity="0.62"/>
 
-                                                        <TextBlock Text="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.steamLevel}"
+                                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.steamLevel}"
                                                                    Style="{DynamicResource TextBlockBaseStyle}"
                                                                    FontSize="21"
                                                                    FontWeight="SemiBold"
@@ -486,7 +494,7 @@
                                                                    FontSize="16"
                                                                    Opacity="0.62"/>
 
-                                                        <TextBlock Text="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.badgesCount}"
+                                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.badgesCount}"
                                                                    Style="{DynamicResource TextBlockBaseStyle}"
                                                                    FontSize="21"
                                                                    FontWeight="SemiBold"
@@ -498,14 +506,14 @@
                                                                    FontSize="16"
                                                                    Opacity="0.62"/>
 
-                                                        <TextBlock Text="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.recentPlaytime2WeeksDisplay}"
+                                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.recentPlaytime2WeeksDisplay}"
                                                                    Style="{DynamicResource TextBlockBaseStyle}"
                                                                    FontSize="21"
                                                                    FontWeight="SemiBold"
                                                                    Margin="0,6,0,18"/>
 
                                                         <!-- Error -->
-                                                        <TextBlock Text="{PluginSettings Plugin=SteamFriendsFullscreen, Path=FriendProfileError}"
+                                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=FriendProfileError}"
                                                                    Style="{DynamicResource TextBlockBaseStyle}"
                                                                    Foreground="Orange"
                                                                    FontSize="15"
@@ -515,10 +523,10 @@
                                                                 <Style TargetType="TextBlock">
                                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                                     <Style.Triggers>
-                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=FriendProfileError}" Value="{x:Null}">
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FriendProfileError}" Value="{x:Null}">
                                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=FriendProfileError}" Value="">
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FriendProfileError}" Value="">
                                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                                         </DataTrigger>
                                                                     </Style.Triggers>
@@ -554,7 +562,7 @@
 
                                                     <!-- Recent games list -->
                                                     <ItemsControl Grid.Row="1"
-                                                                  ItemsSource="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.recentGames}">
+                                                                  ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.recentGames}">
                                                         <ItemsControl.ItemTemplate>
                                                             <DataTemplate>
                                                                 <Border Margin="0,0,0,5"
@@ -579,9 +587,14 @@
                                                                                 BorderBrush="#18FFFFFF"
                                                                                 BorderThickness="1"
                                                                                 VerticalAlignment="Center">
-                                                                            <Image Source="{Binding headerImageUrl}"
-                                                                                   Stretch="UniformToFill"
-                                                                                   RenderOptions.BitmapScalingMode="Fant"/>
+                                                                            <Image Stretch="UniformToFill"
+                                                                                   RenderOptions.BitmapScalingMode="Fant">
+                                                                                <Image.Source>
+                                                                                    <Binding Path="headerImageUrl"
+                                                                                             IsAsync="True"/>
+                                                                                </Image.Source>
+                                                                            </Image>
+
                                                                         </Border>
 
                                                                         <StackPanel Grid.Column="2"
@@ -636,7 +649,7 @@
                                                             <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
                                                                 <Setter Property="Visibility" Value="Visible"/>
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.recentAchievements.Count}" Value="0">
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.recentAchievements.Count}" Value="0">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
@@ -646,12 +659,12 @@
 
                                                     <!-- Recent achievements list -->
                                                     <ItemsControl Grid.Row="4"
-                                                                  ItemsSource="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.recentAchievements}">
+                                                                  ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.recentAchievements}">
                                                         <ItemsControl.Style>
                                                             <Style TargetType="ItemsControl">
                                                                 <Setter Property="Visibility" Value="Visible"/>
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelectedFriendProfile.recentAchievements.Count}" Value="0">
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendProfile.recentAchievements.Count}" Value="0">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
@@ -747,7 +760,7 @@
                                                             <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                                 <Style.Triggers>
-                                                                    <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=IsFriendProfileLoading}" Value="True">
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsFriendProfileLoading}" Value="True">
                                                                         <Setter Property="Visibility" Value="Visible"/>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
@@ -766,7 +779,7 @@
                                 <StackPanel Orientation="Horizontal"  VerticalAlignment="Bottom" Effect="{DynamicResource SoftTextShadow}" HorizontalAlignment="Right" Margin="0,0,20,10">
 
                                     <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                              Tag="B" Command="{Binding CloseCommand}"
+                                              Tag="CancelAction" Command="{Binding CloseCommand}"
                                               Content="{DynamicResource LOCBackLabel}" />
 
                                 </StackPanel>

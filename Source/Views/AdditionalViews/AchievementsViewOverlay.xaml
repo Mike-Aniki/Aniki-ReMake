@@ -1,0 +1,434 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Compact focusable pill used by the Achievements sort toggle. -->
+    <Style x:Key="AnikiAchievementsSortButtonStyle" TargetType="ButtonEx">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="Height" Value="36" />
+        <Setter Property="MinWidth" Value="180" />
+        <Setter Property="Padding" Value="16,0" />
+        <Setter Property="Background" Value="#10000000" />
+        <Setter Property="BorderBrush" Value="#35FFFFFF" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonEx">
+                    <Border x:Name="SortPill"
+                            Height="{TemplateBinding Height}"
+                            MinWidth="{TemplateBinding MinWidth}"
+                            Padding="{TemplateBinding Padding}"
+                            CornerRadius="18"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="SortPill" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}" />
+                            <Setter TargetName="SortPill" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="SortPill" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}" />
+                            <Setter TargetName="SortPill" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="SortPill" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}" />
+                            <Setter TargetName="SortPill" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="SortPill" Property="Background" Value="#28D0B06A" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Fullscreen child window opened by the in-game overlay Achievements button. -->
+    <Style x:Key="AchievementsWindowStyle" TargetType="ContentControl">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid Width="1920"
+                          Height="1080"
+                          Background="Transparent"
+                          Focusable="False">
+
+                        <Rectangle IsHitTestVisible="False" Fill="#96000000"/>
+
+                        <Border Width="1180"
+                                Height="830"
+                                Padding="42,32"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                CornerRadius="28"
+                                Background="{DynamicResource BackgroundMenu}"
+                                BorderBrush="{DynamicResource StaticBorderBrush}"
+                                BorderThickness="1"
+                                Effect="{DynamicResource SoftTextShadow}">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="24"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="18"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Header -->
+                                <StackPanel Grid.Row="0" HorizontalAlignment="Center">
+                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OverlayAchievementsTitle}"
+                                               Margin="0,0,0,0"
+                                               FontSize="44"
+                                               FontWeight="Bold"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               HorizontalAlignment="Center"/>
+
+                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OverlayAchievementsSubtitle}"
+                                               Margin="0,8,0,0"
+                                               FontSize="18"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               Opacity="0.74"
+                                               HorizontalAlignment="Center"
+                                               TextTrimming="CharacterEllipsis"/>
+
+                                    <Border Width="260"
+                                            Height="1"
+                                            Margin="0,16,0,0"
+                                            Background="#55D0B06A"/>
+                                </StackPanel>
+
+                                <!-- Progress summary / sorting -->
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Text="{DynamicResource LOCAchievements}"
+                                                   FontSize="19"
+                                                   FontWeight="Bold"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"/>
+                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OverlayAchievementsSortDescription}"
+                                                   Margin="0,4,0,0"
+                                                   FontSize="14"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   Opacity="0.82"/>
+                                    </StackPanel>
+
+                                    <ButtonEx Grid.Column="1"
+                                              Style="{StaticResource AnikiAchievementsSortButtonStyle}"
+                                              Margin="0,0,12,0"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleOverlayAchievementsSortCommand}">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock Text="&#xE8CB;"
+                                                       FontFamily="{DynamicResource FontIcons}"
+                                                       FontSize="15"
+                                                       Foreground="{DynamicResource TextBrush}"
+                                                       VerticalAlignment="Center"/>
+                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OverlayAchievementsSortButtonText}"
+                                                       Margin="8,0,0,0"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="13"
+                                                       FontWeight="Bold"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </ButtonEx>
+
+                                    <Border Grid.Column="2"
+                                            MinWidth="108"
+                                            Height="34"
+                                            Padding="18,0"
+                                            CornerRadius="17"
+                                            Background="#12000000"
+                                            BorderBrush="#45D0B06A"
+                                            BorderThickness="1"
+                                            VerticalAlignment="Center">
+                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OverlayAchievementsProgressText}"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   FontSize="15"
+                                                   FontWeight="Bold"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Achievement list -->
+                                <Grid Grid.Row="4">
+                                    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                                                  VerticalScrollBarVisibility="Auto"
+                                                  Focusable="False"
+                                                  CanContentScroll="True">
+                                        <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=OverlayAchievementItems}">
+                                            <ItemsControl.Style>
+                                                <Style TargetType="ItemsControl">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=HasOverlayAchievements}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ItemsControl.Style>
+
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Vertical"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ButtonEx Height="128"
+                                                              Margin="0,0,0,12"
+                                                              Padding="0"
+                                                              HorizontalAlignment="Stretch"
+                                                              FocusVisualStyle="{x:Null}"
+                                                              Focusable="True"
+                                                              IsTabStop="True"
+                                                              KeyboardNavigation.IsTabStop="True">
+                                                        <ButtonEx.Style>
+                                                            <Style TargetType="ButtonEx">
+                                                                <Setter Property="Background" Value="#0B000000"/>
+                                                                <Setter Property="BorderBrush" Value="#22FFFFFF"/>
+                                                                <Setter Property="BorderThickness" Value="1"/>
+                                                                <Setter Property="Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate TargetType="ButtonEx">
+                                                                            <Border x:Name="AchievementCard"
+                                                                                    CornerRadius="20"
+                                                                                    Background="{TemplateBinding Background}"
+                                                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                                                                <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                                                            </Border>
+                                                                            <ControlTemplate.Triggers>
+                                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                                    <Setter TargetName="AchievementCard" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                                                    <Setter TargetName="AchievementCard" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                                </Trigger>
+                                                                                <Trigger Property="IsFocused" Value="True">
+                                                                                    <Setter TargetName="AchievementCard" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                                                    <Setter TargetName="AchievementCard" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                                </Trigger>
+                                                                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                                                    <Setter TargetName="AchievementCard" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                                                    <Setter TargetName="AchievementCard" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                                </Trigger>
+                                                                            </ControlTemplate.Triggers>
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </ButtonEx.Style>
+
+                                                        <Grid Margin="18,0">
+                                                            <Grid.Style>
+                                                                <Style TargetType="Grid">
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding Unlocked}" Value="False">
+                                                                            <Setter Property="Opacity" Value="0.62"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Grid.Style>
+
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="96"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <!-- Icon -->
+                                                            <Grid Grid.Column="0"
+                                                                  Width="76"
+                                                                  Height="76"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center">
+                                                                <Border x:Name="AchievementIconMask"
+                                                                        CornerRadius="6"
+                                                                        Background="Black"/>
+
+                                                                <Border CornerRadius="6"
+                                                                        Background="#16000000"
+                                                                        BorderBrush="#30FFFFFF"
+                                                                        BorderThickness="1"/>
+
+                                                                <Grid>
+                                                                    <Grid.OpacityMask>
+                                                                        <VisualBrush Visual="{Binding ElementName=AchievementIconMask}"/>
+                                                                    </Grid.OpacityMask>
+
+                                                                    <TextBlock Text="&#xE7C1;"
+                                                                               FontFamily="{DynamicResource FontIcons}"
+                                                                               FontSize="30"
+                                                                               Foreground="{DynamicResource TextDetailBrush}"
+                                                                               Opacity="0.55"
+                                                                               HorizontalAlignment="Center"
+                                                                               VerticalAlignment="Center"/>
+
+                                                                    <Image Source="{Binding IconPath}"
+                                                                           Stretch="UniformToFill"
+                                                                           RenderOptions.BitmapScalingMode="Fant"/>
+                                                                </Grid>
+                                                            </Grid>
+
+                                                            <!-- Text -->
+                                                            <StackPanel Grid.Column="1"
+                                                                        Margin="20,0,28,0"
+                                                                        VerticalAlignment="Center">
+                                                                <TextBlock Text="{Binding Title}"
+                                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                                           FontSize="23"
+                                                                           FontWeight="Bold"
+                                                                           TextTrimming="CharacterEllipsis"/>
+
+                                                                <TextBlock Text="{Binding Description}"
+                                                                           Margin="0,5,0,0"
+                                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                                           FontSize="16"
+                                                                           Opacity="0.88"
+                                                                           TextTrimming="CharacterEllipsis"/>
+
+                                                                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                                                    <TextBlock Text="{Binding RaritySentence}"
+                                                                               FontSize="14"
+                                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                                               Opacity="0.64"
+                                                                               TextTrimming="CharacterEllipsis"/>
+
+                                                                    <TextBlock Text="{Binding ProgressText}"
+                                                                               Margin="14,0,0,0"
+                                                                               FontSize="13"
+                                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                                               Opacity="0.60"/>
+                                                                </StackPanel>
+                                                            </StackPanel>
+
+                                                            <!-- Status -->
+                                                            <StackPanel Grid.Column="2"
+                                                                        MinWidth="150"
+                                                                        VerticalAlignment="Center"
+                                                                        HorizontalAlignment="Right">
+                                                                <Border Height="32"
+                                                                        Padding="16,0"
+                                                                        CornerRadius="16"
+                                                                        Background="#12000000"
+                                                                        BorderBrush="#35FFFFFF"
+                                                                        BorderThickness="1"
+                                                                        HorizontalAlignment="Right">
+                                                                    <TextBlock Text="{Binding StatusText}"
+                                                                               FontSize="12"
+                                                                               FontWeight="Bold"
+                                                                               HorizontalAlignment="Center"
+                                                                               VerticalAlignment="Center">
+                                                                        <TextBlock.Style>
+                                                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding Unlocked}" Value="True">
+                                                                                        <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </TextBlock.Style>
+                                                                    </TextBlock>
+                                                                </Border>
+
+                                                                <TextBlock Text="{Binding UnlockDateRightText}"
+                                                                           Margin="0,9,0,0"
+                                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                                           FontSize="13"
+                                                                           Opacity="0.64"
+                                                                           HorizontalAlignment="Right"
+                                                                           TextTrimming="CharacterEllipsis"/>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </ButtonEx>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+
+                                    <!-- Empty state -->
+                                    <Border Width="720"
+                                            Height="240"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            CornerRadius="22"
+                                            Background="#10000000"
+                                            BorderBrush="#28FFFFFF"
+                                            BorderThickness="1"
+                                            Padding="28">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=HasOverlayAchievements}" Value="False">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <TextBlock Text="&#xE7C1;"
+                                                       FontFamily="{DynamicResource FontIcons}"
+                                                       FontSize="42"
+                                                       Foreground="{DynamicResource TextDetailBrush}"
+                                                       Opacity="0.55"
+                                                       HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{DynamicResource LOCNoAchievementsOverlay}"
+                                                       Margin="0,14,0,0"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="28"
+                                                       FontWeight="Bold"
+                                                       HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OverlayAchievementsEmptyText}"
+                                                       Margin="0,8,0,0"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="16"
+                                                       Opacity="0.65"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"
+                                                       TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Footer -->
+                                <Grid Grid.Row="5" Margin="0,22,0,0">
+                                    <TextBlock Text="{DynamicResource LOCDataForRunningGame}"
+                                               FontSize="15"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               Opacity="0.62"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Bottom"/>
+
+                                    <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                              Tag="CancelAction"
+                                              Content="{DynamicResource LOCBackLabel}"
+                                              HorizontalAlignment="Right"
+                                              Focusable="False"
+                                              IsTabStop="False"
+                                              IsHitTestVisible="False" />
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -59,17 +59,20 @@
     <!-- Style pour le bouton d'élément de menu de notifications -->
     <Style x:Key="NotificationsMenuItemButton" TargetType="Button">
         <Setter Property="MinWidth" Value="150"/>
-        <Setter Property="Height" Value="54"/>
+        <Setter Property="MinHeight" Value="82"/>
         <Setter Property="Margin" Value="6"/>
+        <Setter Property="Padding" Value="12,10,12,10"/>
         <Setter Property="FontSize" Value="22"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="#66FFFFFF"/>
+        <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="UseLayoutRounding" Value="True"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -80,9 +83,10 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{DynamicResource Corner}"/>
-                        <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          Margin="8,0,8,0"/>
+
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"/>
                     </Grid>
 
                     <ControlTemplate.Triggers>
@@ -90,10 +94,12 @@
                             <Setter TargetName="Card" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
                             <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
                         </Trigger>
+
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Card" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
                             <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
                         </Trigger>
+
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="Card" Property="Background" Value="#55FFFFFF"/>
                             <Setter TargetName="Card" Property="BorderBrush" Value="#FFFFFFFF"/>
@@ -104,6 +110,7 @@
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
+
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Card" Property="Opacity" Value="0.5"/>
                         </Trigger>

@@ -1,0 +1,359 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Fullscreen child window opened by the in-game overlay Last Captures button. -->
+    <Style x:Key="LastCapturesWindowStyle" TargetType="ContentControl">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid Width="1920"
+                          Height="1080"
+                          Background="Transparent"
+                          Focusable="False">
+
+                        <!-- Strong modal dim behind the captures panel -->
+                        <Rectangle IsHitTestVisible="False" Fill="#96000000"/>
+
+                        <Border Width="1200"
+                                Height="760"
+                                Padding="42,32"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                CornerRadius="28"
+                                Background="{DynamicResource BackgroundMenu}"
+                                BorderBrush="{DynamicResource StaticBorderBrush}"
+                                BorderThickness="1"
+                                Effect="{DynamicResource SoftTextShadow}">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="18"/>
+                                    <RowDefinition Height="0"/>
+                                    <RowDefinition Height="18"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Header -->
+                                <StackPanel Grid.Row="0" HorizontalAlignment="Center">
+                                    <Border Width="64"
+                                            Height="64"
+                                            CornerRadius="32"
+                                            HorizontalAlignment="Center"
+                                            Background="#18000000"
+                                            BorderBrush="#80D0B06A"
+                                            BorderThickness="1">
+                                        <TextBlock Text="&#xE714;"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   FontSize="28"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OverlayLastCapturesTitle}"
+                                               Margin="0,14,0,0"
+                                               FontFamily="{DynamicResource FontMain}"
+                                               FontSize="40"
+                                               FontWeight="Bold"
+                                               Foreground="{DynamicResource TextBrush}"
+                                               HorizontalAlignment="Center"/>
+
+                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OverlayLastCapturesSubtitle}"
+                                               Margin="0,8,0,0"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="16"
+                                               Opacity="0.74"
+                                               HorizontalAlignment="Center"
+                                               TextTrimming="CharacterEllipsis"/>
+
+                                    <Border Width="260"
+                                            Height="1"
+                                            Margin="0,16,0,0"
+                                            Background="#55D0B06A"/>
+                                </StackPanel>
+
+
+                                <!-- Captures list and in-view refresh button -->
+                                <Grid Grid.Row="4">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <ItemsControl Grid.Row="0"
+                                                  ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=OverlayLastCaptureItems}"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center">
+                                        <ItemsControl.Style>
+                                            <Style TargetType="ItemsControl">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=HasOverlayLastCaptures}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ItemsControl.Style>
+
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <ButtonEx Width="340"
+                                                          Height="342"
+                                                          Margin="14,0"
+                                                          Padding="0"
+                                                          FocusVisualStyle="{x:Null}"
+                                                          Focusable="True"
+                                                          IsTabStop="True"
+                                                          KeyboardNavigation.IsTabStop="True"
+                                                          Command="{PluginSettings Plugin=AnikiHelper, Path=OpenOverlayCapturePreviewCommand}"
+                                                          CommandParameter="{Binding}">
+                                                    <ButtonEx.Style>
+                                                        <Style TargetType="ButtonEx">
+                                                            <Setter Property="Background" Value="Transparent"/>
+                                                            <Setter Property="BorderBrush" Value="#00FFFFFF"/>
+                                                            <Setter Property="BorderThickness" Value="1"/>
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="ButtonEx">
+                                                                        <Border x:Name="CaptureCard"
+                                                                                CornerRadius="22"
+                                                                                Background="#0C000000"
+                                                                                BorderBrush="#24FFFFFF"
+                                                                                BorderThickness="1"
+                                                                                ClipToBounds="True">
+                                                                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                                                        </Border>
+                                                                        <ControlTemplate.Triggers>
+                                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                                <Setter TargetName="CaptureCard" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                                                <Setter TargetName="CaptureCard" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                            </Trigger>
+                                                                            <Trigger Property="IsFocused" Value="True">
+                                                                                <Setter TargetName="CaptureCard" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                                                <Setter TargetName="CaptureCard" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                            </Trigger>
+                                                                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                                                                <Setter TargetName="CaptureCard" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                                                <Setter TargetName="CaptureCard" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                            </Trigger>
+                                                                        </ControlTemplate.Triggers>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Style>
+                                                    </ButtonEx.Style>
+
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="210"/>
+                                                            <RowDefinition Height="*"/>
+                                                        </Grid.RowDefinitions>
+
+                                                        <Grid Grid.Row="0" Background="#18000000" ClipToBounds="True">
+                                                            <!-- Rounded image mask, so thumbnails respect the card radius -->
+                                                            <Border x:Name="CaptureThumbMask"
+                                                                    CornerRadius="22,22,0,0"
+                                                                    Background="Black"/>
+
+                                                            <Grid>
+                                                                <Grid.OpacityMask>
+                                                                    <VisualBrush Visual="{Binding ElementName=CaptureThumbMask}"/>
+                                                                </Grid.OpacityMask>
+
+                                                                <TextBlock Text="&#xE91B;"
+                                                                           FontFamily="{DynamicResource FontIcons}"
+                                                                           FontSize="38"
+                                                                           Foreground="{DynamicResource TextDetailBrush}"
+                                                                           Opacity="0.45"
+                                                                           HorizontalAlignment="Center"
+                                                                           VerticalAlignment="Center"/>
+
+                                                                <Image Source="{Binding DisplayThumbnailPath}"
+                                                                       Stretch="UniformToFill"
+                                                                       RenderOptions.BitmapScalingMode="Fant"/>
+                                                            </Grid>
+
+                                                            <Border HorizontalAlignment="Right"
+                                                                    VerticalAlignment="Top"
+                                                                    Margin="0,14,14,0"
+                                                                    Padding="9,5"
+                                                                    CornerRadius="11"
+                                                                    Background="#AA000000"
+                                                                    BorderBrush="#35FFFFFF"
+                                                                    BorderThickness="1">
+                                                                <TextBlock FontFamily="{DynamicResource FontMain}"
+                                                                           FontSize="13"
+                                                                           FontWeight="Bold"
+                                                                           Foreground="{DynamicResource TextHighlightBrush}">
+                                                                    <TextBlock.Style>
+                                                                        <Style TargetType="TextBlock">
+                                                                            <Setter Property="Text" Value="{DynamicResource LOCImage}"/>
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding IsVideo}" Value="True">
+                                                                                    <Setter Property="Text" Value="{DynamicResource Video}"/>
+                                                                                    <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}"/>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </TextBlock.Style>
+                                                                </TextBlock>
+                                                            </Border>
+                                                        </Grid>
+
+                                                        <Grid Grid.Row="1" Margin="20,16,20,16">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto"/>
+                                                                <RowDefinition Height="Auto"/>
+                                                                <RowDefinition Height="*"/>
+                                                                <RowDefinition Height="Auto"/>
+                                                            </Grid.RowDefinitions>
+
+                                                            <TextBlock Grid.Row="0"
+                                                                       Text="{Binding GameName}"
+                                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                                       FontSize="20"
+                                                                       FontWeight="Bold"
+                                                                       TextTrimming="CharacterEllipsis"/>
+
+                                                            <TextBlock Grid.Row="1"
+                                                                       Text="{Binding CaptureDateString}"
+                                                                       Margin="0,4,0,0"
+                                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                                       FontSize="14"
+                                                                       Opacity="0.72"
+                                                                       TextTrimming="CharacterEllipsis"/>
+
+                                                            <Grid Grid.Row="3">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="Auto"/>
+                                                                </Grid.ColumnDefinitions>
+
+                                                                <TextBlock Text="{Binding SourceProvider}"
+                                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                                           FontSize="13"
+                                                                           Opacity="0.55"
+                                                                           TextTrimming="CharacterEllipsis"/>
+
+                                                                <TextBlock Grid.Column="1"
+                                                                           Text="{Binding FileSizeString}"
+                                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                                           FontSize="13"
+                                                                           Opacity="0.55"
+                                                                           Margin="10,0,0,0"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Grid>
+                                                </ButtonEx>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                    <!-- Empty state -->
+                                    <Border Grid.Row="0"
+                                            Width="720"
+                                            Height="240"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            CornerRadius="22"
+                                            Background="#10000000"
+                                            BorderBrush="#28FFFFFF"
+                                            BorderThickness="1"
+                                            Padding="28">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=HasOverlayLastCaptures}" Value="False">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <TextBlock Text="&#xE722;"
+                                                       FontFamily="{DynamicResource FontIcons}"
+                                                       FontSize="40"
+                                                       Foreground="{DynamicResource TextDetailBrush}"
+                                                       Opacity="0.55"
+                                                       HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{DynamicResource LOCNoCaptures}"
+                                                       Margin="0,14,0,0"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="28"
+                                                       FontWeight="Bold"
+                                                       HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OverlayLastCapturesEmptyText}"
+                                                       Margin="0,8,0,0"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="16"
+                                                       Opacity="0.65"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"
+                                                       TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <!-- Refreshes ScreenshotsVisualizer while the game is still running -->
+                                    <ButtonEx Grid.Row="1"
+                                              MinWidth="280"
+                                              Height="54"
+                                              Margin="0,22,0,0"
+                                              Padding="22,0"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Bottom"
+                                              Style="{DynamicResource MenuButtonAniki}"
+                                              Content="{PluginSettings Plugin=AnikiHelper, Path=OverlayLastCapturesRefreshButtonText}"
+                                              Visibility="{PluginSettings Plugin=AnikiHelper, Path=CanRefreshOverlayLastCaptures}"
+                                              Focusable="True"
+                                              IsTabStop="True"
+                                              KeyboardNavigation.IsTabStop="True"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=RefreshOverlayLastCapturesCommand}" />
+                                </Grid>
+
+                                <!-- Footer -->
+                                <Grid Grid.Row="5" Margin="0,24,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0"
+                                               MaxWidth="700"
+                                               Text="{DynamicResource LOCLastCapturesDescription}"
+                                               FontSize="15"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               Opacity="0.62"
+                                               VerticalAlignment="Bottom"
+                                               TextWrapping="Wrap"/>
+
+                                    <StackPanel Grid.Column="1"
+                                                Orientation="Horizontal"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Center">
+
+                                        <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                                  Tag="B"
+                                                  Content="{DynamicResource LOCBackLabel}"
+                                                  Focusable="False"
+                                                  IsTabStop="False"
+                                                  IsHitTestVisible="False" />
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

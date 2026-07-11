@@ -145,7 +145,7 @@
                           Opacity="0">
 
                         <Grid.RenderTransform>
-                            <TranslateTransform Y="28"/>
+                            <TranslateTransform Y="0"/>
                         </Grid.RenderTransform>
 
                         <Grid.Triggers>
@@ -158,7 +158,7 @@
                                                          Duration="0:0:0.25"/>
 
                                         <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                                         From="28"
+                                                         From="24"
                                                          To="0"
                                                          Duration="0:0:0.35">
                                             <DoubleAnimation.EasingFunction>
@@ -485,6 +485,70 @@
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
+
+                                <!-- EMPTY STATE - No screenshots / media available -->
+                                <Grid x:Name="NoScreenshotState"
+                                      Width="1540"
+                                      Height="760"
+                                      Panel.ZIndex="50"
+                                      IsHitTestVisible="False">
+
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=ThumbGrid, Path=HasItems}" Value="False">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+
+                                    <Border Width="760"
+                                            MinHeight="260"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Padding="46,34"
+                                            CornerRadius="22"
+                                            BorderThickness="1"
+                                            BorderBrush="{DynamicResource HubCardBorderBrush}"
+                                            Background="#66000000"
+                                            Effect="{DynamicResource SoftTextShadow}">
+
+                                        <StackPanel HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center">
+
+                                            <TextBlock Text="&#xEB9F;"
+                                                       FontFamily="{StaticResource FontIcons}"
+                                                       FontSize="54"
+                                                       Foreground="{DynamicResource TextHighlightBrush}"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"
+                                                       Margin="0,0,0,18"/>
+
+                                            <TextBlock Text="{DynamicResource LOCNoscreenshots}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="32"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="{DynamicResource TextBrush}"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"
+                                                       Margin="0,0,0,10"/>
+
+                                            <TextBlock Text="{DynamicResource LOCNoscreenshotsSubtitle}"
+                                                       Style="{DynamicResource TextBlockDetailStyle}"
+                                                       FontSize="20"
+                                                       Opacity="0.72"
+                                                       Foreground="{DynamicResource TextBrush}"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"
+                                                       TextWrapping="Wrap"
+                                                       MaxWidth="620"/>
+
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
                             </Grid>
 
                             <!-- BOTTOM BUTTONS -->
@@ -500,13 +564,22 @@
                                             Margin="0,0,24,13"
                                             Effect="{DynamicResource SoftTextShadow}">
 
-                                    <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                              Tag="Dpad"
-                                              Content="{DynamicResource LOCButtonPrompt_Navigate}"/>
+                                    <ButtonEx
+                                        Tag="A"
+                                        Content="{DynamicResource LOCOpen}">
+                                        <ButtonEx.Style>
+                                            <Style TargetType="ButtonEx"
+                                                   BasedOn="{StaticResource ButtonBottomMenuDark}">
+                                                <Setter Property="Visibility" Value="Visible"/>
 
-                                    <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                              Tag="A"
-                                              Content="{DynamicResource LOCOpen}"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=ThumbGrid, Path=HasItems}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ButtonEx.Style>
+                                    </ButtonEx>
 
                                     <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
                                               Tag="B"

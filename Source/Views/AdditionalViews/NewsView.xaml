@@ -28,7 +28,7 @@
                                                             Command="{Binding Command, ElementName=NewsPreviousTabShortcutButton}" />
                         </Grid.InputBindings>
                         <Grid.RenderTransform>
-                            <TranslateTransform Y="40"/>
+                            <TranslateTransform Y="0"/>
                         </Grid.RenderTransform>
 
                         <!-- petite anim entrÃ©e -->
@@ -37,11 +37,14 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                         From="0" To="1"
-                                                         Duration="0:0:0.30"/>
+                                                         From="0"
+                                                         To="1"
+                                                         Duration="0:0:0.25"/>
+
                                         <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                                         From="40" To="0"
-                                                         Duration="0:0:0.40">
+                                                         From="24"
+                                                         To="0"
+                                                         Duration="0:0:0.35">
                                             <DoubleAnimation.EasingFunction>
                                                 <CubicEase EasingMode="EaseOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -328,7 +331,7 @@
                                          VirtualizingPanel.VirtualizationMode="Recycling"
                                          VirtualizingPanel.ScrollUnit="Item"
                                          VirtualizingPanel.CacheLengthUnit="Item"
-                                         VirtualizingPanel.CacheLength="3"
+                                         VirtualizingPanel.CacheLength="1"
                                          ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SteamGlobalNewsA}">
 
                                     <ListBox.ItemsPanel>
@@ -568,7 +571,18 @@
                                                               LinkForeground="{DynamicResource GlyphColor}"
                                                               HtmlFontSize="{DynamicResource FontSize}"
                                                               Focusable="False"
-                                                              IsTabStop="False" />
+                                                              IsTabStop="False" >
+                                                    <HtmlTextView.Style>
+                                                        <Style TargetType="HtmlTextView">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsChecked, ElementName=ModeNewsInternal}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </HtmlTextView.Style>
+                                                </HtmlTextView>
                                             </ScrollViewerEx>
                                         </Border>
                                     </Grid>
@@ -640,7 +654,7 @@
                                          VirtualizingPanel.VirtualizationMode="Recycling"
                                          VirtualizingPanel.ScrollUnit="Item"
                                          VirtualizingPanel.CacheLengthUnit="Item"
-                                         VirtualizingPanel.CacheLength="3"
+                                         VirtualizingPanel.CacheLength="1"
                                          ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SteamRecentUpdates}">
                                     <ListBox.ItemsPanel>
                                         <ItemsPanelTemplate>
@@ -711,7 +725,7 @@
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </Border.Style>
-                                                        <TextBlock Text="NEW" FontWeight="Bold" FontSize="14" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                                                        <TextBlock Text="{DynamicResource LOCNEW}" FontWeight="Bold" FontSize="14" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                                                     </Border>
 
                                                     <!-- Accent -->
@@ -729,7 +743,12 @@
                                                     </Border>
                                                     <!-- Vignette / icÃ´ne -->
                                                     <Border Grid.RowSpan="2" Grid.Column="1" Width="120" MaxHeight="120" Margin="0,0,12,0" CornerRadius="8" Background="#33000000" ClipToBounds="True">
-                                                        <Image Source="{Binding CoverPath}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant">
+                                                        <Image Stretch="UniformToFill"
+                                                               RenderOptions.BitmapScalingMode="Fant">
+                                                            <Image.Source>
+                                                                <Binding Path="CoverPath"
+                                                                         IsAsync="True"/>
+                                                            </Image.Source>
                                                             <Image.Style>
                                                                 <Style TargetType="Image">
                                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -749,7 +768,7 @@
                                                     <TextBlock Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Text="{Binding GameName}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="26" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Margin="0,2,8,0"/>
                                                     <!-- Date + titre de lâ€™update -->
                                                     <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,6,8,4">
-                                                        <TextBlock Text="Updated " FontSize="26" Style="{DynamicResource TextBlockBaseStyle}" Opacity="0.75"/>
+                                                        <TextBlock Text="{DynamicResource LOCUpdated}" FontSize="26" Style="{DynamicResource TextBlockBaseStyle}" Opacity="0.75"/>
                                                         <TextBlock Text="{Binding DateString}" FontSize="26" Style="{DynamicResource TextBlockBaseStyle}" Opacity="0.75"/>
                                                     </StackPanel>
                                                 </Grid>
@@ -864,7 +883,18 @@
                                                               LinkForeground="{DynamicResource GlyphColor}"
                                                               HtmlFontSize="{DynamicResource FontSize}"
                                                               Focusable="False"
-                                                              IsTabStop="False" />
+                                                              IsTabStop="False" >
+                                                    <HtmlTextView.Style>
+                                                        <Style TargetType="HtmlTextView">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsChecked, ElementName=ModeUpdatesInternal}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </HtmlTextView.Style>
+                                                </HtmlTextView>
                                             </ScrollViewerEx>
                                         </Border>
                                     </Grid>
@@ -875,7 +905,7 @@
                         </Grid>
 
                         <!--PlayniteNewsPanel-->
-                        <Grid x:Name="PlayniteNewsPanel" Panel.ZIndex="0" MaxWidth="1900" Margin="20,120,20,80" Visibility="Visible">
+                        <Grid x:Name="PlayniteNewsPanel" Panel.ZIndex="0" MaxWidth="1900" Margin="20,120,20,80" Visibility="Collapsed">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
@@ -920,7 +950,7 @@
                                          VirtualizingPanel.VirtualizationMode="Recycling"
                                          VirtualizingPanel.ScrollUnit="Item"
                                          VirtualizingPanel.CacheLengthUnit="Item"
-                                         VirtualizingPanel.CacheLength="3"
+                                         VirtualizingPanel.CacheLength="1"
                                          ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=PlayniteNews}">
 
                                     <ListBox.ItemsPanel>
@@ -1016,8 +1046,11 @@
                                                             <!-- Image principale : LocalImagePath -->
                                                             <Image x:Name="NewsMainImage"
                                                                    Stretch="Uniform"
-                                                                   RenderOptions.BitmapScalingMode="LowQuality"
-                                                                   Source="{Binding LocalImagePath}">
+                                                                   RenderOptions.BitmapScalingMode="LowQuality">
+                                                                <Image.Source>
+                                                                    <Binding Path="LocalImagePath"
+                                                                             IsAsync="True"/>
+                                                                </Image.Source>
                                                                 <Image.Style>
                                                                     <Style TargetType="Image">
                                                                         <Setter Property="Visibility" Value="Visible" />
@@ -1188,7 +1221,18 @@
                                                               LinkForeground="{DynamicResource GlyphColor}"
                                                               HtmlFontSize="{DynamicResource FontSize}"
                                                               Focusable="True"
-                                                              IsTabStop="False" />
+                                                              IsTabStop="False">
+                                                    <HtmlTextView.Style>
+                                                        <Style TargetType="HtmlTextView">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsChecked, ElementName=ModePlayniteInternal}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </HtmlTextView.Style>
+                                                </HtmlTextView>
                                             </ScrollViewerEx>
                                         </Border>
                                     </Grid>
@@ -1248,7 +1292,7 @@
                                          VirtualizingPanel.VirtualizationMode="Recycling"
                                          VirtualizingPanel.ScrollUnit="Item"
                                          VirtualizingPanel.CacheLengthUnit="Item"
-                                         VirtualizingPanel.CacheLength="3"
+                                         VirtualizingPanel.CacheLength="1"
                                          ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SteamGlobalNewsB}">
 
                                     <ListBox.ItemsPanel>
@@ -1339,15 +1383,12 @@
                                                             CornerRadius="8"
                                                             Background="#00000000"
                                                             ClipToBounds="True">
-                                                        <Image Stretch="Uniform" RenderOptions.BitmapScalingMode="LowQuality">
-                                                            <Image.Style>
-                                                                <Style TargetType="Image">
-                                                                    <Setter Property="Source" Value="{Binding LocalImagePath}" />
-                                                                    <Style.Triggers>
-
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </Image.Style>
+                                                        <Image Stretch="Uniform"
+                                                               RenderOptions.BitmapScalingMode="LowQuality">
+                                                            <Image.Source>
+                                                                <Binding Path="LocalImagePath"
+                                                                         IsAsync="True"/>
+                                                            </Image.Source>
                                                         </Image>
                                                     </Border>
 
@@ -1463,7 +1504,18 @@
                                                               LinkForeground="{DynamicResource GlyphColor}"
                                                               HtmlFontSize="{DynamicResource FontSize}"
                                                               Focusable="False"
-                                                              IsTabStop="False" />
+                                                              IsTabStop="False" >
+                                                    <HtmlTextView.Style>
+                                                        <Style TargetType="HtmlTextView">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsChecked, ElementName=ModeDealsInternal}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </HtmlTextView.Style>
+                                                </HtmlTextView>
                                             </ScrollViewerEx>
                                         </Border>
                                     </Grid>
@@ -1481,7 +1533,7 @@
                         <StackPanel x:Name="BackButton" Orientation="Horizontal"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Effect="{DynamicResource SoftTextShadow}" Margin="0,0,20,10">
 
                             <ButtonEx Style="{DynamicResource ButtonBottomMenuShoulders}"
-                                      Content="Switch section" />
+                                      Content="{DynamicResource LOCSwitchSection}" />
 
                             <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
                                       Tag="B"

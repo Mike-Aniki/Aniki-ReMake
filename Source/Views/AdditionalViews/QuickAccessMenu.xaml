@@ -770,6 +770,11 @@
                                                 <Setter Property="Background" Value="{DynamicResource MainMenuImage140}" />
                                             </DataTrigger>
 
+                                            <!-- Rare / Lucky Mode background override -->
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="True">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage150}"/>
+                                            </DataTrigger>
+
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
@@ -813,24 +818,7 @@
                                                 Background="Black"
                                                 CornerRadius="28"/>
 
-                                        <!-- fallback avatar rond -->
-                                        <Border Width="56"
-                                                Height="56"
-                                                CornerRadius="28"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center">
-                                            <Border.Style>
-                                                <Style TargetType="Border"
-                                                       BasedOn="{StaticResource SelectedAvatarBorderStyle}">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding ElementName=UserAvatarHeader, Path=Source}" Value="{x:Null}">
-                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-                                        </Border>
+
 
                                         <!-- path image avatar -->
                                         <TextBlock x:Name="ProfilePicturePathHeader"
@@ -858,12 +846,14 @@
                                                 <VisualBrush Visual="{Binding ElementName=AvatarMaskHeader}" />
                                             </Grid.OpacityMask>
 
-                                            <Image x:Name="UserAvatarHeader"
-                                                   Source="{Binding ElementName=ProfilePicturePathHeader, Path=Text}"
-                                                   Stretch="UniformToFill"
-                                                   RenderOptions.BitmapScalingMode="Fant"
-                                                   Width="56"
-                                                   Height="56"/>
+                                            <Control x:Name="UserAvatarHeader"
+                                                     Tag="{Binding ElementName=ProfilePicturePathHeader, Path=Text}"
+                                                     Width="56"
+                                                     Height="56"
+                                                     Template="{StaticResource SteamSelfAvatarTemplate}"
+                                                     Focusable="False"
+                                                     IsTabStop="False"
+                                                     IsHitTestVisible="False"/>
                                         </Grid>
 
                                         <!-- contour rond -->
@@ -1011,9 +1001,13 @@
                                                 <Style TargetType="ButtonEx">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{PluginStatus Plugin=SteamFriendsFullscreen_d8d67c7e-a797-45d7-ae44-3d53ddecc8d1, Status=Installed}" Value="True">
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{PluginStatus Plugin=AnikiHelper_96a983a3-3f13-4dce-a474-4052b718bb52, Status=Installed}" Value="True"/>
+                                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamFriendsStatusVisibility}" Value="Visible"/>
+                                                            </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Visible"/>
-                                                        </DataTrigger>
+                                                        </MultiDataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </ButtonEx.Style>
@@ -1040,32 +1034,32 @@
                                                                     <Setter Property="BorderBrush" Value="#5519F28B"/>
 
                                                                     <Style.Triggers>
-                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="online">
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="online">
                                                                             <Setter Property="Background" Value="#1819F28B"/>
                                                                             <Setter Property="BorderBrush" Value="#5519F28B"/>
                                                                         </DataTrigger>
 
-                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="offline">
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="offline">
                                                                             <Setter Property="Background" Value="#182D3748"/>
                                                                             <Setter Property="BorderBrush" Value="#554A5A68"/>
                                                                         </DataTrigger>
 
-                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="away">
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="away">
                                                                             <Setter Property="Background" Value="#18FFC857"/>
                                                                             <Setter Property="BorderBrush" Value="#55FFC857"/>
                                                                         </DataTrigger>
 
-                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="busy">
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="busy">
                                                                             <Setter Property="Background" Value="#18FF4D5A"/>
                                                                             <Setter Property="BorderBrush" Value="#55FF4D5A"/>
                                                                         </DataTrigger>
 
-                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="ingame">
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="ingame">
                                                                             <Setter Property="Background" Value="#1846D9FF"/>
                                                                             <Setter Property="BorderBrush" Value="#5546D9FF"/>
                                                                         </DataTrigger>
 
-                                                                        <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="notrunning">
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="notrunning">
                                                                             <Setter Property="Background" Value="#185A7D9A"/>
                                                                             <Setter Property="BorderBrush" Value="#555A7D9A"/>
                                                                         </DataTrigger>
@@ -1093,27 +1087,27 @@
                                                                             <Setter Property="Opacity" Value="0.96"/>
 
                                                                             <Style.Triggers>
-                                                                                <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="online">
+                                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="online">
                                                                                     <Setter Property="Background" Value="{DynamicResource StatusOnlineBrush}"/>
                                                                                 </DataTrigger>
 
-                                                                                <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="offline">
+                                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="offline">
                                                                                     <Setter Property="Background" Value="{DynamicResource StatusOfflineBrush}"/>
                                                                                 </DataTrigger>
 
-                                                                                <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="away">
+                                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="away">
                                                                                     <Setter Property="Background" Value="{DynamicResource StatusAwayBrush}"/>
                                                                                 </DataTrigger>
 
-                                                                                <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="busy">
+                                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="busy">
                                                                                     <Setter Property="Background" Value="{DynamicResource StatusBusyBrush}"/>
                                                                                 </DataTrigger>
 
-                                                                                <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="ingame">
+                                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="ingame">
                                                                                     <Setter Property="Background" Value="{DynamicResource StatusInGameBrush}"/>
                                                                                 </DataTrigger>
 
-                                                                                <DataTrigger Binding="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfState}" Value="notrunning">
+                                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelfState}" Value="notrunning">
                                                                                     <Setter Property="Background" Value="#5A7D9A"/>
                                                                                 </DataTrigger>
                                                                             </Style.Triggers>
@@ -1128,7 +1122,7 @@
                                                                            Opacity="0.95"
                                                                            Style="{DynamicResource TextBlockBaseStyle}"
                                                                            VerticalAlignment="Center"
-                                                                           Text="{PluginSettings Plugin=SteamFriendsFullscreen, Path=SelfStateLoc}"
+                                                                           Text="{PluginSettings Plugin=AnikiHelper, Path=SelfStateLoc}"
                                                                            TextTrimming="CharacterEllipsis"/>
 
                                                             </StackPanel>
@@ -1206,15 +1200,25 @@
                                               Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[QuickAccessNotificationWindowStyle]}"/>
 
                                     <ButtonEx x:Name="QuickFriendsButton"
-                                              Style="{StaticResource QuickAccessButtonStyle}"
                                               Tag="&#xE716;"
                                               Content="{DynamicResource LOCSteamFriendsTitle}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle]}"/>
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle]}">
+                                        <ButtonEx.Style>
+                                            <Style TargetType="ButtonEx" BasedOn="{StaticResource QuickAccessButtonStyle}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamFriendsStatusVisibility}" Value="Visible">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ButtonEx.Style>
+                                    </ButtonEx>
 
                                     <ButtonEx x:Name="QuickAchievementsButton_PA"
                                               Tag="&#xe903;"
                                               Content="{DynamicResource LOCAchievements}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenAchievementsCommand}">
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton]}">
                                         <ButtonEx.Style>
                                             <Style TargetType="ButtonEx" BasedOn="{StaticResource QuickAccessButtonStyle3}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -1248,10 +1252,12 @@
                                         </ButtonEx.Style>
                                     </ButtonEx>
 
-                                    <ButtonEx Tag="&#xE91B;"
+                                    <ButtonEx x:Name="QuickMediaButton"
+                                              Style="{StaticResource QuickAccessButtonStyle}"
+                                              Tag="&#xE91B;"
                                               Content="{DynamicResource LOCMediaGallery}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenMediaGalleryGamesWindowCommand}"
-                                              Style="{StaticResource QuickAccessButtonStyle}"/>
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenMediaGalleryGamesWindowCommand}"/>
+
 
                                     <ButtonEx x:Name="QuickNewsButton"
                                               Style="{StaticResource QuickAccessButtonStyle2}"
@@ -1296,7 +1302,7 @@
                                               FocusVisualStyle="{x:Null}"
                                               Style="{StaticResource QuickAccessButtonStyle}"
                                               Tag="&#xE7E8;"
-                                              Content="Power"
+                                              Content="{DynamicResource LOCPower}"
                                               Command="{PluginSettings Plugin=AnikiHelper, Path=OpenPowerMenuCommand}" />
 
 

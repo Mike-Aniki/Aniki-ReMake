@@ -1,0 +1,272 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+
+    <!-- Toast position -->
+    <sys:String x:Key="PlayAch.Toast.Position">TopRight</sys:String>
+
+    <!-- Toast duration in seconds -->
+    <sys:String x:Key="PlayAch.Toast.DurationSeconds">10</sys:String>
+
+    <!-- Slide in animation -->
+    <Storyboard x:Key="PlayAch.Storyboard.ToastSlideIn">
+        <DoubleAnimation Storyboard.TargetProperty="(Window.Top)"
+                         Duration="0:0:0.28"
+                         FillBehavior="HoldEnd">
+            <DoubleAnimation.EasingFunction>
+                <BackEase EasingMode="EaseOut" Amplitude="0.35"/>
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+    </Storyboard>
+
+    <!-- Slide out animation -->
+    <Storyboard x:Key="PlayAch.Storyboard.ToastSlideOut">
+        <DoubleAnimation Storyboard.TargetProperty="(Window.Top)"
+                         Duration="0:0:0.20"
+                         FillBehavior="HoldEnd">
+            <DoubleAnimation.EasingFunction>
+                <CubicEase EasingMode="EaseIn"/>
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+    </Storyboard>
+
+    <!-- Countdown bar animation -->
+    <Storyboard x:Key="PlayAch.Storyboard.ToastCountdown">
+        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                         From="1"
+                         To="0"
+                         FillBehavior="HoldEnd">
+            <DoubleAnimation.EasingFunction>
+                <CubicEase EasingMode="EaseOut"/>
+            </DoubleAnimation.EasingFunction>
+        </DoubleAnimation>
+    </Storyboard>
+
+    <!-- Toast visual template -->
+    <DataTemplate x:Key="PlayAch.Template.AchievementToast">
+
+        <Grid Width="610"
+              Height="104"
+              Margin="0,10,0,10"
+              SnapsToDevicePixels="True">
+
+            <!-- Shadow -->
+            <Border CornerRadius="9"
+                    Background="#70000000"
+                    Margin="0,4,0,-4"
+                    Opacity="0.55"/>
+
+            <!-- Main card -->
+            <Border CornerRadius="9"
+                    Background="{DynamicResource AnikiToastBackgroundGradient}"
+                    BorderBrush="{DynamicResource AnikiToastBorderBrush}"
+                    BorderThickness="1"
+                    Padding="10">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="78"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="70"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Achievement icon -->
+                    <Border Grid.Column="0"
+                            Width="70"
+                            Height="70"
+                            CornerRadius="2"
+                            Background="#22000000"
+                            BorderBrush="#55FFFFFF"
+                            BorderThickness="1"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            ClipToBounds="True">
+
+                        <Image Source="{Binding IconPath}"
+                               RenderOptions.BitmapScalingMode="Fant"
+                               Stretch="UniformToFill"/>
+                    </Border>
+
+                    <!-- Text -->
+                    <Grid Grid.Column="1"
+                          VerticalAlignment="Center"
+                          Margin="0,0,12,0">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Title -->
+                        <TextBlock Grid.Row="0"
+                                   Text="{Binding TitleText}"
+                                   Style="{DynamicResource AnikiToastTextBlockStyle}"
+                                   FontSize="22"
+                                   FontWeight="SemiBold"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="NoWrap"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,8,0"/>
+
+                        <!-- Desc -->
+                        <TextBlock Grid.Row="1"
+                                   Text="{Binding Description}"
+                                   Style="{DynamicResource AnikiToastTextBlockStyle}"
+                                   Opacity="0.88"
+                                   FontSize="16"
+                                   FontWeight="SemiBold"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="Wrap"
+                                   Margin="0,5,0,0"/>
+                    </Grid>
+
+                    <!-- Right trophy / rarity badge -->
+                    <Grid Grid.Column="2"
+                          Width="66"
+                          Height="76"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="58"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0"
+                              Width="58"
+                              Height="58"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center">
+
+                            <!-- Bronze / Common -->
+                            <Image Source="{ThemeFile 'Images/Bronze.png'}"
+                                   Width="52"
+                                   Height="52"
+                                   Stretch="Uniform"
+                                   RenderOptions.BitmapScalingMode="Fant">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                                    <Condition Binding="{Binding Rarity}" Value="Common"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+
+                            <!-- Silver / Uncommon -->
+                            <Image Source="{ThemeFile 'Images/Argent.png'}"
+                                   Width="52"
+                                   Height="52"
+                                   Stretch="Uniform"
+                                   RenderOptions.BitmapScalingMode="Fant">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                                    <Condition Binding="{Binding Rarity}" Value="Uncommon"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+
+                            <!-- Gold / Rare -->
+                            <Image Source="{ThemeFile 'Images/Or.png'}"
+                                   Width="52"
+                                   Height="52"
+                                   Stretch="Uniform"
+                                   RenderOptions.BitmapScalingMode="Fant">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                                    <Condition Binding="{Binding Rarity}" Value="Rare"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </MultiDataTrigger>
+
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                                    <Condition Binding="{Binding Rarity}" Value="UltraRare"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+
+                            <!-- Platinum / Capstone -->
+                            <Image Source="{ThemeFile 'Images/platinum.png'}"
+                                   Width="52"
+                                   Height="52"
+                                   Stretch="Uniform"
+                                   RenderOptions.BitmapScalingMode="Fant">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsCapstone}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+
+                        </Grid>
+
+                        <!-- Percent rarity -->
+                        <Border Grid.Row="1"
+                                CornerRadius="8"
+                                Padding="7,1"
+                                Background="{DynamicResource AnikiToastChipBackgroundBrush}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                Margin="0,1,0,0">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PercentText}" Value="{x:Null}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding PercentText}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
+                            <TextBlock Text="{Binding PercentText}"
+                                       Style="{DynamicResource AnikiToastTextBlockStyle}"
+                                       Foreground="{DynamicResource AnikiToastSubTextBrush}"
+                                       FontSize="12"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

@@ -20,8 +20,6 @@
                         <QuadraticEase x:Key="EaseOutFast" EasingMode="EaseOut"/>
 
                         <Storyboard x:Key="SB_ToNone">
-                            <DoubleAnimation Storyboard.TargetName="FocusTransform" Storyboard.TargetProperty="Y"
-                                             To="0" Duration="0:0:0.14" EasingFunction="{StaticResource EaseOutFast}"/>
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleX"
                                              To="1" Duration="0:0:0.14" EasingFunction="{StaticResource EaseOutFast}"/>
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleY"
@@ -29,38 +27,37 @@
                         </Storyboard>
 
                         <Storyboard x:Key="SB_ToFocus">
-                            <DoubleAnimation Storyboard.TargetName="FocusTransform" Storyboard.TargetProperty="Y"
-                                             To="-5" Duration="0:0:0.16" EasingFunction="{StaticResource EaseOutSoft}"/>
+                            <!-- Zoom uniquement -->
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleX"
-                                             To="1.03" Duration="0:0:0.16" EasingFunction="{StaticResource EaseOutSoft}"/>
+                                             To="1.035" Duration="0:0:0.16" EasingFunction="{StaticResource EaseOutSoft}"/>
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleY"
-                                             To="1.03" Duration="0:0:0.16" EasingFunction="{StaticResource EaseOutSoft}"/>
+                                             To="1.035" Duration="0:0:0.16" EasingFunction="{StaticResource EaseOutSoft}"/>
                         </Storyboard>
 
                         <Storyboard x:Key="SB_ToHover">
-                            <DoubleAnimation Storyboard.TargetName="FocusTransform" Storyboard.TargetProperty="Y"
-                                             To="-3" Duration="0:0:0.12" EasingFunction="{StaticResource EaseOutFast}"/>
+                            <!-- Hover souris plus léger que le focus manette/clavier -->
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleX"
-                                             To="1.015" Duration="0:0:0.12" EasingFunction="{StaticResource EaseOutFast}"/>
+                                             To="1.02" Duration="0:0:0.12" EasingFunction="{StaticResource EaseOutFast}"/>
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleY"
-                                             To="1.015" Duration="0:0:0.12" EasingFunction="{StaticResource EaseOutFast}"/>
+                                             To="1.02" Duration="0:0:0.12" EasingFunction="{StaticResource EaseOutFast}"/>
                         </Storyboard>
 
                         <Storyboard x:Key="SB_ToFocusHover">
-                            <DoubleAnimation Storyboard.TargetName="FocusTransform" Storyboard.TargetProperty="Y"
-                                             To="-7" Duration="0:0:0.16" EasingFunction="{StaticResource EaseOutSoft}"/>
+                            <!-- Focus + hover : un peu plus marqué -->
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleX"
-                                             To="1.04" Duration="0:0:0.16" EasingFunction="{StaticResource EaseOutSoft}"/>
+                                             To="1.045" Duration="0:0:0.16" EasingFunction="{StaticResource EaseOutSoft}"/>
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleY"
-                                             To="1.04" Duration="0:0:0.16" EasingFunction="{StaticResource EaseOutSoft}"/>
+                                             To="1.045" Duration="0:0:0.16" EasingFunction="{StaticResource EaseOutSoft}"/>
                         </Storyboard>
                     </ControlTemplate.Resources>
 
 
 
                     <!-- Contenu principal du modèle -->
-                    <Grid x:Name="ListBoxGrid" RenderTransformOrigin="0.5,0.5" Margin="{Settings FullscreenItemSpacingMargin}"
-                          d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameIntance}" >
+                    <Grid x:Name="ListBoxGrid"
+                          RenderTransformOrigin="0.5,0.5"
+                          Margin="{Settings FullscreenItemSpacingMargin}"
+                          d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameIntance}">
                         <Grid.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform x:Name="ScaleTransform" ScaleX="1" ScaleY="1" />
@@ -76,6 +73,7 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBanner]}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBannerOverlay]}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Margin" Value="0,-10,0,-20"/>
                                         </MultiDataTrigger>
@@ -157,6 +155,7 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBanner]}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBannerOverlay]}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Margin" Value="-3,-13,-3,-23"/>
                                         </MultiDataTrigger>

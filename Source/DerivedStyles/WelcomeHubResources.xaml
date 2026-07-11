@@ -19,9 +19,62 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
 
+        <!-- Focus zoom -->
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <ScaleTransform ScaleX="1" ScaleY="1" />
+            </Setter.Value>
+        </Setter>
+
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource AncestorType=ButtonEx}}"
                          Value="True">
+
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                             To="1.035"
+                                             Duration="0:0:0.16">
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+
+                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                             To="1.035"
+                                             Duration="0:0:0.16">
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+
+                <DataTrigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                             To="1"
+                                             Duration="0:0:0.14">
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+
+                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                             To="1"
+                                             Duration="0:0:0.14">
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseOut"/>
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.ExitActions>
+
                 <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}" />
                 <Setter Property="BorderThickness" Value="3" />
             </DataTrigger>
@@ -153,8 +206,8 @@
 
     <!-- Achievement Memory -->
     <DataTemplate x:Key="HubAchievementMemoryItemTemplate">
-        <ButtonEx Width="680"
-                  Height="382"
+        <ButtonEx Width="660"
+                  Height="348"
                   Focusable="True"
                   FocusVisualStyle="{x:Null}"
                   Command="{PluginSettings Plugin=AnikiHelper, Path=OpenGameDetailsCommand}"
@@ -350,7 +403,7 @@
 
                         <!-- Bottom gradient -->
                         <Border VerticalAlignment="Bottom"
-                                Height="170"
+                                Height="150"
                                 IsHitTestVisible="False">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -362,7 +415,7 @@
                         </Border>
 
                         <Border VerticalAlignment="Bottom"
-                                Height="104"
+                                Height="83"
                                 CornerRadius="0,0,20,20"
                                 Background="{DynamicResource HubCardBottomBackgroundBrush}"
                                 Opacity="0.80" />
@@ -370,7 +423,7 @@
 
                         <!-- Bottom trophy banner -->
                         <Border VerticalAlignment="Bottom"
-                                Height="104"
+                                Height="83"
                                 CornerRadius="0,0,20,20"
                                 Padding="20,5"
                                 SnapsToDevicePixels="True"
@@ -435,8 +488,8 @@
 
     <!-- Screenshot -->
     <DataTemplate x:Key="HubLatestCaptureItemTemplate">
-        <ButtonEx Width="680"
-                  Height="382"
+        <ButtonEx Width="660"
+                  Height="348"
                   Focusable="True"
                   FocusVisualStyle="{x:Null}"
                   Command="{PluginSettings Plugin=AnikiHelper, Path=OpenScreenshotsForMediaItemCommand}"
@@ -549,7 +602,7 @@
                         </Border>
 
                         <Border VerticalAlignment="Bottom"
-                                Height="150"
+                                Height="130"
                                 IsHitTestVisible="False">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -561,16 +614,16 @@
                         </Border>
 
                         <Border VerticalAlignment="Bottom"
-                                Height="83"
+                                Height="74"
                                 CornerRadius="0,0,20,20"
                                 Background="{DynamicResource HubCardBottomBackgroundBrush}"
                                 Opacity="0.80" />
 
                         <!-- Bottom banner -->
                         <Border VerticalAlignment="Bottom"
-                                Height="83"
+                                Height="74"
                                 CornerRadius="0,0,20,20"
-                                Padding="20,5"
+                                Padding="18,4"
                                 SnapsToDevicePixels="True"
                                 BorderBrush="{DynamicResource HubCardBottomBorderBrush}"
                                 BorderThickness="0,2,0,0">

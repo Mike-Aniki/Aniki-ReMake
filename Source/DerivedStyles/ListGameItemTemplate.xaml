@@ -36,6 +36,7 @@
                                     <!-- BANNIÈRE TOP -->
                                     <Border x:Name="TopBanner"
                                             Grid.Row="0"
+                                            Panel.ZIndex="3"
                                             Background="Transparent"
                                             CornerRadius="{DynamicResource Corner}"
                                             ClipToBounds="True"
@@ -56,41 +57,294 @@
                                         </Border.Style>
 
                                         <Grid>
-                                            <Image x:Name="SourceHorizontal"
-                                                   RenderOptions.BitmapScalingMode="Fant"
-                                                   Stretch="UniformToFill"
-                                                   VerticalAlignment="Center"
-                                                   HorizontalAlignment="Center"
-                                                   Source="{ThemeFileBinding Game.Source.Name, PathFormat='Icons/Banner/Horizontal/{0}.png', FallbackValue={x:Null}}">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
+
+                                            <!-- Custom banner folders defined in Aniki Helper.
+                                            Expected structure:
+                                            CustomBannerAboveCoverFolder/Steam.png
+                                            CustomBannerOnCoverFolder/Steam.png -->
+                                            <TextBlock x:Name="CustomBannerAboveCoverFolderPath"
+                                                       Text="{PluginSettings Plugin=AnikiHelper, Path=CustomBannerAboveCoverFolder}"
+                                                       Visibility="Collapsed"/>
+
+                                            <TextBlock x:Name="CustomBannerOnCoverFolderPath"
+                                                       Text="{PluginSettings Plugin=AnikiHelper, Path=CustomBannerOnCoverFolder}"
+                                                       Visibility="Collapsed"/>
+
+                                            <TextBlock x:Name="CustomSourceHorizontalBannerPath"
+                                                       Visibility="Collapsed">
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0}/{1}.png">
+                                                        <Binding Path="Text" ElementName="CustomBannerAboveCoverFolderPath"/>
+                                                        <Binding Path="Game.Source.Name"/>
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+
+                                            <TextBlock x:Name="CustomPlatformHorizontalBannerPath"
+                                                       Visibility="Collapsed">
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0}/{1}.png">
+                                                        <Binding Path="Text" ElementName="CustomBannerAboveCoverFolderPath"/>
+                                                        <Binding Path="Game.Platforms[0].Name"/>
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+
+                                            <TextBlock x:Name="CustomSourceOnCoverBannerPath"
+                                                       Visibility="Collapsed">
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0}/{1}.png">
+                                                        <Binding Path="Text" ElementName="CustomBannerOnCoverFolderPath"/>
+                                                        <Binding Path="Game.Source.Name"/>
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+
+                                            <TextBlock x:Name="CustomPlatformOnCoverBannerPath"
+                                                       Visibility="Collapsed">
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0}/{1}.png">
+                                                        <Binding Path="Text" ElementName="CustomBannerOnCoverFolderPath"/>
+                                                        <Binding Path="Game.Platforms[0].Name"/>
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+
+                                            <!-- ABOVE COVER MODE -->
+                                            <Grid x:Name="HorizontalBannerContent">
+                                                <Grid.Style>
+                                                    <Style TargetType="Grid">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                         <Style.Triggers>
-                                                            <Trigger Property="Source" Value="{x:Null}">
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBannerOverlay]}" Value="True">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
-                                                            </Trigger>
+                                                            </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
-                                                </Image.Style>
-                                            </Image>
+                                                </Grid.Style>
 
-                                            <Image x:Name="PlatformHorizontal"
-                                                   RenderOptions.BitmapScalingMode="Fant"
-                                                   Stretch="UniformToFill"
-                                                   VerticalAlignment="Center"
-                                                   HorizontalAlignment="Center"
-                                                   Source="{ThemeFileBinding Game.Platforms[0].Name, PathFormat='Icons/Banner/Horizontal/{0}.png', FallbackValue={x:Null}}">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
+                                                <!-- Custom source banner -->
+                                                <Image x:Name="CustomSourceHorizontal"
+                                                       RenderOptions.BitmapScalingMode="Fant"
+                                                       Stretch="UniformToFill"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       Source="{Binding Text, ElementName=CustomSourceHorizontalBannerPath}">
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ElementName=CustomBannerAboveCoverFolderPath, Path=Text}" Value="">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </DataTrigger>
+                                                                <Trigger Property="Source" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+
+                                                <!-- Default theme source banner -->
+                                                <Image x:Name="SourceHorizontal"
+                                                       RenderOptions.BitmapScalingMode="Fant"
+                                                       Stretch="UniformToFill"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       Source="{ThemeFileBinding Game.Source.Name, PathFormat='Icons/Banner/Horizontal/{0}.png', FallbackValue={x:Null}}">
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding ElementName=CustomSourceHorizontal, Path=Visibility}" Value="Collapsed"/>
+                                                                        <Condition Binding="{Binding ElementName=CustomPlatformHorizontal, Path=Visibility}" Value="Collapsed"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </MultiDataTrigger>
+                                                                <Trigger Property="Source" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+
+                                                <!-- Custom platform banner, used only if source banner is unavailable -->
+                                                <Image x:Name="CustomPlatformHorizontal"
+                                                       RenderOptions.BitmapScalingMode="Fant"
+                                                       Stretch="UniformToFill"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       Source="{Binding Text, ElementName=CustomPlatformHorizontalBannerPath}">
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding ElementName=CustomSourceHorizontal, Path=Visibility}" Value="Collapsed"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </MultiDataTrigger>
+                                                                <DataTrigger Binding="{Binding ElementName=CustomBannerAboveCoverFolderPath, Path=Text}" Value="">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </DataTrigger>
+                                                                <Trigger Property="Source" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+
+                                                <!-- Default theme platform banner -->
+                                                <Image x:Name="PlatformHorizontal"
+                                                       RenderOptions.BitmapScalingMode="Fant"
+                                                       Stretch="UniformToFill"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       Source="{ThemeFileBinding Game.Platforms[0].Name, PathFormat='Icons/Banner/Horizontal/{0}.png', FallbackValue={x:Null}}">
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding ElementName=CustomSourceHorizontal, Path=Visibility}" Value="Collapsed"/>
+                                                                        <Condition Binding="{Binding ElementName=SourceHorizontal, Path=Visibility}" Value="Collapsed"/>
+                                                                        <Condition Binding="{Binding ElementName=CustomPlatformHorizontal, Path=Visibility}" Value="Collapsed"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </MultiDataTrigger>
+                                                                <Trigger Property="Source" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+                                            </Grid>
+
+
+                                            <!-- ON COVER MODE -->
+                                            <Grid x:Name="OnCoverBannerContent">
+                                                <Grid.Style>
+                                                    <Style TargetType="Grid">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding ElementName=SourceHorizontal, Path=Source}" Value="{x:Null}">
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBannerOverlay]}" Value="True">
                                                                 <Setter Property="Visibility" Value="Visible"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
-                                                </Image.Style>
-                                            </Image>
+                                                </Grid.Style>
+
+                                                <!-- Custom source on-cover banner -->
+                                                <Image x:Name="CustomSourceOnCover"
+                                                       RenderOptions.BitmapScalingMode="Fant"
+                                                       Stretch="UniformToFill"
+                                                       VerticalAlignment="Top"
+                                                       HorizontalAlignment="Left"
+                                                       Source="{Binding Text, ElementName=CustomSourceOnCoverBannerPath}">
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ElementName=CustomBannerOnCoverFolderPath, Path=Text}" Value="">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </DataTrigger>
+                                                                <Trigger Property="Source" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+
+                                                <!-- Default theme source on-cover banner -->
+                                                <Image x:Name="SourceOnCover"
+                                                       RenderOptions.BitmapScalingMode="Fant"
+                                                       Stretch="UniformToFill"
+                                                       VerticalAlignment="Top"
+                                                       HorizontalAlignment="Left"
+                                                       Source="{ThemeFileBinding Game.Source.Name, PathFormat='Icons/Banner/OnCover/{0}.png', FallbackValue={x:Null}}">
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding ElementName=CustomSourceOnCover, Path=Visibility}" Value="Collapsed"/>
+                                                                        <Condition Binding="{Binding ElementName=CustomPlatformOnCover, Path=Visibility}" Value="Collapsed"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </MultiDataTrigger>
+                                                                <Trigger Property="Source" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+
+                                                <!-- Custom platform on-cover banner, used only if source banner is unavailable -->
+                                                <Image x:Name="CustomPlatformOnCover"
+                                                       RenderOptions.BitmapScalingMode="Fant"
+                                                       Stretch="UniformToFill"
+                                                       VerticalAlignment="Top"
+                                                       HorizontalAlignment="Left"
+                                                       Source="{Binding Text, ElementName=CustomPlatformOnCoverBannerPath}">
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding ElementName=CustomSourceOnCover, Path=Visibility}" Value="Collapsed"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </MultiDataTrigger>
+                                                                <DataTrigger Binding="{Binding ElementName=CustomBannerOnCoverFolderPath, Path=Text}" Value="">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </DataTrigger>
+                                                                <Trigger Property="Source" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+
+                                                <!-- Default theme platform on-cover banner -->
+                                                <Image x:Name="PlatformOnCover"
+                                                       RenderOptions.BitmapScalingMode="Fant"
+                                                       Stretch="UniformToFill"
+                                                       VerticalAlignment="Top"
+                                                       HorizontalAlignment="Left"
+                                                       Source="{ThemeFileBinding Game.Platforms[0].Name, PathFormat='Icons/Banner/OnCover/{0}.png', FallbackValue={x:Null}}">
+                                                    <Image.Style>
+                                                        <Style TargetType="Image">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding ElementName=CustomSourceOnCover, Path=Visibility}" Value="Collapsed"/>
+                                                                        <Condition Binding="{Binding ElementName=SourceOnCover, Path=Visibility}" Value="Collapsed"/>
+                                                                        <Condition Binding="{Binding ElementName=CustomPlatformOnCover, Path=Visibility}" Value="Collapsed"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </MultiDataTrigger>
+                                                                <Trigger Property="Source" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
+                                                </Image>
+                                            </Grid>
+
                                         </Grid>
                                     </Border>
 
@@ -104,6 +358,7 @@
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
                                                             <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBanner]}" Value="True"/>
+                                                            <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBannerOverlay]}" Value="False"/>
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter Property="Grid.Row" Value="1"/>
                                                         <Setter Property="Grid.RowSpan" Value="1"/>
@@ -118,7 +373,7 @@
                                                 IsHitTestVisible="False"/>
 
                                         <Image x:Name="PART_ImageCover"
-                                               RenderOptions.BitmapScalingMode="Fant"
+                                               RenderOptions.BitmapScalingMode="Linear"
                                                StretchDirection="Both"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center"
@@ -159,6 +414,7 @@
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBanner]}" Value="True"/>
+                                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBannerOverlay]}" Value="False"/>
                                                             </MultiDataTrigger.Conditions>
                                                             <Setter Property="Margin" Value="0,-30,0,0"/>
                                                         </MultiDataTrigger>
@@ -210,7 +466,7 @@
                                                         <Setter Property="StretchDirection" Value="Both"/>
                                                         <Setter Property="HorizontalAlignment" Value="Center"/>
                                                         <Setter Property="VerticalAlignment" Value="Center"/>
-                                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant"/>
+                                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="Linear"/>
                                                     </Style>
                                                 </ContentControl.Resources>
                                             </ContentControl>
@@ -255,6 +511,69 @@
 
                                 </Grid>
 
+                                <!-- SOURCE / PLATFORM LOGO BADGE ON COVER
+                                Looks for: ThemeFolder/Icons/Logo/Steam.png
+                                Priority: Source logo first, then first Platform logo. -->
+                                <Grid x:Name="CoverLogoBadge"
+                                      Panel.ZIndex="4"
+                                      IsHitTestVisible="False"
+                                      HorizontalAlignment="Right"
+                                      VerticalAlignment="Bottom"
+                                      Width="30"
+                                      Height="30">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Setter Property="Margin" Value="0,0,8,8"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[CoverLogoBadge]}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+
+                                    <Image x:Name="CoverSourceLogoBadge"
+                                           RenderOptions.BitmapScalingMode="Fant"
+                                           Stretch="Uniform"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Source="{ThemeFileBinding Game.Source.Name, PathFormat='Icons/Logo/{0}.png', FallbackValue={x:Null}}">
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="Source" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+
+                                    <Image x:Name="CoverPlatformLogoBadge"
+                                           RenderOptions.BitmapScalingMode="Fant"
+                                           Stretch="Uniform"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Source="{ThemeFileBinding Game.Platforms[0].Name, PathFormat='Icons/Logo/{0}.png', FallbackValue={x:Null}}">
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=CoverSourceLogoBadge, Path=Visibility}" Value="Collapsed">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                    <Trigger Property="Source" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                </Grid>
+
+
                                 <!--IconGamePass-->
                                 <Grid Panel.ZIndex="2" IsHitTestVisible="False">
                                     <Grid.Style>
@@ -266,6 +585,7 @@
                                                     <MultiDataTrigger.Conditions>
                                                         <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBanner]}" Value="False"/>
                                                         <Condition Binding="{Binding Game.Source.Name}" Value="Xbox Game Pass"/>
+                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[CoverLogoBadge]}" Value="False"/>
                                                     </MultiDataTrigger.Conditions>
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                 </MultiDataTrigger>
@@ -282,14 +602,13 @@
                                 <ContentControl x:Name="BackToGame_Control" FocusVisualStyle="{x:Null}" Focusable="False"/>
                                 <TextBlock x:Name="GameIsRunningBadge"
                                            Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                           Background="{DynamicResource OverlayMenu}"
+                                           Background="{DynamicResource BackgroundMenu}"
                                            Text="{DynamicResource LOCGameRunning}"
                                            VerticalAlignment="Top"
                                            TextAlignment="Center"
                                            Margin="0,0,0,15"
                                            Padding="0,0,0,5"
                                            FontSize="23"
-                                           FontFamily="Segoe UI SemiBold"
                                            HorizontalAlignment="Stretch"
                                            TextTrimming="CharacterEllipsis"
                                            Style="{DynamicResource TextBlockBaseStyle}" />
@@ -310,6 +629,9 @@
                         </MultiDataTrigger>
                         <DataTrigger Binding="{Binding ElementName=BackToGame_Control, Path=Content.IsRunning}" Value="True" >
                             <Setter Property="Text" Value="{DynamicResource LOCBackToGame}" TargetName="GameIsRunningBadge" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SelectedGame.Source.Name}" Value="GG.deals Wishlist">
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="BorderDarken" />
                         </DataTrigger>
 
 

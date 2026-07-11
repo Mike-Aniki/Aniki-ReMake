@@ -478,24 +478,7 @@
                                                 Background="Black"
                                                 CornerRadius="28"/>
 
-                                        <!-- fallback avatar rond -->
-                                        <Border Width="56"
-                                                Height="56"
-                                                CornerRadius="28"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center">
-                                            <Border.Style>
-                                                <Style TargetType="Border"
-                                                       BasedOn="{StaticResource SelectedAvatarBorderStyle}">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding ElementName=UserAvatarHeader, Path=Source}" Value="{x:Null}">
-                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-                                        </Border>
+
 
                                         <!-- path image avatar -->
                                         <TextBlock x:Name="ProfilePicturePathHeader"
@@ -523,12 +506,14 @@
                                                 <VisualBrush Visual="{Binding ElementName=AvatarMaskHeader}" />
                                             </Grid.OpacityMask>
 
-                                            <Image x:Name="UserAvatarHeader"
-                                                   Source="{Binding ElementName=ProfilePicturePathHeader, Path=Text}"
-                                                   Stretch="UniformToFill"
-                                                   RenderOptions.BitmapScalingMode="Fant"
-                                                   Width="56"
-                                                   Height="56"/>
+                                            <Control x:Name="UserAvatarHeader"
+                                                     Tag="{Binding ElementName=ProfilePicturePathHeader, Path=Text}"
+                                                     Width="56"
+                                                     Height="56"
+                                                     Template="{StaticResource SteamSelfAvatarTemplate}"
+                                                     Focusable="False"
+                                                     IsTabStop="False"
+                                                     IsHitTestVisible="False"/>
                                         </Grid>
 
                                         <!-- contour rond -->

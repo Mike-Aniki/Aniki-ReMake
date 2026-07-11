@@ -353,25 +353,7 @@
                                                         Background="Black"
                                                         CornerRadius="28"/>
 
-                                                <!-- fallback avatar rond -->
-                                                <Border Width="56"
-                                                        Height="56"
-                                                        CornerRadius="28"
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center">
-                                                    <Border.Style>
-                                                        <Style TargetType="Border"
-                                                               BasedOn="{StaticResource SelectedAvatarBorderStyle}">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding ElementName=UserAvatarHeader, Path=Source}" Value="{x:Null}">
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
 
-                                                        </Style>
-                                                    </Border.Style>
-                                                </Border>
 
                                                 <!-- path image avatar -->
                                                 <TextBlock x:Name="ProfilePicturePathHeaderDetail"
@@ -399,12 +381,14 @@
                                                         <VisualBrush Visual="{Binding ElementName=AvatarMaskHeaderDetail}" />
                                                     </Grid.OpacityMask>
 
-                                                    <Image x:Name="UserAvatarHeaderDetail"
-                                                           Source="{Binding ElementName=ProfilePicturePathHeaderDetail, Path=Text}"
-                                                           Stretch="UniformToFill"
-                                                           RenderOptions.BitmapScalingMode="Fant"
-                                                           Width="56"
-                                                           Height="56"/>
+                                                    <Control x:Name="UserAvatarHeaderDetail"
+                                                             Tag="{Binding ElementName=ProfilePicturePathHeaderDetail, Path=Text}"
+                                                             Width="56"
+                                                             Height="56"
+                                                             Template="{StaticResource SteamSelfAvatarTemplate}"
+                                                             Focusable="False"
+                                                             IsTabStop="False"
+                                                             IsHitTestVisible="False"/>
                                                 </Grid>
 
                                                 <!-- contour rond -->
@@ -766,7 +750,7 @@
                             <Grid.Resources>
 
                                 <Style x:Key="ClassicPremiumCardStyle" TargetType="Border">
-                                    <Setter Property="Background" Value="{DynamicResource TopBar}"/>
+                                    <Setter Property="Background" Value="{DynamicResource BackgroundAHBrush}"/>
                                     <Setter Property="BorderBrush" Value="{DynamicResource SeparatorBottomBarBrush}"/>
                                     <Setter Property="BorderThickness" Value="0"/>
                                     <Setter Property="CornerRadius" Value="14"/>
@@ -778,7 +762,7 @@
                                 </Style>
 
                                 <Style x:Key="ClassicPremiumChipStyle" TargetType="Border">
-                                    <Setter Property="Background" Value="{DynamicResource TopBar}"/>
+                                    <Setter Property="Background" Value="{DynamicResource BackgroundAHBrush}"/>
                                     <Setter Property="BorderBrush" Value="{DynamicResource SeparatorBottomBarBrush}"/>
                                     <Setter Property="BorderThickness" Value="0"/>
                                     <Setter Property="CornerRadius" Value="10"/>
@@ -924,8 +908,8 @@
                             </Grid.Style>
 
                             <StackPanel Orientation="Vertical"
-                                        MinWidth="720"
-                                        MaxWidth="900"
+                                        MinWidth="700"
+                                        MaxWidth="950"
                                         Margin="50,0,0,0"
                                         HorizontalAlignment="Left">
 
@@ -979,14 +963,14 @@
                                     </TextBlock>
                                 </Grid>
 
-                                <Grid ClipToBounds="False">
+                                <Grid MinWidth="100" ClipToBounds="False">
 
                                     <!-- Shadow layer -->
                                     <Border CornerRadius="22"
                                             Opacity="0.44"
                                             Background="{DynamicResource BackgroundItem}"
-                                            Width="{Binding ElementName=PremiumPanelCard, Path=ActualWidth}"
-                                            Height="{Binding ElementName=PremiumPanelCard, Path=ActualHeight}"
+                                            Width="{Binding ElementName=PanelCard, Path=ActualWidth}"
+                                            Height="{Binding ElementName=PanelCard, Path=ActualHeight}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Margin="0,0,0,0"
@@ -1003,7 +987,7 @@
 
 
                                     <!-- info panel -->
-                                    <Border x:Name="PremiumPanelCard"
+                                    <Border x:Name="PanelCard"
                                             CornerRadius="22"
                                             Padding="16"
                                             Background="{DynamicResource GlassSignatureBrush}"
@@ -1283,6 +1267,7 @@
                                                                 </ButtonEx.Style>
                                                             </ButtonEx>
 
+
                                                             <ButtonEx x:Name="NowPlayingButton"
                                                                       MinWidth="120"
                                                                       Height="48"
@@ -1320,8 +1305,38 @@
 
                                                         </Grid>
 
+
+
                                                         <WrapPanel HorizontalAlignment="Left"
                                                                    VerticalAlignment="Center">
+
+                                                            <ButtonEx x:Name="DuplicateHiderVersionsButton"
+                                                                      Height="48"
+                                                                      Width="48"
+                                                                      Margin="0,0,8,8"
+                                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenDuplicateHiderVersionsWindowCommand}"
+                                                                      FocusVisualStyle="{x:Null}">
+
+                                                                <ButtonEx.Style>
+                                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource GameOptionScaleStyle}">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                                        <Style.Triggers>
+                                                                            <MultiDataTrigger>
+                                                                                <MultiDataTrigger.Conditions>
+                                                                                    <Condition Binding="{PluginStatus Plugin=felixkmh_DuplicateHider_Plugin, Status=Installed}" Value="True"/>
+                                                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=HasDuplicateHiderVersions}" Value="True"/>
+                                                                                </MultiDataTrigger.Conditions>
+
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                            </MultiDataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </ButtonEx.Style>
+
+                                                                <TextBlock Text="&#xF1CB;" FontSize="21" FontFamily="{DynamicResource FontIcons}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                                                            </ButtonEx>
 
                                                             <ButtonEx x:Name="SuccessButton"
                                                                       Command="{PluginSettings Plugin=SSHelper, Path=OpenGameAchievementWindow}"
@@ -1522,7 +1537,7 @@
                                                             </Style>
                                                         </Border.Style>
                                                         <StackPanel>
-                                                            <TextBlock Text="Time Played" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
+                                                            <TextBlock Text="{DynamicResource LOCTimePlayed}" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
                                                             <TextBlock x:Name="PlayedTime"
                                                                        Text="{Binding Playtime, Converter={StaticResource PlayTimeToStringConverter}}"
                                                                        Style="{StaticResource ClassicPremiumCardValueStyle}"
@@ -1547,7 +1562,7 @@
                                                             </Style>
                                                         </Border.Style>
                                                         <StackPanel>
-                                                            <TextBlock Text="Last Played" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
+                                                            <TextBlock Text="{DynamicResource LOCLastPlayed}" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
                                                             <TextBlock x:Name="Played"
                                                                        Text="{Binding LastActivity, StringFormat='{}{0:dd/MM/yyyy}'}"
                                                                        Style="{StaticResource ClassicPremiumCardValueStyle}"/>
@@ -1571,7 +1586,7 @@
                                                             </Style>
                                                         </Border.Style>
                                                         <StackPanel>
-                                                            <TextBlock Text="Size" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
+                                                            <TextBlock Text="{DynamicResource LOCInstallSize}" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
                                                             <TextBlock x:Name="Siz"
                                                                        Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameInstallSizeNoDecimal}"
                                                                        Style="{StaticResource ClassicPremiumCardValueStyle}"/>
@@ -1595,7 +1610,7 @@
                                                             </Style>
                                                         </Border.Style>
                                                         <StackPanel>
-                                                            <TextBlock Text="Status" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
+                                                            <TextBlock Text="{DynamicResource LOCCompletionStatus}" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
                                                             <TextBlock x:Name="Completed"
                                                                        Text="{Binding CompletionStatus, Converter={StaticResource ListToStringConverter}}"
                                                                        Style="{StaticResource ClassicPremiumCardValueStyle}"/>
@@ -1616,7 +1631,7 @@
                                                             </Style>
                                                         </Border.Style>
                                                         <StackPanel>
-                                                            <TextBlock Text="Genre" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
+                                                            <TextBlock Text="{DynamicResource LOCGenresLabel}" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
                                                             <StackPanel Orientation="Horizontal">
                                                                 <TextBlock Text="{Binding Game.Genres.[0], TargetNullValue='', FallbackValue=''}"
                                                                            Style="{StaticResource ClassicPremiumCardValueStyle}"/>
@@ -1658,7 +1673,7 @@
                                                             </Style>
                                                         </Border.Style>
                                                         <StackPanel>
-                                                            <TextBlock Text="Category" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
+                                                            <TextBlock Text="{DynamicResource LOCCategoryLabel}" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
                                                             <StackPanel Orientation="Horizontal">
                                                                 <TextBlock Text="{Binding Game.Categories[0], TargetNullValue='', FallbackValue=''}"
                                                                            Style="{StaticResource ClassicPremiumCardValueStyle}"/>
@@ -1698,9 +1713,60 @@
                                                             </Style>
                                                         </Border.Style>
                                                         <StackPanel>
-                                                            <TextBlock Text="In Game" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
+                                                            <TextBlock Text="{DynamicResource LOCSteamInGame}" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
                                                             <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SteamCurrentPlayersString}"
                                                                        Style="{StaticResource ClassicPremiumCardValueStyle}"/>
+                                                        </StackPanel>
+                                                    </Border>
+
+                                                    <Border>
+                                                        <Border.Style>
+                                                            <Style TargetType="Border" BasedOn="{StaticResource ClassicPremiumCardStyle}">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamFriendsWhoPlayedAvailable}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+
+                                                        <StackPanel>
+                                                            <TextBlock Text="{DynamicResource LOCFriendswhoplayed}"
+                                                                       Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
+
+                                                            <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SteamFriendsWhoPlayedCurrentGame}"
+                                                                          Focusable="False"
+                                                                          FocusVisualStyle="{x:Null}"
+                                                                          Margin="13,-3,0,0">
+                                                                <ItemsControl.ItemsPanel>
+                                                                    <ItemsPanelTemplate>
+                                                                        <StackPanel Orientation="Horizontal"/>
+                                                                    </ItemsPanelTemplate>
+                                                                </ItemsControl.ItemsPanel>
+
+                                                                <ItemsControl.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <Grid Width="36"
+                                                                              Height="36"
+                                                                              Margin="-13,0,0,0"
+                                                                              ToolTip="{Binding name}">
+
+                                                                            <Ellipse Width="28"
+                                                                                     Height="28"
+                                                                                     Stroke="{DynamicResource TextBrush}"
+                                                                                     StrokeThickness="1">
+                                                                                <Ellipse.Fill>
+                                                                                    <ImageBrush ImageSource="{Binding avatar}"
+                                                                                                RenderOptions.BitmapScalingMode="Fant"
+                                                                                                Stretch="UniformToFill"/>
+                                                                                </Ellipse.Fill>
+                                                                            </Ellipse>
+                                                                        </Grid>
+                                                                    </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+                                                            </ItemsControl>
                                                         </StackPanel>
                                                     </Border>
 
@@ -1803,9 +1869,9 @@
                                                                            FontSize="15"
                                                                            FontWeight="SemiBold"/>
 
-                                                                <TextBlock Text=" Achievements"
+                                                                <TextBlock Text="{DynamicResource LOCAchievements}"
                                                                            Style="{StaticResource ClassicPremiumCardLabelStyle}"
-                                                                           Margin="8,1,0,0"
+                                                                           Margin="10,1,0,0"
                                                                            FontSize="14"/>
                                                             </StackPanel>
 
@@ -1845,9 +1911,9 @@
                                                                            FontSize="15"
                                                                            FontWeight="SemiBold"/>
 
-                                                                <TextBlock Text=" Achievements"
+                                                                <TextBlock Text="{DynamicResource LOCAchievements}"
                                                                            Style="{StaticResource ClassicPremiumCardLabelStyle}"
-                                                                           Margin="8,1,0,0"
+                                                                           Margin="10,1,0,0"
                                                                            FontSize="14"/>
                                                             </StackPanel>
 
@@ -1988,21 +2054,21 @@
 
                                                     <Border Style="{StaticResource ClassicPremiumChipStyle}">
                                                         <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Text="Main Story" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
+                                                            <TextBlock Text="{DynamicResource LOCHowLongToBeatMainStory}" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
                                                             <TextBlock Text="{PluginSettings Plugin=HowLongToBeat, Path=MainStoryFormat}" FontWeight="Regular" Margin="8,0,0,0" Style="{StaticResource ClassicPremiumCardValueStyle}" FontSize="16"/>
                                                         </StackPanel>
                                                     </Border>
 
                                                     <Border Style="{StaticResource ClassicPremiumChipStyle}">
                                                         <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Text="Main+Extra" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
+                                                            <TextBlock Text="{DynamicResource LOCHowLongToBeatMainExtra}" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
                                                             <TextBlock Text="{PluginSettings Plugin=HowLongToBeat, Path=MainExtraFormat}" FontWeight="Regular" Margin="8,0,0,0" Style="{StaticResource ClassicPremiumCardValueStyle}" FontSize="16"/>
                                                         </StackPanel>
                                                     </Border>
 
                                                     <Border Style="{StaticResource ClassicPremiumChipStyle}">
                                                         <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Text="Completionist" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
+                                                            <TextBlock Text="{DynamicResource LOCHowLongToBeatCompletionist}" Style="{StaticResource ClassicPremiumCardLabelStyle}"/>
                                                             <TextBlock Text="{PluginSettings Plugin=HowLongToBeat, Path=CompletionistFormat}" FontWeight="Regular" Margin="8,0,0,0" Style="{StaticResource ClassicPremiumCardValueStyle}" FontSize="16"/>
                                                         </StackPanel>
                                                     </Border>
@@ -2012,6 +2078,85 @@
                                             </StackPanel>
 
                                         </Grid>
+                                    </Border>
+
+                                    <!-- Live friends badge : amis actuellement sur ce jeu -->
+                                    <Border HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Margin="0,4,4,0"
+                                            Padding="9,6"
+                                            CornerRadius="14"
+                                            IsHitTestVisible="False"
+                                            Panel.ZIndex="60">
+
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Setter Property="Opacity" Value="0.88"/>
+
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamFriendsPlayingCurrentGameAvailable}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+
+                                        <StackPanel Orientation="Horizontal"
+                                                    VerticalAlignment="Center">
+
+                                            <Border Background="{DynamicResource BackgroundMenu}" Opacity="0.8"/>
+
+
+                                            <!-- petit point live -->
+                                            <Ellipse Width="6"
+                                                     Height="6"
+                                                     Margin="0,0,6,0"
+                                                     Fill="{DynamicResource HighlightBrush}"
+                                                     VerticalAlignment="Center"/>
+
+                                            <!-- label court -->
+                                            <TextBlock Text="{DynamicResource LOCPLAYING}"
+                                                       Style="{StaticResource ClassicPremiumCardValueStyle}"
+                                                       FontSize="11"
+                                                       FontWeight="SemiBold"
+                                                       Opacity="0.85"
+                                                       VerticalAlignment="Center"
+                                                       Margin="0,0,7,0"/>
+
+                                            <!-- avatars uniquement -->
+                                            <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SteamFriendsPlayingCurrentGame}"
+                                                          Margin="5,0,0,0"
+                                                          VerticalAlignment="Center">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid Width="24"
+                                                              Height="24"
+                                                              Margin="-5,0,0,0"
+                                                              ToolTip="{Binding name}">
+
+                                                            <Ellipse Width="24"
+                                                                     Height="24"
+                                                                     Stroke="{DynamicResource TextBrush}"
+                                                                     StrokeThickness="1"
+                                                                     Opacity="0.95">
+                                                                <Ellipse.Fill>
+                                                                    <ImageBrush ImageSource="{Binding avatar}"
+                                                                                RenderOptions.BitmapScalingMode="Fant"
+                                                                                Stretch="UniformToFill"/>
+                                                                </Ellipse.Fill>
+                                                            </Ellipse>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
                                     </Border>
                                 </Grid>
 
@@ -2069,7 +2214,6 @@
 
                             </StackPanel>
                         </Grid>
-
 
                         <!--Panel Update-->
 
@@ -2356,7 +2500,7 @@
                                             <StackPanel>
 
                                                 <!-- Titre -->
-                                                <TextBlock Text="Store screenshots"
+                                                <TextBlock Text="{DynamicResource LOCStoreScreenshots}"
                                                            FontSize="28"
                                                            FontWeight="SemiBold"
                                                            Style="{DynamicResource TextBlockBaseStyle}"
@@ -3447,8 +3591,19 @@
                             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2"/>
-                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" From="-20" To="0" Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         From="0"
+                                                         To="1"
+                                                         Duration="0:0:0.25"/>
+
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                                         From="24"
+                                                         To="0"
+                                                         Duration="0:0:0.35">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
@@ -4116,28 +4271,6 @@
                                     <Setter Property="Focusable" Value="True"/>
                                     <Setter Property="Template" Value="{StaticResource AchievementListItemTemplate}"/>
                                     <Setter Property="Visibility" Value="Visible"/>
-
-                                    <Style.Triggers>
-                                        <!-- Filtre: Unlocked only -->
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophyFilter]}" Value="Unlocked"/>
-                                                <Condition Binding="{Binding Unlocked}" Value="False"/>
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </MultiDataTrigger>
-
-                                        <!-- MODE LOCKED -->
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophyFilter]}" Value="Locked"/>
-                                                <Condition Binding="{Binding Unlocked}" Value="True"/>
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </MultiDataTrigger>
-
-
-                                    </Style.Triggers>
                                 </Style>
 
                                 <Style x:Key="AchievementListBaseStyle" TargetType="ListView">
@@ -4241,103 +4374,17 @@
 
                             </Grid>
 
-                            <!-- NEWEST (défaut) -->
-                            <ListView x:Name="AchievementListNewest"
+                            <!-- DYNAMIC ACHIEVEMENTS LIST -->
+                            <ListView x:Name="DynamicAchievementList"
                                       Margin="10,60,0,10"
                                       ItemContainerStyle="{StaticResource AchievementListItemContainerStyle}"
-                                      ItemsSource="{PluginSettings Plugin=PlayniteAchievements, Path=AchievementsNewestFirst}">
+                                      ItemsSource="{PluginSettings Plugin=PlayniteAchievements, Path=DynamicAchievements}">
                                 <ListView.Style>
                                     <Style TargetType="ListView" BasedOn="{StaticResource AchievementListBaseStyle}">
                                         <Setter Property="Visibility" Value="Visible"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="Oldest">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="RarityAsc">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="RarityDesc">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="DefaultOrder">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
                                     </Style>
                                 </ListView.Style>
                             </ListView>
-
-                            <!-- OLDEST -->
-                            <ListView x:Name="AchievementListOldest"
-                                      Margin="10,60,0,10"
-                                      ItemContainerStyle="{StaticResource AchievementListItemContainerStyle}"
-                                      ItemsSource="{PluginSettings Plugin=PlayniteAchievements, Path=AchievementsOldestFirst}">
-                                <ListView.Style>
-                                    <Style TargetType="ListView" BasedOn="{StaticResource AchievementListBaseStyle}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="Oldest">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ListView.Style>
-                            </ListView>
-
-                            <!-- RARITY ASC-->
-                            <ListView x:Name="AchievementListRarityAsc"
-                                      Margin="10,60,0,10"
-                                      ItemContainerStyle="{StaticResource AchievementListItemContainerStyle}"
-                                      ItemsSource="{PluginSettings Plugin=PlayniteAchievements, Path=AchievementsRarityAsc}">
-                                <ListView.Style>
-                                    <Style TargetType="ListView" BasedOn="{StaticResource AchievementListBaseStyle}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="RarityAsc">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ListView.Style>
-                            </ListView>
-
-                            <!-- RARITY DESC-->
-                            <ListView x:Name="AchievementListRarityDesc"
-                                      Margin="10,60,0,10"
-                                      ItemContainerStyle="{StaticResource AchievementListItemContainerStyle}"
-                                      ItemsSource="{PluginSettings Plugin=PlayniteAchievements, Path=AchievementsRarityDesc}">
-                                <ListView.Style>
-                                    <Style TargetType="ListView" BasedOn="{StaticResource AchievementListBaseStyle}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="RarityDesc">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ListView.Style>
-                            </ListView>
-
-                            <!-- DEFAULT ORDER-->
-                            <ListView x:Name="AchievementListDefaultOrder"
-                                      Margin="10,60,0,10"
-                                      ItemContainerStyle="{StaticResource AchievementListItemContainerStyle}"
-                                      ItemsSource="{PluginSettings Plugin=PlayniteAchievements, Path=AchievementDefaultOrder}">
-                                <ListView.Style>
-                                    <Style TargetType="ListView" BasedOn="{StaticResource AchievementListBaseStyle}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort]}" Value="DefaultOrder">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ListView.Style>
-                            </ListView>
-
-
-
-
 
                             <Grid.Effect>
                                 <DropShadowEffect BlurRadius="10" ShadowDepth="2" Direction="270" Opacity="0.4" />
@@ -4360,7 +4407,7 @@
                                           Content="{DynamicResource LOCButtonPrompt_Navigate}" />
 
                                 <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                          Tag="B"
+                                          Tag="CancelAction"
                                           Content="{DynamicResource LOCBackLabel}" />
                             </StackPanel>
 
@@ -4509,17 +4556,33 @@
                                         <ComboBoxEx pbeh:FocusBahaviors.FocusBinding="True"
                                                     pbeh:FocusBahaviors.OnVisibilityFocus="True"
                                                     SelectedValuePath="Tag"
-                                                    SelectedValue="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophySort], Mode=TwoWay, TargetNullValue=Newest}"
+                                                    SelectedValue="{PluginSettings Plugin=PlayniteAchievements, Path=DynamicAchievementsSortKey, Mode=TwoWay}"
                                                     Margin="0,10,0,15"
                                                     Height="56">
-                                            <ComboBoxItem Content="{DynamicResource LOCNewest}" Tag="Newest"/>
-                                            <ComboBoxItem Content="{DynamicResource LOCOldest}" Tag="Oldest"/>
-                                            <ComboBoxItem Content="{DynamicResource LOCRarityAsc}" Tag="RarityAsc"/>
-                                            <ComboBoxItem Content="{DynamicResource LOCRarityDesc}" Tag="RarityDesc"/>
-                                            <ComboBoxItem Content="{DynamicResource LOCDefault}" Tag="DefaultOrder"/>
+
+                                            <ComboBoxItem Content="{DynamicResource LOCDefault}" Tag="Default"/>
+                                            <ComboBoxItem Content="{DynamicResource LOC_PA_Name}" Tag="Name"/>
+                                            <ComboBoxItem Content="{DynamicResource LOC_PA_UnlockTime}" Tag="UnlockTime"/>
+                                            <ComboBoxItem Content="{DynamicResource LOC_PA_Rarity}" Tag="Rarity"/>
+                                            <ComboBoxItem Content="{DynamicResource LOC_PA_Status}" Tag="Status"/>
+                                            <ComboBoxItem Content="{DynamicResource LOC_PA_Progress}" Tag="Progress"/>
+                                            <ComboBoxItem Content="{DynamicResource LOC_PA_Trophy}" Tag="TrophyType"/>
+                                            <ComboBoxItem Content="{DynamicResource LOC_PA_Category}" Tag="CategoryType"/>
+
                                         </ComboBoxEx>
 
-                                        <Border Height="1" Background="#22FFFFFF" Margin="0,18,0,16"/>
+                                        <TextBlock Text="{DynamicResource LOCDirection}"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   FontSize="20"
+                                                   Opacity="0.70"
+                                                   Margin="0,5,0,5"/>
+
+                                        <ComboBoxEx Margin="0,5,0,15"
+                                                    Height="56"
+                                                    ItemsSource="{PluginSettings Plugin=PlayniteAchievements, Path=DynamicAchievementsSortDirectionOptions}"
+                                                    DisplayMemberPath="Label"
+                                                    SelectedValuePath="Key"
+                                                    SelectedValue="{PluginSettings Plugin=PlayniteAchievements, Path=DynamicAchievementsSortDirectionKey, Mode=TwoWay}" />
 
                                         <!-- SECTION: Show (TES OPTIONS details) -->
                                         <TextBlock Text="{DynamicResource LOCShow}"
@@ -4529,14 +4592,12 @@
                                                    Opacity="0.70"
                                                    Margin="0,15,0,10"/>
 
-                                        <ComboBoxEx SelectedValuePath="Tag"
-                                                    SelectedValue="{PluginSettings Plugin=AnikiHelper, Path=Options[TrophyFilter], Mode=TwoWay, TargetNullValue=All}"
-                                                    Margin="0,10,0,15"
-                                                    Height="46">
-                                            <ComboBoxItem Content="{DynamicResource LOCAll}" Tag="All"/>
-                                            <ComboBoxItem Content="{DynamicResource LOCUnlockedOnly}" Tag="Unlocked"/>
-                                            <ComboBoxItem Content="{DynamicResource LOCLockedOnly}" Tag="Locked"/>
-                                        </ComboBoxEx>
+                                        <ComboBoxEx Margin="0,10,0,15"
+                                                    Height="56"
+                                                    ItemsSource="{PluginSettings Plugin=PlayniteAchievements, Path=DynamicAchievementsFilterOptions}"
+                                                    DisplayMemberPath="Label"
+                                                    SelectedValuePath="Key"
+                                                    SelectedValue="{PluginSettings Plugin=PlayniteAchievements, Path=DynamicAchievementsFilterKey, Mode=TwoWay}" />
 
                                         <Border Height="1" Background="#22FFFFFF" Margin="0,18,0,16"/>
 
@@ -4633,8 +4694,19 @@
                             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.2"/>
-                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" From="-20" To="0" Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         From="0"
+                                                         To="1"
+                                                         Duration="0:0:0.25"/>
+
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                                         From="24"
+                                                         To="0"
+                                                         Duration="0:0:0.35">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
@@ -5389,7 +5461,7 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <!-- Title -->
-                                        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="Trophies options" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHighlightBrush}" FontSize="26" HorizontalAlignment="Center" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                                        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Text="{DynamicResource LOCTrophiesoptions}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHighlightBrush}" FontSize="26" HorizontalAlignment="Center" FontWeight="SemiBold" Margin="0,0,0,12"/>
 
                                         <CheckBoxEx x:Name="CloseTrophiesMenu" Grid.Column="1" Width="50" Height="50" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-10,0,0" Style="{DynamicResource CheckBoxClose}" IsChecked="{Binding IsChecked, ElementName=TrophiesMenuToggle, Mode=TwoWay}">
                                             <CheckBoxEx.Content>
@@ -5525,11 +5597,12 @@
                                           Content="{DynamicResource LOCButtonPrompt_Navigate}" />
 
                                 <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                          Tag="B" Command="{Binding CloseCommand}"
+                                          Tag="CancelAction" Command="{Binding CloseCommand}"
                                           Content="{DynamicResource LOCBackLabel}" />
 
                             </StackPanel>
-                        </Grid>                    </Grid>
+                        </Grid>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding ElementName=PART_ViewHost, Path=ActualWidth}" Value="1728">
                             <Setter Property="Margin" Value="-140,80,30,80" />
@@ -5569,11 +5642,18 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                         From="0" To="1"
-                                                         Duration="0:0:0.2"/>
-                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                                                         From="-20" To="0"
-                                                         Duration="0:0:0.2"/>
+                                                         From="0"
+                                                         To="1"
+                                                         Duration="0:0:0.25"/>
+
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                                         From="24"
+                                                         To="0"
+                                                         Duration="0:0:0.35">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
@@ -5733,7 +5813,7 @@
 
                                             <TextBlock Grid.Column="0"
                                                        VerticalAlignment="Center"
-                                                       Text="DLC List"
+                                                       Text="{DynamicResource LOCDLCList}"
                                                        FontSize="26"
                                                        Style="{DynamicResource TextBlockBaseStyle}" />
 
@@ -5951,7 +6031,7 @@
                                                                             </Style.Triggers>
                                                                         </Style>
                                                                     </Border.Style>
-                                                                    <TextBlock Text="Discount"
+                                                                    <TextBlock Text="{DynamicResource LOCDiscount}"
                                                                                FontSize="15"
                                                                                Style="{DynamicResource TextBlockBaseStyle}" />
                                                                 </Border>
@@ -6188,7 +6268,7 @@
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </Border.Style>
-                                                            <TextBlock Text="Discount"
+                                                            <TextBlock Text="{DynamicResource LOCDiscount}"
                                                                        FontSize="18"
                                                                        Style="{DynamicResource TextBlockBaseStyle}" />
                                                         </Border>
@@ -6314,7 +6394,7 @@
                                           Content="{DynamicResource LOCButtonPrompt_Navigate}" />
 
                                 <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                          Tag="B" Command="{Binding CloseCommand}"
+                                          Tag="CancelAction" Command="{Binding CloseCommand}"
                                           Content="{DynamicResource LOCBackLabel}" />
 
                             </StackPanel>
@@ -6337,6 +6417,240 @@
                 <Setter Property="Margin" Value="-320,0,-320,0"/>
             </DataTrigger>
         </Style.Triggers>
+    </Style>
+
+    <Style x:Key="DuplicateHiderVersionsWindowStyle" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+
+                    <Grid KeyboardNavigation.TabNavigation="Contained"
+                          KeyboardNavigation.DirectionalNavigation="Contained"
+                          KeyboardNavigation.ControlTabNavigation="Contained">
+
+                        <Grid.Resources>
+
+                            <!-- Button style local pour les lignes DuplicateHider -->
+                            <Style x:Key="DuplicateHiderVersionButtonStyle"
+                                   BasedOn="{StaticResource {x:Type ButtonEx}}"
+                                   TargetType="ButtonEx">
+
+                                <Setter Property="Margin" Value="0,0,0,12"/>
+                                <Setter Property="Height" Value="70"/>
+                                <Setter Property="Width" Value="560"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid Background="{TemplateBinding Background}">
+
+                                                <Border x:Name="MainBackground"
+                                                        CornerRadius="{DynamicResource Corner}"
+                                                        Visibility="Collapsed"
+                                                        Background="{DynamicResource ButtonBackgroundFocus}"/>
+
+                                                <Border x:Name="MainBorder"
+                                                        Margin="0"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                        BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                        BorderThickness="3"
+                                                        CornerRadius="{DynamicResource Corner}"
+                                                        Visibility="Collapsed"/>
+
+                                                <!-- Important : ContentPresenter direct, pas dans un TextBlock -->
+                                                <ContentPresenter Margin="22,0"
+                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                  RecognizesAccessKey="True"/>
+
+                                            </Grid>
+
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsFocused" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible" TargetName="MainBorder"/>
+                                                    <Setter Property="Visibility" Value="Visible" TargetName="MainBackground"/>
+                                                </Trigger>
+
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible" TargetName="MainBorder"/>
+                                                    <Setter Property="Visibility" Value="Visible" TargetName="MainBackground"/>
+                                                </Trigger>
+
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Opacity" Value="0.45"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+
+                                <Style.Triggers>
+                                    <!-- La version actuelle reste visible mais pas sélectionnable -->
+                                    <DataTrigger Binding="{Binding IsCurrent}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Setter Property="Opacity" Value="0.55"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+
+                            <!-- Badge Current -->
+                            <Style x:Key="DuplicateHiderCurrentBadgeStyle" TargetType="Border">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Setter Property="Height" Value="30"/>
+                                <Setter Property="Padding" Value="10,0"/>
+                                <Setter Property="CornerRadius" Value="15"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalAlignment" Value="Right"/>
+                                <Setter Property="Background" Value="#33FFFFFF"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsCurrent}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+
+                        </Grid.Resources>
+
+                        <!-- Fond assombri -->
+                        <Border Background="{DynamicResource SecondaryViewBackground}"
+                                Opacity="0.34"/>
+
+                        <Border Width="760"
+                                MaxHeight="520"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Padding="26"
+                                CornerRadius="{DynamicResource Corner}"
+                                Background="{DynamicResource BackgroundMenu}"
+                                BorderBrush="{DynamicResource MenuBorderBrush}"
+                                BorderThickness="2">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0"
+                                           Text="Select game version"
+                                           FontSize="34"
+                                           FontWeight="Bold"
+                                           Foreground="{DynamicResource TextBrush}"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,0,0,28"/>
+
+                                <ItemsControl Grid.Row="1"
+                                              ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=DuplicateHiderGameVersions}"
+                                              Focusable="False"
+                                              IsTabStop="False"
+                                              HorizontalAlignment="Center">
+
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Vertical"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <ButtonEx Style="{StaticResource DuplicateHiderVersionButtonStyle}"
+                                                      Command="{Binding SelectCommand}"
+                                                      Tag="{Binding GameId}">
+
+                                                <!-- 3 colonnes :
+                                                gauche = espace fantôme
+                                                centre = icône + label vraiment centré
+                                                droite = badge Current -->
+                                                <Grid HorizontalAlignment="Stretch"
+                                                      VerticalAlignment="Center">
+
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="125"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="125"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!-- Centre réel du bouton -->
+                                                    <StackPanel Grid.Column="1"
+                                                                Orientation="Horizontal"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center">
+
+                                                        <Image Source="{Binding Icon}"
+                                                               Width="30"
+                                                               Height="30"
+                                                               Stretch="Uniform"
+                                                               VerticalAlignment="Center"
+                                                               Margin="0,0,16,0"
+                                                               RenderOptions.BitmapScalingMode="Fant"/>
+
+                                                        <TextBlock Text="{Binding Label}"
+                                                                   FontSize="24"
+                                                                   FontWeight="SemiBold"
+                                                                   Foreground="{DynamicResource TextBrush}"
+                                                                   VerticalAlignment="Center"
+                                                                   MaxWidth="260"
+                                                                   TextTrimming="CharacterEllipsis"/>
+                                                    </StackPanel>
+
+                                                    <!-- Badge à droite, dans sa propre colonne -->
+                                                    <Border Grid.Column="2"
+                                                            Style="{StaticResource DuplicateHiderCurrentBadgeStyle}">
+
+                                                        <StackPanel Orientation="Horizontal"
+                                                                    VerticalAlignment="Center">
+
+                                                            <TextBlock Text="✓"
+                                                                       FontSize="15"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="{DynamicResource TextBrush}"
+                                                                       VerticalAlignment="Center"
+                                                                       Margin="0,0,6,0"/>
+
+                                                            <TextBlock Text="Current"
+                                                                       FontSize="13"
+                                                                       FontWeight="SemiBold"
+                                                                       Foreground="{DynamicResource TextBrush}"
+                                                                       VerticalAlignment="Center"/>
+                                                        </StackPanel>
+                                                    </Border>
+
+                                                </Grid>
+                                            </ButtonEx>
+
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <StackPanel Grid.Row="2"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Right"
+                                            Margin="0,22,0,0">
+
+                                    <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                              Tag="CancelAction"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=CloseTopWindowCommand}"
+                                              Content="{DynamicResource LOCBackLabel}"/>
+                                </StackPanel>
+
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 

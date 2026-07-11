@@ -91,29 +91,88 @@
                             <Setter Property="Margin" Value="0"/>
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                             <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ButtonEx">
                                         <Border x:Name="CardBorder"
+                                                Margin="10"
                                                 CornerRadius="22"
                                                 Background="{TemplateBinding Background}"
                                                 BorderBrush="{TemplateBinding BorderBrush}"
                                                 BorderThickness="{TemplateBinding BorderThickness}"
                                                 Padding="{TemplateBinding Padding}"
                                                 SnapsToDevicePixels="True"
-                                                Effect="{StaticResource ProfileCardShadow}">
+                                                Effect="{StaticResource ProfileCardShadow}"
+                                                RenderTransformOrigin="0.5,0.5">
+
+                                            <Border.RenderTransform>
+                                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                            </Border.RenderTransform>
+
                                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                         </Border>
 
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsKeyboardFocusWithin" Value="True">
+
                                                 <Setter TargetName="CardBorder"
                                                         Property="BorderBrush"
                                                         Value="{DynamicResource FocusGameBorderBrush}"/>
+
                                                 <Setter TargetName="CardBorder"
                                                         Property="BorderThickness"
-                                                        Value="2.5"/>
+                                                        Value="3"/>
+
+                                                <Trigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetName="CardBorder"
+                                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                                             To="1.018"
+                                                                             Duration="0:0:0.16">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <CubicEase EasingMode="EaseOut"/>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
+
+                                                            <DoubleAnimation Storyboard.TargetName="CardBorder"
+                                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                                             To="1.018"
+                                                                             Duration="0:0:0.16">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <CubicEase EasingMode="EaseOut"/>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.EnterActions>
+
+                                                <Trigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetName="CardBorder"
+                                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                                             To="1"
+                                                                             Duration="0:0:0.14">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <CubicEase EasingMode="EaseOut"/>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
+
+                                                            <DoubleAnimation Storyboard.TargetName="CardBorder"
+                                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                                             To="1"
+                                                                             Duration="0:0:0.14">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <CubicEase EasingMode="EaseOut"/>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </Trigger.ExitActions>
+
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -243,7 +302,7 @@
                           Opacity="0">
 
                         <Grid.RenderTransform>
-                            <TranslateTransform Y="40"/>
+                            <TranslateTransform Y="0"/>
                         </Grid.RenderTransform>
 
                         <Grid.Triggers>
@@ -251,11 +310,14 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                         From="0" To="1"
-                                                         Duration="0:0:0.30"/>
+                                                         From="0"
+                                                         To="1"
+                                                         Duration="0:0:0.25"/>
+
                                         <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                                         From="40" To="0"
-                                                         Duration="0:0:0.40">
+                                                         From="24"
+                                                         To="0"
+                                                         Duration="0:0:0.35">
                                             <DoubleAnimation.EasingFunction>
                                                 <CubicEase EasingMode="EaseOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -478,6 +540,12 @@
                                                 <Setter Property="Background" Value="{DynamicResource StatViewImage148}"/>
                                                 <Setter Property="Opacity" Value="0.1"/>
                                             </DataTrigger>
+
+                                            <!-- Rare / Lucky Mode background override -->
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="True">
+                                                <Setter Property="Background" Value="{DynamicResource StatViewImage150}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
@@ -506,7 +574,7 @@
                                                Foreground="{DynamicResource TextTitleStatViewBrush}"
                                                FontSize="40"
                                                FontWeight="SemiBold"/>
-                                    <TextBlock Text="Player identity and highlights"
+                                    <TextBlock Text="{DynamicResource LOCPlayerIdentity}"
                                                Style="{DynamicResource TextBlockBaseStyle}"
                                                Foreground="{DynamicResource TextTitleStatViewBrush}"
                                                FontSize="20"
@@ -662,25 +730,7 @@
                                                                 Background="Black"
                                                                 CornerRadius="75"/>
 
-                                                        <!-- fallback avatar rond -->
-                                                        <Border Width="150"
-                                                                Height="150"
-                                                                CornerRadius="75"
-                                                                HorizontalAlignment="Center"
-                                                                VerticalAlignment="Center">
-                                                            <Border.Style>
-                                                                <Style TargetType="Border"
-                                                                       BasedOn="{StaticResource SelectedAvatarBorderStyle}">
-                                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding ElementName=UserAvatar, Path=Source}" Value="{x:Null}">
-                                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
 
-                                                                </Style>
-                                                            </Border.Style>
-                                                        </Border>
 
                                                         <!-- image user masquée en rond -->
                                                         <Grid Width="150"
@@ -708,12 +758,14 @@
                                                                 </TextBlock.Style>
                                                             </TextBlock>
 
-                                                            <Image x:Name="UserAvatar"
-                                                                   Source="{Binding ElementName=ProfilePicturePath, Path=Text}"
-                                                                   Stretch="UniformToFill"
-                                                                   RenderOptions.BitmapScalingMode="Fant"
-                                                                   Width="150"
-                                                                   Height="150"/>
+                                                            <Control x:Name="UserAvatar"
+                                                                     Tag="{Binding ElementName=ProfilePicturePath, Path=Text}"
+                                                                     Width="150"
+                                                                     Height="150"
+                                                                     Template="{StaticResource SteamSelfAvatarTemplate}"
+                                                                     Focusable="False"
+                                                                     IsTabStop="False"
+                                                                     IsHitTestVisible="False"/>
                                                         </Grid>
 
                                                         <!-- contour rond -->
@@ -1121,11 +1173,19 @@
                                                                             CornerRadius="20,20,0,0"
                                                                             Background="{DynamicResource HubCardMaskImageBrush}" />
 
+                                                                    <TextBlock x:Name="ThisYearTopGameBackgroundPathText"
+                                                                               Text="{PluginSettings Plugin=AnikiHelper, Path=ThisYearTopGameBackgroundPath}"
+                                                                               Visibility="Collapsed"/>
+
                                                                     <Image x:Name="BgReal"
                                                                            RenderOptions.BitmapScalingMode="Fant"
                                                                            Height="346"
-                                                                           Stretch="UniformToFill"
-                                                                           Source="{PluginSettings Plugin=AnikiHelper, Path=ThisYearTopGameBackgroundPath}">
+                                                                           Stretch="UniformToFill">
+                                                                        <Image.Source>
+                                                                            <Binding ElementName="ThisYearTopGameBackgroundPathText"
+                                                                                     Path="Text"
+                                                                                     IsAsync="True"/>
+                                                                        </Image.Source>
                                                                         <Image.Style>
                                                                             <Style TargetType="Image">
                                                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -1402,11 +1462,19 @@
                                                                             CornerRadius="20,20,0,0"
                                                                             Background="{DynamicResource HubCardMaskImageBrush}" />
 
+                                                                    <TextBlock x:Name="ThisMonthTopGameBackgroundPathText"
+                                                                               Text="{PluginSettings Plugin=AnikiHelper, Path=ThisMonthTopGameBackgroundPath}"
+                                                                               Visibility="Collapsed"/>
+
                                                                     <Image x:Name="LastPlayedBg"
                                                                            RenderOptions.BitmapScalingMode="Fant"
                                                                            Height="346"
-                                                                           Stretch="UniformToFill"
-                                                                           Source="{PluginSettings Plugin=AnikiHelper, Path=ThisMonthTopGameBackgroundPath}">
+                                                                           Stretch="UniformToFill">
+                                                                        <Image.Source>
+                                                                            <Binding ElementName="ThisMonthTopGameBackgroundPathText"
+                                                                                     Path="Text"
+                                                                                     IsAsync="True"/>
+                                                                        </Image.Source>
                                                                         <Image.Style>
                                                                             <Style TargetType="Image">
                                                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -1624,13 +1692,20 @@
                                                                 <Border CornerRadius="22"
                                                                         Background="{DynamicResource BannerStatsBackgroundBrush}" />
 
+                                                                <TextBlock x:Name="HubRecentAddedBackgroundPathText"
+                                                                           Text="{PluginSettings Plugin=AnikiHelper, Path=HubRecentAddedBackgroundPath}"
+                                                                           Visibility="Collapsed"/>
                                                                 <!-- image -->
                                                                 <Grid ClipToBounds="True">
-                                                                    <Image Source="{PluginSettings Plugin=AnikiHelper, Path=HubRecentAddedBackgroundPath}"
-                                                                           Stretch="UniformToFill"
+                                                                    <Image Stretch="UniformToFill"
                                                                            VerticalAlignment="Center"
                                                                            Opacity="1"
                                                                            RenderOptions.BitmapScalingMode="Fant">
+                                                                        <Image.Source>
+                                                                            <Binding ElementName="HubRecentAddedBackgroundPathText"
+                                                                                     Path="Text"
+                                                                                     IsAsync="True"/>
+                                                                        </Image.Source>
                                                                         <Image.Style>
                                                                             <Style TargetType="Image">
                                                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -1735,13 +1810,21 @@
                                                                 <Border CornerRadius="22"
                                                                         Background="{DynamicResource BannerStatsBackgroundBrush}" />
 
+                                                                <TextBlock x:Name="RecentPlayedBackgroundPathText"
+                                                                           Text="{PluginSettings Plugin=AnikiHelper, Path=RecentPlayedBackgroundPath}"
+                                                                           Visibility="Collapsed"/>
+
                                                                 <!-- image -->
                                                                 <Grid ClipToBounds="True">
-                                                                    <Image Source="{PluginSettings Plugin=AnikiHelper, Path=RecentPlayedBackgroundPath}"
-                                                                           Stretch="UniformToFill"
+                                                                    <Image Stretch="UniformToFill"
                                                                            VerticalAlignment="Center"
                                                                            Opacity="0.95"
                                                                            RenderOptions.BitmapScalingMode="Fant">
+                                                                        <Image.Source>
+                                                                            <Binding ElementName="RecentPlayedBackgroundPathText"
+                                                                                     Path="Text"
+                                                                                     IsAsync="True"/>
+                                                                        </Image.Source>
                                                                         <Image.Style>
                                                                             <Style TargetType="Image">
                                                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -1854,13 +1937,22 @@
                                                                 <Border CornerRadius="22"
                                                                         Background="{DynamicResource BannerStatsBackgroundBrush}" />
 
+                                                                <TextBlock x:Name="HubNeverPlayedBackgroundPathText"
+                                                                           Text="{PluginSettings Plugin=AnikiHelper, Path=HubNeverPlayedBackgroundPath}"
+                                                                           Visibility="Collapsed"/>
+
+
                                                                 <!-- image -->
                                                                 <Grid ClipToBounds="True">
-                                                                    <Image Source="{PluginSettings Plugin=AnikiHelper, Path=HubNeverPlayedBackgroundPath}"
-                                                                           Stretch="UniformToFill"
+                                                                    <Image Stretch="UniformToFill"
                                                                            VerticalAlignment="Center"
                                                                            Opacity="1"
                                                                            RenderOptions.BitmapScalingMode="Fant">
+                                                                        <Image.Source>
+                                                                            <Binding ElementName="HubNeverPlayedBackgroundPathText"
+                                                                                     Path="Text"
+                                                                                     IsAsync="True"/>
+                                                                        </Image.Source>
                                                                         <Image.Style>
                                                                             <Style TargetType="Image">
                                                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -2118,7 +2210,7 @@
                                                     </Grid.RowDefinitions>
 
                                                     <TextBlock Grid.Row="0"
-                                                               Text="Rarest achievement unlocked"
+                                                               Text="{DynamicResource LOCRarestAchievementUnlocked}"
                                                                HorizontalAlignment="Center"
                                                                Foreground="{DynamicResource TextHubBannerCardTitleBrush}"
                                                                Style="{DynamicResource TextBlockBaseStyle}"
@@ -2283,14 +2375,14 @@
                                                             <StackPanel VerticalAlignment="Center"
                                                                         HorizontalAlignment="Center"
                                                                         Margin="42">
-                                                                <TextBlock Text="PlayniteAchievements required"
+                                                                <TextBlock Text="{DynamicResource LOCPlayniteAchievementsRequired}"
                                                                            Style="{DynamicResource TextBlockBaseStyle}"
                                                                            Foreground="{DynamicResource TextHubBannerCardTitleBrush}"
                                                                            FontSize="26"
                                                                            FontWeight="Bold"
                                                                            TextAlignment="Center"/>
 
-                                                                <TextBlock Text="Migrate to PlayniteAchievements to unlock advanced achievements features."
+                                                                <TextBlock Text="{DynamicResource LOCMigrateToPlayniteAchievements}"
                                                                            Style="{DynamicResource TextBlockBaseStyle}"
                                                                            Foreground="{DynamicResource TextHubBannerCardTitleBrush}"
                                                                            FontSize="18"
@@ -2324,14 +2416,14 @@
                                                             <StackPanel VerticalAlignment="Center"
                                                                         HorizontalAlignment="Center"
                                                                         Margin="42">
-                                                                <TextBlock Text="Rarest achievement not available yet"
+                                                                <TextBlock Text="{DynamicResource LOCRarestAchievementNot}"
                                                                            Style="{DynamicResource TextBlockBaseStyle}"
                                                                            Foreground="{DynamicResource TextHubBannerCardTitleBrush}"
                                                                            FontSize="26"
                                                                            FontWeight="Bold"
                                                                            TextAlignment="Center"/>
 
-                                                                <TextBlock Text="Play a game or refresh achievement memories to activate this card."
+                                                                <TextBlock Text="{DynamicResource LOCPlayGameRefresh}"
                                                                            Style="{DynamicResource TextBlockBaseStyle}"
                                                                            Foreground="{DynamicResource TextHubBannerCardTitleBrush}"
                                                                            FontSize="18"
@@ -2758,9 +2850,12 @@
 
                                                                         <Border Background="#181A1E"/>
 
-                                                                        <Image Source="{Binding DisplayThumbnailPath}"
-                                                                               Stretch="UniformToFill"
+                                                                        <Image Stretch="UniformToFill"
                                                                                RenderOptions.BitmapScalingMode="Fant">
+                                                                            <Image.Source>
+                                                                                <Binding Path="DisplayThumbnailPath"
+                                                                                         IsAsync="True"/>
+                                                                            </Image.Source>
                                                                             <Image.Style>
                                                                                 <Style TargetType="Image">
                                                                                     <Setter Property="Visibility" Value="Visible"/>

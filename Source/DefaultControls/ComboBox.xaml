@@ -7,6 +7,103 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Height" Value="50" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+
+                    <Grid Background="{TemplateBinding Background}">
+                        <Border x:Name="StaticBorder" Margin="0,0,0,0" BorderThickness="2" Opacity="0.5" CornerRadius="{DynamicResource Corner}"
+                                BorderBrush="{DynamicResource NoFocusBorderButtonBrush}" />
+                        <Border x:Name="MainBackground" Margin="0" CornerRadius="{DynamicResource Corner}" Background="{DynamicResource ButtonBackgroundFocus}" Tag="False" Visibility="Collapsed" />
+                        <Border x:Name="MainBorder" Margin="0" BorderThickness="3" CornerRadius="{DynamicResource Corner}" BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                Tag="False" Visibility="Collapsed" />
+                        <Border x:Name="FlashMenuBorder" Margin="0" CornerRadius="{DynamicResource Corner}" Style="{DynamicResource AnimatedFlashMenu}"
+                                Tag="False" Visibility="Collapsed">
+                        </Border>
+                        <ToggleButton x:Name="ToggleButton" Focusable="False" ClickMode="Press"
+                                      VerticalAlignment="Center" Margin="20,0,20,0"
+                                      IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                    <DockPanel LastChildFill="False" Background="Transparent">
+                                        <Viewbox DockPanel.Dock="Right" Height="18">
+                                            <TextBlock Text="&#xE972;" FontFamily="{DynamicResource FontIcons}" FontWeight="Regular"
+                                                       Foreground="{DynamicResource SelectionLightBrush}"
+                                                       VerticalAlignment="Center" />
+                                        </Viewbox>
+                                    </DockPanel>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+
+                        <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
+                                   IsHitTestVisible="False"
+                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                   VerticalAlignment="Center"
+                                   FontSize="22"
+                                   FontWeight="Regular"
+                                   x:Name="TextContent"
+                                   Margin="10,0,60,0">
+                            <ContentPresenter IsHitTestVisible="False"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"/>
+                        </TextBlock>
+
+                        <Popup x:Name="Popup" IsOpen="{TemplateBinding IsDropDownOpen}"
+                               Placement="Bottom" Focusable="False" AllowsTransparency="True">
+                            <Grid MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                  MinWidth="{TemplateBinding ActualWidth}"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <Border CornerRadius="{DynamicResource Corner}" Padding="2" BorderBrush="{DynamicResource ComboBoxBorderBrush}" BorderThickness="2"
+                                        Background="{DynamicResource BackgroundMenu}" >
+                                    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                                                  VerticalScrollBarVisibility="Visible">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Grid>
+                        </Popup>
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Tag" Value="True" TargetName="MainBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="StaticBorder" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Tag" Value="True" TargetName="MainBackground" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBackground" />
+                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
+                            <Setter Property="Tag" Value="True" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
+                            <Setter Property="Visibility" Value="Visible" TargetName="FlashMenuBorder" />
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="StaticBorder" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ComboBoxRightStyle" TargetType="ComboBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Height" Value="50" />
         <Setter Property="HorizontalContentAlignment" Value="Right" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">

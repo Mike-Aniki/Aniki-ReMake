@@ -156,17 +156,6 @@
                                                           ClipToBounds="False"
                                                           SnapsToDevicePixels="True">
 
-                                                        <Border x:Name="FocusGlow"
-                                                                CornerRadius="{DynamicResource Corner}"
-                                                                Background="{DynamicResource GlowFocusBrush}"
-                                                                Opacity="0"
-                                                                Margin="-4"
-                                                                CacheMode="BitmapCache">
-                                                            <Border.Effect>
-                                                                <BlurEffect Radius="12" RenderingBias="Performance"/>
-                                                            </Border.Effect>
-                                                        </Border>
-
                                                         <Grid x:Name="ShadowLayer"
                                                               IsHitTestVisible="False"
                                                               Opacity="0.55">
@@ -305,7 +294,6 @@
                                     <Setter Property="Visibility" Value="Visible" TargetName="MainBorder"/>
                                     <Setter Property="Opacity" Value="1" TargetName="MainBorder"/>
                                     <Setter Property="Visibility" Value="Visible" TargetName="FlashFocus"/>
-                                    <Setter TargetName="FocusGlow" Property="Opacity" Value="0.25"/>
                                     <Setter TargetName="DimGames" Property="Opacity" Value="0"/>
                                     <Setter TargetName="FocusedTitleOverlay" Property="Opacity" Value="1"/>
                                 </Trigger>
@@ -315,7 +303,6 @@
                                     <Setter Property="Tag" Value="False" TargetName="MainBorder"/>
                                     <Setter Property="Visibility" Value="Collapsed" TargetName="MainBorder"/>
                                     <Setter Property="Visibility" Value="Collapsed" TargetName="FlashFocus"/>
-                                    <Setter TargetName="FocusGlow" Property="Opacity" Value="0"/>
                                     <Setter TargetName="DimGames" Property="Opacity" Value="0.12"/>
                                     <Setter TargetName="FocusedTitleOverlay" Property="Opacity" Value="0"/>
                                 </Trigger>
@@ -384,12 +371,7 @@
                                     </MultiTrigger.EnterActions>
                                 </MultiTrigger>
 
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PerformanceMode]}" Value="True"/>
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter TargetName="FocusGlow" Property="Opacity" Value="0"/>
-                                </MultiDataTrigger>
+
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
 
@@ -449,6 +431,7 @@
                           VerticalAlignment="Stretch"
                           Opacity="0">
 
+
                         <Grid.RenderTransform>
                             <TranslateTransform Y="0"/>
                         </Grid.RenderTransform>
@@ -475,18 +458,235 @@
                             </EventTrigger>
                         </Grid.Triggers>
 
+
                         <Grid IsHitTestVisible="False">
                             <Border Background="{DynamicResource SecondaryViewBackground}"/>
 
-                            <Border Background="{DynamicResource WelcomeImage1}" Opacity="0.20">
+                            <Border>
                                 <Border.OpacityMask>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                        <GradientStop Color="#00FFFFFF" Offset="0"/>
-                                        <GradientStop Color="#FFFFFFFF" Offset="0.28"/>
-                                        <GradientStop Color="#FFFFFFFF" Offset="0.76"/>
-                                        <GradientStop Color="#00FFFFFF" Offset="1"/>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                                        <GradientStop Color="#80FFFFFF" Offset="0.30"/>
+                                        <GradientStop Color="#80FFFFFF" Offset="0.60"/>
+                                        <GradientStop Color="#FFFFFFFF" Offset="1"/>
                                     </LinearGradientBrush>
                                 </Border.OpacityMask>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                        <Setter Property="Tag" Value="{DynamicResource BackgroundImageIndex}" />
+                                        <Setter Property="Background" Value="{DynamicResource WelcomeImage1}"/>
+                                        <Style.Triggers>
+
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="100">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage100}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="101">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage101}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="102">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage102}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="103">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage103}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="104">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage104}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="105">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage105}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="106">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage106}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="107">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage107}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="108">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage108}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="109">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage109}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="110">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage110}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="111">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage111}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="112">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage112}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="113">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage113}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="114">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage114}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="115">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage115}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="116">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage116}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="117">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage117}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="118">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage118}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="119">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage119}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="120">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage120}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="121">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage121}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="122">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage122}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="123">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage123}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="124">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage124}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="125">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage125}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="126">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage126}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="127">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage127}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="128">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage128}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="129">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage129}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="130">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage130}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="131">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage131}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="132">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage132}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="133">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage133}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="134">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage134}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="135">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage135}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="136">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage136}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="137">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage137}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="138">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage138}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="139">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage139}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="140">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage140}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="141">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage141}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="142">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage142}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="143">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage143}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="144">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage144}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="145">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage145}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="146">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage146}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="147">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage147}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="148">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage148}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="149">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage149}"/>
+                                                <Setter Property="Opacity" Value="0.2"/>
+                                            </DataTrigger>
+
+                                            <!-- Rare / Lucky Mode background override -->
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="True">
+                                                <Setter Property="Background" Value="{DynamicResource MediaViewImage150}"/>
+                                                <Setter Property="Opacity" Value="0.5"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                             </Border>
 
                             <Border Background="{DynamicResource ShadeBackgroundBrush}" Opacity="0.88"/>
@@ -776,6 +976,10 @@
                                                 Orientation="Horizontal"
                                                 VerticalAlignment="Center"
                                                 Opacity="0.75">
+
+                                        <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                                  Tag="Y"
+                                                  Content="{DynamicResource LOCMediaGalleryRefreshMedia}" />
 
                                         <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
                                                   Tag="B"

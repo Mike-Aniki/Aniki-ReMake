@@ -161,6 +161,36 @@ Presets:
         Preview: Themes Option\10.Preview\Theme Color\32.PopGreen.jpg
         Files:
           - Themes Option\2.Interface\ThemeColors\32.PopGreen.xaml
+      AuroraPrestige:
+        Name: Aurora Prestige
+        Preview: Themes Option\10.Preview\Theme Color\36.AuroraPrestige.jpg
+        Files:
+          - Themes Option\2.Interface\ThemeColors\36.AuroraPrestige.xaml
+      VermilionPrestige:
+        Name: Vermilion Prestige
+        Preview: Themes Option\10.Preview\Theme Color\38.VermilionPrestige.jpg
+        Files:
+          - Themes Option\2.Interface\ThemeColors\38.VermilionPrestige.xaml
+      RosePrestige:
+        Name: Rose Prestige
+        Preview: Themes Option\10.Preview\Theme Color\37.RosePrestige.jpg
+        Files:
+          - Themes Option\2.Interface\ThemeColors\37.RosePrestige.xaml
+      CarbonPrestige:
+        Name: Carbon Prestige
+        Preview: Themes Option\10.Preview\Theme Color\39.CarbonPrestige.jpg
+        Files:
+          - Themes Option\2.Interface\ThemeColors\39.CarbonPrestige.xaml
+      EmeraldPrestige:
+        Name: Emerald Prestige
+        Preview: Themes Option\10.Preview\Theme Color\40.EmeraldPrestige.jpg
+        Files:
+          - Themes Option\2.Interface\ThemeColors\40.EmeraldPrestige.xaml
+      SapphirePrestige:
+        Name: Sapphire Prestige
+        Preview: Themes Option\10.Preview\Theme Color\41.SapphirePrestige.jpg
+        Files:
+          - Themes Option\2.Interface\ThemeColors\41.SapphirePrestige.xaml
       Iris:
         Name: Iris (by Meepmeep189)
         Preview: Themes Option\10.Preview\Theme Color\34.Iris.jpg
@@ -319,7 +349,7 @@ Presets:
         Files:
           - Themes Option\2.Interface\VisualPack\114.EldenRing.xaml
       DarkSoul:
-        Name: Dark Soul
+        Name: Dark Souls
         Preview: Themes Option\2.Interface\Images\VisualPack\Previews\117.DarkSoul.png
         Files:
           - Themes Option\2.Interface\VisualPack\117.DarkSoul.xaml
@@ -1349,6 +1379,15 @@ Variables:
     Default: User Name
     Category: Appearance
 
+  UseSteamAvatar:
+    Title: Use Steam profile avatar
+    LocKey: LOCUseSteamAvatar
+    Type: Boolean
+    Default: false
+    Category: Appearance
+    Description: Uses your Steam profile avatar before the Extra Metadata profile picture and the selected built-in avatar. If the Steam avatar is unavailable, the normal avatar priority is kept.
+    DescriptionLocKey: LOCUseSteamAvatarDesc
+
   Corner:
     Title: Interface corner radius
     Description: Adjusts how rounded the interface panels, buttons, and game covers look. Lower values are sharper, higher values are more rounded.
@@ -1540,6 +1579,19 @@ Variables:
     DescriptionLocKey: LOCDetailedSideInfoPanelDesc
     Preview: Themes Option\10.Preview\DetailedSideInfoPanel.jpg
 
+  FeaturesSteamMain:
+    Title: Show Steam feature icons
+    LocKey: LOCFeaturesSteamMain
+    Type: Boolean
+    Default: false
+    Category: Main View
+    DependsOn: DetailedSideInfoPanel
+    DependsOnValue: true
+    AutoDisableWhenDependencyMissing: true
+    Description: Shows Steam feature icons on the main view. Requires the detailed side info panel.
+    DescriptionLocKey: LOCFeaturesSteamMainDesc
+    Preview: Themes Option\10.Preview\FeaturesSteamMain.jpg
+
   Title_VisualEffects:
     Title: Visual Effects
     LocKey: LOCVisualEffectsHeader
@@ -1574,7 +1626,7 @@ Variables:
     Title: Animate game logo
     LocKey: LOCGameLogoAnimationOnMainView
     Type: Boolean
-    Default: true
+    Default: false
     NeedRestart: true
     Category: Main View
     Description: Adds a subtle animation to the selected game logo on the main view. Disable this on very low-end PCs if the interface feels less smooth.
@@ -1587,6 +1639,16 @@ Variables:
     Type: Header
     HeaderKind: Section
     Category: Main View
+
+  ShowUPSNotification:
+    Title: Show UPS Music Notification
+    LocKey: LOCShowUPSNotification
+    Type: Boolean
+    Default: true
+    Category: Main View
+    Description: Shows a quick notification when UPS Radio mode is enabled and the currently playing track changes.
+    DescriptionLocKey: LOCShowUPSNotificationDesc
+    Preview: Themes Option\10.Preview\ShowUPSNotification.jpg
 
   ShowToolsButton:
     Title: Show tools button on top menu
@@ -1648,6 +1710,29 @@ Variables:
     DescriptionLocKey: LOCPlatformBannerDesc
     Preview: Themes Option\10.Preview\PlatformBanner.jpg
 
+  PlatformBannerOverlay:
+    Title: Place platform banner over cover art
+    LocKey: LOCPlatformBannerOverlay
+    Type: Boolean
+    Default: false
+    Category: Main View
+    DependsOn: PlatformBanner
+    DependsOnValue: true
+    AutoDisableWhenDependencyMissing: true
+    Description: Places platform banners over the cover art instead of adding a separate banner row above the cover. Requires platform banners to be enabled.
+    DescriptionLocKey: LOCPlatformBannerOverlayDesc
+    Preview: Themes Option\10.Preview\PlatformBannerOverlay.jpg
+
+  CoverLogoBadge:
+    Title: Show logo on covers
+    LocKey: LOCCoverLogoBadge
+    Type: Boolean
+    Default: false
+    Category: Main View
+    Description: Shows a small source/platform logo at the bottom-right of game covers. Images are loaded from Icons\Logo using the source name first, then the first platform name as fallback.
+    DescriptionLocKey: LOCCoverLogoBadgeDesc
+    Preview: Themes Option\10.Preview\CoverLogoBadge.jpg
+
   SuccessOnMainMenu:
     Title: Show achievement badge
     LocKey: LOCAchievementBadgeOnMainView
@@ -1667,6 +1752,16 @@ Variables:
     Description: Shows a source badge at the top of the main view with the game source logo.
     DescriptionLocKey: LOCSourceLogoOnMainScreenDesc
     Preview: Themes Option\10.Preview\SourceLogoOnMainScreen.jpg
+
+  FavoriteCapsule:
+    Title: Show favorite badge
+    LocKey: LOCFavoriteCapsuleOnMainView
+    Type: Boolean
+    Default: true
+    Category: Main View
+    Description: Shows a favorite badge on the main view when the selected game is marked as favorite.
+    DescriptionLocKey: LOCFavoriteCapsuleOnMainViewDesc
+    Preview: Themes Option\10.Preview\FavoriteCapsule.jpg
 
   AgeRatingOnMainScreen:
     Title: Show age rating badge
@@ -1688,17 +1783,6 @@ Variables:
     Description: Shows a completion status banner on game covers, such as New, Playing, Completed, based on your Playnite completion status settings.
     DescriptionLocKey: LOCCompletionStatusOnGameCoverDesc
     Preview: Themes Option\10.Preview\CompletionStatus.jpg
-
-
-  FeaturesSteamMain:
-    Title: Show Steam feature icons
-    LocKey: LOCFeaturesSteamMain
-    Type: Boolean
-    Default: false
-    Category: Main View
-    Description: Shows Steam feature icons on the main view, based on the game’s Features field in Playnite.
-    DescriptionLocKey: LOCFeaturesSteamMainDesc
-    Preview: Themes Option\10.Preview\FeaturesSteamMain.jpg
 
 
   MainDesc:
@@ -1983,15 +2067,14 @@ Variables:
     DescriptionLocKey: LOCAnimationBackgroundInfo
 
   SteamBanner:
-    Title: Steam banner compatibility mode
-    LocKey: LOCSteamBanner
+    Title: SteamGridDB Hero compatibility mode
+    LocKey: LOCSteamGridDBHeroMode
     Type: Boolean
     Default: false
     Category: Backgrounds & Videos
-    Description: Adapts the main view layout for wide Steam banner images and automatically shows the game list frame background for a cleaner banner layout. Some layout options may not apply in this mode.
-    DescriptionLocKey: LOCSteamBannerDesc
+    Description: Improves compatibility with SteamGridDB Hero images. When enabled, game backgrounds are displayed in Uniform mode instead of UniformToFill, so the full image is visible without heavy zoom or cropping. A lower screen shade is also added to keep the bottom area clean.
+    DescriptionLocKey: LOCSteamGridDBHeroModeDesc
     Preview: Themes Option\10.Preview\SteamBanner.jpg
-
 
   TrailerOnMainView:
     Title: Show trailer on main view
@@ -2055,6 +2138,7 @@ Variables:
     Category: Achievements
     Description: Displays your Gamerscore instead of your achievement level throughout the theme.
     DescriptionLocKey: LOCGamerscoreInsteadOfLevelDesc
+    Preview: Themes Option\10.Preview\UseGamerscoreInsteadOfLevel.jpg
 
   LogoTrophy:
     Title: Show game logo instead of title
@@ -2064,6 +2148,7 @@ Variables:
     Category: Achievements
     Description: Displays the game logo instead of the game title on the game achievements screen.
     DescriptionLocKey: LOCLogoInTrophyDesc
+    Preview: Themes Option\10.Preview\LogoTrophy.jpg
 
   ShowHiddenAchievements:
     Title: Show hidden achievements by default
