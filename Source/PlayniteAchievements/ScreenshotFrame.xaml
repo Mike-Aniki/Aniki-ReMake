@@ -1,0 +1,245 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <DataTemplate x:Key="PlayAch.Template.ScreenshotFrame">
+
+        <Grid SnapsToDevicePixels="True">
+
+            <!-- Bottom fade -->
+            <Rectangle VerticalAlignment="Bottom"
+                       Height="460">
+                <Rectangle.Fill>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#00000000" Offset="0.00"/>
+                        <GradientStop Color="#50000000" Offset="0.12"/>
+                        <GradientStop Color="#85000000" Offset="0.28"/>
+                        <GradientStop Color="#C0000000" Offset="0.50"/>
+                        <GradientStop Color="#E6000000" Offset="0.74"/>
+                        <GradientStop Color="#FF000000" Offset="1.00"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <!-- Bottom content -->
+            <Grid VerticalAlignment="Bottom"
+                  Margin="42,0,42,34">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="96"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="110"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Left trophy icon -->
+                <Border Grid.Column="0"
+                        Width="92"
+                        Height="92"
+                        CornerRadius="8"
+                        Background="#22000000"
+                        BorderBrush="#66FFFFFF"
+                        BorderThickness="1"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Left"
+                        ClipToBounds="True">
+                    <Image Source="{Binding IconPath}"
+                           Stretch="UniformToFill"
+                           RenderOptions.BitmapScalingMode="Fant"/>
+                </Border>
+
+                <!-- Title + description -->
+                <StackPanel Grid.Column="1"
+                            Margin="16,0,18,2"
+                            VerticalAlignment="Bottom">
+
+                    <TextBlock Text="{Binding TitleText}"
+                               Foreground="White"
+                               FontSize="30"
+                               FontWeight="Bold"
+                               TextTrimming="CharacterEllipsis"
+                               TextWrapping="NoWrap"/>
+
+                    <TextBlock Text="{Binding Description}"
+                               Foreground="#E6FFFFFF"
+                               FontSize="20"
+                               FontWeight="SemiBold"
+                               Margin="0,6,0,0"
+                               TextWrapping="Wrap"
+                               TextTrimming="CharacterEllipsis"
+                               MaxHeight="56"/>
+
+                    <!-- unlock date and time -->
+                    <Grid Margin="0,7,0,0">
+
+                        <!-- Date and time -->
+                        <TextBlock Foreground="#BFFFFFFF"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="NoWrap">
+
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasUnlockTime, Mode=OneWay}"
+                                                     Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+
+                            <Run Text="{DynamicResource LOCPlayAchUnlockedOn}"/>
+                            <Run Text="{Binding UnlockDateText, Mode=OneWay}"/>
+                            <Run Text="{DynamicResource LOCPlayAchAt}"/>
+                            <Run Text="{Binding UnlockTimeText, Mode=OneWay}"/>
+                        </TextBlock>
+
+                        <!-- Date only -->
+                        <TextBlock Foreground="#BFFFFFFF"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="NoWrap">
+
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasUnlockTime, Mode=OneWay}"
+                                                     Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+
+                            <Run Text="{DynamicResource LOCPlayAchUnlockedOn}"/>
+                            <Run Text="{Binding UnlockDateText, Mode=OneWay}"/>
+                        </TextBlock>
+
+
+                    </Grid>
+
+                </StackPanel>
+
+                <!-- Right rarity trophy -->
+                <Grid Grid.Column="2"
+                      Width="100"
+                      Height="100"
+                      HorizontalAlignment="Right"
+                      VerticalAlignment="Bottom">
+
+                    <!-- Bronze / Common -->
+                    <Image Source="{ThemeFile 'Images/Bronze.png'}"
+                           Width="92"
+                           Height="92"
+                           Stretch="Uniform"
+                           RenderOptions.BitmapScalingMode="Fant">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                            <Condition Binding="{Binding Rarity}" Value="Common"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+
+                    <!-- Silver / Uncommon -->
+                    <Image Source="{ThemeFile 'Images/Argent.png'}"
+                           Width="92"
+                           Height="92"
+                           Stretch="Uniform"
+                           RenderOptions.BitmapScalingMode="Fant">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                            <Condition Binding="{Binding Rarity}" Value="Uncommon"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+
+                    <!-- Gold / Rare -->
+                    <Image Source="{ThemeFile 'Images/Or.png'}"
+                           Width="92"
+                           Height="92"
+                           Stretch="Uniform"
+                           RenderOptions.BitmapScalingMode="Fant">
+                        <Image.Effect>
+                            <DropShadowEffect Color="#FFD54A"
+                                              BlurRadius="22"
+                                              ShadowDepth="0"
+                                              Opacity="0.90"/>
+                        </Image.Effect>
+
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                            <Condition Binding="{Binding Rarity}" Value="Rare"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </MultiDataTrigger>
+
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                            <Condition Binding="{Binding Rarity}" Value="UltraRare"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+
+                    <!-- Platinum / Capstone -->
+                    <Image Source="{ThemeFile 'Images/platinum.png'}"
+                           Width="92"
+                           Height="92"
+                           Stretch="Uniform"
+                           RenderOptions.BitmapScalingMode="Fant">
+                        <Image.Effect>
+                            <DropShadowEffect Color="#E7F1FF"
+                                              BlurRadius="24"
+                                              ShadowDepth="0"
+                                              Opacity="0.95"/>
+                        </Image.Effect>
+
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsCapstone}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+
+                </Grid>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

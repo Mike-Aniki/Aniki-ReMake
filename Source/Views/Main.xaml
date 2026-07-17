@@ -49,6 +49,7 @@
         <ResourceDictionary Source="{ThemeFile 'Views/AdditionalViews/AchievementsViewOverlay.xaml'}" />
         <ResourceDictionary Source="{ThemeFile 'Views/AdditionalViews/GamepadTesterView.xaml'}" />
         <ResourceDictionary Source="{ThemeFile 'PlayniteAchievements/AchievementToast.xaml'}" />
+        <ResourceDictionary Source="{ThemeFile 'PlayniteAchievements/ScreenshotFrame.xaml'}" />
 
     </ResourceDictionary.MergedDictionaries>
 
@@ -591,10 +592,11 @@
                                     <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
                                         <Setter Property="Foreground" Value="White" />
                                         <Style.Triggers>
-                                            <Trigger Property="Visibility" Value="Visible">
+                                            <Trigger Property="IsVisible" Value="True">
                                                 <Trigger.EnterActions>
                                                     <BeginStoryboard x:Name="PulseSB">
-                                                        <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                                                        <Storyboard RepeatBehavior="Forever"
+                                                                    AutoReverse="True">
                                                             <DoubleAnimation Storyboard.TargetProperty="Opacity"
                                                                              From="1"
                                                                              To="0.28"
@@ -602,10 +604,9 @@
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </Trigger.EnterActions>
-                                            </Trigger>
-                                            <Trigger Property="Visibility" Value="Collapsed">
+
                                                 <Trigger.ExitActions>
-                                                    <StopStoryboard BeginStoryboardName="PulseSB" />
+                                                    <RemoveStoryboard BeginStoryboardName="PulseSB" />
                                                 </Trigger.ExitActions>
                                             </Trigger>
                                         </Style.Triggers>
@@ -1064,13 +1065,12 @@
 
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="420"/>
+                                        <ColumnDefinition Width="450"/>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="420"/>
+                                        <ColumnDefinition Width="450"/>
                                     </Grid.ColumnDefinitions>
 
                                     <!--Avatar Left-->
-
                                     <Grid Grid.Column="0"
                                           Grid.Row="0"
                                           Margin="20,0,0,5"
@@ -1251,7 +1251,6 @@
                                         </ButtonEx>
                                     </Grid>
 
-
                                     <!-- Quick actions -->
                                     <Grid x:Name="HubQuickActions"
                                           Grid.Row="0"
@@ -1422,6 +1421,7 @@
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
 
 
@@ -1432,7 +1432,7 @@
                                                   Content="NowPlay"
                                                   Command="{PluginSettings Plugin=NowPlaying, Path=OpenCustomDialog}"
                                                   Height="40"
-                                                  MinWidth="60"
+                                                  MinWidth="50"
                                                   Margin="0,0,7,0"
                                                   Padding="0"
                                                   Grid.Column="0" >
@@ -1463,7 +1463,7 @@
                                                     Grid.Column="1" Margin="0,0,7,0"
                                                     VerticalAlignment="Center"
                                                     Height="40"
-                                                    MinWidth="60"
+                                                    MinWidth="50"
                                                     Focusable="True"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton]}">
                                             <CheckBoxEx.Style>
@@ -1562,7 +1562,7 @@
                                                     VerticalAlignment="Center"
                                                     Margin="0,0,7,0"
                                                     Height="40"
-                                                    MinWidth="60"
+                                                    MinWidth="50"
                                                     Focusable="True"
                                                     Command="{PluginSettings Plugin=SSHelper, Path=OpenAchievementWindow}">
                                             <CheckBoxEx.Style>
@@ -1666,7 +1666,7 @@
                                                   VerticalAlignment="Center"
                                                   Margin="0,0,7,0"
                                                   Height="40"
-                                                  MinWidth="60"
+                                                  MinWidth="50"
                                                   Padding="0"
                                                   Focusable="True"
                                                   Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle]}">
@@ -1730,12 +1730,57 @@
                                             </StackPanel>
                                         </ButtonEx>
 
-                                        <ButtonEx Content="OverlayButton2"
+                                        <ButtonEx Content="PlayerMusicButton2"
                                                   Grid.Column="3"
                                                   VerticalAlignment="Center"
                                                   Margin="0,0,7,0"
                                                   Height="40"
-                                                  MinWidth="60"
+                                                  MinWidth="50"
+                                                  Focusable="True"
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[MusicPlayerWindowStyle|FocusFirst]}">
+                                            <ButtonEx.Style>
+                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowMusicPlayerButton]}" Value="True"/>
+                                                                <Condition Binding="{PluginStatus Plugin=UniPlaySong.a1b2c3d4-e5f6-7890-abcd-ef1234567890, Status=Installed}" Value="True"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ButtonEx.Style>
+                                            <ButtonEx.Triggers>
+                                                <EventTrigger RoutedEvent="ButtonBase.Click">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="OpenViewSound"
+                                                                Storyboard.TargetProperty="LoadedBehavior">
+                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
+                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
+                                                            </ObjectAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </ButtonEx.Triggers>
+
+                                            <TextBlock Text="&#xF0EE;"
+                                                       FontFamily="{DynamicResource FontIcons}"
+                                                       FontSize="26"
+                                                       Foreground="{DynamicResource TextBrush}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
+                                        <ButtonEx Content="OverlayButton2"
+                                                  Grid.Column="4"
+                                                  VerticalAlignment="Center"
+                                                  Margin="0,0,7,0"
+                                                  Height="40"
+                                                  MinWidth="50"
                                                   Focusable="True"
                                                   Style="{DynamicResource OverlayButtonStyle}"
                                                   Command="{PluginSettings Plugin=AnikiHelper, Path=OpenInGameOverlay[Open]}">
@@ -1763,7 +1808,7 @@
                                         </ButtonEx>
 
                                         <ButtonEx x:Name="QuickMenu2"
-                                                  Grid.Column="4"
+                                                  Grid.Column="5"
                                                   VerticalAlignment="Center"
                                                   HorizontalContentAlignment="Center"
                                                   HorizontalAlignment="Center"
@@ -2827,7 +2872,7 @@
                                                                             <Border Grid.Row="1" Style="{StaticResource HubBottomBannerStyle}">
                                                                                 <StackPanel VerticalAlignment="Top">
                                                                                     <TextBlock VerticalAlignment="Top"
-                                                                                               FontSize="32"
+                                                                                               FontSize="19"
                                                                                                FontWeight="Bold"
                                                                                                Foreground="{DynamicResource TextHubBannerCardBottomBrush}"
                                                                                                Style="{DynamicResource TextBlockBaseStyle}"
@@ -2837,16 +2882,16 @@
 
                                                                                     <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
                                                                                                Foreground="{DynamicResource TextHubBannerCardBottomBrush}"
-                                                                                               Margin="0,4,0,0"
-                                                                                               FontSize="18"
+                                                                                               Margin="0,2,0,0"
+                                                                                               FontSize="17"
                                                                                                TextTrimming="CharacterEllipsis"
                                                                                                Text="{PluginSettings Plugin=AnikiHelper, Path=LibraryNewsGameName}" />
 
                                                                                     <TextBlock Style="{DynamicResource TextBlockBaseStyle}"
                                                                                                Foreground="{DynamicResource TextHubBannerCardBottomBrush}"
                                                                                                Opacity="0.82"
-                                                                                               Margin="0,3,0,0"
-                                                                                               FontSize="15"
+                                                                                               Margin="0,2,0,0"
+                                                                                               FontSize="14"
                                                                                                TextTrimming="CharacterEllipsis"
                                                                                                Text="{PluginSettings Plugin=AnikiHelper, Path=LibraryNewsSummary}" />
                                                                                 </StackPanel>
@@ -5481,139 +5526,192 @@
                                                     </Style>
                                                 </ContentControl.Style>
                                             </ContentControl>
+                                        </Grid>
 
-                                            <!-- PAGE 3 : HUB APPS -->
-                                            <Grid x:Name="HubAppsSection"
-                                                  Grid.Row="0"
-                                                  Height="1000"
-                                                  HorizontalAlignment="Center"
-                                                  VerticalAlignment="Top"
-                                                  KeyboardNavigation.TabNavigation="Continue"
-                                                  KeyboardNavigation.DirectionalNavigation="Continue">
-                                                <Grid.Style>
-                                                    <Style TargetType="Grid">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=ShowHubAppsPage}" Value="False">
-                                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Grid.Style>
+                                        <!-- PAGE 3 : HUB APPS -->
+                                        <Grid x:Name="HubAppsSection"
+                                              Grid.Row="0"
+                                              Height="1000"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Top"
+                                              KeyboardNavigation.TabNavigation="Continue"
+                                              KeyboardNavigation.DirectionalNavigation="Continue">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=ShowHubAppsPage}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
 
-                                                <Grid.Resources>
-                                                    <DataTemplate x:Key="HubAppsContentTemplate">
-                                                        <Grid Width="1380">
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="Auto"/>
-                                                                <RowDefinition Height="*"/>
-                                                            </Grid.RowDefinitions>
+                                            <Grid.Resources>
+                                                <DataTemplate x:Key="HubAppsContentTemplate">
+                                                    <Grid Width="1380">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="*"/>
+                                                        </Grid.RowDefinitions>
 
-                                                            <StackPanel Grid.Row="0"
-                                                                        Orientation="Vertical"
-                                                                        Margin="0,0,0,10">
-                                                                <TextBlock Text="{DynamicResource LOCApps}"
-                                                                           HorizontalAlignment="Center"
-                                                                           Style="{DynamicResource TextBlockBaseStyle}"
-                                                                           Foreground="{DynamicResource TextHubBannerCardTitleBrush}"
-                                                                           FontSize="34"
-                                                                           FontWeight="Bold"
-                                                                           Margin="0,0,0,5"/>
+                                                        <StackPanel Grid.Row="0"
+                                                                    Orientation="Vertical"
+                                                                    Margin="0,0,0,10">
+                                                            <TextBlock Text="{DynamicResource LOCApps}"
+                                                                       HorizontalAlignment="Center"
+                                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                                       Foreground="{DynamicResource TextHubBannerCardTitleBrush}"
+                                                                       FontSize="34"
+                                                                       FontWeight="Bold"
+                                                                       Margin="0,0,0,5"/>
 
-                                                                <TextBlock Text="{DynamicResource LOCHUBAppsSubtile}"
-                                                                           HorizontalAlignment="Center"
-                                                                           Style="{DynamicResource TextBlockBaseStyle}"
-                                                                           FontSize="18"
-                                                                           Opacity="0.75"/>
-                                                            </StackPanel>
+                                                            <TextBlock Text="{DynamicResource LOCHUBAppsSubtile}"
+                                                                       HorizontalAlignment="Center"
+                                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                                       FontSize="18"
+                                                                       Opacity="0.75"/>
+                                                        </StackPanel>
 
-                                                            <ItemsControl Grid.Row="1"
-                                                                          ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=HubAppItems}"
-                                                                          AlternationCount="20"
-                                                                          HorizontalAlignment="Center"
-                                                                          VerticalAlignment="Top"
-                                                                          FocusVisualStyle="{x:Null}"
-                                                                          Focusable="False"
-                                                                          KeyboardNavigation.TabNavigation="Continue"
-                                                                          KeyboardNavigation.DirectionalNavigation="Continue">
+                                                        <ItemsControl Grid.Row="1"
+                                                                      ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=HubAppItems}"
+                                                                      AlternationCount="20"
+                                                                      HorizontalAlignment="Center"
+                                                                      VerticalAlignment="Top"
+                                                                      FocusVisualStyle="{x:Null}"
+                                                                      Focusable="False"
+                                                                      KeyboardNavigation.TabNavigation="Continue"
+                                                                      KeyboardNavigation.DirectionalNavigation="Continue">
 
-                                                                <ItemsControl.ItemsPanel>
-                                                                    <ItemsPanelTemplate>
-                                                                        <!-- Same logic as the other Hub 2x2 pages -->
-                                                                        <WrapPanel Width="1380"
-                                                                                   ItemWidth="690"
-                                                                                   ItemHeight="390"/>
-                                                                    </ItemsPanelTemplate>
-                                                                </ItemsControl.ItemsPanel>
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <!-- Same logic as the other Hub 2x2 pages -->
+                                                                    <WrapPanel Width="1380"
+                                                                               ItemWidth="690"
+                                                                               ItemHeight="390"/>
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
 
-                                                                <ItemsControl.ItemContainerStyle>
-                                                                    <Style TargetType="ContentPresenter">
-                                                                        <Setter Property="Margin" Value="15"/>
-                                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                                        <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(ItemsControl.AlternationIndex)}" Value="0">
-                                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(ItemsControl.AlternationIndex)}" Value="1">
-                                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(ItemsControl.AlternationIndex)}" Value="2">
-                                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                                            </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(ItemsControl.AlternationIndex)}" Value="3">
-                                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                                            </DataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </ItemsControl.ItemContainerStyle>
+                                                            <ItemsControl.ItemContainerStyle>
+                                                                <Style TargetType="ContentPresenter">
+                                                                    <Setter Property="Margin" Value="15"/>
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(ItemsControl.AlternationIndex)}" Value="0">
+                                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(ItemsControl.AlternationIndex)}" Value="1">
+                                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(ItemsControl.AlternationIndex)}" Value="2">
+                                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(ItemsControl.AlternationIndex)}" Value="3">
+                                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ItemsControl.ItemContainerStyle>
 
-                                                                <ItemsControl.ItemTemplate>
-                                                                    <DataTemplate>
-                                                                        <ButtonEx Width="640"
-                                                                                  Height="360"
-                                                                                  Focusable="True"
-                                                                                  FocusVisualStyle="{x:Null}"
-                                                                                  Style="{StaticResource HubCardFocusButtonStyle}"
-                                                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenOverlayAppCommand}"
-                                                                                  CommandParameter="{Binding}">
-                                                                            <Border CornerRadius="20"
-                                                                                    Style="{DynamicResource HubCardBorderStyle}">
-                                                                                <Grid>
-                                                                                    <Grid.RowDefinitions>
-                                                                                        <RowDefinition Height="*"/>
-                                                                                        <RowDefinition Height="Auto"/>
-                                                                                    </Grid.RowDefinitions>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <ButtonEx Width="640"
+                                                                              Height="360"
+                                                                              Focusable="True"
+                                                                              FocusVisualStyle="{x:Null}"
+                                                                              Style="{StaticResource HubCardFocusButtonStyle}"
+                                                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenOverlayAppCommand}"
+                                                                              CommandParameter="{Binding}">
+                                                                        <Border CornerRadius="20"
+                                                                                Style="{DynamicResource HubCardBorderStyle}">
+                                                                            <Grid>
+                                                                                <Grid.RowDefinitions>
+                                                                                    <RowDefinition Height="*"/>
+                                                                                    <RowDefinition Height="Auto"/>
+                                                                                </Grid.RowDefinitions>
 
-                                                                                    <!-- App background / fallback placeholder -->
-                                                                                    <Border Grid.Row="0"
-                                                                                            CornerRadius="20,20,0,0"
-                                                                                            ClipToBounds="True">
-                                                                                        <Grid>
-                                                                                            <Grid.OpacityMask>
-                                                                                                <VisualBrush Visual="{Binding ElementName=HubAppImageMask}" Stretch="Fill"/>
-                                                                                            </Grid.OpacityMask>
+                                                                                <!-- App background / fallback placeholder -->
+                                                                                <Border Grid.Row="0"
+                                                                                        CornerRadius="20,20,0,0"
+                                                                                        ClipToBounds="True">
+                                                                                    <Grid>
+                                                                                        <Grid.OpacityMask>
+                                                                                            <VisualBrush Visual="{Binding ElementName=HubAppImageMask}" Stretch="Fill"/>
+                                                                                        </Grid.OpacityMask>
 
-                                                                                            <Border x:Name="HubAppImageMask"
-                                                                                                    CornerRadius="20,20,0,0"
-                                                                                                    Background="Black"/>
+                                                                                        <Border x:Name="HubAppImageMask"
+                                                                                                CornerRadius="20,20,0,0"
+                                                                                                Background="Black"/>
 
-                                                                                            <!-- Default placeholder from the theme Images folder -->
-                                                                                            <Image Source="{ThemeFile 'Images/NoBackgroundApp.png'}"
-                                                                                                   Stretch="UniformToFill"
-                                                                                                   RenderOptions.BitmapScalingMode="Fant"/>
+                                                                                        <!-- Default placeholder from the theme Images folder -->
+                                                                                        <Image Source="{ThemeFile 'Images/NoBackgroundApp.png'}"
+                                                                                               Stretch="UniformToFill"
+                                                                                               RenderOptions.BitmapScalingMode="Fant"/>
 
-                                                                                            <!-- Custom background selected in Aniki Helper -->
-                                                                                            <Image Source="{Binding BackgroundImagePath}"
-                                                                                                   Stretch="UniformToFill"
+                                                                                        <!-- Custom background selected in Aniki Helper -->
+                                                                                        <Image Source="{Binding BackgroundImagePath}"
+                                                                                               Stretch="UniformToFill"
+                                                                                               RenderOptions.BitmapScalingMode="Fant">
+                                                                                            <Image.Style>
+                                                                                                <Style TargetType="Image">
+                                                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                                                    <Style.Triggers>
+                                                                                                        <DataTrigger Binding="{Binding BackgroundImagePath}" Value="">
+                                                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                                        </DataTrigger>
+                                                                                                        <DataTrigger Binding="{Binding BackgroundImagePath}" Value="{x:Null}">
+                                                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                                        </DataTrigger>
+                                                                                                    </Style.Triggers>
+                                                                                                </Style>
+                                                                                            </Image.Style>
+                                                                                        </Image>
+
+                                                                                        <!-- Same dark readable layer as the other Hub cards -->
+                                                                                        <Border Background="#55000000"/>
+
+                                                                                        <Border VerticalAlignment="Bottom"
+                                                                                                Height="120"
+                                                                                                IsHitTestVisible="False">
+                                                                                            <Border.Background>
+                                                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                                                    <GradientStop Color="#00000000" Offset="0"/>
+                                                                                                    <GradientStop Color="#CC000000" Offset="1"/>
+                                                                                                </LinearGradientBrush>
+                                                                                            </Border.Background>
+                                                                                        </Border>
+                                                                                    </Grid>
+                                                                                </Border>
+
+                                                                                <!-- Bottom band: app icon + app name -->
+                                                                                <Border Grid.Row="1"
+                                                                                        CornerRadius="0,0,20,20"
+                                                                                        Background="{DynamicResource HubCardBottomBackgroundBrush}"
+                                                                                        Padding="16,10">
+                                                                                    <Grid VerticalAlignment="Center">
+                                                                                        <Grid.ColumnDefinitions>
+                                                                                            <ColumnDefinition Width="Auto"/>
+                                                                                            <ColumnDefinition Width="14"/>
+                                                                                            <ColumnDefinition Width="*"/>
+                                                                                        </Grid.ColumnDefinitions>
+
+                                                                                        <Grid Grid.Column="0"
+                                                                                              Width="36"
+                                                                                              Height="36"
+                                                                                              VerticalAlignment="Center">
+                                                                                            <Image Source="{Binding IconPath}"
+                                                                                                   Width="36"
+                                                                                                   Height="36"
+                                                                                                   Stretch="Uniform"
                                                                                                    RenderOptions.BitmapScalingMode="Fant">
                                                                                                 <Image.Style>
                                                                                                     <Style TargetType="Image">
                                                                                                         <Setter Property="Visibility" Value="Visible"/>
                                                                                                         <Style.Triggers>
-                                                                                                            <DataTrigger Binding="{Binding BackgroundImagePath}" Value="">
+                                                                                                            <DataTrigger Binding="{Binding IconPath}" Value="">
                                                                                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                                                                             </DataTrigger>
-                                                                                                            <DataTrigger Binding="{Binding BackgroundImagePath}" Value="{x:Null}">
+                                                                                                            <DataTrigger Binding="{Binding IconPath}" Value="{x:Null}">
                                                                                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                                                                             </DataTrigger>
                                                                                                         </Style.Triggers>
@@ -5621,178 +5719,125 @@
                                                                                                 </Image.Style>
                                                                                             </Image>
 
-                                                                                            <!-- Same dark readable layer as the other Hub cards -->
-                                                                                            <Border Background="#55000000"/>
-
-                                                                                            <Border VerticalAlignment="Bottom"
-                                                                                                    Height="120"
-                                                                                                    IsHitTestVisible="False">
-                                                                                                <Border.Background>
-                                                                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                                                                        <GradientStop Color="#00000000" Offset="0"/>
-                                                                                                        <GradientStop Color="#CC000000" Offset="1"/>
-                                                                                                    </LinearGradientBrush>
-                                                                                                </Border.Background>
-                                                                                            </Border>
-                                                                                        </Grid>
-                                                                                    </Border>
-
-                                                                                    <!-- Bottom band: app icon + app name -->
-                                                                                    <Border Grid.Row="1"
-                                                                                            CornerRadius="0,0,20,20"
-                                                                                            Background="{DynamicResource HubCardBottomBackgroundBrush}"
-                                                                                            Padding="16,10">
-                                                                                        <Grid VerticalAlignment="Center">
-                                                                                            <Grid.ColumnDefinitions>
-                                                                                                <ColumnDefinition Width="Auto"/>
-                                                                                                <ColumnDefinition Width="14"/>
-                                                                                                <ColumnDefinition Width="*"/>
-                                                                                            </Grid.ColumnDefinitions>
-
-                                                                                            <Grid Grid.Column="0"
-                                                                                                  Width="36"
-                                                                                                  Height="36"
-                                                                                                  VerticalAlignment="Center">
-                                                                                                <Image Source="{Binding IconPath}"
-                                                                                                       Width="36"
-                                                                                                       Height="36"
-                                                                                                       Stretch="Uniform"
-                                                                                                       RenderOptions.BitmapScalingMode="Fant">
-                                                                                                    <Image.Style>
-                                                                                                        <Style TargetType="Image">
-                                                                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                                                                            <Style.Triggers>
-                                                                                                                <DataTrigger Binding="{Binding IconPath}" Value="">
-                                                                                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                                                                                </DataTrigger>
-                                                                                                                <DataTrigger Binding="{Binding IconPath}" Value="{x:Null}">
-                                                                                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                                                                                </DataTrigger>
-                                                                                                            </Style.Triggers>
-                                                                                                        </Style>
-                                                                                                    </Image.Style>
-                                                                                                </Image>
-
-                                                                                                <!-- Fallback icon if the Software Tool has no icon -->
-                                                                                                <TextBlock Text="&#xECAA;"
-                                                                                                           FontFamily="{DynamicResource FontIcons}"
-                                                                                                           FontSize="26"
-                                                                                                           Foreground="{DynamicResource TextHubBannerCardTitleBrush}"
-                                                                                                           Opacity="0.75"
-                                                                                                           HorizontalAlignment="Center"
-                                                                                                           VerticalAlignment="Center">
-                                                                                                    <TextBlock.Style>
-                                                                                                        <Style TargetType="TextBlock">
-                                                                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                                                                            <Style.Triggers>
-                                                                                                                <DataTrigger Binding="{Binding IconPath}" Value="">
-                                                                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                                                                </DataTrigger>
-                                                                                                                <DataTrigger Binding="{Binding IconPath}" Value="{x:Null}">
-                                                                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                                                                </DataTrigger>
-                                                                                                            </Style.Triggers>
-                                                                                                        </Style>
-                                                                                                    </TextBlock.Style>
-                                                                                                </TextBlock>
-                                                                                            </Grid>
-
-                                                                                            <TextBlock Grid.Column="2"
-                                                                                                       Text="{Binding Name}"
-                                                                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                                                            <!-- Fallback icon if the Software Tool has no icon -->
+                                                                                            <TextBlock Text="&#xECAA;"
+                                                                                                       FontFamily="{DynamicResource FontIcons}"
+                                                                                                       FontSize="26"
                                                                                                        Foreground="{DynamicResource TextHubBannerCardTitleBrush}"
-                                                                                                       FontSize="22"
-                                                                                                       FontWeight="SemiBold"
-                                                                                                       VerticalAlignment="Center"
-                                                                                                       TextTrimming="CharacterEllipsis"
-                                                                                                       TextWrapping="NoWrap"/>
+                                                                                                       Opacity="0.75"
+                                                                                                       HorizontalAlignment="Center"
+                                                                                                       VerticalAlignment="Center">
+                                                                                                <TextBlock.Style>
+                                                                                                    <Style TargetType="TextBlock">
+                                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                                        <Style.Triggers>
+                                                                                                            <DataTrigger Binding="{Binding IconPath}" Value="">
+                                                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                                                            </DataTrigger>
+                                                                                                            <DataTrigger Binding="{Binding IconPath}" Value="{x:Null}">
+                                                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                                                            </DataTrigger>
+                                                                                                        </Style.Triggers>
+                                                                                                    </Style>
+                                                                                                </TextBlock.Style>
+                                                                                            </TextBlock>
                                                                                         </Grid>
-                                                                                    </Border>
-                                                                                </Grid>
-                                                                            </Border>
-                                                                        </ButtonEx>
-                                                                    </DataTemplate>
-                                                                </ItemsControl.ItemTemplate>
-                                                            </ItemsControl>
-                                                        </Grid>
-                                                    </DataTemplate>
-                                                </Grid.Resources>
 
-                                                <ContentControl RenderTransformOrigin="0.5,0.5">
-                                                    <ContentControl.RenderTransform>
-                                                        <TranslateTransform X="0"/>
-                                                    </ContentControl.RenderTransform>
+                                                                                        <TextBlock Grid.Column="2"
+                                                                                                   Text="{Binding Name}"
+                                                                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                                                                   Foreground="{DynamicResource TextHubBannerCardTitleBrush}"
+                                                                                                   FontSize="22"
+                                                                                                   FontWeight="SemiBold"
+                                                                                                   VerticalAlignment="Center"
+                                                                                                   TextTrimming="CharacterEllipsis"
+                                                                                                   TextWrapping="NoWrap"/>
+                                                                                    </Grid>
+                                                                                </Border>
+                                                                            </Grid>
+                                                                        </Border>
+                                                                    </ButtonEx>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </Grid.Resources>
 
-                                                    <ContentControl.Style>
-                                                        <Style TargetType="ContentControl">
-                                                            <Setter Property="Content" Value="{x:Null}"/>
-                                                            <Setter Property="ContentTemplate" Value="{x:Null}"/>
-                                                            <Setter Property="Opacity" Value="0"/>
-                                                            <Setter Property="Focusable" Value="False"/>
-                                                            <Setter Property="IsTabStop" Value="False"/>
-                                                            <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
+                                            <ContentControl RenderTransformOrigin="0.5,0.5">
+                                                <ContentControl.RenderTransform>
+                                                    <TranslateTransform X="0"/>
+                                                </ContentControl.RenderTransform>
 
-                                                            <Style.Triggers>
-                                                                <MultiDataTrigger>
-                                                                    <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{Binding Visibility, ElementName=WelcomeHubOverlay}" Value="Visible"/>
-                                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=HubIsAppsPage}" Value="True"/>
-                                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=ShowHubAppsPage}" Value="True"/>
-                                                                    </MultiDataTrigger.Conditions>
+                                                <ContentControl.Style>
+                                                    <Style TargetType="ContentControl">
+                                                        <Setter Property="Content" Value="{x:Null}"/>
+                                                        <Setter Property="ContentTemplate" Value="{x:Null}"/>
+                                                        <Setter Property="Opacity" Value="0"/>
+                                                        <Setter Property="Focusable" Value="False"/>
+                                                        <Setter Property="IsTabStop" Value="False"/>
+                                                        <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
 
-                                                                    <Setter Property="Content" Value="{Binding}"/>
-                                                                    <Setter Property="ContentTemplate" Value="{StaticResource HubAppsContentTemplate}"/>
-                                                                    <Setter Property="Opacity" Value="1"/>
-                                                                </MultiDataTrigger>
+                                                        <Style.Triggers>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{Binding Visibility, ElementName=WelcomeHubOverlay}" Value="Visible"/>
+                                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=HubIsAppsPage}" Value="True"/>
+                                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=ShowHubAppsPage}" Value="True"/>
+                                                                </MultiDataTrigger.Conditions>
 
-                                                                <MultiDataTrigger>
-                                                                    <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{Binding Visibility, ElementName=WelcomeHubOverlay}" Value="Visible"/>
-                                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=HubIsAppsPage}" Value="True"/>
-                                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=HubPageDirection}" Value="Forward"/>
-                                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=ShowHubAppsPage}" Value="True"/>
-                                                                    </MultiDataTrigger.Conditions>
-                                                                    <MultiDataTrigger.EnterActions>
-                                                                        <BeginStoryboard HandoffBehavior="SnapshotAndReplace">
-                                                                            <Storyboard FillBehavior="Stop">
-                                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.16"/>
-                                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" From="58" To="0" Duration="0:0:0.34">
-                                                                                    <DoubleAnimation.EasingFunction>
-                                                                                        <CubicEase EasingMode="EaseOut"/>
-                                                                                    </DoubleAnimation.EasingFunction>
-                                                                                </DoubleAnimation>
-                                                                            </Storyboard>
-                                                                        </BeginStoryboard>
-                                                                    </MultiDataTrigger.EnterActions>
-                                                                </MultiDataTrigger>
+                                                                <Setter Property="Content" Value="{Binding}"/>
+                                                                <Setter Property="ContentTemplate" Value="{StaticResource HubAppsContentTemplate}"/>
+                                                                <Setter Property="Opacity" Value="1"/>
+                                                            </MultiDataTrigger>
 
-                                                                <MultiDataTrigger>
-                                                                    <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{Binding Visibility, ElementName=WelcomeHubOverlay}" Value="Visible"/>
-                                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=HubIsAppsPage}" Value="True"/>
-                                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=HubPageDirection}" Value="Backward"/>
-                                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=ShowHubAppsPage}" Value="True"/>
-                                                                    </MultiDataTrigger.Conditions>
-                                                                    <MultiDataTrigger.EnterActions>
-                                                                        <BeginStoryboard HandoffBehavior="SnapshotAndReplace">
-                                                                            <Storyboard FillBehavior="Stop">
-                                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.16"/>
-                                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" From="-58" To="0" Duration="0:0:0.34">
-                                                                                    <DoubleAnimation.EasingFunction>
-                                                                                        <CubicEase EasingMode="EaseOut"/>
-                                                                                    </DoubleAnimation.EasingFunction>
-                                                                                </DoubleAnimation>
-                                                                            </Storyboard>
-                                                                        </BeginStoryboard>
-                                                                    </MultiDataTrigger.EnterActions>
-                                                                </MultiDataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </ContentControl.Style>
-                                                </ContentControl>
-                                            </Grid>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{Binding Visibility, ElementName=WelcomeHubOverlay}" Value="Visible"/>
+                                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=HubIsAppsPage}" Value="True"/>
+                                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=HubPageDirection}" Value="Forward"/>
+                                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=ShowHubAppsPage}" Value="True"/>
+                                                                </MultiDataTrigger.Conditions>
+                                                                <MultiDataTrigger.EnterActions>
+                                                                    <BeginStoryboard HandoffBehavior="SnapshotAndReplace">
+                                                                        <Storyboard FillBehavior="Stop">
+                                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.16"/>
+                                                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" From="58" To="0" Duration="0:0:0.34">
+                                                                                <DoubleAnimation.EasingFunction>
+                                                                                    <CubicEase EasingMode="EaseOut"/>
+                                                                                </DoubleAnimation.EasingFunction>
+                                                                            </DoubleAnimation>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </MultiDataTrigger.EnterActions>
+                                                            </MultiDataTrigger>
 
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{Binding Visibility, ElementName=WelcomeHubOverlay}" Value="Visible"/>
+                                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=HubIsAppsPage}" Value="True"/>
+                                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=HubPageDirection}" Value="Backward"/>
+                                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=ShowHubAppsPage}" Value="True"/>
+                                                                </MultiDataTrigger.Conditions>
+                                                                <MultiDataTrigger.EnterActions>
+                                                                    <BeginStoryboard HandoffBehavior="SnapshotAndReplace">
+                                                                        <Storyboard FillBehavior="Stop">
+                                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.16"/>
+                                                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" From="-58" To="0" Duration="0:0:0.34">
+                                                                                <DoubleAnimation.EasingFunction>
+                                                                                    <CubicEase EasingMode="EaseOut"/>
+                                                                                </DoubleAnimation.EasingFunction>
+                                                                            </DoubleAnimation>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </MultiDataTrigger.EnterActions>
+                                                            </MultiDataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContentControl.Style>
+                                            </ContentControl>
                                         </Grid>
+
 
                                     </Grid>
                                 </Grid>
@@ -7170,20 +7215,39 @@
                                            TextWrapping="NoWrap"
                                            ClipToBounds="True"
                                            Text="{PluginSettings Plugin=NowPlaying, Path=RunningGame.GameName}" />
-                                <TextBlock FontSize="20" Margin="5,0,0,0" Width="30" TextAlignment="Left" Style="{DynamicResource TextBlockBaseStyle}">
-                                    <TextBlock.Triggers>
-                                        <EventTrigger RoutedEvent="Loaded">
-                                            <BeginStoryboard>
-                                                <Storyboard RepeatBehavior="Forever">
-                                                    <StringAnimationUsingKeyFrames Storyboard.TargetProperty="Text" Duration="0:0:1.2" RepeatBehavior="Forever">
-                                                        <DiscreteStringKeyFrame KeyTime="0:0:0.0" Value="." />
-                                                        <DiscreteStringKeyFrame KeyTime="0:0:0.4" Value=".." />
-                                                        <DiscreteStringKeyFrame KeyTime="0:0:0.8" Value="..." />
-                                                    </StringAnimationUsingKeyFrames>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                    </TextBlock.Triggers>
+                                <TextBlock FontSize="20"
+                                           Margin="5,0,0,0"
+                                           Width="30"
+                                           TextAlignment="Left">
+
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock"
+                                               BasedOn="{StaticResource TextBlockBaseStyle}">
+
+                                            <Setter Property="Text" Value="..." />
+
+                                            <Style.Triggers>
+                                                <Trigger Property="IsVisible" Value="True">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard x:Name="ClosingDotsStoryboard">
+                                                            <Storyboard RepeatBehavior="Forever">
+                                                                <StringAnimationUsingKeyFrames Storyboard.TargetProperty="Text"
+                                                                                               Duration="0:0:1.2">
+                                                                    <DiscreteStringKeyFrame KeyTime="0:0:0.0" Value="." />
+                                                                    <DiscreteStringKeyFrame KeyTime="0:0:0.4" Value=".." />
+                                                                    <DiscreteStringKeyFrame KeyTime="0:0:0.8" Value="..." />
+                                                                </StringAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.EnterActions>
+
+                                                    <Trigger.ExitActions>
+                                                        <RemoveStoryboard BeginStoryboardName="ClosingDotsStoryboard" />
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
                                 </TextBlock>
                             </StackPanel>
                         </Border>
@@ -7255,20 +7319,39 @@
                                            TextWrapping="NoWrap"
                                            ClipToBounds="True"
                                            Text="{PluginSettings Plugin=AnikiHelper, Path=ClosingGameName}" />
-                                <TextBlock FontSize="20" Margin="5,0,0,0" Width="30" TextAlignment="Left" Style="{DynamicResource TextBlockBaseStyle}">
-                                    <TextBlock.Triggers>
-                                        <EventTrigger RoutedEvent="Loaded">
-                                            <BeginStoryboard>
-                                                <Storyboard RepeatBehavior="Forever">
-                                                    <StringAnimationUsingKeyFrames Storyboard.TargetProperty="Text" Duration="0:0:1.2" RepeatBehavior="Forever">
-                                                        <DiscreteStringKeyFrame KeyTime="0:0:0.0" Value="." />
-                                                        <DiscreteStringKeyFrame KeyTime="0:0:0.4" Value=".." />
-                                                        <DiscreteStringKeyFrame KeyTime="0:0:0.8" Value="..." />
-                                                    </StringAnimationUsingKeyFrames>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                    </TextBlock.Triggers>
+                                <TextBlock FontSize="20"
+                                           Margin="5,0,0,0"
+                                           Width="30"
+                                           TextAlignment="Left">
+
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock"
+                                               BasedOn="{StaticResource TextBlockBaseStyle}">
+
+                                            <Setter Property="Text" Value="..." />
+
+                                            <Style.Triggers>
+                                                <Trigger Property="IsVisible" Value="True">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard x:Name="ClosingDotsAnikiStoryboard">
+                                                            <Storyboard RepeatBehavior="Forever">
+                                                                <StringAnimationUsingKeyFrames Storyboard.TargetProperty="Text"
+                                                                                               Duration="0:0:1.2">
+                                                                    <DiscreteStringKeyFrame KeyTime="0:0:0.0" Value="." />
+                                                                    <DiscreteStringKeyFrame KeyTime="0:0:0.4" Value=".." />
+                                                                    <DiscreteStringKeyFrame KeyTime="0:0:0.8" Value="..." />
+                                                                </StringAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.EnterActions>
+
+                                                    <Trigger.ExitActions>
+                                                        <RemoveStoryboard BeginStoryboardName="ClosingDotsAnikiStoryboard" />
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
                                 </TextBlock>
                             </StackPanel>
                         </Border>
@@ -7343,25 +7426,43 @@
                                 <!-- Icône selon le type -->
                                 <TextBlock Margin="0,0,10,0"
                                            VerticalAlignment="Center"
-                                           FontFamily="{StaticResource FontIcoFont}"
                                            FontSize="22"
                                            Foreground="{DynamicResource TextBrush}">
+
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
-                                            <!-- icône par défaut -->
-                                            <Setter Property="Text" Value="&#xee22;"/>
+
+                                            <!-- Icône par défaut : information -->
+                                            <Setter Property="FontFamily"
+                                                    Value="{DynamicResource FontIcons}"/>
+
+                                            <Setter Property="Text"
+                                                    Value="&#xE946;"/>
+
                                             <Style.Triggers>
-                                                <!-- Type = steamUpdate -->
-                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=GlobalToastType}" Value="steamUpdate">
-                                                    <!-- icône “update” ou “news” -->
-                                                    <Setter Property="Text" Value="&#xef3e;"/>
+
+                                                <!-- Mise à jour Steam -->
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=GlobalToastType}"
+                                                             Value="steamUpdate">
+
+                                                    <Setter Property="FontFamily"
+                                                            Value="{StaticResource FontIcons}"/>
+
+                                                    <Setter Property="Text"
+                                                            Value="&#xEBD3;"/>
                                                 </DataTrigger>
 
-                                                <!-- Type = successStory (exemple futur) -->
-                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=GlobalToastType}" Value="Test">
-                                                    <!-- icône trophée -->
-                                                    <Setter Property="Text" Value="&#xef02;"/>
+                                                <!-- Notification de test / trophée -->
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=GlobalToastType}"
+                                                             Value="Test">
+
+                                                    <Setter Property="FontFamily"
+                                                            Value="{StaticResource FontIcons}"/>
+
+                                                    <Setter Property="Text"
+                                                            Value="&#xE946;"/>
                                                 </DataTrigger>
+
                                             </Style.Triggers>
                                         </Style>
                                     </TextBlock.Style>
@@ -8556,6 +8657,7 @@
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
 
 
@@ -8685,7 +8787,7 @@
                                                     Margin="0,0,7,0"
                                                     VerticalAlignment="Center"
                                                     Height="40"
-                                                    MinWidth="60"
+                                                    MinWidth="50"
                                                     Focusable="True"
                                                     Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton]}">
                                             <CheckBoxEx.Style>
@@ -8784,7 +8886,7 @@
                                                     VerticalAlignment="Center"
                                                     Margin="0,0,7,0"
                                                     Height="40"
-                                                    MinWidth="60"
+                                                    MinWidth="50"
                                                     Focusable="True"
                                                     Command="{PluginSettings Plugin=SSHelper, Path=OpenAchievementWindow}">
                                             <CheckBoxEx.Style>
@@ -8883,10 +8985,10 @@
                                                   VerticalAlignment="Center"
                                                   Margin="0,0,7,0"
                                                   Height="40"
-                                                  MinWidth="60"
+                                                  MinWidth="50"
                                                   Padding="0"
                                                   Focusable="True"
-                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle]}">
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[AudioSwitcherWindowStyle|FocusFirst|NoDim]}">
 
                                             <ButtonEx.Style>
                                                 <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
@@ -8945,9 +9047,54 @@
                                             </StackPanel>
                                         </ButtonEx>
 
+                                        <ButtonEx Content="PlayerMusicButton2"
+                                                  Grid.Column="5"
+                                                  VerticalAlignment="Center"
+                                                  Margin="0,0,7,0"
+                                                  Height="40"
+                                                  MinWidth="50"
+                                                  Focusable="True"
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[MusicPlayerWindowStyle|FocusFirst]}">
+                                            <ButtonEx.Style>
+                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowMusicPlayerButton]}" Value="True"/>
+                                                                <Condition Binding="{PluginStatus Plugin=UniPlaySong.a1b2c3d4-e5f6-7890-abcd-ef1234567890, Status=Installed}" Value="True"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ButtonEx.Style>
+                                            <ButtonEx.Triggers>
+                                                <EventTrigger RoutedEvent="ButtonBase.Click">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="OpenViewSound"
+                                                                Storyboard.TargetProperty="LoadedBehavior">
+                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
+                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
+                                                            </ObjectAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </ButtonEx.Triggers>
+
+                                            <TextBlock Text="&#xF0EE;"
+                                                       FontFamily="{DynamicResource FontIcons}"
+                                                       FontSize="26"
+                                                       Foreground="{DynamicResource TextBrush}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
                                         <!-- Overlay -->
                                         <ButtonEx x:Name="OverlayButton"
-                                                  Grid.Column="5"
+                                                  Grid.Column="6"
                                                   Height="40"
                                                   MinWidth="50"
                                                   Margin="0,0,7,0"
@@ -8969,7 +9116,7 @@
 
                                         <!-- QUICK SETTINGS / SYSTEM STATUS -->
                                         <ButtonEx x:Name="QuickMenu"
-                                                  Grid.Column="6"
+                                                  Grid.Column="7"
                                                   VerticalAlignment="Center"
                                                   HorizontalContentAlignment="Center"
                                                   HorizontalAlignment="Center"
@@ -9780,6 +9927,10 @@
                                                     <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PerformanceMode]}" Value="True">
                                                         <Setter Property="Opacity" Value="0.6"/>
                                                     </DataTrigger>
+
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[SteamBanner]}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Border.Style>
@@ -9827,7 +9978,7 @@
                                                             <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnMainView]}" Value="True"/>
                                                             <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
                                                             <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
-                                                            <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Opacity}" Value="1"/>
+                                                            <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_NoSound, Path=Opacity}" Value="1"/>
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                         <MultiDataTrigger.EnterActions>
@@ -9872,7 +10023,7 @@
                                                             <Condition Binding="{Binding ElementName=PART_ViewHost, Path=ActualWidth}" Value="1728"/>
                                                             <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
                                                             <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
-                                                            <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Opacity}" Value="1"/>
+                                                            <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_NoSound, Path=Opacity}" Value="1"/>
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                     </MultiDataTrigger>
@@ -9896,17 +10047,14 @@
                                     Panel.ZIndex="-10"
                                     VerticalAlignment="Stretch"
                                     HorizontalAlignment="Stretch">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="{ThemeFile 'Images/ShadowBackground/ShadeSteamhero.png'}"
+                                                RenderOptions.BitmapScalingMode="LowQuality"
+                                                Stretch="Fill"/>
+                                </Border.Background>
                                 <Border.Style>
                                     <Style TargetType="Border">
                                         <Setter Property="Visibility" Value="Collapsed" />
-                                        <Setter Property="Background">
-                                            <Setter.Value>
-                                                <ImageBrush ImageSource="{ThemeFile 'Images/ShadowBackground/ShadeSteamhero.png'}"
-                                                            RenderOptions.BitmapScalingMode="Linear"
-                                                            Stretch="Fill" />
-                                            </Setter.Value>
-                                        </Setter>
-
                                         <Style.Triggers>
                                             <!-- Affiche l'image si l'option SteamBanner est activée -->
                                             <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[SteamBanner]}" Value="True">
@@ -13356,7 +13504,7 @@
                                                     <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnMainView]}" Value="True"/>
                                                     <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
                                                     <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
-                                                    <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Opacity}" Value="1"/>
+                                                    <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_NoSound, Path=Opacity}" Value="1"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.EnterActions>
                                                     <BeginStoryboard>
@@ -13383,7 +13531,7 @@
                                     </Style>
                                 </Border.Style>
 
-                                <ContentControl x:Name="ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound" Focusable="False" Panel.ZIndex="-46"  >
+                                <ContentControl x:Name="ExtraMetadataLoader_VideoLoaderControl_NoControls_NoSound" Focusable="False" Panel.ZIndex="-46"  >
                                     <ContentControl.Style>
                                         <Style TargetType="ContentControl">
                                             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -13456,8 +13604,6 @@
                                     </ContentControl.Style>
                                 </ContentControl>
                             </Border >
-
-
 
                             <!--Info Alternatif -->
                             <Grid x:Name="DetailedSideInfoPanelContent" Grid.Row="0" Grid.RowSpan="5" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,-150,-45,0" >
@@ -14017,7 +14163,7 @@
                             </Grid>
 
 
-
+                            <!--Shade Derriere game list -->
                             <Border CornerRadius="0" Panel.ZIndex="-10"
                                     IsHitTestVisible="False"
                                     Background="{DynamicResource ShadeBackgroundButton}">
@@ -16610,37 +16756,41 @@
                                         <DropShadowEffect Color="Black" ShadowDepth="2" Opacity="1" />
                                     </Grid.Effect>
 
-                                    <Grid.Resources>
-                                        <Storyboard x:Key="PressAToContinuePulse"
-                                                    RepeatBehavior="Forever"
-                                                    AutoReverse="True">
-                                            <DoubleAnimation Storyboard.TargetName="PressAToContinueGlow"
-                                                             Storyboard.TargetProperty="Opacity"
-                                                             From="0"
-                                                             To="0.80"
-                                                             Duration="0:0:1.5"/>
-                                        </Storyboard>
-                                    </Grid.Resources>
 
-                                    <Grid.Triggers>
-                                        <EventTrigger RoutedEvent="Loaded">
-                                            <BeginStoryboard x:Name="PressAToContinuePulse_SB"
-                                                             Storyboard="{StaticResource PressAToContinuePulse}" />
-                                        </EventTrigger>
-                                        <EventTrigger RoutedEvent="Unloaded">
-                                            <StopStoryboard BeginStoryboardName="PressAToContinuePulse_SB"/>
-                                        </EventTrigger>
-                                    </Grid.Triggers>
 
                                     <!-- glow discret -->
                                     <Border x:Name="PressAToContinueGlow"
                                             Padding="18,8,18,8"
                                             CornerRadius="18"
                                             Background="#66FFFFFF"
-                                            Opacity="1"
                                             IsHitTestVisible="False"
                                             RenderTransformOrigin="0.5,0.5">
 
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Opacity" Value="0" />
+
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsVisible" Value="True">
+                                                        <Trigger.EnterActions>
+                                                            <BeginStoryboard x:Name="PressAToContinuePulse_SB">
+                                                                <Storyboard RepeatBehavior="Forever"
+                                                                            AutoReverse="True">
+                                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                     From="0"
+                                                                                     To="0.80"
+                                                                                     Duration="0:0:1.5"/>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </Trigger.EnterActions>
+
+                                                        <Trigger.ExitActions>
+                                                            <RemoveStoryboard BeginStoryboardName="PressAToContinuePulse_SB"/>
+                                                        </Trigger.ExitActions>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
                                     </Border>
 
                                     <Border x:Name="BackgroundButton"
@@ -16681,7 +16831,7 @@
                                 </Grid>
 
                                 <!-- FOOTER -->
-                                <TextBlock Text="Aniki ReMake v3.3.0"
+                                <TextBlock Text="Aniki ReMake v3.3.1"
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Bottom"
                                            Margin="0,0,22,18"
@@ -17462,14 +17612,36 @@
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Value="True"/>
                                                     <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubClosing}" Value="False"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}" Value="False"/>
                                                     <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}" Value="False"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="Tag" Value="True"/>
                                             </MultiDataTrigger>
+
+                                            <!--
+                                            Une fenêtre secondaire Aniki est ouverte :
+                                            mettre UPS en pause, sauf lorsque Radio Mode est actif.
+                                            -->
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}"
+                                                               Value="True"/>
+
+                                                    <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}"
+                                                               Value="False"/>
+
+                                                </MultiDataTrigger.Conditions>
+
+                                                <Setter Property="Tag" Value="True"/>
+                                            </MultiDataTrigger>
+
                                         </Style.Triggers>
                                     </Style>
                                 </ContentControl.Style>
                             </ContentControl>
+
+
 
                             <ContentControl x:Name="Sounds_MusicControl" >
                                 <ContentControl.Style>
@@ -17481,7 +17653,7 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ElementName=TrailerContainer, Path=Opacity}" Value="1"/>
-                                                    <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Content.IsPlayerMuted}" Value="False" />
+                                                    <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_NoSound, Path=Content.IsPlayerMuted}" Value="False" />
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="Tag" Value="True"/>
                                             </MultiDataTrigger>
@@ -17489,7 +17661,7 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ElementName=TrailerContainer, Path=Opacity}" Value="1"/>
-                                                    <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Content.IsPlayerMuted}" Value="True" />
+                                                    <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_NoSound, Path=Content.IsPlayerMuted}" Value="True" />
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="Tag" Value="False"/>
                                             </MultiDataTrigger>
@@ -17510,6 +17682,191 @@
 
                         <!-- Sound -->
 
+
+                        <!-- ==========================================================
+                        MUSIQUE DES FENÊTRES SECONDAIRES — MODE NORMAL
+                        ========================================================== -->
+
+                        <MediaElement x:Name="SecondaryViewsOSTNormal"
+                                      Source="{ThemeFile 'audio/SecondaryViewsOST.mp3'}"
+                                      Volume="{Settings Fullscreen.BackgroundVolume}"
+                                      MediaElementBehaviors.Repeat="True">
+
+                            <MediaElement.Style>
+                                <Style TargetType="MediaElement">
+
+                                    <Setter Property="LoadedBehavior" Value="Manual"/>
+                                    <Setter Property="UnloadedBehavior" Value="Close"/>
+
+                                    <Style.Triggers>
+
+                                        <!-- Jouer uniquement en mode normal -->
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}"
+                                                           Value="True"/>
+
+                                                <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}"
+                                                           Value="False"/>
+
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}"
+                                                           Value="False"/>
+
+                                            </MultiDataTrigger.Conditions>
+
+                                            <Setter Property="LoadedBehavior" Value="Play"/>
+                                        </MultiDataTrigger>
+
+                                        <!-- Conserver la position entre deux fenêtres -->
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}"
+                                                     Value="False">
+
+                                            <Setter Property="LoadedBehavior" Value="Pause"/>
+                                        </DataTrigger>
+
+                                        <!-- Radio Mode prioritaire -->
+                                        <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}"
+                                                     Value="True">
+
+                                            <Setter Property="LoadedBehavior" Value="Stop"/>
+                                        </DataTrigger>
+
+                                        <!-- Arrêter complètement la musique normale en Lucky Mode -->
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}"
+                                                     Value="True">
+
+                                            <Setter Property="LoadedBehavior" Value="Stop"/>
+                                        </DataTrigger>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </MediaElement.Style>
+                        </MediaElement>
+
+
+                        <!-- ==========================================================
+                        MUSIQUE DES FENÊTRES SECONDAIRES — LUCKY STYLE 1
+                        ========================================================== -->
+
+                        <MediaElement x:Name="SecondaryViewsOSTLuckyStyle1"
+                                      Source="{ThemeFile 'audio/Lucky/SecondaryViewsOST.mp3'}"
+                                      Volume="{Settings Fullscreen.BackgroundVolume}"
+                                      MediaElementBehaviors.Repeat="True">
+
+                            <MediaElement.Style>
+                                <Style TargetType="MediaElement">
+
+                                    <Setter Property="LoadedBehavior" Value="Manual"/>
+                                    <Setter Property="UnloadedBehavior" Value="Close"/>
+
+                                    <Style.Triggers>
+
+                                        <!-- Jouer uniquement en Lucky Style 1 -->
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}"
+                                                           Value="True"/>
+
+                                                <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}"
+                                                           Value="False"/>
+
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle1}"
+                                                           Value="True"/>
+
+                                            </MultiDataTrigger.Conditions>
+
+                                            <Setter Property="LoadedBehavior" Value="Play"/>
+                                        </MultiDataTrigger>
+
+                                        <!-- Conserver la position entre deux fenêtres -->
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}"
+                                                     Value="False">
+
+                                            <Setter Property="LoadedBehavior" Value="Pause"/>
+                                        </DataTrigger>
+
+                                        <!-- Radio Mode prioritaire -->
+                                        <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}"
+                                                     Value="True">
+
+                                            <Setter Property="LoadedBehavior" Value="Stop"/>
+                                        </DataTrigger>
+
+                                        <!-- Arrêter complètement si le Style 1 n'est pas actif -->
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle1}"
+                                                     Value="False">
+
+                                            <Setter Property="LoadedBehavior" Value="Stop"/>
+                                        </DataTrigger>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </MediaElement.Style>
+                        </MediaElement>
+
+
+                        <!-- ==========================================================
+                        MUSIQUE DES FENÊTRES SECONDAIRES — LUCKY STYLE 2
+                        ========================================================== -->
+
+                        <MediaElement x:Name="SecondaryViewsOSTLuckyStyle2"
+                                      Source="{ThemeFile 'audio/Lucky/SecondaryViewsOST2.mp3'}"
+                                      Volume="{Settings Fullscreen.BackgroundVolume}"
+                                      MediaElementBehaviors.Repeat="True">
+
+                            <MediaElement.Style>
+                                <Style TargetType="MediaElement">
+
+                                    <Setter Property="LoadedBehavior" Value="Manual"/>
+                                    <Setter Property="UnloadedBehavior" Value="Close"/>
+
+                                    <Style.Triggers>
+
+                                        <!-- Jouer uniquement en Lucky Style 2 -->
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}"
+                                                           Value="True"/>
+
+                                                <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}"
+                                                           Value="False"/>
+
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle2}"
+                                                           Value="True"/>
+
+                                            </MultiDataTrigger.Conditions>
+
+                                            <Setter Property="LoadedBehavior" Value="Play"/>
+                                        </MultiDataTrigger>
+
+                                        <!-- Conserver la position entre deux fenêtres -->
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}"
+                                                     Value="False">
+
+                                            <Setter Property="LoadedBehavior" Value="Pause"/>
+                                        </DataTrigger>
+
+                                        <!-- Radio Mode prioritaire -->
+                                        <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}"
+                                                     Value="True">
+
+                                            <Setter Property="LoadedBehavior" Value="Stop"/>
+                                        </DataTrigger>
+
+                                        <!-- Arrêter complètement si le Style 2 n'est pas actif -->
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle2}"
+                                                     Value="False">
+
+                                            <Setter Property="LoadedBehavior" Value="Stop"/>
+                                        </DataTrigger>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </MediaElement.Style>
+                        </MediaElement>
 
 
                         <!-- Normal login OST -->

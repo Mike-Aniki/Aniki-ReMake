@@ -68,6 +68,48 @@
                             <Setter TargetName="IconImg" Property="Style" Value="{DynamicResource IconXButton}" />
                         </Trigger>
 
+                        <!-- Play = X par défaut -->
+                        <Trigger Property="Tag" Value="PlayAction">
+                            <Setter TargetName="IconImg"
+                                    Property="Style"
+                                    Value="{DynamicResource IconXButton}" />
+                        </Trigger>
+
+                        <!-- Details = A par défaut -->
+                        <Trigger Property="Tag" Value="DetailsAction">
+                            <Setter TargetName="IconImg"
+                                    Property="Style"
+                                    Value="{DynamicResource IconAButton}" />
+                        </Trigger>
+
+                        <!-- Quand Playnite inverse A et X : Play = A -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                                           Value="PlayAction" />
+                                <Condition Binding="{Settings Fullscreen.SwapStartDetailsAction}"
+                                           Value="True" />
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter TargetName="IconImg"
+                                    Property="Style"
+                                    Value="{DynamicResource IconAButton}" />
+                        </MultiDataTrigger>
+
+                        <!-- Quand Playnite inverse A et X : Details = X -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                                           Value="DetailsAction" />
+                                <Condition Binding="{Settings Fullscreen.SwapStartDetailsAction}"
+                                           Value="True" />
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter TargetName="IconImg"
+                                    Property="Style"
+                                    Value="{DynamicResource IconXButton}" />
+                        </MultiDataTrigger>
+
                         <Trigger Property="Tag" Value="Y">
                             <Setter TargetName="IconImg" Property="Visibility" Value="Visible" />
                             <Setter TargetName="BumperHint" Property="Visibility" Value="Collapsed" />
@@ -186,6 +228,48 @@
                             <Setter TargetName="BumperHint" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="IconImg" Property="Style" Value="{DynamicResource IconXButton}" />
                         </Trigger>
+
+                        <!-- Play = X par défaut -->
+                        <Trigger Property="Tag" Value="PlayAction">
+                            <Setter TargetName="IconImg"
+                                    Property="Style"
+                                    Value="{DynamicResource IconXButton}" />
+                        </Trigger>
+
+                        <!-- Details = A par défaut -->
+                        <Trigger Property="Tag" Value="DetailsAction">
+                            <Setter TargetName="IconImg"
+                                    Property="Style"
+                                    Value="{DynamicResource IconAButton}" />
+                        </Trigger>
+
+                        <!-- Quand Playnite inverse A et X : Play = A -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                                           Value="PlayAction" />
+                                <Condition Binding="{Settings Fullscreen.SwapStartDetailsAction}"
+                                           Value="True" />
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter TargetName="IconImg"
+                                    Property="Style"
+                                    Value="{DynamicResource IconAButton}" />
+                        </MultiDataTrigger>
+
+                        <!-- Quand Playnite inverse A et X : Details = X -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                                           Value="DetailsAction" />
+                                <Condition Binding="{Settings Fullscreen.SwapStartDetailsAction}"
+                                           Value="True" />
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter TargetName="IconImg"
+                                    Property="Style"
+                                    Value="{DynamicResource IconXButton}" />
+                        </MultiDataTrigger>
 
                         <Trigger Property="Tag" Value="Y">
                             <Setter TargetName="IconImg" Property="Visibility" Value="Visible" />

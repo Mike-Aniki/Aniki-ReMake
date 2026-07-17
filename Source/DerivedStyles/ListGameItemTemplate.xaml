@@ -126,14 +126,17 @@
                                                 <!-- Custom source banner -->
                                                 <Image x:Name="CustomSourceHorizontal"
                                                        RenderOptions.BitmapScalingMode="Fant"
-                                                       Stretch="UniformToFill"
                                                        VerticalAlignment="Center"
                                                        HorizontalAlignment="Center"
                                                        Source="{Binding Text, ElementName=CustomSourceHorizontalBannerPath}">
                                                     <Image.Style>
                                                         <Style TargetType="Image">
                                                             <Setter Property="Visibility" Value="Visible"/>
+                                                            <Setter Property="Stretch" Value="UniformToFill"/>
                                                             <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[StretchBanner]}" Value="True">
+                                                                    <Setter Property="Stretch" Value="Fill"/>
+                                                                </DataTrigger>
                                                                 <DataTrigger Binding="{Binding ElementName=CustomBannerAboveCoverFolderPath, Path=Text}" Value="">
                                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                                 </DataTrigger>
@@ -174,14 +177,17 @@
                                                 <!-- Custom platform banner, used only if source banner is unavailable -->
                                                 <Image x:Name="CustomPlatformHorizontal"
                                                        RenderOptions.BitmapScalingMode="Fant"
-                                                       Stretch="UniformToFill"
                                                        VerticalAlignment="Center"
                                                        HorizontalAlignment="Center"
                                                        Source="{Binding Text, ElementName=CustomPlatformHorizontalBannerPath}">
                                                     <Image.Style>
                                                         <Style TargetType="Image">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Setter Property="Stretch" Value="UniformToFill"/>
                                                             <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[StretchBanner]}" Value="True">
+                                                                    <Setter Property="Stretch" Value="Fill"/>
+                                                                </DataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
                                                                         <Condition Binding="{Binding ElementName=CustomSourceHorizontal, Path=Visibility}" Value="Collapsed"/>
@@ -244,14 +250,17 @@
                                                 <!-- Custom source on-cover banner -->
                                                 <Image x:Name="CustomSourceOnCover"
                                                        RenderOptions.BitmapScalingMode="Fant"
-                                                       Stretch="UniformToFill"
                                                        VerticalAlignment="Top"
                                                        HorizontalAlignment="Left"
                                                        Source="{Binding Text, ElementName=CustomSourceOnCoverBannerPath}">
                                                     <Image.Style>
                                                         <Style TargetType="Image">
                                                             <Setter Property="Visibility" Value="Visible"/>
+                                                            <Setter Property="Stretch" Value="UniformToFill"/>
                                                             <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[StretchBanner]}" Value="True">
+                                                                    <Setter Property="Stretch" Value="Fill"/>
+                                                                </DataTrigger>
                                                                 <DataTrigger Binding="{Binding ElementName=CustomBannerOnCoverFolderPath, Path=Text}" Value="">
                                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                                 </DataTrigger>
@@ -292,14 +301,17 @@
                                                 <!-- Custom platform on-cover banner, used only if source banner is unavailable -->
                                                 <Image x:Name="CustomPlatformOnCover"
                                                        RenderOptions.BitmapScalingMode="Fant"
-                                                       Stretch="UniformToFill"
                                                        VerticalAlignment="Top"
                                                        HorizontalAlignment="Left"
                                                        Source="{Binding Text, ElementName=CustomPlatformOnCoverBannerPath}">
                                                     <Image.Style>
                                                         <Style TargetType="Image">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Setter Property="Stretch" Value="UniformToFill"/>
                                                             <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[StretchBanner]}" Value="True">
+                                                                    <Setter Property="Stretch" Value="Fill"/>
+                                                                </DataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
                                                                         <Condition Binding="{Binding ElementName=CustomSourceOnCover, Path=Visibility}" Value="Collapsed"/>

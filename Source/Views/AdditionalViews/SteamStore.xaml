@@ -1255,43 +1255,49 @@
                                                      Height="13"
                                                      Margin="0,0,10,0"
                                                      Fill="{DynamicResource TextHighlightBrush}"
-                                                     Opacity="0.30"
                                                      RenderTransformOrigin="0.5,0.5">
+
                                                 <Ellipse.RenderTransform>
                                                     <ScaleTransform ScaleX="1" ScaleY="1"/>
                                                 </Ellipse.RenderTransform>
 
-                                                <Ellipse.Triggers>
-                                                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-                                                        <BeginStoryboard>
-                                                            <Storyboard RepeatBehavior="Forever">
-                                                                <DoubleAnimation Storyboard.TargetName="SteamStoreLoadingDot1"
-                                                                                 Storyboard.TargetProperty="Opacity"
-                                                                                 From="0.30"
-                                                                                 To="1"
-                                                                                 Duration="0:0:0.45"
-                                                                                 AutoReverse="True"
-                                                                                 RepeatBehavior="Forever"/>
+                                                <Ellipse.Style>
+                                                    <Style TargetType="Ellipse">
+                                                        <Setter Property="Opacity" Value="0.30"/>
 
-                                                                <DoubleAnimation Storyboard.TargetName="SteamStoreLoadingDot1"
-                                                                                 Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
-                                                                                 From="0.85"
-                                                                                 To="1.25"
-                                                                                 Duration="0:0:0.45"
-                                                                                 AutoReverse="True"
-                                                                                 RepeatBehavior="Forever"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsVisible" Value="True">
+                                                                <Trigger.EnterActions>
+                                                                    <BeginStoryboard x:Name="SteamStoreLoadingDot1Storyboard">
+                                                                        <Storyboard RepeatBehavior="Forever">
+                                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                             From="0.30"
+                                                                                             To="1"
+                                                                                             Duration="0:0:0.45"
+                                                                                             AutoReverse="True"/>
 
-                                                                <DoubleAnimation Storyboard.TargetName="SteamStoreLoadingDot1"
-                                                                                 Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
-                                                                                 From="0.85"
-                                                                                 To="1.25"
-                                                                                 Duration="0:0:0.45"
-                                                                                 AutoReverse="True"
-                                                                                 RepeatBehavior="Forever"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
-                                                </Ellipse.Triggers>
+                                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                                                                             From="0.85"
+                                                                                             To="1.25"
+                                                                                             Duration="0:0:0.45"
+                                                                                             AutoReverse="True"/>
+
+                                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                                                                             From="0.85"
+                                                                                             To="1.25"
+                                                                                             Duration="0:0:0.45"
+                                                                                             AutoReverse="True"/>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </Trigger.EnterActions>
+
+                                                                <Trigger.ExitActions>
+                                                                    <RemoveStoryboard BeginStoryboardName="SteamStoreLoadingDot1Storyboard"/>
+                                                                </Trigger.ExitActions>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Ellipse.Style>
                                             </Ellipse>
 
                                             <!-- Dot 2 -->
@@ -1300,46 +1306,52 @@
                                                      Height="13"
                                                      Margin="0,0,10,0"
                                                      Fill="{DynamicResource TextHighlightBrush}"
-                                                     Opacity="0.30"
                                                      RenderTransformOrigin="0.5,0.5">
+
                                                 <Ellipse.RenderTransform>
                                                     <ScaleTransform ScaleX="1" ScaleY="1"/>
                                                 </Ellipse.RenderTransform>
 
-                                                <Ellipse.Triggers>
-                                                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-                                                        <BeginStoryboard>
-                                                            <Storyboard RepeatBehavior="Forever">
-                                                                <DoubleAnimation Storyboard.TargetName="SteamStoreLoadingDot2"
-                                                                                 Storyboard.TargetProperty="Opacity"
-                                                                                 From="0.30"
-                                                                                 To="1"
-                                                                                 Duration="0:0:0.45"
-                                                                                 BeginTime="0:0:0.15"
-                                                                                 AutoReverse="True"
-                                                                                 RepeatBehavior="Forever"/>
+                                                <Ellipse.Style>
+                                                    <Style TargetType="Ellipse">
+                                                        <Setter Property="Opacity" Value="0.30"/>
 
-                                                                <DoubleAnimation Storyboard.TargetName="SteamStoreLoadingDot2"
-                                                                                 Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
-                                                                                 From="0.85"
-                                                                                 To="1.25"
-                                                                                 Duration="0:0:0.45"
-                                                                                 BeginTime="0:0:0.15"
-                                                                                 AutoReverse="True"
-                                                                                 RepeatBehavior="Forever"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsVisible" Value="True">
+                                                                <Trigger.EnterActions>
+                                                                    <BeginStoryboard x:Name="SteamStoreLoadingDot2Storyboard">
+                                                                        <Storyboard RepeatBehavior="Forever">
+                                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                             From="0.30"
+                                                                                             To="1"
+                                                                                             Duration="0:0:0.45"
+                                                                                             BeginTime="0:0:0.15"
+                                                                                             AutoReverse="True"/>
 
-                                                                <DoubleAnimation Storyboard.TargetName="SteamStoreLoadingDot2"
-                                                                                 Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
-                                                                                 From="0.85"
-                                                                                 To="1.25"
-                                                                                 Duration="0:0:0.45"
-                                                                                 BeginTime="0:0:0.15"
-                                                                                 AutoReverse="True"
-                                                                                 RepeatBehavior="Forever"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
-                                                </Ellipse.Triggers>
+                                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                                                                             From="0.85"
+                                                                                             To="1.25"
+                                                                                             Duration="0:0:0.45"
+                                                                                             BeginTime="0:0:0.15"
+                                                                                             AutoReverse="True"/>
+
+                                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                                                                             From="0.85"
+                                                                                             To="1.25"
+                                                                                             Duration="0:0:0.45"
+                                                                                             BeginTime="0:0:0.15"
+                                                                                             AutoReverse="True"/>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </Trigger.EnterActions>
+
+                                                                <Trigger.ExitActions>
+                                                                    <RemoveStoryboard BeginStoryboardName="SteamStoreLoadingDot2Storyboard"/>
+                                                                </Trigger.ExitActions>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Ellipse.Style>
                                             </Ellipse>
 
                                             <!-- Dot 3 -->
@@ -1347,46 +1359,52 @@
                                                      Width="13"
                                                      Height="13"
                                                      Fill="{DynamicResource TextHighlightBrush}"
-                                                     Opacity="0.30"
                                                      RenderTransformOrigin="0.5,0.5">
+
                                                 <Ellipse.RenderTransform>
                                                     <ScaleTransform ScaleX="1" ScaleY="1"/>
                                                 </Ellipse.RenderTransform>
 
-                                                <Ellipse.Triggers>
-                                                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-                                                        <BeginStoryboard>
-                                                            <Storyboard RepeatBehavior="Forever">
-                                                                <DoubleAnimation Storyboard.TargetName="SteamStoreLoadingDot3"
-                                                                                 Storyboard.TargetProperty="Opacity"
-                                                                                 From="0.30"
-                                                                                 To="1"
-                                                                                 Duration="0:0:0.45"
-                                                                                 BeginTime="0:0:0.30"
-                                                                                 AutoReverse="True"
-                                                                                 RepeatBehavior="Forever"/>
+                                                <Ellipse.Style>
+                                                    <Style TargetType="Ellipse">
+                                                        <Setter Property="Opacity" Value="0.30"/>
 
-                                                                <DoubleAnimation Storyboard.TargetName="SteamStoreLoadingDot3"
-                                                                                 Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
-                                                                                 From="0.85"
-                                                                                 To="1.25"
-                                                                                 Duration="0:0:0.45"
-                                                                                 BeginTime="0:0:0.30"
-                                                                                 AutoReverse="True"
-                                                                                 RepeatBehavior="Forever"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsVisible" Value="True">
+                                                                <Trigger.EnterActions>
+                                                                    <BeginStoryboard x:Name="SteamStoreLoadingDot3Storyboard">
+                                                                        <Storyboard RepeatBehavior="Forever">
+                                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                             From="0.30"
+                                                                                             To="1"
+                                                                                             Duration="0:0:0.45"
+                                                                                             BeginTime="0:0:0.30"
+                                                                                             AutoReverse="True"/>
 
-                                                                <DoubleAnimation Storyboard.TargetName="SteamStoreLoadingDot3"
-                                                                                 Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
-                                                                                 From="0.85"
-                                                                                 To="1.25"
-                                                                                 Duration="0:0:0.45"
-                                                                                 BeginTime="0:0:0.30"
-                                                                                 AutoReverse="True"
-                                                                                 RepeatBehavior="Forever"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
-                                                </Ellipse.Triggers>
+                                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                                                                             From="0.85"
+                                                                                             To="1.25"
+                                                                                             Duration="0:0:0.45"
+                                                                                             BeginTime="0:0:0.30"
+                                                                                             AutoReverse="True"/>
+
+                                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                                                                             From="0.85"
+                                                                                             To="1.25"
+                                                                                             Duration="0:0:0.45"
+                                                                                             BeginTime="0:0:0.30"
+                                                                                             AutoReverse="True"/>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </Trigger.EnterActions>
+
+                                                                <Trigger.ExitActions>
+                                                                    <RemoveStoryboard BeginStoryboardName="SteamStoreLoadingDot3Storyboard"/>
+                                                                </Trigger.ExitActions>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Ellipse.Style>
                                             </Ellipse>
                                         </StackPanel>
 

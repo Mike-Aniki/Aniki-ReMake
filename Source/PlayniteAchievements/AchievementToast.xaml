@@ -3,45 +3,9 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
 
-    <!-- Toast position -->
-    <sys:String x:Key="PlayAch.Toast.Position">TopRight</sys:String>
 
     <!-- Toast duration in seconds -->
     <sys:String x:Key="PlayAch.Toast.DurationSeconds">10</sys:String>
-
-    <!-- Slide in animation -->
-    <Storyboard x:Key="PlayAch.Storyboard.ToastSlideIn">
-        <DoubleAnimation Storyboard.TargetProperty="(Window.Top)"
-                         Duration="0:0:0.28"
-                         FillBehavior="HoldEnd">
-            <DoubleAnimation.EasingFunction>
-                <BackEase EasingMode="EaseOut" Amplitude="0.35"/>
-            </DoubleAnimation.EasingFunction>
-        </DoubleAnimation>
-    </Storyboard>
-
-    <!-- Slide out animation -->
-    <Storyboard x:Key="PlayAch.Storyboard.ToastSlideOut">
-        <DoubleAnimation Storyboard.TargetProperty="(Window.Top)"
-                         Duration="0:0:0.20"
-                         FillBehavior="HoldEnd">
-            <DoubleAnimation.EasingFunction>
-                <CubicEase EasingMode="EaseIn"/>
-            </DoubleAnimation.EasingFunction>
-        </DoubleAnimation>
-    </Storyboard>
-
-    <!-- Countdown bar animation -->
-    <Storyboard x:Key="PlayAch.Storyboard.ToastCountdown">
-        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
-                         From="1"
-                         To="0"
-                         FillBehavior="HoldEnd">
-            <DoubleAnimation.EasingFunction>
-                <CubicEase EasingMode="EaseOut"/>
-            </DoubleAnimation.EasingFunction>
-        </DoubleAnimation>
-    </Storyboard>
 
     <!-- Toast visual template -->
     <DataTemplate x:Key="PlayAch.Template.AchievementToast">
@@ -72,21 +36,66 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- Achievement icon -->
-                    <Border Grid.Column="0"
-                            Width="70"
-                            Height="70"
-                            CornerRadius="2"
-                            Background="#22000000"
-                            BorderBrush="#55FFFFFF"
-                            BorderThickness="1"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            ClipToBounds="True">
+                    <Grid Grid.Column="0"
+                          Width="70"
+                          Height="70"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Center">
 
-                        <Image Source="{Binding IconPath}"
-                               RenderOptions.BitmapScalingMode="Fant"
-                               Stretch="UniformToFill"/>
-                    </Border>
+                        <!-- Normal achievement icon -->
+                        <Border Width="70"
+                                Height="70"
+                                CornerRadius="2"
+                                Background="#22000000"
+                                BorderBrush="#55FFFFFF"
+                                BorderThickness="1"
+                                ClipToBounds="True">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding FriendAvatar}" Value="{x:Null}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding FriendAvatar}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
+                            <Image Source="{Binding IconPath}"
+                                   RenderOptions.BitmapScalingMode="Fant"
+                                   Stretch="UniformToFill"/>
+                        </Border>
+
+                        <!-- Friend avatar -->
+                        <Border Width="70"
+                                Height="70"
+                                CornerRadius="35"
+                                Background="#22000000"
+                                BorderBrush="#AAFFFFFF"
+                                BorderThickness="2"
+                                ClipToBounds="True">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding FriendAvatar}" Value="{x:Null}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding FriendAvatar}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
+                            <Image Source="{Binding FriendAvatar}"
+                                   RenderOptions.BitmapScalingMode="Fant"
+                                   Stretch="UniformToFill"/>
+                        </Border>
+                    </Grid>
 
                     <!-- Text -->
                     <Grid Grid.Column="1"
@@ -96,10 +105,37 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <!-- Title -->
+                        <!-- Friend premium header -->
                         <TextBlock Grid.Row="0"
+                                   Text="{DynamicResource LOCFriendUnlockedAchievement}"
+                                   Style="{DynamicResource AnikiToastTextBlockStyle}"
+                                   Foreground="{DynamicResource AnikiToastSubTextBrush}"
+                                   FontSize="11"
+                                   FontWeight="Bold"
+                                   Opacity="0.90"
+                                   TextTrimming="CharacterEllipsis"
+                                   TextWrapping="NoWrap"
+                                   Margin="0,0,8,2">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding FriendAvatar}" Value="{x:Null}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding FriendAvatar}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <!-- Title -->
+                        <TextBlock Grid.Row="1"
                                    Text="{Binding TitleText}"
                                    Style="{DynamicResource AnikiToastTextBlockStyle}"
                                    FontSize="22"
@@ -109,16 +145,39 @@
                                    VerticalAlignment="Center"
                                    Margin="0,0,8,0"/>
 
-                        <!-- Desc -->
-                        <TextBlock Grid.Row="1"
-                                   Text="{Binding Description}"
-                                   Style="{DynamicResource AnikiToastTextBlockStyle}"
-                                   Opacity="0.88"
-                                   FontSize="16"
-                                   FontWeight="SemiBold"
-                                   TextTrimming="CharacterEllipsis"
-                                   TextWrapping="Wrap"
-                                   Margin="0,5,0,0"/>
+                        <!-- Description: displayed only for the user's own achievements -->
+                        <Grid Grid.Row="2"
+                              Margin="0,5,0,0">
+
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <!-- Hidden by default when a friend avatar is available -->
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+
+                                    <Style.Triggers>
+                                        <!-- Normal notification: no friend avatar -->
+                                        <DataTrigger Binding="{Binding FriendAvatar}"
+                                                     Value="{x:Null}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+
+                                        <DataTrigger Binding="{Binding FriendAvatar}"
+                                                     Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+
+                            <TextBlock Text="{Binding Description}"
+                                       Style="{DynamicResource AnikiToastTextBlockStyle}"
+                                       Opacity="0.88"
+                                       FontSize="16"
+                                       FontWeight="SemiBold"
+                                       MaxHeight="40"
+                                       TextTrimming="CharacterEllipsis"
+                                       TextWrapping="Wrap"/>
+                        </Grid>
                     </Grid>
 
                     <!-- Right trophy / rarity badge -->

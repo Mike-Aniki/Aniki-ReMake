@@ -8,7 +8,7 @@
                     xmlns:pbeh="clr-namespace:Playnite.Behaviors;assembly=Playnite"
                     mc:Ignorable="d">
 
-    <!-- Gamepad Tester - Fullscreen integrated blocks -->
+    <!-- Gamepad Tester -->
     <Style x:Key="GamepadTesterWindowStyle" TargetType="ContentControl">
         <Setter Property="Template">
             <Setter.Value>
@@ -17,7 +17,6 @@
                     <Grid x:Name="GamepadTesterRoot"
                           Background="{DynamicResource SecondaryViewBackground}"
                           FocusManager.IsFocusScope="True"
-                          FocusManager.FocusedElement="{Binding ElementName=GamepadTester_ButtonMap}"
                           KeyboardNavigation.DirectionalNavigation="Contained"
                           KeyboardNavigation.TabNavigation="Cycle"
                           KeyboardNavigation.ControlTabNavigation="Contained"
@@ -74,7 +73,7 @@
                                 <Setter Property="SnapsToDevicePixels" Value="True"/>
                                 <Setter Property="Effect">
                                     <Setter.Value>
-                                        <DropShadowEffect BlurRadius="24"
+                                        <DropShadowEffect BlurRadius="10"
                                                           ShadowDepth="0"
                                                           Opacity="0.35"
                                                           Color="#000000"/>
@@ -83,13 +82,22 @@
                             </Style>
 
                             <Style x:Key="GamepadTesterBlockStyle" TargetType="ContentControl">
-                                <Setter Property="Focusable" Value="True"/>
-                                <Setter Property="IsTabStop" Value="True"/>
+                                <Setter Property="Focusable" Value="False"/>
+                                <Setter Property="IsTabStop" Value="False"/>
                                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                                <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Contained"/>
-                                <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle"/>
+                                <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Continue"/>
+                                <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue"/>
                                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
                                 <Setter Property="VerticalAlignment" Value="Stretch"/>
+                            </Style>
+
+                            <Style x:Key="GamepadTesterInteractiveBlockStyle"
+                                   TargetType="ContentControl"
+                                   BasedOn="{StaticResource GamepadTesterBlockStyle}">
+                                <Setter Property="Focusable" Value="False"/>
+                                <Setter Property="IsTabStop" Value="False"/>
+                                <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Continue"/>
+                                <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue"/>
                             </Style>
 
                         </Grid.Resources>
@@ -130,6 +138,7 @@
                                         MinWidth="260"
                                         VerticalAlignment="Center">
                                     <ContentControl x:Name="GamepadTester_StatusBadge"
+                                                    Tag="GamepadTester_StatusBadge"
                                                     Style="{StaticResource GamepadTesterBlockStyle}"
                                                     MinHeight="44"
                                                     Focusable="False"
@@ -145,35 +154,12 @@
                                     <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <!-- Button map -->
-                                <Border Grid.Column="0" Style="{StaticResource GamepadTesterCardStyle}">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-
-                                        <StackPanel Orientation="Vertical" Grid.Row="0">
-                                            <TextBlock Text="Button map" Style="{StaticResource GamepadTesterTitleStyle}"/>
-                                            <TextBlock Text="Press buttons on the controller to check the live layout highlight."
-                                                       Style="{StaticResource GamepadTesterSubtitleStyle}"
-                                                       Margin="0,-6,0,16"/>
-                                        </StackPanel>
-
-                                        <ContentControl x:Name="GamepadTester_ButtonMap"
-                                                        Grid.Row="1"
-                                                        Style="{StaticResource GamepadTesterBlockStyle}"/>
-                                    </Grid>
-                                </Border>
-
-                                <!-- Right column -->
-                                <Grid Grid.Column="2">
+                                <!-- Controller and stick diagnostics -->
+                                <Grid Grid.Column="0">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1.35*"/>
                                         <RowDefinition Height="18"/>
-                                        <RowDefinition Height="0.82*"/>
-                                        <RowDefinition Height="18"/>
-                                        <RowDefinition Height="0.72*"/>
+                                        <RowDefinition Height="0.78*"/>
                                     </Grid.RowDefinitions>
 
                                     <Border Grid.Row="0" Style="{StaticResource GamepadTesterCardStyle}">
@@ -183,12 +169,53 @@
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
 
-                                            <TextBlock Text="Stick check" Style="{StaticResource GamepadTesterTitleStyle}"/>
+                                            <StackPanel Orientation="Vertical" Grid.Row="0">
+                                                <TextBlock Text="Button map" Style="{StaticResource GamepadTesterTitleStyle}"/>
+                                                <TextBlock Text="Start the focused test, then press every control on the gamepad."
+                                                           Style="{StaticResource GamepadTesterSubtitleStyle}"
+                                                           Margin="0,-6,0,12"/>
+                                            </StackPanel>
+
+                                            <ContentControl x:Name="GamepadTester_ButtonMap"
+                                                            Tag="GamepadTester_ButtonMap"
+                                                            Grid.Row="1"
+                                                            Style="{StaticResource GamepadTesterInteractiveBlockStyle}"/>
+                                        </Grid>
+                                    </Border>
+
+                                    <Border Grid.Row="2" Style="{StaticResource GamepadTesterCardStyle}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Text="Stick diagnostics" Style="{StaticResource GamepadTesterTitleStyle}"/>
 
                                             <ContentControl x:Name="GamepadTester_StickCheck"
+                                                            Tag="GamepadTester_StickCheck"
                                                             Grid.Row="1"
                                                             Style="{StaticResource GamepadTesterBlockStyle}"/>
                                         </Grid>
+                                    </Border>
+                                </Grid>
+
+                                <!-- Right column -->
+                                <Grid Grid.Column="2"
+                                      KeyboardNavigation.DirectionalNavigation="Continue"
+                                      KeyboardNavigation.TabNavigation="Continue">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="14"/>
+                                        <RowDefinition Height="0.72*"/>
+                                        <RowDefinition Height="18"/>
+                                        <RowDefinition Height="1.18*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Border Grid.Row="0" Style="{StaticResource GamepadTesterCardStyle}">
+                                        <ContentControl x:Name="GamepadTester_TriggerCheck"
+                                                        Tag="GamepadTester_TriggerCheck"
+                                                        Style="{StaticResource GamepadTesterBlockStyle}"/>
                                     </Border>
 
                                     <Border Grid.Row="2" Style="{StaticResource GamepadTesterCardStyle}">
@@ -201,8 +228,9 @@
                                             <TextBlock Text="Rumble" Style="{StaticResource GamepadTesterTitleStyle}"/>
 
                                             <ContentControl x:Name="GamepadTester_RumblePad"
+                                                            Tag="GamepadTester_RumblePad"
                                                             Grid.Row="1"
-                                                            Style="{StaticResource GamepadTesterBlockStyle}"/>
+                                                            Style="{StaticResource GamepadTesterInteractiveBlockStyle}"/>
                                         </Grid>
                                     </Border>
 
@@ -216,8 +244,9 @@
                                             <TextBlock Text="Latency" Style="{StaticResource GamepadTesterTitleStyle}"/>
 
                                             <ContentControl x:Name="GamepadTester_LatencyMini"
+                                                            Tag="GamepadTester_LatencyMini"
                                                             Grid.Row="1"
-                                                            Style="{StaticResource GamepadTesterBlockStyle}"/>
+                                                            Style="{StaticResource GamepadTesterInteractiveBlockStyle}"/>
                                         </Grid>
                                     </Border>
                                 </Grid>
@@ -230,7 +259,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Text="Tip: focus the Rumble or Latency panel, then press A to activate the focused tester button."
+                                <TextBlock Text="A: activate"
                                            Style="{DynamicResource TextBlockBaseStyle}"
                                            FontSize="13"
                                            FontWeight="SemiBold"
@@ -242,10 +271,58 @@
                                             Orientation="Horizontal"
                                             VerticalAlignment="Center">
 
-                                    <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                              Tag="B"
-                                              Command="{Binding CloseCommand}"
-                                              Content="{DynamicResource LOCBackLabel}" />
+                                    <StackPanel.Style>
+                                        <Style TargetType="StackPanel">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Content.DataContext.IsButtonCaptureRunning, ElementName=GamepadTester_ButtonMap}"
+                                                             Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Content.DataContext.IsStickCaptureRunning, ElementName=GamepadTester_StickCheck}"
+                                                             Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Content.DataContext.IsLatencyTestRunning, ElementName=GamepadTester_LatencyMini}"
+                                                             Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
+
+                                    <ButtonEx x:Name="GamepadTester_BackButton"
+                                              Content="{DynamicResource LOCBackLabel}">
+                                        <ButtonEx.Style>
+                                            <Style TargetType="ButtonEx"
+                                                   BasedOn="{StaticResource ButtonBottomMenuDark}">
+                                                <Setter Property="Tag" Value="B"/>
+                                                <Setter Property="Command" Value="{Binding CloseCommand}"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Content.DataContext.IsButtonCaptureRunning, ElementName=GamepadTester_ButtonMap}"
+                                                                 Value="True">
+                                                        <Setter Property="Tag" Value="{x:Null}"/>
+                                                        <Setter Property="Command" Value="{x:Null}"/>
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Content.DataContext.IsStickCaptureRunning, ElementName=GamepadTester_StickCheck}"
+                                                                 Value="True">
+                                                        <Setter Property="Tag" Value="{x:Null}"/>
+                                                        <Setter Property="Command" Value="{x:Null}"/>
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Content.DataContext.IsLatencyTestRunning, ElementName=GamepadTester_LatencyMini}"
+                                                                 Value="True">
+                                                        <Setter Property="Tag" Value="{x:Null}"/>
+                                                        <Setter Property="Command" Value="{x:Null}"/>
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ButtonEx.Style>
+                                    </ButtonEx>
                                 </StackPanel>
                             </Grid>
                         </Grid>

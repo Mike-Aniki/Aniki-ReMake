@@ -49,6 +49,58 @@
         </Setter>
     </Style>
 
+    <!-- Compact pill used by the hidden-achievements toggle. -->
+    <Style x:Key="AnikiAchievementsTogglePillStyle" TargetType="CheckBoxEx">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="Height" Value="36" />
+        <Setter Property="MinWidth" Value="200" />
+        <Setter Property="Padding" Value="16,0" />
+        <Setter Property="Background" Value="#10000000" />
+        <Setter Property="BorderBrush" Value="#35FFFFFF" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBoxEx">
+                    <Border x:Name="TogglePill"
+                            Height="{TemplateBinding Height}"
+                            MinWidth="{TemplateBinding MinWidth}"
+                            Padding="{TemplateBinding Padding}"
+                            CornerRadius="18"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="TogglePill" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}" />
+                            <Setter TargetName="TogglePill" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="TogglePill" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}" />
+                            <Setter TargetName="TogglePill" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="TogglePill" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}" />
+                            <Setter TargetName="TogglePill" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="TogglePill" Property="Background" Value="#22D0B06A" />
+                            <Setter TargetName="TogglePill" Property="BorderBrush" Value="#55D0B06A" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="TogglePill" Property="Background" Value="#28D0B06A" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Fullscreen child window opened by the in-game overlay Achievements button. -->
     <Style x:Key="AchievementsWindowStyle" TargetType="ContentControl">
         <Setter Property="Focusable" Value="False" />
@@ -63,7 +115,7 @@
                         <Rectangle IsHitTestVisible="False" Fill="#96000000"/>
 
                         <Border Width="1180"
-                                Height="830"
+                                Height="1000"
                                 Padding="42,32"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
@@ -92,7 +144,7 @@
                                                Style="{DynamicResource TextBlockBaseStyle}"
                                                HorizontalAlignment="Center"/>
 
-                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OverlayAchievementsSubtitle}"
+                                    <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=DynamicAchievementsGameLabel}"
                                                Margin="0,8,0,0"
                                                FontSize="18"
                                                Style="{DynamicResource TextBlockBaseStyle}"
@@ -109,24 +161,13 @@
                                 <!-- Progress summary / sorting -->
                                 <Grid Grid.Row="2">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <StackPanel VerticalAlignment="Center">
-                                        <TextBlock Text="{DynamicResource LOCAchievements}"
-                                                   FontSize="19"
-                                                   FontWeight="Bold"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"/>
-                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OverlayAchievementsSortDescription}"
-                                                   Margin="0,4,0,0"
-                                                   FontSize="14"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"
-                                                   Opacity="0.82"/>
-                                    </StackPanel>
-
-                                    <ButtonEx Grid.Column="1"
+                                    <ButtonEx Grid.Column="0"
                                               Style="{StaticResource AnikiAchievementsSortButtonStyle}"
                                               Margin="0,0,12,0"
                                               Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleOverlayAchievementsSortCommand}">
@@ -145,22 +186,105 @@
                                         </StackPanel>
                                     </ButtonEx>
 
-                                    <Border Grid.Column="2"
-                                            MinWidth="108"
-                                            Height="34"
-                                            Padding="18,0"
-                                            CornerRadius="17"
+                                    <CheckBoxEx Grid.Column="1"
+                                                Style="{StaticResource AnikiAchievementsTogglePillStyle}"
+                                                Margin="0,0,12,0"
+                                                IsChecked="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowHiddenAchievements], Mode=TwoWay}">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock Text="&#xE890;"
+                                                       FontFamily="{DynamicResource FontIcons}"
+                                                       FontSize="15"
+                                                       Foreground="{DynamicResource TextBrush}"
+                                                       VerticalAlignment="Center"/>
+                                            <TextBlock Margin="8,0,0,0"
+                                                       Text="{DynamicResource LOCShowHiddenAchievements}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="13"
+                                                       FontWeight="Bold"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </CheckBoxEx>
+
+                                    <Border Grid.Column="3"
+                                            Height="44"
+                                            Padding="14,0"
+                                            CornerRadius="22"
                                             Background="#12000000"
                                             BorderBrush="#45D0B06A"
                                             BorderThickness="1"
                                             VerticalAlignment="Center">
-                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OverlayAchievementsProgressText}"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"
-                                                   FontSize="15"
-                                                   FontWeight="Bold"
-                                                   Foreground="{DynamicResource TextHighlightBrush}"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"/>
+                                        <StackPanel Orientation="Horizontal"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center">
+
+                                            <!-- Platinum -->
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <Image Source="{ThemeFile 'Images/platinum.png'}"
+                                                       Width="28"
+                                                       Height="28"
+                                                       Margin="0,0,5,0"
+                                                       RenderOptions.BitmapScalingMode="Fant"/>
+                                                <TextBlock FontSize="15"
+                                                           FontWeight="Bold"
+                                                           VerticalAlignment="Center">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                            <Setter Property="Text" Value="0"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Percent}" Value="100">
+                                                                    <Setter Property="Text" Value="1"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=IsCompleted}" Value="True">
+                                                                    <Setter Property="Text" Value="1"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </StackPanel>
+
+                                            <!-- Gold -->
+                                            <StackPanel Orientation="Horizontal" Margin="14,0,0,0" VerticalAlignment="Center">
+                                                <Image Source="{ThemeFile 'Images/Or.png'}"
+                                                       Width="28"
+                                                       Height="28"
+                                                       Margin="0,0,5,0"
+                                                       RenderOptions.BitmapScalingMode="Fant"/>
+                                                <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=RareAndUltraRare.Unlocked, FallbackValue=0}"
+                                                           FontSize="15"
+                                                           FontWeight="Bold"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           VerticalAlignment="Center"/>
+                                            </StackPanel>
+
+                                            <!-- Silver -->
+                                            <StackPanel Orientation="Horizontal" Margin="14,0,0,0" VerticalAlignment="Center">
+                                                <Image Source="{ThemeFile 'Images/Argent.png'}"
+                                                       Width="28"
+                                                       Height="28"
+                                                       Margin="0,0,5,0"
+                                                       RenderOptions.BitmapScalingMode="Fant"/>
+                                                <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=Uncommon.Unlocked, FallbackValue=0}"
+                                                           FontSize="15"
+                                                           FontWeight="Bold"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           VerticalAlignment="Center"/>
+                                            </StackPanel>
+
+                                            <!-- Bronze -->
+                                            <StackPanel Orientation="Horizontal" Margin="14,0,0,0" VerticalAlignment="Center">
+                                                <Image Source="{ThemeFile 'Images/Bronze.png'}"
+                                                       Width="28"
+                                                       Height="28"
+                                                       Margin="0,0,5,0"
+                                                       RenderOptions.BitmapScalingMode="Fant"/>
+                                                <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=Common.Unlocked, FallbackValue=0}"
+                                                           FontSize="15"
+                                                           FontWeight="Bold"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </StackPanel>
                                     </Border>
                                 </Grid>
 
@@ -169,13 +293,14 @@
                                     <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                                                   VerticalScrollBarVisibility="Auto"
                                                   Focusable="False"
-                                                  CanContentScroll="True">
-                                        <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=OverlayAchievementItems}">
+                                                  CanContentScroll="True"
+                                                  Padding="0,4,12,4">
+                                        <ItemsControl ItemsSource="{PluginSettings Plugin=PlayniteAchievements, Path=DynamicAchievements}">
                                             <ItemsControl.Style>
                                                 <Style TargetType="ItemsControl">
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=HasOverlayAchievements}" Value="False">
+                                                        <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=HasAchievements}" Value="False">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
@@ -279,9 +404,73 @@
                                                                                HorizontalAlignment="Center"
                                                                                VerticalAlignment="Center"/>
 
-                                                                    <Image Source="{Binding IconPath}"
+                                                                    <Image Source="{Binding Icon}"
                                                                            Stretch="UniformToFill"
-                                                                           RenderOptions.BitmapScalingMode="Fant"/>
+                                                                           RenderOptions.BitmapScalingMode="Fant">
+                                                                        <Image.Style>
+                                                                            <Style TargetType="Image">
+                                                                                <Setter Property="Opacity" Value="1"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding Unlocked}" Value="False">
+                                                                                        <Setter Property="Opacity" Value="0.25"/>
+                                                                                    </DataTrigger>
+                                                                                    <MultiDataTrigger>
+                                                                                        <MultiDataTrigger.Conditions>
+                                                                                            <Condition Binding="{Binding IsHidden}" Value="True"/>
+                                                                                            <Condition Binding="{Binding Unlocked}" Value="False"/>
+                                                                                            <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowHiddenAchievements]}" Value="False"/>
+                                                                                        </MultiDataTrigger.Conditions>
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </MultiDataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Image.Style>
+                                                                    </Image>
+
+                                                                    <Image Source="{ThemeFile 'Images/Buttons/locked.png'}"
+                                                                           Width="38"
+                                                                           Height="38"
+                                                                           Opacity="0.82"
+                                                                           HorizontalAlignment="Center"
+                                                                           VerticalAlignment="Center">
+                                                                        <Image.Style>
+                                                                            <Style TargetType="Image">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding Unlocked}" Value="False">
+                                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                                    </DataTrigger>
+                                                                                    <MultiDataTrigger>
+                                                                                        <MultiDataTrigger.Conditions>
+                                                                                            <Condition Binding="{Binding IsHidden}" Value="True"/>
+                                                                                            <Condition Binding="{Binding Unlocked}" Value="False"/>
+                                                                                            <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowHiddenAchievements]}" Value="False"/>
+                                                                                        </MultiDataTrigger.Conditions>
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </MultiDataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Image.Style>
+                                                                    </Image>
+
+                                                                    <Image Source="{ThemeFile 'Images/TrophyHidden.png'}"
+                                                                           Stretch="UniformToFill">
+                                                                        <Image.Style>
+                                                                            <Style TargetType="Image">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                <Style.Triggers>
+                                                                                    <MultiDataTrigger>
+                                                                                        <MultiDataTrigger.Conditions>
+                                                                                            <Condition Binding="{Binding IsHidden}" Value="True"/>
+                                                                                            <Condition Binding="{Binding Unlocked}" Value="False"/>
+                                                                                            <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowHiddenAchievements]}" Value="False"/>
+                                                                                        </MultiDataTrigger.Conditions>
+                                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                                    </MultiDataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Image.Style>
+                                                                    </Image>
                                                                 </Grid>
                                                             </Grid>
 
@@ -289,71 +478,266 @@
                                                             <StackPanel Grid.Column="1"
                                                                         Margin="20,0,28,0"
                                                                         VerticalAlignment="Center">
-                                                                <TextBlock Text="{Binding Title}"
-                                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                                <TextBlock Text="{Binding Name}"
                                                                            FontSize="23"
                                                                            FontWeight="Bold"
-                                                                           TextTrimming="CharacterEllipsis"/>
+                                                                           TextTrimming="CharacterEllipsis">
+                                                                    <TextBlock.Style>
+                                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                                            <Style.Triggers>
+                                                                                <MultiDataTrigger>
+                                                                                    <MultiDataTrigger.Conditions>
+                                                                                        <Condition Binding="{Binding IsHidden}" Value="True"/>
+                                                                                        <Condition Binding="{Binding Unlocked}" Value="False"/>
+                                                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowHiddenAchievements]}" Value="False"/>
+                                                                                    </MultiDataTrigger.Conditions>
+                                                                                    <Setter Property="Effect">
+                                                                                        <Setter.Value>
+                                                                                            <BlurEffect Radius="12" KernelType="Gaussian"/>
+                                                                                        </Setter.Value>
+                                                                                    </Setter>
+                                                                                    <Setter Property="Opacity" Value="0.72"/>
+                                                                                </MultiDataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </TextBlock.Style>
+                                                                </TextBlock>
 
                                                                 <TextBlock Text="{Binding Description}"
                                                                            Margin="0,5,0,0"
-                                                                           Style="{DynamicResource TextBlockBaseStyle}"
                                                                            FontSize="16"
-                                                                           Opacity="0.88"
-                                                                           TextTrimming="CharacterEllipsis"/>
+                                                                           TextTrimming="CharacterEllipsis">
+                                                                    <TextBlock.Style>
+                                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                                            <Setter Property="Opacity" Value="0.88"/>
+                                                                            <Style.Triggers>
+                                                                                <MultiDataTrigger>
+                                                                                    <MultiDataTrigger.Conditions>
+                                                                                        <Condition Binding="{Binding IsHidden}" Value="True"/>
+                                                                                        <Condition Binding="{Binding Unlocked}" Value="False"/>
+                                                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowHiddenAchievements]}" Value="False"/>
+                                                                                    </MultiDataTrigger.Conditions>
+                                                                                    <Setter Property="Effect">
+                                                                                        <Setter.Value>
+                                                                                            <BlurEffect Radius="12" KernelType="Gaussian"/>
+                                                                                        </Setter.Value>
+                                                                                    </Setter>
+                                                                                    <Setter Property="Opacity" Value="0.58"/>
+                                                                                </MultiDataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </TextBlock.Style>
+                                                                </TextBlock>
 
                                                                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                                                                    <TextBlock Text="{Binding RaritySentence}"
+                                                                    <TextBlock Text="{Binding Percent, Mode=OneWay, StringFormat={}{0:F0}%}"
                                                                                FontSize="14"
-                                                                               Style="{DynamicResource TextBlockBaseStyle}"
                                                                                Opacity="0.64"
-                                                                               TextTrimming="CharacterEllipsis"/>
+                                                                               Style="{DynamicResource TextBlockDetailStyle}"/>
+                                                                    <TextBlock Margin="5,0,0,0"
+                                                                               Text="{DynamicResource LOCPlayershaveachievement}"
+                                                                               FontSize="14"
+                                                                               Opacity="0.64"
+                                                                               Style="{DynamicResource TextBlockDetailStyle}"/>
 
-                                                                    <TextBlock Text="{Binding ProgressText}"
-                                                                               Margin="14,0,0,0"
-                                                                               FontSize="13"
-                                                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                                                               Opacity="0.60"/>
+                                                                    <StackPanel Orientation="Horizontal" Margin="14,0,0,0">
+                                                                        <StackPanel.Style>
+                                                                            <Style TargetType="StackPanel">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding ProgressNum}" Value="{x:Null}">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding ProgressDenom}" Value="{x:Null}">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding ProgressDenom}" Value="1">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding Unlocked}" Value="True">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </StackPanel.Style>
+                                                                        <TextBlock FontSize="13"
+                                                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                                                   Opacity="0.60">
+                                                                            <Run Text=" • "/>
+                                                                            <Run Text="{Binding ProgressNum}"/>
+                                                                            <Run Text="/"/>
+                                                                            <Run Text="{Binding ProgressDenom}"/>
+                                                                        </TextBlock>
+                                                                    </StackPanel>
                                                                 </StackPanel>
                                                             </StackPanel>
 
-                                                            <!-- Status -->
-                                                            <StackPanel Grid.Column="2"
-                                                                        MinWidth="150"
-                                                                        VerticalAlignment="Center"
-                                                                        HorizontalAlignment="Right">
-                                                                <Border Height="32"
-                                                                        Padding="16,0"
-                                                                        CornerRadius="16"
-                                                                        Background="#12000000"
-                                                                        BorderBrush="#35FFFFFF"
-                                                                        BorderThickness="1"
-                                                                        HorizontalAlignment="Right">
-                                                                    <TextBlock Text="{Binding StatusText}"
-                                                                               FontSize="12"
-                                                                               FontWeight="Bold"
-                                                                               HorizontalAlignment="Center"
-                                                                               VerticalAlignment="Center">
+                                                            <!-- Status + Aniki trophy rank -->
+                                                            <Grid Grid.Column="2"
+                                                                  Width="190"
+                                                                  Margin="18,0,0,0"
+                                                                  VerticalAlignment="Center"
+                                                                  HorizontalAlignment="Right">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="54"/>
+                                                                </Grid.ColumnDefinitions>
+
+                                                                <!-- Unlock date / time -->
+                                                                <StackPanel Grid.Column="0"
+                                                                            Margin="0,0,10,0"
+                                                                            VerticalAlignment="Center"
+                                                                            HorizontalAlignment="Right">
+                                                                    <StackPanel.Style>
+                                                                        <Style TargetType="StackPanel">
+                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding Unlocked}" Value="True">
+                                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </StackPanel.Style>
+
+                                                                    <TextBlock Text="{Binding DateUnlocked, StringFormat='{}{0:HH:mm}'}"
+                                                                               FontSize="20"
+                                                                               Opacity="0.72"
+                                                                               HorizontalAlignment="Right">
                                                                         <TextBlock.Style>
                                                                             <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
                                                                                 <Style.Triggers>
-                                                                                    <DataTrigger Binding="{Binding Unlocked}" Value="True">
-                                                                                        <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}"/>
+                                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[LocalClock]}" Value="False">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
                                                                                     </DataTrigger>
                                                                                 </Style.Triggers>
                                                                             </Style>
                                                                         </TextBlock.Style>
                                                                     </TextBlock>
-                                                                </Border>
 
-                                                                <TextBlock Text="{Binding UnlockDateRightText}"
-                                                                           Margin="0,9,0,0"
-                                                                           Style="{DynamicResource TextBlockBaseStyle}"
-                                                                           FontSize="13"
-                                                                           Opacity="0.64"
-                                                                           HorizontalAlignment="Right"
-                                                                           TextTrimming="CharacterEllipsis"/>
-                                                            </StackPanel>
+                                                                    <TextBlock Text="{Binding DateUnlocked, StringFormat='{}{0:t}'}"
+                                                                               FontSize="20"
+                                                                               Opacity="0.72"
+                                                                               HorizontalAlignment="Right">
+                                                                        <TextBlock.Style>
+                                                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[LocalClock]}" Value="False">
+                                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </TextBlock.Style>
+                                                                    </TextBlock>
+
+                                                                    <TextBlock Text="{Binding DateUnlocked, StringFormat='{}{0:d MMM yyyy}'}"
+                                                                               FontSize="20"
+                                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                                               Opacity="0.72"
+                                                                               HorizontalAlignment="Right"/>
+                                                                </StackPanel>
+
+                                                                <!-- Trophy icon centered vertically -->
+                                                                <Grid Grid.Column="1"
+                                                                      Width="54"
+                                                                      Height="54"
+                                                                      HorizontalAlignment="Right"
+                                                                      VerticalAlignment="Center">
+
+                                                                    <Image Source="{ThemeFile 'Images/Bronze.png'}"
+                                                                           Height="46"
+                                                                           HorizontalAlignment="Center"
+                                                                           VerticalAlignment="Center"
+                                                                           RenderOptions.BitmapScalingMode="Fant">
+                                                                        <Image.Style>
+                                                                            <Style TargetType="Image">
+                                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding IsCapstone}" Value="True">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding Rarity}" Value="UltraRare">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding Rarity}" Value="Rare">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                    <DataTrigger Binding="{Binding Rarity}" Value="Uncommon">
+                                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Image.Style>
+                                                                    </Image>
+
+                                                                    <Image Source="{ThemeFile 'Images/Argent.png'}"
+                                                                           Height="46"
+                                                                           HorizontalAlignment="Center"
+                                                                           VerticalAlignment="Center"
+                                                                           RenderOptions.BitmapScalingMode="Fant">
+                                                                        <Image.Style>
+                                                                            <Style TargetType="Image">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                <Style.Triggers>
+                                                                                    <MultiDataTrigger>
+                                                                                        <MultiDataTrigger.Conditions>
+                                                                                            <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                                                                            <Condition Binding="{Binding Rarity}" Value="Uncommon"/>
+                                                                                        </MultiDataTrigger.Conditions>
+                                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                                    </MultiDataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Image.Style>
+                                                                    </Image>
+
+                                                                    <Image Source="{ThemeFile 'Images/Or.png'}"
+                                                                           Height="46"
+                                                                           HorizontalAlignment="Center"
+                                                                           VerticalAlignment="Center"
+                                                                           RenderOptions.BitmapScalingMode="Fant">
+                                                                        <Image.Style>
+                                                                            <Style TargetType="Image">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                <Style.Triggers>
+                                                                                    <MultiDataTrigger>
+                                                                                        <MultiDataTrigger.Conditions>
+                                                                                            <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                                                                            <Condition Binding="{Binding Rarity}" Value="UltraRare"/>
+                                                                                        </MultiDataTrigger.Conditions>
+                                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                                    </MultiDataTrigger>
+                                                                                    <MultiDataTrigger>
+                                                                                        <MultiDataTrigger.Conditions>
+                                                                                            <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                                                                            <Condition Binding="{Binding Rarity}" Value="Rare"/>
+                                                                                        </MultiDataTrigger.Conditions>
+                                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                                    </MultiDataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Image.Style>
+                                                                    </Image>
+
+                                                                    <Image Source="{ThemeFile 'Images/platinum.png'}"
+                                                                           Height="46"
+                                                                           HorizontalAlignment="Center"
+                                                                           VerticalAlignment="Center"
+                                                                           RenderOptions.BitmapScalingMode="Fant">
+                                                                        <Image.Style>
+                                                                            <Style TargetType="Image">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding IsCapstone}" Value="True">
+                                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Image.Style>
+                                                                    </Image>
+                                                                </Grid>
+                                                            </Grid>
                                                         </Grid>
                                                     </ButtonEx>
                                                 </DataTemplate>
@@ -375,7 +759,7 @@
                                             <Style TargetType="Border">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=HasOverlayAchievements}" Value="False">
+                                                    <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=HasAchievements}" Value="False">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -395,7 +779,7 @@
                                                        FontSize="28"
                                                        FontWeight="Bold"
                                                        HorizontalAlignment="Center"/>
-                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OverlayAchievementsEmptyText}"
+                                            <TextBlock Text="{DynamicResource LOCNoAchievementsOverlay}"
                                                        Margin="0,8,0,0"
                                                        Style="{DynamicResource TextBlockBaseStyle}"
                                                        FontSize="16"
@@ -408,15 +792,44 @@
                                 </Grid>
 
                                 <!-- Footer -->
-                                <Grid Grid.Row="5" Margin="0,22,0,0">
-                                    <TextBlock Text="{DynamicResource LOCDataForRunningGame}"
-                                               FontSize="15"
-                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                               Opacity="0.62"
-                                               HorizontalAlignment="Left"
-                                               VerticalAlignment="Bottom"/>
+                                <Grid Grid.Row="5" Margin="0,18,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                                    <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                    <Border Grid.Column="1"
+                                            Height="34"
+                                            Padding="16,0"
+                                            CornerRadius="17"
+                                            Background="#10000000"
+                                            BorderBrush="#35FFFFFF"
+                                            BorderThickness="1"
+                                            VerticalAlignment="Bottom"
+                                            HorizontalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <TextBlock Text="{DynamicResource LOCPlayAch_Column_Total}"
+                                                       Margin="0"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="14"
+                                                       FontWeight="Bold"
+                                                       VerticalAlignment="Center"/>
+
+                                            <TextBlock Margin="6,0,0,0"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="14"
+                                                       FontWeight="Bold"
+                                                       VerticalAlignment="Center">
+                                                <Run Text="{PluginSettings Plugin=PlayniteAchievements, Path=UnlockedCount}"/>
+                                                <Run Text=" / "/>
+                                                <Run Text="{PluginSettings Plugin=PlayniteAchievements, Path=AchievementCount}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <ButtonEx Grid.Column="2"
+                                              Style="{DynamicResource ButtonBottomMenuDark}"
                                               Tag="CancelAction"
                                               Content="{DynamicResource LOCBackLabel}"
                                               HorizontalAlignment="Right"
