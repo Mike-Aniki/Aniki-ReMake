@@ -15,6 +15,7 @@
                     xmlns:fullscreen="clr-namespace:Playnite.FullscreenApp.Controls;assembly=Playnite.FullscreenApp"
                     xmlns:playnite="clr-namespace:Playnite;assembly=Playnite"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:media="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
                     mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
@@ -52,6 +53,20 @@
         <ResourceDictionary Source="{ThemeFile 'PlayniteAchievements/ScreenshotFrame.xaml'}" />
 
     </ResourceDictionary.MergedDictionaries>
+
+    <!-- Fade-in des musiques intégrées au thème -->
+    <Storyboard x:Key="ThemeMusicFadeIn" FillBehavior="Stop">
+        <DoubleAnimation Storyboard.TargetProperty="Volume" From="0" Duration="0:0:0.4"/>
+    </Storyboard>
+
+    <!-- Fade-out puis pause en conservant la position -->
+    <Storyboard x:Key="ThemeMusicFadeOutPause" FillBehavior="Stop">
+        <DoubleAnimation Storyboard.TargetProperty="Volume" To="0" Duration="0:0:0.4"/>
+
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="LoadedBehavior">
+            <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="{x:Static media:MediaState.Pause}"/>
+        </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
 
     <!-- Wrong Message -->
     <Style x:Key="WrongSettingStyle" TargetType="ContentControl">
@@ -1287,7 +1302,7 @@
                                                       Margin="8,0"
                                                       Padding="20,8"
                                                       Content="{DynamicResource LOCProfile}"
-                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[PlayerProfileWindowStyle|MostPlayedCard]}"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[PlayerProfileWindowStyle|MostPlayedCard|SecondaryMusic]}"
                                                       Focusable="True">
                                                 <ButtonEx.Triggers>
                                                     <EventTrigger RoutedEvent="ButtonBase.Click">
@@ -1340,7 +1355,7 @@
                                                       Margin="8,0"
                                                       Padding="20,8"
                                                       Content="{DynamicResource LOCStoreButton}"
-                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[SteamStoreStyle|FocusFirst]}"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[SteamStoreStyle|FocusFirst|SecondaryMusic]}"
                                                       Focusable="True">
                                                 <ButtonEx.Triggers>
                                                     <EventTrigger RoutedEvent="ButtonBase.Click">
@@ -1371,7 +1386,7 @@
                                                       Margin="8,0"
                                                       Padding="20,8"
                                                       Content="{DynamicResource LOCNewsTab}"
-                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[LastUpdatesWindowStyle]}"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[LastUpdatesWindowStyle|SecondaryMusic]}"
                                                       Focusable="True">
                                                 <ButtonEx.Style>
                                                     <Style TargetType="ButtonEx" BasedOn="{StaticResource WelcomeHubQuickButtonStyle}">
@@ -1465,7 +1480,7 @@
                                                     Height="40"
                                                     MinWidth="50"
                                                     Focusable="True"
-                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton]}">
+                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton|SecondaryMusic]}">
                                             <CheckBoxEx.Style>
                                                 <Style TargetType="CheckBoxEx" BasedOn="{StaticResource TopBarAchievementButtonStyle}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -1669,7 +1684,7 @@
                                                   MinWidth="50"
                                                   Padding="0"
                                                   Focusable="True"
-                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle]}">
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle|SecondaryMusic]}">
 
                                             <ButtonEx.Style>
                                                 <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
@@ -1782,8 +1797,17 @@
                                                   Height="40"
                                                   MinWidth="50"
                                                   Focusable="True"
-                                                  Style="{DynamicResource OverlayButtonStyle}"
                                                   Command="{PluginSettings Plugin=AnikiHelper, Path=OpenInGameOverlay[Open]}">
+                                            <ButtonEx.Style>
+                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource OverlayButtonStyle}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowOverlayButton]}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ButtonEx.Style>
                                             <ButtonEx.Triggers>
                                                 <EventTrigger RoutedEvent="ButtonBase.Click">
                                                     <BeginStoryboard>
@@ -2094,7 +2118,7 @@
                                                                       Focusable="True"
                                                                       FocusVisualStyle="{x:Null}"
                                                                       Style="{StaticResource HubCardFocusButtonStyle}"
-                                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[PlayerProfileWindowStyle|MostPlayedCard]}">
+                                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[PlayerProfileWindowStyle|MostPlayedCard|SecondaryMusic]}">
 
                                                                 <Border CornerRadius="20"
                                                                         Style="{DynamicResource HubCardBorderStyle}">
@@ -2693,7 +2717,7 @@
                                                                           HorizontalAlignment="Center"
                                                                           Focusable="True"
                                                                           FocusVisualStyle="{x:Null}"
-                                                                          Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[LastUpdatesWindowStyle]}"
+                                                                          Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[LastUpdatesWindowStyle|SecondaryMusic]}"
                                                                           Style="{DynamicResource HubCardFocusButtonStyle}">
 
                                                                     <Border CornerRadius="24"
@@ -2949,7 +2973,7 @@
                                                                           HorizontalAlignment="Center"
                                                                           Focusable="True"
                                                                           FocusVisualStyle="{x:Null}"
-                                                                          Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[LastUpdatesWindowStyle]}"
+                                                                          Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[LastUpdatesWindowStyle|SecondaryMusic]}"
                                                                           Style="{DynamicResource HubCardFocusButtonStyle}">
 
 
@@ -4311,7 +4335,7 @@
                                                                               Focusable="True"
                                                                               FocusVisualStyle="{x:Null}"
                                                                               Style="{StaticResource HubCardFocusButtonStyle}"
-                                                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle]}">
+                                                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle|SecondaryMusic]}">
 
                                                                         <Border CornerRadius="20"
                                                                                 Style="{DynamicResource HubCardBorderStyle}">
@@ -6959,8 +6983,6 @@
                             </StackPanel>
                         </Border>
 
-
-
                         <!-- SESSION SUMMARY -->
                         <Border x:Name="SessionSummaryPanel"
                                 Background="Transparent"
@@ -7582,7 +7604,6 @@
                             </StackPanel>
                         </Border>
 
-
                         <!-- UPS Now Playing - Notification-->
                         <Grid x:Name="UPSNowPlayingHost"
                               Panel.ZIndex="102"
@@ -7593,7 +7614,7 @@
                                     VerticalAlignment="Top"
                                     Margin="0,210,40,0"
                                     Opacity="0"
-                                    Height="80"
+                                    Height="95"
                                     Width="500"
                                     Background="{DynamicResource BackgroundMenu}"
                                     BorderBrush="{DynamicResource NotificationBorder}"
@@ -8679,7 +8700,7 @@
                                                   HorizontalAlignment="Left"
                                                   VerticalAlignment="Top"
                                                   Grid.Column="1"
-                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton]}" />
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton|SecondaryMusic]}" />
 
 
 
@@ -8789,7 +8810,7 @@
                                                     Height="40"
                                                     MinWidth="50"
                                                     Focusable="True"
-                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton]}">
+                                                    Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton|SecondaryMusic]}">
                                             <CheckBoxEx.Style>
                                                 <Style TargetType="CheckBoxEx" BasedOn="{StaticResource TopBarAchievementButtonStyle}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -8988,8 +9009,7 @@
                                                   MinWidth="50"
                                                   Padding="0"
                                                   Focusable="True"
-                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[AudioSwitcherWindowStyle|FocusFirst|NoDim]}">
-
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle|SecondaryMusic]}">
                                             <ButtonEx.Style>
                                                 <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -9101,8 +9121,31 @@
                                                   Padding="0"
                                                   Focusable="True"
                                                   IsTabStop="True"
-                                                  Style="{DynamicResource OverlayButtonStyle}"
                                                   Command="{PluginSettings Plugin=AnikiHelper, Path=OpenInGameOverlay[Open]}">
+                                            <ButtonEx.Style>
+                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource OverlayButtonStyle}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowOverlayButton]}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ButtonEx.Style>
+                                            <ButtonEx.Triggers>
+                                                <EventTrigger RoutedEvent="ButtonBase.Click">
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <ObjectAnimationUsingKeyFrames
+                                                                Storyboard.TargetName="OpenViewSound"
+                                                                Storyboard.TargetProperty="LoadedBehavior">
+                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
+                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
+                                                            </ObjectAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger>
+                                            </ButtonEx.Triggers>
 
 
                                             <TextBlock Text="&#xE735;"
@@ -9940,7 +9983,7 @@
                                     <!-- Calque 2 : Calque dégradé Left -->
                                     <Border IsHitTestVisible="False"
                                             Background="{DynamicResource ShadeBackgroundDetails}"
-                                            Opacity="1">
+                                            Opacity="{DynamicResource OpacityShadeLeft}">
                                         <Border.Style>
                                             <Style TargetType="Border">
                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -14175,12 +14218,27 @@
                                         <Setter Property="Grid.ColumnSpan" Value="3"/>
                                         <Setter Property="VerticalAlignment" Value="Bottom"/>
                                         <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                                        <Setter Property="Opacity" Value="1"/>
-                                        <Setter Property="Height" Value="500"/>
+                                        <Setter Property="Opacity" Value="{DynamicResource OpacityShadeBottom}"/>
+                                        <Setter Property="Height" Value="800"/>
                                         <Setter Property="Visibility" Value="Visible"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ElementName=GameListBackgroundPanel, Path=Visibility}" Value="Visible">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Settings Fullscreen.Columns}" Value="6">
+                                                <Setter Property="Height" Value="800"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Settings Fullscreen.Columns}" Value="7">
+                                                <Setter Property="Height" Value="700"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Settings Fullscreen.Columns}" Value="8">
+                                                <Setter Property="Height" Value="600"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Settings Fullscreen.Columns}" Value="9">
+                                                <Setter Property="Height" Value="500"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Settings Fullscreen.Columns}" Value="10">
+                                                <Setter Property="Height" Value="500"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -16831,7 +16889,7 @@
                                 </Grid>
 
                                 <!-- FOOTER -->
-                                <TextBlock Text="Aniki ReMake v3.3.1"
+                                <TextBlock Text="Aniki ReMake v3.3.2"
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Bottom"
                                            Margin="0,0,22,18"
@@ -17612,7 +17670,7 @@
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Value="True"/>
                                                     <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubClosing}" Value="False"/>
-                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}" Value="False"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSecondaryMusicWindowOpen}" Value="False"/>
                                                     <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}" Value="False"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="Tag" Value="True"/>
@@ -17625,7 +17683,7 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
 
-                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}"
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSecondaryMusicWindowOpen}"
                                                                Value="True"/>
 
                                                     <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}"
@@ -17704,7 +17762,7 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
 
-                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}"
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSecondaryMusicWindowOpen}"
                                                            Value="True"/>
 
                                                 <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}"
@@ -17714,15 +17772,17 @@
                                                            Value="False"/>
 
                                             </MultiDataTrigger.Conditions>
-
+                                            <MultiDataTrigger.EnterActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
+                                            </MultiDataTrigger.EnterActions>
                                             <Setter Property="LoadedBehavior" Value="Play"/>
                                         </MultiDataTrigger>
 
                                         <!-- Conserver la position entre deux fenêtres -->
-                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}"
-                                                     Value="False">
-
-                                            <Setter Property="LoadedBehavior" Value="Pause"/>
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSecondaryMusicWindowOpen}" Value="False">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeOutPause}"/>
+                                            </DataTrigger.EnterActions>
                                         </DataTrigger>
 
                                         <!-- Radio Mode prioritaire -->
@@ -17766,7 +17826,7 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
 
-                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}"
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSecondaryMusicWindowOpen}"
                                                            Value="True"/>
 
                                                 <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}"
@@ -17776,17 +17836,18 @@
                                                            Value="True"/>
 
                                             </MultiDataTrigger.Conditions>
-
+                                            <MultiDataTrigger.EnterActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
+                                            </MultiDataTrigger.EnterActions>
                                             <Setter Property="LoadedBehavior" Value="Play"/>
                                         </MultiDataTrigger>
 
                                         <!-- Conserver la position entre deux fenêtres -->
-                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}"
-                                                     Value="False">
-
-                                            <Setter Property="LoadedBehavior" Value="Pause"/>
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSecondaryMusicWindowOpen}" Value="False">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeOutPause}"/>
+                                            </DataTrigger.EnterActions>
                                         </DataTrigger>
-
                                         <!-- Radio Mode prioritaire -->
                                         <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}"
                                                      Value="True">
@@ -17828,7 +17889,7 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
 
-                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}"
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSecondaryMusicWindowOpen}"
                                                            Value="True"/>
 
                                                 <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}"
@@ -17838,15 +17899,17 @@
                                                            Value="True"/>
 
                                             </MultiDataTrigger.Conditions>
-
+                                            <MultiDataTrigger.EnterActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
+                                            </MultiDataTrigger.EnterActions>
                                             <Setter Property="LoadedBehavior" Value="Play"/>
                                         </MultiDataTrigger>
 
                                         <!-- Conserver la position entre deux fenêtres -->
-                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}"
-                                                     Value="False">
-
-                                            <Setter Property="LoadedBehavior" Value="Pause"/>
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSecondaryMusicWindowOpen}" Value="False">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeOutPause}"/>
+                                            </DataTrigger.EnterActions>
                                         </DataTrigger>
 
                                         <!-- Radio Mode prioritaire -->
@@ -18296,10 +18359,13 @@
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Value="True"/>
                                                 <Condition Binding="{Binding ElementName=WelcomeControl, Path=Visibility}" Value="Visible"/>
-                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSecondaryMusicWindowOpen}" Value="False"/>
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="False"/>
                                                 <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.EnterActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
+                                            </MultiDataTrigger.EnterActions>
                                             <Setter Property="LoadedBehavior" Value="Play"/>
                                         </MultiDataTrigger>
 
@@ -18311,11 +18377,35 @@
                                             <Setter Property="LoadedBehavior" Value="Stop"/>
                                         </DataTrigger>
 
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="False">
+                                        <!--Mettre temporairement en pause si Playnite perd le focus alors que le Hub est toujours ouvert.-->
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Value="True"/>
+                                                <Condition Binding="{Binding ElementName=WelcomeControl, Path=Visibility}" Value="Visible"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="False"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="LoadedBehavior" Value="Pause"/>
+                                        </MultiDataTrigger>
+                                        <!-- Une vraie vue secondaire musicale remplace la musique du Hub -->
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Value="True"/>
+                                                <Condition Binding="{Binding ElementName=WelcomeControl, Path=Visibility}" Value="Visible"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSecondaryMusicWindowOpen}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+
+                                            <MultiDataTrigger.EnterActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeOutPause}"/>
+                                            </MultiDataTrigger.EnterActions>
+                                        </MultiDataTrigger>
+
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="True">
                                             <Setter Property="LoadedBehavior" Value="Stop"/>
                                         </DataTrigger>
 
-                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="True">
+                                        <!-- La Radio UniPlaySong est prioritaire -->
+                                        <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}" Value="True">
                                             <Setter Property="LoadedBehavior" Value="Stop"/>
                                         </DataTrigger>
 
@@ -18337,31 +18427,61 @@
 
                                     <Style.Triggers>
 
-                                        <!-- Play Lucky Style 1 Hub OST only when Lucky Style 1 is active -->
+                                        <!-- Jouer la musique du Hub uniquement lorsque Lucky Style 1 est actif -->
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Value="True"/>
                                                 <Condition Binding="{Binding ElementName=WelcomeControl, Path=Visibility}" Value="Visible"/>
-                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSecondaryMusicWindowOpen}" Value="False"/>
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle1}" Value="True"/>
                                                 <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.EnterActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
+                                            </MultiDataTrigger.EnterActions>
                                             <Setter Property="LoadedBehavior" Value="Play"/>
                                         </MultiDataTrigger>
 
+                                        <!-- Le Hub est fermé -->
                                         <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Value="False">
                                             <Setter Property="LoadedBehavior" Value="Stop"/>
                                         </DataTrigger>
 
+                                        <!-- La vue du Hub n'est plus visible -->
                                         <DataTrigger Binding="{Binding ElementName=WelcomeControl, Path=Visibility}" Value="Collapsed">
                                             <Setter Property="LoadedBehavior" Value="Stop"/>
                                         </DataTrigger>
 
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="False">
+                                        <!-- Une vraie vue secondaire musicale remplace la musique du Hub -->
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Value="True"/>
+                                                <Condition Binding="{Binding ElementName=WelcomeControl, Path=Visibility}" Value="Visible"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSecondaryMusicWindowOpen}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+
+                                            <MultiDataTrigger.EnterActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeOutPause}"/>
+                                            </MultiDataTrigger.EnterActions>
+                                        </MultiDataTrigger>
+
+                                        <!-- Une vraie vue secondaire musicale remplace la musique du Hub -->
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Value="True"/>
+                                                <Condition Binding="{Binding ElementName=WelcomeControl, Path=Visibility}" Value="Visible"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSecondaryMusicWindowOpen}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="LoadedBehavior" Value="Pause"/>
+                                        </MultiDataTrigger>
+
+                                        <!-- Arrêter complètement si Lucky Style 1 n'est plus actif -->
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle1}" Value="False">
                                             <Setter Property="LoadedBehavior" Value="Stop"/>
                                         </DataTrigger>
 
-                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle1}" Value="False">
+                                        <!-- La Radio UniPlaySong est prioritaire -->
+                                        <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}" Value="True">
                                             <Setter Property="LoadedBehavior" Value="Stop"/>
                                         </DataTrigger>
 
@@ -18383,31 +18503,62 @@
 
                                     <Style.Triggers>
 
-                                        <!-- Play Lucky Style 2 Hub OST only when Lucky Style 2 is active -->
+                                        <!-- Jouer la musique du Hub uniquement lorsque Lucky Style 2 est actif -->
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Value="True"/>
                                                 <Condition Binding="{Binding ElementName=WelcomeControl, Path=Visibility}" Value="Visible"/>
-                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSecondaryMusicWindowOpen}" Value="False"/>
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle2}" Value="True"/>
                                                 <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.EnterActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
+                                            </MultiDataTrigger.EnterActions>
                                             <Setter Property="LoadedBehavior" Value="Play"/>
                                         </MultiDataTrigger>
 
+                                        <!-- Le Hub est fermé -->
                                         <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Value="False">
                                             <Setter Property="LoadedBehavior" Value="Stop"/>
                                         </DataTrigger>
 
+                                        <!-- La vue du Hub n'est plus visible -->
                                         <DataTrigger Binding="{Binding ElementName=WelcomeControl, Path=Visibility}" Value="Collapsed">
                                             <Setter Property="LoadedBehavior" Value="Stop"/>
                                         </DataTrigger>
 
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="False">
+                                        <!-- Mettre temporairement en pause si Playnite perd le focus alors que le Hub est toujours ouvert -->
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Value="True"/>
+                                                <Condition Binding="{Binding ElementName=WelcomeControl, Path=Visibility}" Value="Visible"/>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="False"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsAnikiWindowOpen}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="LoadedBehavior" Value="Pause"/>
+                                        </MultiDataTrigger>
+
+                                        <!-- Une vraie vue secondaire musicale remplace la musique du Hub -->
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Value="True"/>
+                                                <Condition Binding="{Binding ElementName=WelcomeControl, Path=Visibility}" Value="Visible"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsSecondaryMusicWindowOpen}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+
+                                            <MultiDataTrigger.EnterActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeOutPause}"/>
+                                            </MultiDataTrigger.EnterActions>
+                                        </MultiDataTrigger>
+
+                                        <!-- Arrêter complètement si Lucky Style 2 n'est plus actif -->
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle2}" Value="False">
                                             <Setter Property="LoadedBehavior" Value="Stop"/>
                                         </DataTrigger>
 
-                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle2}" Value="False">
+                                        <!-- La Radio UniPlaySong est prioritaire -->
+                                        <DataTrigger Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled}" Value="True">
                                             <Setter Property="LoadedBehavior" Value="Stop"/>
                                         </DataTrigger>
 

@@ -25,25 +25,36 @@
                   Margin="42,0,42,34">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="96"/>
+                    <ColumnDefinition Width="110"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="110"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Left trophy icon -->
                 <Border Grid.Column="0"
-                        Width="92"
-                        Height="92"
-                        CornerRadius="8"
-                        Background="#22000000"
+                        Width="110"
+                        Height="110"
+                        CornerRadius="0"
+                        Background="#00000000"
                         BorderBrush="#66FFFFFF"
                         BorderThickness="1"
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Left"
                         ClipToBounds="True">
-                    <Image Source="{Binding IconPath}"
-                           Stretch="UniformToFill"
-                           RenderOptions.BitmapScalingMode="Fant"/>
+                    <Image RenderOptions.BitmapScalingMode="Fant">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="{Binding IconPath}"/>
+                                <Setter Property="Stretch" Value="UniformToFill"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsGameCompleted}" Value="True">
+                                        <Setter Property="Source" Value="{Binding GameIconPath}"/>
+                                        <Setter Property="Stretch" Value="UniformToFill"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
                 </Border>
 
                 <!-- Title + description -->
@@ -51,21 +62,65 @@
                             Margin="16,0,18,2"
                             VerticalAlignment="Bottom">
 
-                    <TextBlock Text="{Binding TitleText}"
-                               Foreground="White"
+                    <!-- Game name: displayed only on the standalone completion frame -->
+                    <TextBlock Text="{Binding GameName}"
+                               Foreground="#BFFFFFFF"
+                               FontSize="17"
+                               FontWeight="SemiBold"
+                               TextTrimming="CharacterEllipsis"
+                               TextWrapping="NoWrap"
+                               Margin="0,0,0,5">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsGameCompleted}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                    <!-- Achievement title / special completion title -->
+                    <TextBlock Foreground="White"
                                FontSize="30"
                                FontWeight="Bold"
                                TextTrimming="CharacterEllipsis"
-                               TextWrapping="NoWrap"/>
+                               TextWrapping="NoWrap">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Text" Value="{Binding TitleText}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsGameCompleted}" Value="True">
+                                        <Setter Property="Text"
+                                                Value="{DynamicResource LOCAnikiPlatinumAchievementUnlocked}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
 
-                    <TextBlock Text="{Binding Description}"
-                               Foreground="#E6FFFFFF"
+                    <!-- Achievement description / special completion description -->
+                    <TextBlock Foreground="#E6FFFFFF"
                                FontSize="20"
                                FontWeight="SemiBold"
                                Margin="0,6,0,0"
                                TextWrapping="Wrap"
                                TextTrimming="CharacterEllipsis"
-                               MaxHeight="56"/>
+                               MaxHeight="56">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Text" Value="{Binding Description}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsGameCompleted}" Value="True">
+                                        <Setter Property="Text"
+                                                Value="{DynamicResource LOCAnikiAllAchievementsUnlocked}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
 
                     <!-- unlock date and time -->
                     <Grid Margin="0,7,0,0">
@@ -127,8 +182,8 @@
 
                 <!-- Right rarity trophy -->
                 <Grid Grid.Column="2"
-                      Width="100"
-                      Height="100"
+                      Width="110"
+                      Height="110"
                       HorizontalAlignment="Right"
                       VerticalAlignment="Bottom">
 
@@ -145,6 +200,7 @@
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
                                             <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                            <Condition Binding="{Binding IsGameCompleted}" Value="False"/>
                                             <Condition Binding="{Binding Rarity}" Value="Common"/>
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -167,6 +223,7 @@
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
                                             <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                            <Condition Binding="{Binding IsGameCompleted}" Value="False"/>
                                             <Condition Binding="{Binding Rarity}" Value="Uncommon"/>
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -196,6 +253,7 @@
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
                                             <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                            <Condition Binding="{Binding IsGameCompleted}" Value="False"/>
                                             <Condition Binding="{Binding Rarity}" Value="Rare"/>
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -204,6 +262,7 @@
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
                                             <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                            <Condition Binding="{Binding IsGameCompleted}" Value="False"/>
                                             <Condition Binding="{Binding Rarity}" Value="UltraRare"/>
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -213,24 +272,30 @@
                         </Image.Style>
                     </Image>
 
-                    <!-- Platinum / Capstone -->
-                    <Image Source="{ThemeFile 'Images/platinum.png'}"
-                           Width="92"
-                           Height="92"
-                           Stretch="Uniform"
+                    <!-- Platinum / Capstone / Game completed -->
+                    <Image Source="{ThemeFile 'Images/Plat.png'}"
+                           Width="105"
+                           Height="105"
+                           Stretch="UniformToFill"
                            RenderOptions.BitmapScalingMode="Fant">
                         <Image.Effect>
                             <DropShadowEffect Color="#E7F1FF"
                                               BlurRadius="24"
                                               ShadowDepth="0"
-                                              Opacity="0.95"/>
+                                              Opacity="0.90"/>
                         </Image.Effect>
 
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
+                                    <!-- Real Capstone achievement -->
                                     <DataTrigger Binding="{Binding IsCapstone}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+
+                                    <!-- Standalone game-completion frame -->
+                                    <DataTrigger Binding="{Binding IsGameCompleted}" Value="True">
                                         <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>

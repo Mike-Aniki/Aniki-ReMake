@@ -46,8 +46,8 @@
                         <Border Width="70"
                                 Height="70"
                                 CornerRadius="2"
-                                Background="#22000000"
-                                BorderBrush="#55FFFFFF"
+                                Background="#00000000"
+                                BorderBrush="#00000000"
                                 BorderThickness="1"
                                 ClipToBounds="True">
                             <Border.Style>
@@ -64,9 +64,20 @@
                                 </Style>
                             </Border.Style>
 
-                            <Image Source="{Binding IconPath}"
-                                   RenderOptions.BitmapScalingMode="Fant"
-                                   Stretch="UniformToFill"/>
+                            <Image RenderOptions.BitmapScalingMode="Fant">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Setter Property="Source" Value="{Binding IconPath}"/>
+                                        <Setter Property="Stretch" Value="UniformToFill"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsGameCompleted}" Value="True">
+                                                <Setter Property="Source" Value="{Binding GameIconPath}"/>
+                                                <Setter Property="Stretch" Value="UniformToFill"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
                         </Border>
 
                         <!-- Friend avatar -->
@@ -136,14 +147,30 @@
 
                         <!-- Title -->
                         <TextBlock Grid.Row="1"
-                                   Text="{Binding TitleText}"
-                                   Style="{DynamicResource AnikiToastTextBlockStyle}"
-                                   FontSize="22"
+                                   FontSize="20"
                                    FontWeight="SemiBold"
                                    TextTrimming="CharacterEllipsis"
                                    TextWrapping="NoWrap"
                                    VerticalAlignment="Center"
-                                   Margin="0,0,8,0"/>
+                                   Margin="0,0,8,0">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock"
+                                       BasedOn="{StaticResource AnikiToastTextBlockStyle}">
+
+                                    <Setter Property="Text"
+                                            Value="{Binding TitleText}"/>
+
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsGameCompleted}"
+                                                     Value="True">
+
+                                            <Setter Property="Text"
+                                                    Value="{DynamicResource LOCAnikiPlatinumAchievementUnlocked}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
 
                         <!-- Description: displayed only for the user's own achievements -->
                         <Grid Grid.Row="2"
@@ -169,14 +196,30 @@
                                 </Style>
                             </Grid.Style>
 
-                            <TextBlock Text="{Binding Description}"
-                                       Style="{DynamicResource AnikiToastTextBlockStyle}"
-                                       Opacity="0.88"
-                                       FontSize="16"
+                            <TextBlock Opacity="0.88"
+                                       FontSize="14"
                                        FontWeight="SemiBold"
                                        MaxHeight="40"
                                        TextTrimming="CharacterEllipsis"
-                                       TextWrapping="Wrap"/>
+                                       TextWrapping="Wrap">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock"
+                                           BasedOn="{StaticResource AnikiToastTextBlockStyle}">
+
+                                        <Setter Property="Text"
+                                                Value="{Binding Description}"/>
+
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsGameCompleted}"
+                                                         Value="True">
+
+                                                <Setter Property="Text"
+                                                        Value="{DynamicResource LOCAnikiAllAchievementsUnlocked}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </Grid>
                     </Grid>
 
@@ -187,141 +230,166 @@
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center">
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="58"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <Grid Grid.Row="0"
-                              Width="58"
-                              Height="58"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center">
-
-                            <!-- Bronze / Common -->
-                            <Image Source="{ThemeFile 'Images/Bronze.png'}"
-                                   Width="52"
-                                   Height="52"
-                                   Stretch="Uniform"
-                                   RenderOptions.BitmapScalingMode="Fant">
-                                <Image.Style>
-                                    <Style TargetType="Image">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding IsCapstone}" Value="False"/>
-                                                    <Condition Binding="{Binding Rarity}" Value="Common"/>
-                                                </MultiDataTrigger.Conditions>
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </MultiDataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Image.Style>
-                            </Image>
-
-                            <!-- Silver / Uncommon -->
-                            <Image Source="{ThemeFile 'Images/Argent.png'}"
-                                   Width="52"
-                                   Height="52"
-                                   Stretch="Uniform"
-                                   RenderOptions.BitmapScalingMode="Fant">
-                                <Image.Style>
-                                    <Style TargetType="Image">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding IsCapstone}" Value="False"/>
-                                                    <Condition Binding="{Binding Rarity}" Value="Uncommon"/>
-                                                </MultiDataTrigger.Conditions>
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </MultiDataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Image.Style>
-                            </Image>
-
-                            <!-- Gold / Rare -->
-                            <Image Source="{ThemeFile 'Images/Or.png'}"
-                                   Width="52"
-                                   Height="52"
-                                   Stretch="Uniform"
-                                   RenderOptions.BitmapScalingMode="Fant">
-                                <Image.Style>
-                                    <Style TargetType="Image">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding IsCapstone}" Value="False"/>
-                                                    <Condition Binding="{Binding Rarity}" Value="Rare"/>
-                                                </MultiDataTrigger.Conditions>
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </MultiDataTrigger>
-
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding IsCapstone}" Value="False"/>
-                                                    <Condition Binding="{Binding Rarity}" Value="UltraRare"/>
-                                                </MultiDataTrigger.Conditions>
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </MultiDataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Image.Style>
-                            </Image>
-
-                            <!-- Platinum / Capstone -->
-                            <Image Source="{ThemeFile 'Images/platinum.png'}"
-                                   Width="52"
-                                   Height="52"
-                                   Stretch="Uniform"
-                                   RenderOptions.BitmapScalingMode="Fant">
-                                <Image.Style>
-                                    <Style TargetType="Image">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsCapstone}" Value="True">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Image.Style>
-                            </Image>
-
-                        </Grid>
-
-                        <!-- Percent rarity -->
-                        <Border Grid.Row="1"
-                                CornerRadius="8"
-                                Padding="7,1"
-                                Background="{DynamicResource AnikiToastChipBackgroundBrush}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Top"
-                                Margin="0,1,0,0">
-                            <Border.Style>
-                                <Style TargetType="Border">
+                        <!-- Normal trophy and rarity percentage -->
+                        <Grid>
+                            <Grid.Style>
+                                <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Visible"/>
+
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding PercentText}" Value="{x:Null}">
+                                        <!-- A Capstone uses the full-size Platinum icon -->
+                                        <DataTrigger Binding="{Binding IsCapstone}" Value="True">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding PercentText}" Value="">
+
+                                        <!-- The separate completion notification also uses Platinum -->
+                                        <DataTrigger Binding="{Binding IsGameCompleted}" Value="True">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </Border.Style>
+                            </Grid.Style>
 
-                            <TextBlock Text="{Binding PercentText}"
-                                       Style="{DynamicResource AnikiToastTextBlockStyle}"
-                                       Foreground="{DynamicResource AnikiToastSubTextBrush}"
-                                       FontSize="12"
-                                       FontWeight="Bold"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
-                        </Border>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="58"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Normal rarity trophy -->
+                            <Grid Grid.Row="0"
+                                  Width="58"
+                                  Height="58"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center">
+
+                                <!-- Bronze / Common -->
+                                <Image Source="{ThemeFile 'Images/Bronze.png'}"
+                                       Width="52"
+                                       Height="52"
+                                       Stretch="Uniform"
+                                       RenderOptions.BitmapScalingMode="Fant">
+
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Rarity}" Value="Common">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+
+                                <!-- Silver / Uncommon -->
+                                <Image Source="{ThemeFile 'Images/Argent.png'}"
+                                       Width="52"
+                                       Height="52"
+                                       Stretch="Uniform"
+                                       RenderOptions.BitmapScalingMode="Fant">
+
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Rarity}" Value="Uncommon">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+
+                                <!-- Gold / Rare and UltraRare -->
+                                <Image Source="{ThemeFile 'Images/Or.png'}"
+                                       Width="52"
+                                       Height="52"
+                                       Stretch="Uniform"
+                                       RenderOptions.BitmapScalingMode="Fant">
+
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Rarity}" Value="Rare">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding Rarity}" Value="UltraRare">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+
+                            </Grid>
+
+                            <!-- Percent rarity -->
+                            <Border Grid.Row="1"
+                                    CornerRadius="8"
+                                    Padding="7,1"
+                                    Background="{DynamicResource AnikiToastChipBackgroundBrush}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Margin="0,1,0,0">
+
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Visibility" Value="Visible"/>
+
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding PercentText}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+
+                                            <DataTrigger Binding="{Binding PercentText}" Value="">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <TextBlock Text="{Binding PercentText}"
+                                           Style="{DynamicResource AnikiToastTextBlockStyle}"
+                                           Foreground="{DynamicResource AnikiToastSubTextBrush}"
+                                           FontSize="12"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+
+                        <!-- Full-size Platinum icon -->
+                        <Image Source="{ThemeFile 'Images/Plat.png'}"
+                               Width="66"
+                               Height="76"
+                               Stretch="Uniform"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               RenderOptions.BitmapScalingMode="Fant">
+
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+
+                                    <Style.Triggers>
+                                        <!-- Real Capstone achievement -->
+                                        <DataTrigger Binding="{Binding IsCapstone}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+
+                                        <!-- Separate game-completion notification -->
+                                        <DataTrigger Binding="{Binding IsGameCompleted}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
 
                     </Grid>
                 </Grid>
