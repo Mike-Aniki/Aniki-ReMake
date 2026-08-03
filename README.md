@@ -4,12 +4,13 @@
 
 ### A Console-Style Fullscreen Experience for Playnite
 
+
 <p>
   <a href="https://github.com/Mike-Aniki/Aniki-ReMake/releases/latest">
     <img src="https://img.shields.io/github/v/release/Mike-Aniki/Aniki-ReMake?style=for-the-badge&label=Latest%20Release&color=blue" alt="Latest release">
   </a>
-  <a href="https://github.com/Mike-Aniki/Aniki-ReMake/releases">
-    <img src="https://img.shields.io/github/downloads/Mike-Aniki/Aniki-ReMake/total?style=for-the-badge&label=Total%20Downloads&color=blue" alt="Total downloads">
+  <a href="https://github.com/Mike-Aniki/Aniki-ReMake/releases/latest">
+    <img src="https://img.shields.io/github/downloads/Mike-Aniki/Aniki-ReMake/latest/total?style=for-the-badge&label=Latest%20Release%20Downloads&color=blue" alt="Latest release downloads">
   </a>
   <a href="https://github.com/Mike-Aniki/Aniki-ReMake/stargazers">
     <img src="https://img.shields.io/github/stars/Mike-Aniki/Aniki-ReMake?style=for-the-badge&label=Stars&color=blue" alt="GitHub stars">
