@@ -25,15 +25,15 @@
                   Margin="42,0,42,34">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="130"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="110"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Left trophy icon -->
                 <Border Grid.Column="0"
-                        Width="110"
-                        Height="110"
+                        Width="130"
+                        Height="130"
                         CornerRadius="0"
                         Background="#00000000"
                         BorderBrush="#66FFFFFF"
@@ -64,23 +64,78 @@
 
                     <!-- Game name: displayed only on the standalone completion frame -->
                     <TextBlock Text="{Binding GameName}"
-                               Foreground="#BFFFFFFF"
+                               Foreground="#AFFFFFFF"
                                FontSize="17"
                                FontWeight="SemiBold"
                                TextTrimming="CharacterEllipsis"
                                TextWrapping="NoWrap"
-                               Margin="0,0,0,5">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Visibility" Value="Collapsed"/>
+                               Margin="0,0,0,4"/>
+
+                    <!-- Subtle separator under the game name -->
+                    <Rectangle Width="56"
+                               Height="2"
+                               RadiusX="1"
+                               RadiusY="1"
+                               HorizontalAlignment="Left"
+                               Margin="0,0,0,6">
+                        <Rectangle.Style>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="Fill" Value="#66FFFFFF"/>
+
                                 <Style.Triggers>
+                                    <!-- Bronze / Common -->
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                            <Condition Binding="{Binding IsGameCompleted}" Value="False"/>
+                                            <Condition Binding="{Binding Rarity}" Value="Common"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Fill" Value="#FFC98A52"/>
+                                    </MultiDataTrigger>
+
+                                    <!-- Silver / Uncommon -->
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                            <Condition Binding="{Binding IsGameCompleted}" Value="False"/>
+                                            <Condition Binding="{Binding Rarity}" Value="Uncommon"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Fill" Value="#FFD5DAE2"/>
+                                    </MultiDataTrigger>
+
+                                    <!-- Gold / Rare -->
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                            <Condition Binding="{Binding IsGameCompleted}" Value="False"/>
+                                            <Condition Binding="{Binding Rarity}" Value="Rare"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Fill" Value="#FFFFC948"/>
+                                    </MultiDataTrigger>
+
+                                    <!-- Gold / UltraRare -->
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsCapstone}" Value="False"/>
+                                            <Condition Binding="{Binding IsGameCompleted}" Value="False"/>
+                                            <Condition Binding="{Binding Rarity}" Value="UltraRare"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Fill" Value="#FFFFC948"/>
+                                    </MultiDataTrigger>
+
+                                    <!-- Platinum / Capstone -->
+                                    <DataTrigger Binding="{Binding IsCapstone}" Value="True">
+                                        <Setter Property="Fill" Value="#FFE7F1FF"/>
+                                    </DataTrigger>
+
+                                    <!-- Platinum / Game completed -->
                                     <DataTrigger Binding="{Binding IsGameCompleted}" Value="True">
-                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Setter Property="Fill" Value="#FFE7F1FF"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                        </Rectangle.Style>
+                    </Rectangle>
 
                     <!-- Achievement title / special completion title -->
                     <TextBlock Foreground="White"
@@ -102,7 +157,7 @@
                     </TextBlock>
 
                     <!-- Achievement description / special completion description -->
-                    <TextBlock Foreground="#E6FFFFFF"
+                    <TextBlock Foreground="#D9FFFFFF"
                                FontSize="20"
                                FontWeight="SemiBold"
                                Margin="0,6,0,0"
@@ -126,7 +181,7 @@
                     <Grid Margin="0,7,0,0">
 
                         <!-- Date and time -->
-                        <TextBlock Foreground="#BFFFFFFF"
+                        <TextBlock Foreground="#99FFFFFF"
                                    FontSize="15"
                                    FontWeight="SemiBold"
                                    TextTrimming="CharacterEllipsis"

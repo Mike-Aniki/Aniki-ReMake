@@ -818,13 +818,7 @@
                                                                             <Setter Property="Visibility" Value="Visible"/>
                                                                         </DataTrigger>
 
-                                                                        <MultiDataTrigger>
-                                                                            <MultiDataTrigger.Conditions>
-                                                                                <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="False"/>
-                                                                                <Condition Binding="{PluginStatus Plugin=SuccessStoryFullscreenHelper, Status=Installed}" Value="True"/>
-                                                                            </MultiDataTrigger.Conditions>
-                                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                                        </MultiDataTrigger>
+
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </StackPanel.Style>
@@ -854,28 +848,6 @@
                                                                     </Border.Style>
                                                                 </Border>
 
-                                                                <!-- SSHELPER FALLBACK -->
-                                                                <Border Width="34"
-                                                                        Height="34"
-                                                                        VerticalAlignment="Center"
-                                                                        HorizontalAlignment="Center"
-                                                                        RenderOptions.BitmapScalingMode="Fant">
-
-                                                                    <Border.Style>
-                                                                        <Style TargetType="Border" BasedOn="{StaticResource SSHelper_UserLevelBorderStyle}">
-                                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                                            <Style.Triggers>
-                                                                                <MultiDataTrigger>
-                                                                                    <MultiDataTrigger.Conditions>
-                                                                                        <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="False"/>
-                                                                                        <Condition Binding="{PluginStatus Plugin=SuccessStoryFullscreenHelper, Status=Installed}" Value="True"/>
-                                                                                    </MultiDataTrigger.Conditions>
-                                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                                </MultiDataTrigger>
-                                                                            </Style.Triggers>
-                                                                        </Style>
-                                                                    </Border.Style>
-                                                                </Border>
                                                             </Grid>
 
                                                             <TextBlock Margin="2,1,0,0"
@@ -915,54 +887,6 @@
                                                                             <MultiDataTrigger>
                                                                                 <MultiDataTrigger.Conditions>
                                                                                     <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="True"/>
-                                                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                                            </MultiDataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </TextBlock.Style>
-                                                            </TextBlock>
-
-                                                            <TextBlock Margin="10,1,0,0"
-                                                                       Text="{PluginSettings Plugin=SSHelper, Path=GSLevel}"
-                                                                       Foreground="{DynamicResource TextTitleStatViewBrush}"
-                                                                       FontSize="24"
-                                                                       Opacity="0.82"
-                                                                       FontWeight="SemiBold"
-                                                                       VerticalAlignment="Center">
-                                                                <TextBlock.Style>
-                                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-                                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                                        <Style.Triggers>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="False"/>
-                                                                                    <Condition Binding="{PluginStatus Plugin=SuccessStoryFullscreenHelper, Status=Installed}" Value="True"/>
-                                                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="False"/>
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                                            </MultiDataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </TextBlock.Style>
-                                                            </TextBlock>
-
-                                                            <TextBlock Margin="8,0,0,1"
-                                                                       Text="{PluginSettings Plugin=SSHelper, Path=GSScore}"
-                                                                       Foreground="{DynamicResource TextTitleStatViewBrush}"
-                                                                       FontSize="24"
-                                                                       Opacity="0.82"
-                                                                       FontWeight="SemiBold"
-                                                                       VerticalAlignment="Center">
-                                                                <TextBlock.Style>
-                                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-                                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                                        <Style.Triggers>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="False"/>
-                                                                                    <Condition Binding="{PluginStatus Plugin=SuccessStoryFullscreenHelper, Status=Installed}" Value="True"/>
                                                                                     <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[UseGamerscoreInsteadOfLevel]}" Value="True"/>
                                                                                 </MultiDataTrigger.Conditions>
                                                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -1066,26 +990,6 @@
 
                                                                 <TextBlock Text="{DynamicResource LOCStatsTotalTrophiesUnlocked}" Style="{StaticResource ProfileStatLabelStyle}"/>
                                                                 <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=GSTotal}" Style="{StaticResource ProfileStatValueStyle}" FontSize="22"/>
-                                                            </StackPanel>
-
-                                                            <StackPanel VerticalAlignment="Top">
-                                                                <StackPanel.Style>
-                                                                    <Style TargetType="StackPanel">
-                                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                                        <Style.Triggers>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="False"/>
-                                                                                    <Condition Binding="{PluginStatus Plugin=SuccessStoryFullscreenHelper, Status=Installed}" Value="True"/>
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                                            </MultiDataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </StackPanel.Style>
-
-                                                                <TextBlock Text="{DynamicResource LOCStatsTotalTrophiesUnlocked}" Style="{StaticResource ProfileStatLabelStyle}"/>
-                                                                <TextBlock Text="{PluginSettings Plugin=SSHelper, Path=GSTotal}" Style="{StaticResource ProfileStatValueStyle}" FontSize="22"/>
                                                             </StackPanel>
                                                         </Grid>
                                                     </Border>
@@ -2029,14 +1933,6 @@
                                                         <DataTrigger Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="True">
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                         </DataTrigger>
-
-                                                        <MultiDataTrigger>
-                                                            <MultiDataTrigger.Conditions>
-                                                                <Condition Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="True"/>
-                                                                <Condition Binding="{PluginStatus Plugin=SuccessStoryFullscreenHelper, Status=Installed}" Value="True"/>
-                                                            </MultiDataTrigger.Conditions>
-                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                        </MultiDataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </Grid.Style>
@@ -2134,60 +2030,6 @@
                                                             <StackPanel>
                                                                 <TextBlock Text="{DynamicResource LOCStatsTrophyBronze}" Style="{StaticResource ProfileStatLabelStyle}"/>
                                                                 <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=GS15}" Style="{StaticResource ProfileStatValueStyle}" FontSize="24"/>
-                                                            </StackPanel>
-                                                        </Border>
-                                                    </WrapPanel>
-
-                                                    <!-- SS -->
-                                                    <WrapPanel Grid.Row="1">
-                                                        <WrapPanel.Style>
-                                                            <Style TargetType="WrapPanel">
-                                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                                <Style.Triggers>
-                                                                    <MultiDataTrigger>
-                                                                        <MultiDataTrigger.Conditions>
-                                                                            <Condition Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="True"/>
-                                                                            <Condition Binding="{PluginStatus Plugin=SuccessStoryFullscreenHelper, Status=Installed}" Value="True"/>
-                                                                            <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="False"/>
-                                                                        </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                                    </MultiDataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </WrapPanel.Style>
-
-                                                        <Border Style="{StaticResource ProfileChip}">
-                                                            <StackPanel>
-                                                                <TextBlock Text="{DynamicResource LOCStatsFullCompletionGames}" Style="{StaticResource ProfileStatLabelStyle}"/>
-                                                                <TextBlock Text="{PluginSettings Plugin=SSHelper, Path=PlatinumGames.Count}" Style="{StaticResource ProfileStatValueStyle}" FontSize="24"/>
-                                                            </StackPanel>
-                                                        </Border>
-
-                                                        <Border Style="{StaticResource ProfileChip}">
-                                                            <StackPanel>
-                                                                <TextBlock Text="{DynamicResource LOCStatsTrophyPlatinum}" Style="{StaticResource ProfileStatLabelStyle}"/>
-                                                                <TextBlock Text="{PluginSettings Plugin=SSHelper, Path=GSPlat}" Style="{StaticResource ProfileStatValueStyle}" FontSize="24"/>
-                                                            </StackPanel>
-                                                        </Border>
-
-                                                        <Border Style="{StaticResource ProfileChip}">
-                                                            <StackPanel>
-                                                                <TextBlock Text="{DynamicResource LOCStatsTrophyGold}" Style="{StaticResource ProfileStatLabelStyle}"/>
-                                                                <TextBlock Text="{PluginSettings Plugin=SSHelper, Path=GS90}" Style="{StaticResource ProfileStatValueStyle}" FontSize="24"/>
-                                                            </StackPanel>
-                                                        </Border>
-
-                                                        <Border Style="{StaticResource ProfileChip}">
-                                                            <StackPanel>
-                                                                <TextBlock Text="{DynamicResource LOCStatsTrophySilver}" Style="{StaticResource ProfileStatLabelStyle}"/>
-                                                                <TextBlock Text="{PluginSettings Plugin=SSHelper, Path=GS30}" Style="{StaticResource ProfileStatValueStyle}" FontSize="24"/>
-                                                            </StackPanel>
-                                                        </Border>
-
-                                                        <Border Style="{StaticResource ProfileChip}">
-                                                            <StackPanel>
-                                                                <TextBlock Text="{DynamicResource LOCStatsTrophyBronze}" Style="{StaticResource ProfileStatLabelStyle}"/>
-                                                                <TextBlock Text="{PluginSettings Plugin=SSHelper, Path=GS15}" Style="{StaticResource ProfileStatValueStyle}" FontSize="24"/>
                                                             </StackPanel>
                                                         </Border>
                                                     </WrapPanel>
@@ -2531,27 +2373,6 @@
                                                                     </ItemsPanelTemplate>
                                                                 </ListBox.ItemsPanel>
                                                             </ListBox>
-
-                                                            <!-- RECENT SS -->
-                                                            <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=RecentAchievements}"
-                                                                          Focusable="False"
-                                                                          ItemTemplate="{StaticResource HubTrophyRecentTemplate}">
-                                                                <ItemsControl.Style>
-                                                                    <Style TargetType="ItemsControl">
-                                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                                        <Style.Triggers>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="False"/>
-                                                                                    <Condition Binding="{PluginStatus Plugin=AnikiHelper_96a983a3-3f13-4dce-a474-4052b718bb52, Status=Installed}" Value="True"/>
-                                                                                    <Condition Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="True"/>
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                                            </MultiDataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </ItemsControl.Style>
-                                                            </ItemsControl>
                                                         </Grid>
                                                     </Border>
 
@@ -2562,15 +2383,6 @@
                                                                 <DataTrigger Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="True">
                                                                     <Setter Property="Visibility" Value="Visible"/>
                                                                 </DataTrigger>
-
-                                                                <MultiDataTrigger>
-                                                                    <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="False"/>
-                                                                        <Condition Binding="{PluginStatus Plugin=AnikiHelper_96a983a3-3f13-4dce-a474-4052b718bb52, Status=Installed}" Value="True"/>
-                                                                        <Condition Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="True"/>
-                                                                    </MultiDataTrigger.Conditions>
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </MultiDataTrigger>
                                                             </Style.Triggers>
                                                         </Style>
                                                     </Grid.Style>
@@ -2671,26 +2483,7 @@
                                                                 </ListBox.ItemsPanel>
                                                             </ListBox>
 
-                                                            <!-- TOP SS -->
-                                                            <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=RareTop}"
-                                                                          Focusable="False"
-                                                                          ItemTemplate="{StaticResource HubTrophyRareTemplate}">
-                                                                <ItemsControl.Style>
-                                                                    <Style TargetType="ItemsControl">
-                                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                                        <Style.Triggers>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="False"/>
-                                                                                    <Condition Binding="{PluginStatus Plugin=AnikiHelper_96a983a3-3f13-4dce-a474-4052b718bb52, Status=Installed}" Value="True"/>
-                                                                                    <Condition Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="True"/>
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                                            </MultiDataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </ItemsControl.Style>
-                                                            </ItemsControl>
+
                                                         </Grid>
                                                     </Border>
 
@@ -2701,15 +2494,6 @@
                                                                 <DataTrigger Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="True">
                                                                     <Setter Property="Visibility" Value="Visible"/>
                                                                 </DataTrigger>
-
-                                                                <MultiDataTrigger>
-                                                                    <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="False"/>
-                                                                        <Condition Binding="{PluginStatus Plugin=AnikiHelper_96a983a3-3f13-4dce-a474-4052b718bb52, Status=Installed}" Value="True"/>
-                                                                        <Condition Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="True"/>
-                                                                    </MultiDataTrigger.Conditions>
-                                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                                </MultiDataTrigger>
                                                             </Style.Triggers>
                                                         </Style>
                                                     </Grid.Style>
@@ -3267,14 +3051,6 @@
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                 </DataTrigger>
 
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{PluginStatus Plugin=playnite-successstory-plugin, Status=Installed}" Value="True"/>
-                                                        <Condition Binding="{PluginStatus Plugin=SuccessStoryFullscreenHelper, Status=Installed}" Value="True"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </MultiDataTrigger>
-
                                                 <DataTrigger Binding="{Binding ElementName=PlayerProfileRoot, Path=Tag}" Value="Page3">
                                                     <Setter Property="Background" Value="{DynamicResource PageDotsFocusBrush}"/>
                                                     <Setter Property="Opacity" Value="1"/>
@@ -3342,9 +3118,6 @@
                         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="80" Margin="0,0,0,0">
                             <StackPanel Orientation="Horizontal"  VerticalAlignment="Bottom" Effect="{DynamicResource SoftTextShadow}" HorizontalAlignment="Right" Margin="0,0,20,10">
 
-                                <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                          Tag="Dpad"
-                                          Content="{DynamicResource LOCButtonPrompt_Navigate}" />
                                 <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
                                           Tag="B"
                                           Content="{DynamicResource LOCBackLabel}" />

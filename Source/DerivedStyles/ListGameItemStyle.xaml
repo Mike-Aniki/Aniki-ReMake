@@ -82,63 +82,7 @@
                             </ContentPresenter.Style>
                         </ContentPresenter>
 
-                        <Border x:Name="PlatinumIcon"
-                                Width="50"
-                                Height="50"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                CornerRadius="12,0,0,12"
-                                IsHitTestVisible="False"
-                                BorderThickness="1.5,1.5,0,1.5"
-                                CacheMode="BitmapCache">
 
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Opacity" Value="0"/>
-
-                                    <Style.Triggers>
-                                        <!-- PlayniteAchievements -->
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True"/>
-                                                <Condition Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Percent}" Value="100"/>
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="Opacity" Value="1"/>
-                                        </MultiDataTrigger>
-
-                                        <!-- SuccessStory fallback -->
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True"/>
-                                                <Condition Binding="{PluginSettings Plugin=SuccessStory, Path=Percent}" Value="100"/>
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="Opacity" Value="1"/>
-                                        </MultiDataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                    <GradientStop Color="#202040" Offset="0"/>
-                                    <GradientStop Color="#90404060" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Border.Background>
-
-                            <Border.BorderBrush>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                    <GradientStop Color="#FFFFFFFF" Offset="0.0"/>
-                                    <GradientStop Color="#90C0E0FF" Offset="0.5"/>
-                                    <GradientStop Color="#00000000" Offset="1.0"/>
-                                </LinearGradientBrush>
-                            </Border.BorderBrush>
-
-                            <Image Source="{ThemeFile 'Images/platinum.png'}"
-                                   Width="30"
-                                   Height="30"
-                                   Margin="2"
-                                   RenderOptions.BitmapScalingMode="Linear"/>
-                        </Border>
 
                         <Border x:Name="GameTitleBackground" CornerRadius="{DynamicResource Corner}" Margin="0" BorderThickness="0" Background="{DynamicResource GameTitleBrush}" Opacity="0.6"
                                 VerticalAlignment="Bottom" Visibility="Collapsed" />
@@ -163,29 +107,149 @@
                                 </Style>
                             </Grid.Style>
 
-                            <Border x:Name="MainBorder" Opacity="0" CornerRadius="{DynamicResource Corner}" Tag="False" >
+                            <!-- Bordure de focus de la cover -->
+                            <Border x:Name="MainBorder"
+                                    Opacity="0"
+                                    CornerRadius="{DynamicResource Corner}"
+                                    Tag="False"
+                                    IsHitTestVisible="False"
+                                    SnapsToDevicePixels="True">
+
                                 <Border.Style>
                                     <Style TargetType="Border">
-                                        <Setter Property="BorderThickness" Value="3.5"/>
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+
+                                        <!-- Bordure statique par défaut -->
+                                        <Setter Property="BorderThickness"
+                                                Value="3.5"/>
+
+                                        <Setter Property="Visibility"
+                                                Value="Collapsed"/>
+
+                                        <Setter Property="BorderBrush"
+                                                Value="{DynamicResource FocusGameBorderBrush}"/>
+
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=SuccessStory, Path=Percent}" Value="100">
-                                                <Setter Property="BorderThickness" Value="4"/>
+
+                                            <!-- Bordure animée -->
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+
+                                                    <!-- La cover possède le focus -->
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}"
+                                                               Value="True"/>
+
+                                                    <!-- La bordure est réellement visible -->
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Visibility}"
+                                                               Value="Visible"/>
+
+                                                    <!-- Option activée -->
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AnimatedBorderCover]}"
+                                                               Value="True"/>
+
+                                                    <!-- Désactivée en mode Performance -->
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PerformanceMode]}"
+                                                               Value="False"/>
+
+                                                    <!-- Playnite doit être la fenêtre active -->
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}"
+                                                               Value="True"/>
+
+                                                </MultiDataTrigger.Conditions>
+
+                                                <!-- Remplace la bordure statique par la variante animable -->
+                                                <MultiDataTrigger.Setters>
+                                                    <Setter Property="BorderBrush"
+                                                            Value="{DynamicResource AnimatedFocusGameBorderBrush}"/>
+                                                </MultiDataTrigger.Setters>
+
+                                                <MultiDataTrigger.EnterActions>
+
+                                                    <BeginStoryboard x:Name="StartAnimatedCoverBorder"
+                                                                     HandoffBehavior="SnapshotAndReplace">
+
+                                                        <Storyboard Timeline.DesiredFrameRate="30">
+
+                                                            <!-- Apparition douce de la bordure -->
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetProperty="Opacity"
+                                                                From="0"
+                                                                To="1"
+                                                                Duration="0:0:0.22">
+
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <SineEase EasingMode="EaseOut"/>
+                                                                </DoubleAnimation.EasingFunction>
+
+                                                            </DoubleAnimation>
+
+                                                            <!-- Rotation lente et continue du reflet -->
+                                                            <DoubleAnimation
+                                                                Storyboard.TargetProperty="(Border.BorderBrush).(Brush.RelativeTransform).(RotateTransform.Angle)"
+                                                                From="0"
+                                                                To="360"
+                                                                Duration="0:0:8"
+                                                                RepeatBehavior="Forever"/>
+
+                                                        </Storyboard>
+
+                                                    </BeginStoryboard>
+
+                                                </MultiDataTrigger.EnterActions>
+
+                                                <MultiDataTrigger.ExitActions>
+
+                                                    <!-- Supprime réellement les clocks d’animation -->
+                                                    <RemoveStoryboard BeginStoryboardName="StartAnimatedCoverBorder"/>
+
+                                                </MultiDataTrigger.ExitActions>
+
+                                            </MultiDataTrigger>
+
+                                            <!-- Bordure spéciale pour un jeu terminé à 100 % -->
+                                            <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Percent}"
+                                                         Value="100">
+
+                                                <Setter Property="BorderThickness"
+                                                        Value="4"/>
 
                                                 <Setter Property="BorderBrush">
                                                     <Setter.Value>
-                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                                            <GradientStop Color="#C0E8FF" Offset="0"/>
-                                                            <GradientStop Color="#202040" Offset="0.5"/>
-                                                            <GradientStop Color="#00E6FF" Offset="1"/>
+
+                                                        <!--
+                                                        Le RotateTransform est nécessaire :
+                                                        si l’animation est activée, ce pinceau pourra
+                                                        également être animé sans erreur.
+                                                        -->
+                                                        <LinearGradientBrush StartPoint="0,0"
+                                                                             EndPoint="1,1">
+
+                                                            <GradientStop Color="#C0E8FF"
+                                                                          Offset="0"/>
+
+                                                            <GradientStop Color="#202040"
+                                                                          Offset="0.5"/>
+
+                                                            <GradientStop Color="#00E6FF"
+                                                                          Offset="1"/>
+
+                                                            <LinearGradientBrush.RelativeTransform>
+                                                                <RotateTransform CenterX="0.5"
+                                                                                 CenterY="0.5"
+                                                                                 Angle="0"/>
+                                                            </LinearGradientBrush.RelativeTransform>
+
                                                         </LinearGradientBrush>
+
                                                     </Setter.Value>
                                                 </Setter>
+
                                             </DataTrigger>
+
                                         </Style.Triggers>
+
                                     </Style>
                                 </Border.Style>
+
                             </Border>
 
 

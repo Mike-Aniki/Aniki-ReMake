@@ -1,0 +1,2250 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    mc:Ignorable="d">
+
+    <Style x:Key="FirstSetupWindowStyle" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <ControlTemplate.Resources>
+
+                        <Style x:Key="FirstSetupPageStyle" TargetType="Grid">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </Style>
+
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}"/>
+
+                        <Style x:Key="FirstSetupItemsControlStyle" TargetType="ItemsControl">
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="IsTabStop" Value="False"/>
+                            <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Continue"/>
+                            <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ItemsControl">
+                                        <ItemsPresenter/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                        <Style x:Key="FirstSetupPreviewHostStyle" TargetType="ContentControl">
+                            <Setter Property="Height" Value="500"/>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="VerticalAlignment" Value="Top"/>
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="IsTabStop" Value="False"/>
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                            <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="None"/>
+                            <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+                        </Style>
+
+                        <Style x:Key="FirstSetupTitleStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                            <Setter Property="FontSize" Value="44"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="TextWrapping" Value="Wrap"/>
+                            <Setter Property="Effect" Value="{DynamicResource SoftTextShadow}"/>
+                        </Style>
+
+                        <Style x:Key="FirstSetupSubtitleStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                            <Setter Property="FontSize" Value="22"/>
+                            <Setter Property="LineHeight" Value="31"/>
+                            <Setter Property="TextWrapping" Value="Wrap"/>
+                            <Setter Property="Opacity" Value="0.82"/>
+                        </Style>
+
+                        <Style x:Key="FirstSetupNavButtonStyle" TargetType="ButtonEx">
+                            <Setter Property="MinWidth" Value="230"/>
+                            <Setter Property="Height" Value="62"/>
+                            <Setter Property="Margin" Value="10,0"/>
+                            <Setter Property="Padding" Value="28,0"/>
+                            <Setter Property="FontSize" Value="22"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="Background" Value="#CC17191F"/>
+                            <Setter Property="BorderBrush" Value="#42FFFFFF"/>
+                            <Setter Property="BorderThickness" Value="2"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ButtonEx">
+                                        <Border x:Name="Root"
+                                                CornerRadius="16"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                Padding="{TemplateBinding Padding}">
+                                            <TextBlock Text="{TemplateBinding Content}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="{TemplateBinding FontSize}"
+                                                       FontWeight="{TemplateBinding FontWeight}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       TextAlignment="Center"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter TargetName="Root" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                <Setter TargetName="Root" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                <Setter TargetName="Root" Property="Effect">
+                                                    <Setter.Value>
+                                                        <DropShadowEffect BlurRadius="18" ShadowDepth="0" Opacity="0.55" Color="#FFFFFFFF"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Root" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter TargetName="Root" Property="Opacity" Value="0.35"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                        <Style x:Key="FirstSetupChoiceButtonStyle" TargetType="ButtonEx">
+                            <Setter Property="Height" Value="106"/>
+                            <Setter Property="Margin" Value="0,0,0,8"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ButtonEx">
+                                        <Border x:Name="Card"
+                                                Padding="20,14"
+                                                CornerRadius="16"
+                                                Background="#B015171C"
+                                                BorderBrush="#32FFFFFF"
+                                                BorderThickness="2">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border x:Name="SelectionRail"
+                                                        Width="6"
+                                                        Margin="-20,-14,0,-14"
+                                                        HorizontalAlignment="Left"
+                                                        CornerRadius="16,0,0,16"
+                                                        Background="{DynamicResource FocusGameBorderBrush}"
+                                                        Visibility="Collapsed"/>
+                                                <StackPanel Margin="15,0,12,0" VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding Title}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="22"
+                                                               FontWeight="SemiBold"
+                                                               TextWrapping="Wrap"
+                                                               MaxHeight="54"/>
+                                                    <TextBlock Text="{Binding Description}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="15"
+                                                               Margin="0,6,0,0"
+                                                               Opacity="0.66"
+                                                               TextWrapping="Wrap"
+                                                               MaxHeight="56"/>
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                                    <Border x:Name="RecommendedBadge"
+                                                            Padding="10,4"
+                                                            CornerRadius="9"
+                                                            Background="{DynamicResource ButtonBackgroundFocus}"
+                                                            HorizontalAlignment="Right"
+                                                            Visibility="Collapsed">
+                                                        <TextBlock Text="{DynamicResource LOCFirstSetupRecommended}"
+                                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                                   FontSize="12"
+                                                                   FontWeight="Bold"/>
+                                                    </Border>
+                                                    <Border x:Name="SelectedIndicator"
+                                                            Width="34"
+                                                            Height="34"
+                                                            Margin="0,6,0,0"
+                                                            CornerRadius="17"
+                                                            Background="{DynamicResource ButtonBackgroundFocus}"
+                                                            BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                            BorderThickness="3"
+                                                            HorizontalAlignment="Right"
+                                                            Visibility="Collapsed">
+                                                        <TextBlock Text="✓"
+                                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                                   FontSize="19"
+                                                                   FontWeight="Bold"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"/>
+                                                    </Border>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding IsRecommended}" Value="True">
+                                                <Setter TargetName="RecommendedBadge" Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                <Setter TargetName="Card" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                <Setter TargetName="SelectionRail" Property="Visibility" Value="Visible"/>
+                                                <Setter TargetName="SelectedIndicator" Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                <Setter TargetName="Card" Property="BorderThickness" Value="4"/>
+                                                <Setter TargetName="Card" Property="Effect">
+                                                    <Setter.Value>
+                                                        <DropShadowEffect BlurRadius="16" ShadowDepth="0" Opacity="0.4" Color="#FFFFFFFF"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                        <DataTemplate x:Key="FirstSetupChoiceButtonTemplate">
+                            <ButtonEx Style="{StaticResource FirstSetupChoiceButtonStyle}"
+                                      HorizontalAlignment="Stretch"
+                                      Command="{Binding SelectCommand}"/>
+                        </DataTemplate>
+
+                        <Style x:Key="FirstSetupColorChoiceButtonStyle"
+                               TargetType="ButtonEx"
+                               BasedOn="{StaticResource FirstSetupChoiceButtonStyle}">
+                            <Setter Property="Height" Value="98"/>
+                            <Setter Property="Margin" Value="0,0,0,6"/>
+                        </Style>
+
+                        <DataTemplate x:Key="FirstSetupColorChoiceButtonTemplate">
+                            <ButtonEx Style="{StaticResource FirstSetupColorChoiceButtonStyle}"
+                                      HorizontalAlignment="Stretch"
+                                      Command="{Binding SelectCommand}"/>
+                        </DataTemplate>
+
+                        <DataTemplate x:Key="FirstSetupLoginChoiceButtonTemplate">
+                            <ButtonEx Style="{StaticResource FirstSetupChoiceButtonStyle}"
+                                      Height="106"
+                                      Margin="0,0,10,0"
+                                      HorizontalAlignment="Stretch"
+                                      Command="{Binding SelectCommand}"/>
+                        </DataTemplate>
+
+                        <Style x:Key="FirstSetupAvatarButtonStyle" TargetType="ButtonEx">
+                            <Setter Property="Width" Value="116"/>
+                            <Setter Property="Height" Value="112"/>
+                            <Setter Property="Margin" Value="5"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ButtonEx">
+                                        <Border x:Name="AvatarCard"
+                                                CornerRadius="20"
+                                                Background="#B015171C"
+                                                BorderBrush="#32FFFFFF"
+                                                BorderThickness="2"
+                                                Padding="8">
+                                            <Grid>
+                                                <Grid Width="78"
+                                                      Height="78"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center">
+                                                    <Border x:Name="AvatarImageMask"
+                                                            CornerRadius="39"
+                                                            Background="Black"/>
+                                                    <Border Background="#22000000">
+                                                        <Border.OpacityMask>
+                                                            <VisualBrush Visual="{Binding ElementName=AvatarImageMask}"
+                                                                         Stretch="Fill"
+                                                                         RenderOptions.BitmapScalingMode="Fant"
+                                                                         RenderOptions.CachingHint="Cache"/>
+                                                        </Border.OpacityMask>
+                                                        <Image Source="{Binding PreviewPath}"
+                                                               Stretch="UniformToFill"
+                                                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                                                    </Border>
+                                                </Grid>
+                                                <Border x:Name="AvatarSelectedIndicator"
+                                                        Width="34"
+                                                        Height="34"
+                                                        CornerRadius="17"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Top"
+                                                        Background="{DynamicResource ButtonBackgroundFocus}"
+                                                        BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                        BorderThickness="3"
+                                                        Visibility="Collapsed">
+                                                    <TextBlock Text="✓"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="19"
+                                                               FontWeight="Bold"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"/>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                <Setter TargetName="AvatarCard" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                <Setter TargetName="AvatarCard" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                <Setter TargetName="AvatarSelectedIndicator" Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter TargetName="AvatarCard" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                <Setter TargetName="AvatarCard" Property="BorderThickness" Value="4"/>
+                                                <Setter TargetName="AvatarCard" Property="Effect">
+                                                    <Setter.Value>
+                                                        <DropShadowEffect BlurRadius="15" ShadowDepth="0" Opacity="0.38" Color="#FFFFFFFF"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="AvatarCard" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                        <DataTemplate x:Key="FirstSetupAvatarButtonTemplate">
+                            <ButtonEx Style="{StaticResource FirstSetupAvatarButtonStyle}"
+                                      Command="{Binding SelectCommand}"/>
+                        </DataTemplate>
+
+                        <Style x:Key="FirstSetupInfoCardStyle" TargetType="Border">
+                            <Setter Property="CornerRadius" Value="20"/>
+                            <Setter Property="Background" Value="#B015171C"/>
+                            <Setter Property="BorderBrush" Value="#32FFFFFF"/>
+                            <Setter Property="BorderThickness" Value="2"/>
+                            <Setter Property="Padding" Value="25"/>
+                            <Setter Property="Margin" Value="10"/>
+                        </Style>
+
+                        <Style x:Key="FirstSetupIntegrationInstallButtonStyle" TargetType="ButtonEx">
+                            <Setter Property="MinWidth" Value="190"/>
+                            <Setter Property="MinHeight" Value="48"/>
+                            <Setter Property="Padding" Value="22,8"/>
+                            <Setter Property="Margin" Value="0,18,0,0"/>
+                            <Setter Property="HorizontalAlignment" Value="Right"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="FontSize" Value="17"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="Background" Value="#CC17191F"/>
+                            <Setter Property="BorderBrush" Value="#52FFFFFF"/>
+                            <Setter Property="BorderThickness" Value="2"/>
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ButtonEx">
+                                        <Border x:Name="InstallButtonRoot"
+                                                CornerRadius="13"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                Padding="{TemplateBinding Padding}">
+                                            <TextBlock Text="{TemplateBinding Content}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="{TemplateBinding FontSize}"
+                                                       FontWeight="{TemplateBinding FontWeight}"
+                                                       TextWrapping="Wrap"
+                                                       TextAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter TargetName="InstallButtonRoot" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                <Setter TargetName="InstallButtonRoot" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                <Setter TargetName="InstallButtonRoot" Property="Effect">
+                                                    <Setter.Value>
+                                                        <DropShadowEffect BlurRadius="16" ShadowDepth="0" Opacity="0.48" Color="#FFFFFFFF"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="InstallButtonRoot" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter TargetName="InstallButtonRoot" Property="Opacity" Value="0.38"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                        <Style x:Key="FirstSetupExtensionCardStyle"
+                               TargetType="Border"
+                               BasedOn="{StaticResource FirstSetupInfoCardStyle}">
+                            <Setter Property="MinHeight" Value="145"/>
+                            <Setter Property="Padding" Value="16"/>
+                            <Setter Property="Margin" Value="7,20"/>
+                            <Setter Property="CornerRadius" Value="17"/>
+                        </Style>
+
+                        <Style x:Key="FirstSetupExtensionTitleStyle"
+                               TargetType="TextBlock"
+                               BasedOn="{StaticResource TextBlockBaseStyle}">
+                            <Setter Property="FontSize" Value="22"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="TextWrapping" Value="Wrap"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+
+                        <Style x:Key="FirstSetupExtensionIconFrameStyle"
+                               TargetType="Border">
+                            <Setter Property="Width" Value="56"/>
+                            <Setter Property="Height" Value="56"/>
+                            <Setter Property="Margin" Value="0,0,15,0"/>
+                            <Setter Property="Padding" Value="4"/>
+                            <Setter Property="CornerRadius" Value="11"/>
+                            <Setter Property="Background" Value="#18000000"/>
+                            <Setter Property="BorderBrush" Value="#35FFFFFF"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                        </Style>
+
+                        <Style x:Key="FirstSetupExtensionIconStyle"
+                               TargetType="Image">
+                            <Setter Property="Stretch" Value="Uniform"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                            <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant"/>
+                        </Style>
+
+                        <Style x:Key="FirstSetupExtensionStatusStyle"
+                               TargetType="TextBlock"
+                               BasedOn="{StaticResource TextBlockBaseStyle}">
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="HorizontalAlignment" Value="Right"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="14,2,0,0"/>
+                        </Style>
+
+                        <Style x:Key="FirstSetupExtensionDescriptionStyle"
+                               TargetType="TextBlock"
+                               BasedOn="{StaticResource TextBlockBaseStyle}">
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="LineHeight" Value="19"/>
+                            <Setter Property="TextWrapping" Value="Wrap"/>
+                            <Setter Property="Margin" Value="0,8,0,0"/>
+                            <Setter Property="Opacity" Value="0.80"/>
+                        </Style>
+
+                        <Style x:Key="FirstSetupExtensionInstallButtonStyle"
+                               TargetType="ButtonEx"
+                               BasedOn="{StaticResource FirstSetupIntegrationInstallButtonStyle}">
+                            <Setter Property="MinWidth" Value="172"/>
+                            <Setter Property="MinHeight" Value="40"/>
+                            <Setter Property="Padding" Value="16,5"/>
+                            <Setter Property="Margin" Value="0,9,0,0"/>
+                            <Setter Property="FontSize" Value="14"/>
+                        </Style>
+
+                        <DataTemplate x:Key="FirstSetupChoicePreviewTemplate">
+                            <Grid Focusable="False" IsHitTestVisible="False" KeyboardNavigation.DirectionalNavigation="None">
+                                <Border x:Name="ChoicePreviewMask"
+                                        CornerRadius="28"
+                                        Background="Black"/>
+                                <Border Background="#FF090A0D">
+                                    <Border.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=ChoicePreviewMask}"
+                                                     Stretch="Fill"
+                                                     RenderOptions.BitmapScalingMode="Fant"
+                                                     RenderOptions.CachingHint="Cache"/>
+                                    </Border.OpacityMask>
+                                    <Image Source="{Binding PreviewPath}"
+                                           Stretch="UniformToFill"
+                                           HorizontalAlignment="Center"
+                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                                </Border>
+                                <Border CornerRadius="28"
+                                        BorderBrush="#3AFFFFFF"
+                                        BorderThickness="2"
+                                        IsHitTestVisible="False"/>
+                                <Border VerticalAlignment="Bottom" Height="255" CornerRadius="0,0,28,28">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Color="#00000000" Offset="0"/>
+                                            <GradientStop Color="#72000000" Offset="0.38"/>
+                                            <GradientStop Color="#C9000000" Offset="0.68"/>
+                                            <GradientStop Color="#F6000000" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <StackPanel VerticalAlignment="Bottom" Margin="34,0,34,28">
+                                        <TextBlock Text="{Binding Title}"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   FontSize="32"
+                                                   FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Description}"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   FontSize="19"
+                                                   TextWrapping="Wrap"
+                                                   Opacity="0.86"
+                                                   Margin="0,8,0,0"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+
+                    </ControlTemplate.Resources>
+
+                    <Grid x:Name="FirstSetupRoot"
+                          Background="#FF08090C"
+                          KeyboardNavigation.DirectionalNavigation="Contained"
+                          KeyboardNavigation.TabNavigation="Contained"
+                          KeyboardNavigation.ControlTabNavigation="Contained"
+                          FocusManager.FocusedElement="{Binding ElementName=FirstSetupStartButton}"
+                          RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <ScaleTransform ScaleX="1" ScaleY="1"/>
+                        </Grid.RenderTransform>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Opacity" Value="1"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.IsClosing}" Value="True">
+                                        <Setter Property="IsHitTestVisible" Value="False"/>
+                                        <DataTrigger.EnterActions>
+                                            <BeginStoryboard HandoffBehavior="SnapshotAndReplace">
+                                                <Storyboard FillBehavior="HoldEnd" Timeline.DesiredFrameRate="30">
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.38">
+                                                        <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+                                                    </DoubleAnimation>
+                                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1.012" Duration="0:0:0.38">
+                                                        <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+                                                    </DoubleAnimation>
+                                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1.012" Duration="0:0:0.38">
+                                                        <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+                                                    </DoubleAnimation>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.EnterActions>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+
+                        <Grid IsHitTestVisible="False">
+                            <Image Source="{ThemeFile 'Themes Option/2.Interface/Images/Welcome.jpg'}"
+                                   Stretch="UniformToFill"
+                                   Opacity="0.24"/>
+                            <Rectangle Fill="#D608090C"/>
+                            <Rectangle>
+                                <Rectangle.Fill>
+                                    <RadialGradientBrush Center="0.5,0.34" RadiusX="0.72" RadiusY="0.72">
+                                        <GradientStop Color="#301E8BFF" Offset="0"/>
+                                        <GradientStop Color="#00000000" Offset="1"/>
+                                    </RadialGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Grid>
+
+                        <Grid x:Name="FirstSetupWizardContent"
+                              Margin="74,38,74,36"
+                              IsEnabled="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CanInteract}">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.IsOfferVisible}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="92"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="82"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Progress header -->
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupTitle}"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="25"
+                                               FontWeight="SemiBold"/>
+                                    <ProgressBar Width="670"
+                                                 Height="5"
+                                                 HorizontalAlignment="Left"
+                                                 Margin="0,14,0,0"
+                                                 Minimum="0"
+                                                 Maximum="100"
+                                                 Value="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ProgressPercent}"
+                                                 Foreground="{DynamicResource FocusGameBorderBrush}"
+                                                 Background="#30FFFFFF"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="1"
+                                           VerticalAlignment="Center"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           FontSize="19">
+                                    <Run Text="{DynamicResource LOCFirstSetupStep}"/>
+                                    <Run Text=" "/>
+                                    <Run Text="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CurrentStepNumber}"/>
+                                    <Run Text=" / "/>
+                                    <Run Text="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.TotalStepCount}"/>
+                                </TextBlock>
+                            </Grid>
+
+                            <!-- 0. Welcome -->
+                            <Grid Grid.Row="1">
+                                <Grid.Style>
+                                    <Style TargetType="Grid" BasedOn="{StaticResource FirstSetupPageStyle}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CurrentPage}" Value="0">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1.1*"/>
+                                    <ColumnDefinition Width="0.9*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel VerticalAlignment="Center" Margin="40,0,80,0">
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupWelcomeTitle}" Style="{StaticResource FirstSetupTitleStyle}" FontSize="58"/>
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupWelcomeDesc}" Style="{StaticResource FirstSetupSubtitleStyle}" FontSize="24" Margin="0,28,0,0"/>
+                                    <StackPanel Orientation="Horizontal" Margin="-10,48,0,0">
+                                        <ButtonEx x:Name="FirstSetupStartButton"
+                                                  Style="{StaticResource FirstSetupNavButtonStyle}"
+                                                  Content="{DynamicResource LOCFirstSetupStart}"
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ContinueCommand}"/>
+                                        <ButtonEx Style="{StaticResource FirstSetupNavButtonStyle}"
+                                                  Content="{DynamicResource LOCFirstSetupUseDefaults}"
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.UseDefaultsCommand}"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupWelcomeDefaultsNote}"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="16"
+                                               Opacity="0.65"
+                                               Margin="0,20,0,0"/>
+                                </StackPanel>
+                                <Grid Grid.Column="1" Margin="20,40,30,40">
+                                    <Border x:Name="WelcomePagePreviewMask"
+                                            CornerRadius="34"
+                                            Background="Black"/>
+                                    <Border>
+                                        <Border.OpacityMask>
+                                            <VisualBrush Visual="{Binding ElementName=WelcomePagePreviewMask}"
+                                                         Stretch="Fill"
+                                                         RenderOptions.BitmapScalingMode="Fant"
+                                                         RenderOptions.CachingHint="Cache"/>
+                                        </Border.OpacityMask>
+                                        <Image Source="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.WelcomePreviewPath}"
+                                               Stretch="UniformToFill"
+                                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    </Border>
+                                    <Border CornerRadius="34"
+                                            BorderBrush="#42FFFFFF"
+                                            BorderThickness="2"
+                                            IsHitTestVisible="False"/>
+                                </Grid>
+                            </Grid>
+
+                            <!-- 1. Profile -->
+                            <Grid Grid.Row="1">
+                                <Grid.Style>
+                                    <Style TargetType="Grid" BasedOn="{StaticResource FirstSetupPageStyle}">
+                                        <Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CurrentPage}" Value="1"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                                <StackPanel Margin="35,12,35,20">
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupProfileTitle}" Style="{StaticResource FirstSetupTitleStyle}"/>
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupProfileDesc}" Style="{StaticResource FirstSetupSubtitleStyle}" Margin="0,12,0,0"/>
+                                </StackPanel>
+                                <Grid Grid.Row="1" Margin="35,10,35,15">
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="350"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                    <Border Style="{StaticResource FirstSetupInfoCardStyle}" Margin="0,0,26,0">
+                                        <StackPanel VerticalAlignment="Center">
+                                            <Grid Width="156" Height="156" HorizontalAlignment="Center">
+                                                <Border x:Name="ProfileAvatarMask"
+                                                        CornerRadius="78"
+                                                        Background="Black"/>
+                                                <Border>
+                                                    <Border.OpacityMask>
+                                                        <VisualBrush Visual="{Binding ElementName=ProfileAvatarMask}"
+                                                                     Stretch="Fill"
+                                                                     RenderOptions.BitmapScalingMode="Fant"
+                                                                     RenderOptions.CachingHint="Cache"/>
+                                                    </Border.OpacityMask>
+                                                    <Image Source="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SelectedAvatarPreviewPath}"
+                                                           Stretch="UniformToFill"
+                                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                                                </Border>
+                                                <Border CornerRadius="78"
+                                                        BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                        BorderThickness="3"
+                                                        IsHitTestVisible="False"/>
+                                            </Grid>
+                                            <TextBlock Text="{DynamicResource LOCFirstSetupProfileName}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="17" Margin="0,24,0,10"/>
+                                            <ButtonEx x:Name="FirstSetupProfileNameButton"
+                                                      Style="{StaticResource FirstSetupNavButtonStyle}"
+                                                      Margin="0"
+                                                      MinWidth="0"
+                                                      HorizontalAlignment="Stretch"
+                                                      Content="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.UserNameInput.CurrentStringValue}"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.EditUserNameCommand}"/>
+                                            <TextBlock Text="{DynamicResource LOCFirstSetupProfileEmptyName}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="15" Opacity="0.62" Margin="0,14,0,0" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                                        <TextBlock Text="{DynamicResource LOCFirstSetupProfileAvatar}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="25" FontWeight="SemiBold" Margin="10,4,0,10"/>
+                                        <ItemsControl Grid.Row="1"
+                                                      ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.AvatarChoices}"
+                                                      ItemTemplate="{StaticResource FirstSetupAvatarButtonTemplate}"
+                                                      Style="{StaticResource FirstSetupItemsControlStyle}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel Orientation="Horizontal" Width="1260" ItemWidth="126" ItemHeight="122"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                        <TextBlock Grid.Row="2" Text="{DynamicResource LOCFirstSetupProfileMoreAvatars}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="16" Opacity="0.67" Margin="10,8,0,0"/>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            <!-- Generic choice pages -->
+                            <Grid Grid.Row="1">
+                                <Grid.Style><Style TargetType="Grid" BasedOn="{StaticResource FirstSetupPageStyle}"><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CurrentPage}" Value="2"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></Grid.Style>
+                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                                <StackPanel Margin="35,12,35,20">
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupStartupTitle}" Style="{StaticResource FirstSetupTitleStyle}"/>
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupStartupDesc}" Style="{StaticResource FirstSetupSubtitleStyle}" Margin="0,12,0,0"/>
+                                </StackPanel>
+
+                                <Grid Grid.Row="1" Margin="35,4,35,12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.90*"/>
+                                        <ColumnDefinition Width="1.10*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ContentControl Style="{StaticResource FirstSetupPreviewHostStyle}"
+                                                    Margin="0,0,24,0"
+                                                    Content="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SelectedStartup, Mode=TwoWay}"
+                                                    ContentTemplate="{StaticResource FirstSetupChoicePreviewTemplate}"/>
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="28"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="{DynamicResource LOCFirstSetupStartupDestination}"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   FontSize="23"
+                                                   FontWeight="SemiBold"
+                                                   Margin="0,0,0,10"/>
+                                        <ItemsControl x:Name="FirstSetupStartupChoices"
+                                                      Grid.Row="1"
+                                                      ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.StartupChoices}"
+                                                      ItemTemplate="{StaticResource FirstSetupChoiceButtonTemplate}"
+                                                      Style="{StaticResource FirstSetupItemsControlStyle}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                        <StackPanel Grid.Row="3" Margin="0,0,0,10">
+                                            <TextBlock Text="{DynamicResource LOCFirstSetupStartupLogin}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="23"
+                                                       FontWeight="SemiBold"/>
+                                            <TextBlock Text="{DynamicResource LOCFirstSetupStartupLoginDesc}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="16"
+                                                       Opacity="0.68"
+                                                       TextWrapping="Wrap"
+                                                       Margin="0,6,0,0"/>
+                                        </StackPanel>
+                                        <ItemsControl x:Name="FirstSetupLoginScreenChoices"
+                                                      Grid.Row="4"
+                                                      ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.LoginScreenChoices}"
+                                                      ItemTemplate="{StaticResource FirstSetupLoginChoiceButtonTemplate}"
+                                                      Style="{StaticResource FirstSetupItemsControlStyle}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <UniformGrid Columns="2"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid.Style><Style TargetType="Grid" BasedOn="{StaticResource FirstSetupPageStyle}"><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CurrentPage}" Value="3"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></Grid.Style>
+                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                                <StackPanel Margin="35,12,35,20"><TextBlock Text="{DynamicResource LOCFirstSetupInterfaceTitle}" Style="{StaticResource FirstSetupTitleStyle}"/><TextBlock Text="{DynamicResource LOCFirstSetupInterfaceDesc}" Style="{StaticResource FirstSetupSubtitleStyle}" Margin="0,12,0,0"/></StackPanel>
+                                <Grid Grid.Row="1" Margin="35,4,35,12"><Grid.ColumnDefinitions><ColumnDefinition Width="0.90*"/><ColumnDefinition Width="1.10*"/></Grid.ColumnDefinitions>
+                                    <ContentControl Style="{StaticResource FirstSetupPreviewHostStyle}" Margin="0,0,24,0" Content="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SelectedInterface, Mode=TwoWay}" ContentTemplate="{StaticResource FirstSetupChoicePreviewTemplate}"/>
+                                    <ItemsControl x:Name="FirstSetupInterfaceChoices"
+                                                  Grid.Column="1"
+                                                  ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.InterfaceChoices}"
+                                                  ItemTemplate="{StaticResource FirstSetupChoiceButtonTemplate}"
+                                                  Style="{StaticResource FirstSetupItemsControlStyle}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </Grid>
+                                <TextBlock Grid.Row="2"
+                                           Text="{DynamicResource LOCFirstSetupInterfacePresetNote}"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           FontSize="16"
+                                           Opacity="0.68"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Right"
+                                           Margin="35,6,35,0"/>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid.Style><Style TargetType="Grid" BasedOn="{StaticResource FirstSetupPageStyle}"><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CurrentPage}" Value="4"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></Grid.Style>
+                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                                <StackPanel Margin="35,12,35,20"><TextBlock Text="{DynamicResource LOCFirstSetupColorTitle}" Style="{StaticResource FirstSetupTitleStyle}"/><TextBlock Text="{DynamicResource LOCFirstSetupColorDesc}" Style="{StaticResource FirstSetupSubtitleStyle}" Margin="0,12,0,0"/></StackPanel>
+                                <Grid Grid.Row="1" Margin="35,4,35,4"><Grid.ColumnDefinitions><ColumnDefinition Width="0.90*"/><ColumnDefinition Width="1.10*"/></Grid.ColumnDefinitions>
+                                    <ContentControl Style="{StaticResource FirstSetupPreviewHostStyle}" Margin="0,0,24,0" Content="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SelectedColor, Mode=TwoWay}" ContentTemplate="{StaticResource FirstSetupChoicePreviewTemplate}"/>
+                                    <ItemsControl x:Name="FirstSetupColorChoices"
+                                                  Grid.Column="1"
+                                                  ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ColorChoices}"
+                                                  ItemTemplate="{StaticResource FirstSetupColorChoiceButtonTemplate}"
+                                                  Style="{StaticResource FirstSetupItemsControlStyle}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </Grid>
+                                <TextBlock Grid.Row="2" Text="{DynamicResource LOCFirstSetupColorMorePresets}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="17" Opacity="0.72" HorizontalAlignment="Right" Margin="0,6,35,0"/>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid.Style><Style TargetType="Grid" BasedOn="{StaticResource FirstSetupPageStyle}"><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CurrentPage}" Value="5"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></Grid.Style>
+                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                                <StackPanel Margin="35,12,35,20"><TextBlock Text="{DynamicResource LOCFirstSetupDetailsTitle}" Style="{StaticResource FirstSetupTitleStyle}"/><TextBlock Text="{DynamicResource LOCFirstSetupDetailsDesc}" Style="{StaticResource FirstSetupSubtitleStyle}" Margin="0,12,0,0"/></StackPanel>
+                                <Grid Grid.Row="1" Margin="35,4,35,12"><Grid.ColumnDefinitions><ColumnDefinition Width="0.90*"/><ColumnDefinition Width="1.10*"/></Grid.ColumnDefinitions>
+                                    <ContentControl Style="{StaticResource FirstSetupPreviewHostStyle}" Margin="0,0,24,0" Content="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SelectedDetails, Mode=TwoWay}" ContentTemplate="{StaticResource FirstSetupChoicePreviewTemplate}"/>
+                                    <ItemsControl x:Name="FirstSetupDetailsChoices"
+                                                  Grid.Column="1"
+                                                  ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.DetailsChoices}"
+                                                  ItemTemplate="{StaticResource FirstSetupChoiceButtonTemplate}"
+                                                  Style="{StaticResource FirstSetupItemsControlStyle}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </Grid>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid.Style><Style TargetType="Grid" BasedOn="{StaticResource FirstSetupPageStyle}"><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CurrentPage}" Value="6"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></Grid.Style>
+                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                                <StackPanel Margin="35,12,35,20"><TextBlock Text="{DynamicResource LOCFirstSetupExperienceTitle}" Style="{StaticResource FirstSetupTitleStyle}"/><TextBlock Text="{DynamicResource LOCFirstSetupExperienceDesc}" Style="{StaticResource FirstSetupSubtitleStyle}" Margin="0,12,0,0"/></StackPanel>
+                                <Grid Grid.Row="1" Margin="35,4,35,4"><Grid.ColumnDefinitions><ColumnDefinition Width="0.90*"/><ColumnDefinition Width="1.10*"/></Grid.ColumnDefinitions>
+                                    <ContentControl Style="{StaticResource FirstSetupPreviewHostStyle}" Margin="0,0,24,0" Content="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SelectedExperience, Mode=TwoWay}" ContentTemplate="{StaticResource FirstSetupChoicePreviewTemplate}"/>
+                                    <ItemsControl x:Name="FirstSetupExperienceChoices"
+                                                  Grid.Column="1"
+                                                  ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ExperienceChoices}"
+                                                  ItemTemplate="{StaticResource FirstSetupChoiceButtonTemplate}"
+                                                  Style="{StaticResource FirstSetupItemsControlStyle}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </Grid>
+                                <Border Grid.Row="2" CornerRadius="12" Background="#552C1A00" BorderBrush="#80FFB44A" BorderThickness="1" Padding="18,10" Margin="35,8,35,0"><TextBlock Text="{DynamicResource LOCFirstSetupExperienceWarning}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="16" TextWrapping="Wrap"/></Border>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid.Style><Style TargetType="Grid" BasedOn="{StaticResource FirstSetupPageStyle}"><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CurrentPage}" Value="7"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></Grid.Style>
+                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                                <StackPanel Margin="35,12,35,20"><TextBlock Text="{DynamicResource LOCFirstSetupTrailersTitle}" Style="{StaticResource FirstSetupTitleStyle}"/><TextBlock Text="{DynamicResource LOCFirstSetupTrailersDesc}" Style="{StaticResource FirstSetupSubtitleStyle}" Margin="0,12,0,0"/></StackPanel>
+                                <Grid Grid.Row="1" Margin="35,4,35,4"><Grid.ColumnDefinitions><ColumnDefinition Width="0.90*"/><ColumnDefinition Width="1.10*"/></Grid.ColumnDefinitions>
+                                    <ContentControl Style="{StaticResource FirstSetupPreviewHostStyle}" Margin="0,0,24,0" Content="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SelectedTrailers, Mode=TwoWay}" ContentTemplate="{StaticResource FirstSetupChoicePreviewTemplate}"/>
+                                    <ItemsControl x:Name="FirstSetupTrailerChoices"
+                                                  Grid.Column="1"
+                                                  ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.TrailerChoices}"
+                                                  ItemTemplate="{StaticResource FirstSetupChoiceButtonTemplate}"
+                                                  Style="{StaticResource FirstSetupItemsControlStyle}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </Grid>
+                                <TextBlock Grid.Row="2" Text="{DynamicResource LOCFirstSetupTrailersNote}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="16" Opacity="0.72" TextWrapping="Wrap" Margin="35,8,35,0"/>
+                            </Grid>
+
+                            <!-- 8. Extensions -->
+                            <Grid Grid.Row="1">
+                                <Grid.Style>
+                                    <Style TargetType="Grid" BasedOn="{StaticResource FirstSetupPageStyle}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CurrentPage}" Value="8">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+
+                                <Rectangle Grid.RowSpan="3"
+                                           Fill="#B708090C"
+                                           IsHitTestVisible="False"/>
+
+                                <StackPanel Margin="35,8,35,6">
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupIntegrationsTitle}"
+                                               Style="{StaticResource FirstSetupTitleStyle}"
+                                               FontSize="39"/>
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupIntegrationsDesc}"
+                                               Style="{StaticResource FirstSetupSubtitleStyle}"
+                                               FontSize="18"
+                                               LineHeight="26"
+                                               Margin="0,7,0,0"/>
+                                </StackPanel>
+
+                                <Grid Grid.Row="1" Margin="25,2,25,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- PlayniteAchievements -->
+                                    <Border Style="{StaticResource FirstSetupExtensionCardStyle}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border Style="{StaticResource FirstSetupExtensionIconFrameStyle}">
+                                                    <Image Source="{ThemeFile 'Themes Option/Extensions/PlayniteAchievements.png'}"
+                                                           Style="{StaticResource FirstSetupExtensionIconStyle}"/>
+                                                </Border>
+                                                <TextBlock Grid.Column="1"
+                                                           Text="PlayniteAchievements"
+                                                           Style="{StaticResource FirstSetupExtensionTitleStyle}"/>
+                                                <TextBlock Grid.Column="2">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource FirstSetupExtensionStatusStyle}">
+                                                            <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusNotInstalled}"/>
+                                                            <Setter Property="Opacity" Value="0.62"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.PlayniteAchievementsQueued}" Value="True">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusScheduled}"/>
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.PlayniteAchievementsInstalled}" Value="True">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusInstalled}"/>
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                            <TextBlock Grid.Row="1"
+                                                       Text="{DynamicResource LOCFirstSetupAchievementsDesc}"
+                                                       Style="{StaticResource FirstSetupExtensionDescriptionStyle}"
+                                                       Margin="71,8,0,0"/>
+                                            <ButtonEx Grid.Row="2"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.InstallPlayniteAchievementsCommand}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource FirstSetupExtensionInstallButtonStyle}">
+                                                        <Setter Property="Content" Value="{DynamicResource LOCFirstSetupInstallAtEnd}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.PlayniteAchievementsQueued}" Value="True">
+                                                                <Setter Property="Content" Value="{DynamicResource LOCFirstSetupCancelScheduledInstall}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.PlayniteAchievementsInstalled}" Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- UniPlaySong -->
+                                    <Border Grid.Column="1" Style="{StaticResource FirstSetupExtensionCardStyle}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border Style="{StaticResource FirstSetupExtensionIconFrameStyle}">
+                                                    <Image Source="{ThemeFile 'Themes Option/Extensions/UniPlaySong.png'}"
+                                                           Style="{StaticResource FirstSetupExtensionIconStyle}"/>
+                                                </Border>
+                                                <TextBlock Grid.Column="1"
+                                                           Text="UniPlaySong"
+                                                           Style="{StaticResource FirstSetupExtensionTitleStyle}"/>
+                                                <TextBlock Grid.Column="2">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource FirstSetupExtensionStatusStyle}">
+                                                            <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusNotInstalled}"/>
+                                                            <Setter Property="Opacity" Value="0.62"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.UniPlaySongQueued}" Value="True">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusScheduled}"/>
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.UniPlaySongInstalled}" Value="True">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusInstalled}"/>
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                            <TextBlock Grid.Row="1"
+                                                       Text="{DynamicResource LOCFirstSetupMusicDesc}"
+                                                       Style="{StaticResource FirstSetupExtensionDescriptionStyle}"
+                                                       Margin="71,8,0,0"/>
+                                            <ButtonEx Grid.Row="2"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.InstallUniPlaySongCommand}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource FirstSetupExtensionInstallButtonStyle}">
+                                                        <Setter Property="Content" Value="{DynamicResource LOCFirstSetupInstallAtEnd}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.UniPlaySongQueued}" Value="True">
+                                                                <Setter Property="Content" Value="{DynamicResource LOCFirstSetupCancelScheduledInstall}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.UniPlaySongInstalled}" Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- Playnite Audio Switcher -->
+                                    <Border Grid.Row="1" Style="{StaticResource FirstSetupExtensionCardStyle}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border Style="{StaticResource FirstSetupExtensionIconFrameStyle}">
+                                                    <Image Source="{ThemeFile 'Themes Option/Extensions/AudioSwitcher.png'}"
+                                                           Style="{StaticResource FirstSetupExtensionIconStyle}"/>
+                                                </Border>
+                                                <TextBlock Grid.Column="1"
+                                                           Text="Playnite Audio Switcher"
+                                                           Style="{StaticResource FirstSetupExtensionTitleStyle}"/>
+                                                <TextBlock Grid.Column="2">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource FirstSetupExtensionStatusStyle}">
+                                                            <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusNotInstalled}"/>
+                                                            <Setter Property="Opacity" Value="0.62"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.AudioSwitcherQueued}" Value="True">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusScheduled}"/>
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.AudioSwitcherInstalled}" Value="True">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusInstalled}"/>
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                            <TextBlock Grid.Row="1"
+                                                       Text="{DynamicResource LOCFirstSetupAudioSwitcherDesc}"
+                                                       Style="{StaticResource FirstSetupExtensionDescriptionStyle}"
+                                                       Margin="71,8,0,0"/>
+                                            <ButtonEx Grid.Row="2"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.InstallAudioSwitcherCommand}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource FirstSetupExtensionInstallButtonStyle}">
+                                                        <Setter Property="Content" Value="{DynamicResource LOCFirstSetupInstallAtEnd}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.AudioSwitcherQueued}" Value="True">
+                                                                <Setter Property="Content" Value="{DynamicResource LOCFirstSetupCancelScheduledInstall}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.AudioSwitcherInstalled}" Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- Custom Fade Animations -->
+                                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource FirstSetupExtensionCardStyle}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border Style="{StaticResource FirstSetupExtensionIconFrameStyle}">
+                                                    <Image Source="{ThemeFile 'Themes Option/Extensions/CustomFadeAnimation.png'}"
+                                                           Style="{StaticResource FirstSetupExtensionIconStyle}"/>
+                                                </Border>
+                                                <TextBlock Grid.Column="1"
+                                                           Text="Custom Fade Animations"
+                                                           Style="{StaticResource FirstSetupExtensionTitleStyle}"/>
+                                                <TextBlock Grid.Column="2">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource FirstSetupExtensionStatusStyle}">
+                                                            <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusNotInstalled}"/>
+                                                            <Setter Property="Opacity" Value="0.62"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CustomFadeAnimationQueued}" Value="True">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusScheduled}"/>
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CustomFadeAnimationInstalled}" Value="True">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusInstalled}"/>
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                            <TextBlock Grid.Row="1"
+                                                       Text="{DynamicResource LOCFirstSetupCustomFadeDesc}"
+                                                       Style="{StaticResource FirstSetupExtensionDescriptionStyle}"
+                                                       Margin="71,8,0,0"/>
+                                            <ButtonEx Grid.Row="2"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.InstallCustomFadeAnimationCommand}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource FirstSetupExtensionInstallButtonStyle}">
+                                                        <Setter Property="Content" Value="{DynamicResource LOCFirstSetupInstallAtEnd}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CustomFadeAnimationQueued}" Value="True">
+                                                                <Setter Property="Content" Value="{DynamicResource LOCFirstSetupCancelScheduledInstall}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CustomFadeAnimationInstalled}" Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- Extra Metadata -->
+                                    <Border Grid.Row="2" Style="{StaticResource FirstSetupExtensionCardStyle}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border Style="{StaticResource FirstSetupExtensionIconFrameStyle}">
+                                                    <Image Source="{ThemeFile 'Themes Option/Extensions/ExtraMetadata.png'}"
+                                                           Style="{StaticResource FirstSetupExtensionIconStyle}"/>
+                                                </Border>
+                                                <TextBlock Grid.Column="1"
+                                                           Text="Extra Metadata"
+                                                           Style="{StaticResource FirstSetupExtensionTitleStyle}"/>
+                                                <TextBlock Grid.Column="2">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource FirstSetupExtensionStatusStyle}">
+                                                            <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusNotInstalled}"/>
+                                                            <Setter Property="Opacity" Value="0.62"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ExtraMetadataNeedsTools}" Value="True">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusMetadataToolsRequired}"/>
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ExtraMetadataQueued}" Value="True">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusScheduled}"/>
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ExtraMetadataInstalled}" Value="True">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusInstalled}"/>
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                            <TextBlock Grid.Row="1"
+                                                       Text="{DynamicResource LOCFirstSetupExtraMetadataDesc}"
+                                                       Style="{StaticResource FirstSetupExtensionDescriptionStyle}"
+                                                       Margin="71,8,0,0"/>
+                                            <ButtonEx Grid.Row="2"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.InstallExtraMetadataCommand}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource FirstSetupExtensionInstallButtonStyle}">
+                                                        <Setter Property="Content" Value="{DynamicResource LOCFirstSetupInstallAtEnd}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ExtraMetadataNeedsTools}" Value="True">
+                                                                <Setter Property="Content" Value="{DynamicResource LOCFirstSetupInstallMetadataToolsAtEnd}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ExtraMetadataQueued}" Value="True">
+                                                                <Setter Property="Content" Value="{DynamicResource LOCFirstSetupCancelScheduledInstall}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ExtraMetadataInstalled}" Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- Screenshots -->
+                                    <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource FirstSetupExtensionCardStyle}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border Style="{StaticResource FirstSetupExtensionIconFrameStyle}">
+                                                    <Image Source="{ThemeFile 'Themes Option/Extensions/Screenshot.png'}"
+                                                           Style="{StaticResource FirstSetupExtensionIconStyle}"/>
+                                                </Border>
+                                                <TextBlock Grid.Column="1"
+                                                           Text="{DynamicResource LOCFirstSetupScreenshotsTitle}"
+                                                           Style="{StaticResource FirstSetupExtensionTitleStyle}"/>
+                                                <TextBlock Grid.Column="2">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource FirstSetupExtensionStatusStyle}">
+                                                            <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusNotInstalled}"/>
+                                                            <Setter Property="Opacity" Value="0.62"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ScreenshotUtilitiesNeedsLocalProvider}" Value="True">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusLocalProviderRequired}"/>
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ScreenshotProviderQueued}" Value="True">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusScheduled}"/>
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ScreenshotUtilitiesLocalProviderQueued}" Value="True">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusScheduled}"/>
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ScreenshotPluginInstalled}" Value="True">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupStatusInstalled}"/>
+                                                                    <Setter Property="Opacity" Value="1"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                            <TextBlock Grid.Row="1"
+                                                       Text="{DynamicResource LOCFirstSetupScreenshotsDesc}"
+                                                       Style="{StaticResource FirstSetupExtensionDescriptionStyle}"
+                                                       Margin="71,8,0,0"/>
+                                            <Grid Grid.Row="2">
+                                                <ButtonEx Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ChooseAndInstallScreenshotProviderCommand}">
+                                                    <ButtonEx.Style>
+                                                        <Style TargetType="ButtonEx" BasedOn="{StaticResource FirstSetupExtensionInstallButtonStyle}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Setter Property="Content" Value="{DynamicResource LOCFirstSetupChooseForEnd}"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ScreenshotNoProviderInstalled}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ScreenshotProviderQueued}" Value="True">
+                                                                    <Setter Property="Content" Value="{DynamicResource LOCFirstSetupCancelScheduledInstall}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ButtonEx.Style>
+                                                </ButtonEx>
+                                                <ButtonEx Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.InstallScreenshotUtilitiesLocalProviderCommand}">
+                                                    <ButtonEx.Style>
+                                                        <Style TargetType="ButtonEx" BasedOn="{StaticResource FirstSetupExtensionInstallButtonStyle}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Setter Property="Content" Value="{DynamicResource LOCFirstSetupInstallLocalProviderAtEnd}"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ScreenshotUtilitiesNeedsLocalProvider}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ScreenshotUtilitiesLocalProviderQueued}" Value="True">
+                                                                    <Setter Property="Content" Value="{DynamicResource LOCFirstSetupCancelScheduledInstall}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ButtonEx.Style>
+                                                </ButtonEx>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+
+                                <StackPanel Grid.Row="2" Margin="30,5,30,0">
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupIntegrationsOptional}"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="14"
+                                               Opacity="0.68"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               TextWrapping="Wrap"/>
+                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.QueuedAddonSummary}"
+                                               FontSize="16"
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               TextWrapping="Wrap"
+                                               Margin="0,5,0,0">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.HasQueuedAddonInstallations}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- 9. Helper discovery -->
+                            <Grid Grid.Row="1">
+                                <Grid.Style>
+                                    <Style TargetType="Grid" BasedOn="{StaticResource FirstSetupPageStyle}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CurrentPage}" Value="9">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Margin="35,8,35,6">
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupHelperTitle}"
+                                               Style="{StaticResource FirstSetupTitleStyle}"/>
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupHelperDesc}"
+                                               Style="{StaticResource FirstSetupSubtitleStyle}"
+                                               Margin="0,8,0,0"
+                                               TextWrapping="Wrap"/>
+                                </StackPanel>
+
+                                <Grid Grid.Row="1"
+                                      Margin="24,3,24,0"
+                                      Focusable="False"
+                                      IsHitTestVisible="False"
+                                      KeyboardNavigation.DirectionalNavigation="None">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="200"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Steam connection and status -->
+                                    <Border Style="{StaticResource FirstSetupInfoCardStyle}"
+                                            Padding="16"
+                                            Margin="6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="220"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Border CornerRadius="16"
+                                                    Background="#14000000"
+                                                    BorderBrush="#28FFFFFF"
+                                                    BorderThickness="1"
+                                                    Padding="20">
+                                                <Grid>
+                                                    <Image Source="{ThemeFile 'Images/Aniki.png'}"
+                                                           Width="110"
+                                                           Height="110"
+                                                           Stretch="Uniform"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                                                </Grid>
+                                            </Border>
+
+                                            <Grid Grid.Column="1"
+                                                  Margin="22,0,4,0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock Text="{DynamicResource LOCFirstSetupHelperSteamTitle}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="25"
+                                                               FontWeight="Bold"
+                                                               VerticalAlignment="Center"/>
+
+                                                    <Border Grid.Column="1"
+                                                            Padding="13,5"
+                                                            CornerRadius="12"
+                                                            BorderThickness="1"
+                                                            VerticalAlignment="Center">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="#352A2115"/>
+                                                                <Setter Property="BorderBrush" Value="#8BC79A52"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SteamReady}" Value="True">
+                                                                        <Setter Property="Background" Value="#34225945"/>
+                                                                        <Setter Property="BorderBrush" Value="#A648D39A"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock FontSize="14"
+                                                                   FontWeight="Bold">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                                    <Setter Property="Text" Value="{DynamicResource LOCFirstSetupHelperSteamStatusDisconnected}"/>
+                                                                    <Setter Property="Foreground" Value="#FFE0C284"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SteamReady}" Value="True">
+                                                                            <Setter Property="Text" Value="{DynamicResource LOCFirstSetupHelperSteamStatusConnected}"/>
+                                                                            <Setter Property="Foreground" Value="#FF80E6B6"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                    </Border>
+                                                </Grid>
+
+                                                <TextBlock Grid.Row="1"
+                                                           Text="{DynamicResource LOCFirstSetupHelperSteamInstruction}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="16"
+                                                           LineHeight="22"
+                                                           TextWrapping="Wrap"
+                                                           Margin="0,10,0,0"
+                                                           Opacity="0.90"/>
+
+                                                <Border Grid.Row="2"
+                                                        Margin="0,10,0,0"
+                                                        Padding="13,8"
+                                                        CornerRadius="11"
+                                                        Background="#4A0B0E12"
+                                                        BorderBrush="#24FFFFFF"
+                                                        BorderThickness="1">
+                                                    <TextBlock Text="{DynamicResource LOCFirstSetupHelperSteamBenefits}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="14"
+                                                               LineHeight="20"
+                                                               TextWrapping="Wrap"
+                                                               Opacity="0.76"/>
+                                                </Border>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- Main Helper features -->
+                                    <Grid Grid.Row="1"
+                                          Margin="0,10,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Overlay -->
+                                        <Border Style="{StaticResource FirstSetupInfoCardStyle}"
+                                                Padding="18,18,18,16"
+                                                Margin="6">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="220"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+
+                                                <Grid Height="210"
+                                                      Margin="4,0,4,0"
+                                                      HorizontalAlignment="Stretch"
+                                                      VerticalAlignment="Top">
+                                                    <Border x:Name="HelperOverlayDiscoveryMask"
+                                                            CornerRadius="14"
+                                                            Background="Black"/>
+                                                    <Border>
+                                                        <Border.OpacityMask>
+                                                            <VisualBrush Visual="{Binding ElementName=HelperOverlayDiscoveryMask}"
+                                                                         Stretch="Fill"
+                                                                         RenderOptions.BitmapScalingMode="Fant"
+                                                                         RenderOptions.CachingHint="Cache"/>
+                                                        </Border.OpacityMask>
+                                                        <Image Source="{ThemeFile 'Themes Option/11.First Setup/Helper/Overlay.jpg'}"
+                                                               Stretch="UniformToFill"
+                                                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                                                    </Border>
+                                                    <Rectangle RadiusX="14" RadiusY="14" Fill="#22000000"/>
+                                                    <Border CornerRadius="14" BorderBrush="#22FFFFFF" BorderThickness="1"/>
+                                                </Grid>
+
+                                                <TextBlock Grid.Row="1"
+                                                           Text="{DynamicResource LOCFirstSetupHelperOverlayTitle}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="20"
+                                                           FontWeight="Bold"
+                                                           Margin="0,10,0,0"
+                                                           TextWrapping="Wrap"
+                                                           TextAlignment="Center"/>
+
+                                                <TextBlock Grid.Row="2"
+                                                           Text="{DynamicResource LOCFirstSetupHelperOverlayDesc}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="14"
+                                                           LineHeight="19"
+                                                           TextWrapping="Wrap"
+                                                           Margin="0,6,0,0"
+                                                           Opacity="0.76"
+                                                           TextAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <!-- Splash -->
+                                        <Border Grid.Column="1"
+                                                Style="{StaticResource FirstSetupInfoCardStyle}"
+                                                Padding="18,18,18,16"
+                                                Margin="6">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="220"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+
+                                                <Grid Height="210"
+                                                      Margin="4,0,4,0"
+                                                      HorizontalAlignment="Stretch"
+                                                      VerticalAlignment="Top">
+                                                    <Border x:Name="HelperSplashDiscoveryMask"
+                                                            CornerRadius="14"
+                                                            Background="Black"/>
+                                                    <Border>
+                                                        <Border.OpacityMask>
+                                                            <VisualBrush Visual="{Binding ElementName=HelperSplashDiscoveryMask}"
+                                                                         Stretch="Fill"
+                                                                         RenderOptions.BitmapScalingMode="Fant"
+                                                                         RenderOptions.CachingHint="Cache"/>
+                                                        </Border.OpacityMask>
+                                                        <Image Source="{ThemeFile 'Themes Option/11.First Setup/Helper/Splash.jpg'}"
+                                                               Stretch="UniformToFill"
+                                                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                                                    </Border>
+                                                    <Rectangle RadiusX="14" RadiusY="14" Fill="#22000000"/>
+                                                    <Border CornerRadius="14" BorderBrush="#22FFFFFF" BorderThickness="1"/>
+                                                </Grid>
+
+                                                <TextBlock Grid.Row="1"
+                                                           Text="{DynamicResource LOCFirstSetupHelperSplashTitle}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="20"
+                                                           FontWeight="Bold"
+                                                           Margin="0,10,0,0"
+                                                           TextWrapping="Wrap"
+                                                           TextAlignment="Center"/>
+
+                                                <TextBlock Grid.Row="2"
+                                                           Text="{DynamicResource LOCFirstSetupHelperSplashDesc}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="14"
+                                                           LineHeight="19"
+                                                           TextWrapping="Wrap"
+                                                           Margin="0,6,0,0"
+                                                           Opacity="0.76"
+                                                           TextAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <!-- Mouse and keyboard -->
+                                        <Border Grid.Column="2"
+                                                Style="{StaticResource FirstSetupInfoCardStyle}"
+                                                Padding="18,18,18,16"
+                                                Margin="6">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="220"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+
+                                                <Grid Height="210"
+                                                      Margin="4,0,4,0"
+                                                      HorizontalAlignment="Stretch"
+                                                      VerticalAlignment="Top">
+                                                    <Border x:Name="HelperInputDiscoveryMask"
+                                                            CornerRadius="14"
+                                                            Background="Black"/>
+                                                    <Border>
+                                                        <Border.OpacityMask>
+                                                            <VisualBrush Visual="{Binding ElementName=HelperInputDiscoveryMask}"
+                                                                         Stretch="Fill"
+                                                                         RenderOptions.BitmapScalingMode="Fant"
+                                                                         RenderOptions.CachingHint="Cache"/>
+                                                        </Border.OpacityMask>
+                                                        <Image Source="{ThemeFile 'Themes Option/11.First Setup/Helper/Input.jpg'}"
+                                                               Stretch="UniformToFill"
+                                                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                                                    </Border>
+
+                                                    <Border CornerRadius="14"
+                                                            BorderBrush="#22FFFFFF"
+                                                            BorderThickness="1"/>
+                                                </Grid>
+
+                                                <TextBlock Grid.Row="1"
+                                                           Text="{DynamicResource LOCFirstSetupHelperInputTitle}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="20"
+                                                           FontWeight="Bold"
+                                                           Margin="0,10,0,0"
+                                                           TextWrapping="Wrap"
+                                                           TextAlignment="Center"/>
+
+                                                <TextBlock Grid.Row="2"
+                                                           Text="{DynamicResource LOCFirstSetupHelperInputDesc}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="14"
+                                                           LineHeight="19"
+                                                           TextWrapping="Wrap"
+                                                           Margin="0,6,0,0"
+                                                           Opacity="0.76"
+                                                           TextAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+
+                                        <!-- More -->
+                                        <Border Grid.Column="3"
+                                                Style="{StaticResource FirstSetupInfoCardStyle}"
+                                                Padding="18,18,18,16"
+                                                Margin="6">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="220"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+
+                                                <Grid Height="210"
+                                                      Margin="4,0,4,0"
+                                                      HorizontalAlignment="Stretch"
+                                                      VerticalAlignment="Top">
+                                                    <Border x:Name="HelperMoreDiscoveryMask"
+                                                            CornerRadius="14"
+                                                            Background="Black"/>
+                                                    <Border>
+                                                        <Border.OpacityMask>
+                                                            <VisualBrush Visual="{Binding ElementName=HelperMoreDiscoveryMask}"
+                                                                         Stretch="Fill"
+                                                                         RenderOptions.BitmapScalingMode="Fant"
+                                                                         RenderOptions.CachingHint="Cache"/>
+                                                        </Border.OpacityMask>
+                                                        <Image Source="{ThemeFile 'Themes Option/11.First Setup/Helper/More.jpg'}"
+                                                               Stretch="UniformToFill"
+                                                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                                                    </Border>
+                                                    <Rectangle RadiusX="14" RadiusY="14" Fill="#22000000"/>
+                                                    <Border CornerRadius="14" BorderBrush="#22FFFFFF" BorderThickness="1"/>
+                                                </Grid>
+
+                                                <TextBlock Grid.Row="1"
+                                                           Text="{DynamicResource LOCFirstSetupHelperMoreTitle}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="20"
+                                                           FontWeight="Bold"
+                                                           Margin="0,10,0,0"
+                                                           TextWrapping="Wrap"
+                                                           TextAlignment="Center"/>
+
+                                                <TextBlock Grid.Row="2"
+                                                           Text="{DynamicResource LOCFirstSetupHelperMoreDesc}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="14"
+                                                           LineHeight="19"
+                                                           TextWrapping="Wrap"
+                                                           Margin="0,6,0,0"
+                                                           Opacity="0.76"
+                                                           TextAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Grid>
+
+                                <TextBlock Grid.Row="2"
+                                           Text="{DynamicResource LOCFirstSetupHelperFooter}"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           FontSize="15"
+                                           Opacity="0.72"
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center"
+                                           TextWrapping="Wrap"
+                                           MaxWidth="1500"
+                                           Margin="0,5,0,0"/>
+                            </Grid>
+
+                            <!-- 10. Complete -->
+                            <Grid Grid.Row="1">
+                                <Grid.Style>
+                                    <Style TargetType="Grid" BasedOn="{StaticResource FirstSetupPageStyle}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CurrentPage}" Value="10">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.9*"/>
+                                    <ColumnDefinition Width="1.1*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel VerticalAlignment="Center" Margin="45,0,60,0">
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupCompleteTitle}" Style="{StaticResource FirstSetupTitleStyle}" FontSize="54"/>
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupCompleteDesc}" Style="{StaticResource FirstSetupSubtitleStyle}" FontSize="22" Margin="0,20,0,0"/>
+                                    <Border Style="{StaticResource FirstSetupInfoCardStyle}" Margin="0,34,0,0">
+                                        <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="190"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                            <StackPanel>
+                                                <TextBlock Text="{DynamicResource LOCFirstSetupSummaryProfile}"/>
+                                                <TextBlock Text="{DynamicResource LOCFirstSetupSummaryStartup}" Margin="0,13,0,0"/>
+                                                <TextBlock Text="{DynamicResource LOCFirstSetupSummaryLoginScreen}" Margin="0,13,0,0"/>
+                                                <TextBlock Text="{DynamicResource LOCFirstSetupSummaryInterface}" Margin="0,13,0,0"/>
+                                                <TextBlock Text="{DynamicResource LOCFirstSetupSummaryColor}" Margin="0,13,0,0"/>
+                                                <TextBlock Text="{DynamicResource LOCFirstSetupSummaryDetails}" Margin="0,13,0,0"/>
+                                                <TextBlock Text="{DynamicResource LOCFirstSetupSummaryExperience}" Margin="0,13,0,0"/>
+                                                <TextBlock Text="{DynamicResource LOCFirstSetupSummaryTrailers}" Margin="0,13,0,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SummaryUserName}" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SummaryStartup}" Margin="0,13,0,0" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SummaryLoginScreen}" Margin="0,13,0,0" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SummaryInterface}" Margin="0,13,0,0" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SummaryColor}" Margin="0,13,0,0" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SummaryDetails}" Margin="0,13,0,0" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SummaryExperience}" Margin="0,13,0,0" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SummaryTrailers}" Margin="0,13,0,0" FontWeight="SemiBold"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupCompleteRestartNote}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="16" Opacity="0.7" TextWrapping="Wrap" Margin="0,18,0,0"/>
+                                </StackPanel>
+                                <Grid Grid.Column="1"
+                                      Width="620"
+                                      Height="620"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Focusable="False"
+                                      IsHitTestVisible="False">
+
+                                    <Border x:Name="CompletePagePreviewMask"
+                                            Width="620"
+                                            Height="620"
+                                            CornerRadius="34"
+                                            Background="Black"/>
+
+                                    <Border Width="620"
+                                            Height="620"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                        <Border.OpacityMask>
+                                            <VisualBrush Visual="{Binding ElementName=CompletePagePreviewMask}"
+                                                         Stretch="Fill"
+                                                         RenderOptions.BitmapScalingMode="Fant"
+                                                         RenderOptions.CachingHint="Cache"/>
+                                        </Border.OpacityMask>
+
+                                        <Image Source="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CompletePreviewPath}"
+                                               Width="620"
+                                               Height="620"
+                                               Stretch="UniformToFill"
+                                               StretchDirection="Both"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    </Border>
+
+                                    <Border Width="620"
+                                            Height="620"
+                                            CornerRadius="34"
+                                            BorderBrush="#42FFFFFF"
+                                            BorderThickness="2"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            IsHitTestVisible="False"/>
+                                </Grid>
+                            </Grid>
+
+                            <!-- Common footer navigation -->
+                            <Grid Grid.Row="2">
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CurrentPage}" Value="0"><Setter Property="Visibility" Value="Collapsed"/></DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <ButtonEx HorizontalAlignment="Left"
+                                          Style="{StaticResource FirstSetupNavButtonStyle}"
+                                          Content="{DynamicResource LOCFirstSetupBack}"
+                                          Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.BackCommand}"/>
+                                <ButtonEx x:Name="FirstSetupContinueButton"
+                                          HorizontalAlignment="Right"
+                                          Content="{DynamicResource LOCFirstSetupContinue}"
+                                          Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ContinueCommand}">
+                                    <ButtonEx.Style>
+                                        <Style TargetType="ButtonEx" BasedOn="{StaticResource FirstSetupNavButtonStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CurrentPage}" Value="10"><Setter Property="Visibility" Value="Collapsed"/></DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ButtonEx.Style>
+                                </ButtonEx>
+                                <ButtonEx x:Name="FirstSetupFinishButton"
+                                          HorizontalAlignment="Right"
+                                          Content="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.FinishButtonText}"
+                                          Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.FinishCommand}">
+                                    <ButtonEx.Style>
+                                        <Style TargetType="ButtonEx" BasedOn="{StaticResource FirstSetupNavButtonStyle}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CurrentPage}" Value="10"><Setter Property="Visibility" Value="Visible"/></DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ButtonEx.Style>
+                                </ButtonEx>
+                            </Grid>
+
+                        </Grid>
+
+                        <!-- One-time setup offer for existing users -->
+                        <Grid x:Name="FirstSetupOfferOverlay"
+                              Panel.ZIndex="900"
+                              KeyboardNavigation.DirectionalNavigation="Contained"
+                              KeyboardNavigation.TabNavigation="Contained">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.IsOfferVisible}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+
+                            <Border Width="1120"
+                                    Padding="64,58"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    CornerRadius="32"
+                                    Background="#F015171C"
+                                    BorderBrush="#46FFFFFF"
+                                    BorderThickness="2">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="38" ShadowDepth="0" Opacity="0.62" Color="#FF000000"/>
+                                </Border.Effect>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0"
+                                               Text="{DynamicResource LOCFirstSetupOfferTitle}"
+                                               Style="{StaticResource FirstSetupTitleStyle}"
+                                               FontSize="48"
+                                               TextAlignment="Center"
+                                               HorizontalAlignment="Center"/>
+
+                                    <TextBlock Grid.Row="1"
+                                               Text="{DynamicResource LOCFirstSetupOfferDescription}"
+                                               Style="{StaticResource FirstSetupSubtitleStyle}"
+                                               FontSize="23"
+                                               LineHeight="34"
+                                               TextAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               MaxWidth="930"
+                                               Margin="0,28,0,0"/>
+
+                                    <TextBlock Grid.Row="2"
+                                               Text="{DynamicResource LOCFirstSetupOfferFamiliar}"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="19"
+                                               LineHeight="29"
+                                               TextWrapping="Wrap"
+                                               TextAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               MaxWidth="930"
+                                               Opacity="0.72"
+                                               Margin="0,22,0,0"/>
+
+                                    <StackPanel Grid.Row="3"
+                                                Orientation="Horizontal"
+                                                HorizontalAlignment="Center"
+                                                Margin="0,42,0,0">
+                                        <ButtonEx x:Name="FirstSetupOfferSkipButton"
+                                                  Style="{StaticResource FirstSetupNavButtonStyle}"
+                                                  MinWidth="290"
+                                                  Content="{DynamicResource LOCFirstSetupOfferSkip}"
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.SkipOfferCommand}"/>
+                                        <ButtonEx x:Name="FirstSetupOfferStartButton"
+                                                  Style="{StaticResource FirstSetupNavButtonStyle}"
+                                                  MinWidth="330"
+                                                  Content="{DynamicResource LOCFirstSetupOfferStart}"
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.StartOfferedSetupCommand}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <!-- Post-setup Playnite add-on installation flow -->
+                        <Grid x:Name="FirstSetupAddonInstallOverlay"
+                              Panel.ZIndex="950"
+                              Background="#F708090C"
+                              KeyboardNavigation.DirectionalNavigation="Contained"
+                              KeyboardNavigation.TabNavigation="Contained">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.IsAddonInstallFlowActive}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+
+                            <Border Width="1120"
+                                    Padding="58,50"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    CornerRadius="30"
+                                    Background="#F017191F"
+                                    BorderBrush="#46FFFFFF"
+                                    BorderThickness="2">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="38" ShadowDepth="0" Opacity="0.62" Color="#FF000000"/>
+                                </Border.Effect>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0"
+                                               Text="{DynamicResource LOCFirstSetupAddonInstallFlowTitle}"
+                                               Style="{StaticResource FirstSetupTitleStyle}"
+                                               FontSize="46"
+                                               TextAlignment="Center"
+                                               HorizontalAlignment="Center"/>
+
+                                    <TextBlock Grid.Row="1"
+                                               Text="{DynamicResource LOCFirstSetupAddonInstallFlowDescription}"
+                                               Style="{StaticResource FirstSetupSubtitleStyle}"
+                                               FontSize="21"
+                                               LineHeight="31"
+                                               TextAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               TextWrapping="Wrap"
+                                               MaxWidth="940"
+                                               Margin="0,22,0,0"/>
+
+                                    <Border Grid.Row="2"
+                                            CornerRadius="15"
+                                            Background="#552C1A00"
+                                            BorderBrush="#90FFB44A"
+                                            BorderThickness="1"
+                                            Padding="20,14"
+                                            Margin="0,26,0,0">
+                                        <TextBlock Text="{DynamicResource LOCFirstSetupAddonInstallRestartGuide}"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   FontSize="18"
+                                                   LineHeight="27"
+                                                   TextAlignment="Center"
+                                                   TextWrapping="Wrap"/>
+                                    </Border>
+
+                                    <Border Grid.Row="3"
+                                            CornerRadius="20"
+                                            Background="#B015171C"
+                                            BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                            BorderThickness="2"
+                                            Padding="30,24"
+                                            Margin="0,28,0,0">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid>
+                                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.PendingAddonInstallProgressText}"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                           FontSize="18"
+                                                           FontWeight="SemiBold"
+                                                           Opacity="0.72"/>
+                                                <Border HorizontalAlignment="Right"
+                                                        Padding="12,5"
+                                                        CornerRadius="10"
+                                                        Background="#553C2C00">
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.PendingAddonInstallIsLast}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                    <TextBlock Text="{DynamicResource LOCFirstSetupAddonInstallLastExtension}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               FontSize="14"
+                                                               FontWeight="Bold"/>
+                                                </Border>
+                                            </Grid>
+                                            <TextBlock Grid.Row="1"
+                                                       Text="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.PendingAddonInstallCurrentName}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="32"
+                                                       FontWeight="Bold"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"
+                                                       Margin="0,14,0,0"/>
+                                            <TextBlock Grid.Row="2"
+                                                       Text="{DynamicResource LOCFirstSetupAddonInstallLaunchedNote}"
+                                                       FontSize="16"
+                                                       Opacity="0.72"
+                                                       HorizontalAlignment="Center"
+                                                       TextAlignment="Center"
+                                                       TextWrapping="Wrap"
+                                                       Margin="0,14,0,0">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.PendingAddonInstallCurrentLaunched}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Border>
+
+                                    <StackPanel Grid.Row="4"
+                                                Orientation="Horizontal"
+                                                HorizontalAlignment="Center"
+                                                Margin="0,32,0,0">
+                                        <ButtonEx x:Name="FirstSetupAddonInstallButton"
+                                                  Style="{StaticResource FirstSetupNavButtonStyle}"
+                                                  MinWidth="310"
+                                                  Content="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.PendingAddonInstallButtonText}"
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.InstallCurrentPendingAddonCommand}"/>
+
+                                        <ButtonEx MinWidth="310"
+                                                  Content="{DynamicResource LOCFirstSetupAddonInstallNext}"
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ContinuePendingAddonInstallCommand}">
+                                            <ButtonEx.Style>
+                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource FirstSetupNavButtonStyle}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CanContinuePendingAddonInstall}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ButtonEx.Style>
+                                        </ButtonEx>
+
+                                        <ButtonEx MinWidth="330"
+                                                  Content="{DynamicResource LOCFirstSetupAddonInstallFinishLater}"
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.FinishPendingAddonInstallCommand}">
+                                            <ButtonEx.Style>
+                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource FirstSetupNavButtonStyle}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CanFinishPendingAddonInstall}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ButtonEx.Style>
+                                        </ButtonEx>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <!-- Applying settings overlay -->
+                        <Grid x:Name="FirstSetupApplyingOverlay"
+                              Panel.ZIndex="1000"
+                              Background="#F708090C"
+                              Focusable="False"
+                              KeyboardNavigation.DirectionalNavigation="None"
+                              KeyboardNavigation.TabNavigation="None">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.IsApplying}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+
+                            <Border Width="900"
+                                    Padding="54,48"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    CornerRadius="28"
+                                    Background="#E817191F"
+                                    BorderBrush="#42FFFFFF"
+                                    BorderThickness="2">
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupApplyingTitle}"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="42"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"/>
+                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ApplyStatus}"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="21"
+                                               Opacity="0.78"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"
+                                               Margin="0,18,0,0"/>
+                                    <ProgressBar Height="12"
+                                                 Margin="0,38,0,0"
+                                                 Minimum="0"
+                                                 Maximum="100"
+                                                 Value="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ApplyProgress}"
+                                                 Foreground="{DynamicResource FocusGameBorderBrush}"
+                                                 Background="#30FFFFFF"/>
+                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ApplyProgressText}"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="18"
+                                               FontWeight="SemiBold"
+                                               Opacity="0.82"
+                                               HorizontalAlignment="Right"
+                                               Margin="0,12,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
