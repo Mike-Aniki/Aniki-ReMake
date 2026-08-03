@@ -9305,12 +9305,6 @@
                                             </MultiDataTrigger>
 
 
-                                            <DataTrigger Binding="{Binding ElementName=AnikiImageBackground, Path=Source}" Value="{x:Null}">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding ElementName=BackgroundChanger, Path=Visibility}" Value="Visible">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                            </DataTrigger>
                                             <DataTrigger Binding="{Binding ElementName=CurrentLayoutMarker, Path=Text}" Value="PanelLayout">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
@@ -9336,7 +9330,7 @@
 
                                 <!--No Background Changer-->
 
-                                <FadeImage x:Name="AnikiImageBackground"
+                                <FadeImage x:Name="ControlRoot"
                                            Source="{Binding SelectedGame.DisplayBackgroundImageObject}"
                                            SourceUpdateDelay="200"
                                            RenderTransformOrigin="0.5,1">
@@ -9360,9 +9354,14 @@
                                                 <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PerformanceMode]}" Value="True">
                                                     <Setter Property="AnimationEnabled" Value="False"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding ElementName=ImageBackgroundChanger, Path=Visibility}" Value="Visible">
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{PluginStatus Plugin=playnite-backgroundchanger-plugin, Status=Installed}" Value="True"/>
+                                                        <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=EnableBackgroundImage}" Value="True"/>
+                                                        <Condition Binding="{Binding ElementName=BackgroundChanger_PluginBackgroundImage, Path=Visibility}" Value="Visible"/>
+                                                    </MultiDataTrigger.Conditions>
                                                     <Setter Property="Visibility" Value="Collapsed"/>
-                                                </DataTrigger>
+                                                </MultiDataTrigger>
 
                                                 <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[SteamBanner]}" Value="True">
                                                     <Setter Property="Stretch" Value="Uniform"/>
@@ -9441,132 +9440,6 @@
                                     </FadeImage.Style>
                                 </FadeImage>
 
-
-                                <!--Background Changer-->
-
-                                <FadeImage x:Name="ImageBackgroundChanger" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.5,1">
-                                    <FadeImage.Source>
-                                        <PriorityBinding>
-                                            <Binding ElementName="VideoBackgroundChanger" Path="MediaElement.Source" />
-                                            <Binding ElementName="BackgroundChanger_PluginBackgroundImage" Path="Content.Source" />
-                                        </PriorityBinding>
-                                    </FadeImage.Source>
-                                    <FadeImage.Style>
-                                        <Style TargetType="FadeImage" >
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Setter Property="Stretch" Value="UniformToFill"/>
-                                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                                            <Setter Property="VerticalAlignment" Value="Top"/>
-                                            <Setter Property="Clip" Value="{x:Null}"/>
-                                            <Setter Property="AnimationEnabled" Value="True"/>
-                                            <Setter Property="RenderTransform">
-                                                <Setter.Value>
-                                                    <ScaleTransform ScaleX="1" ScaleY="1" />
-                                                </Setter.Value>
-                                            </Setter>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PerformanceMode]}" Value="True">
-                                                    <Setter Property="AnimationEnabled" Value="False"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[BackgroundStretchMode]}" Value="True">
-                                                    <Setter Property="Stretch" Value="Fill"/>
-                                                </DataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=EnableBackgroundImage}" Value="True"/>
-                                                        <Condition Binding="{PluginStatus Plugin=playnite-backgroundchanger-plugin, Status=Installed}" Value="True"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </MultiDataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[SteamBanner]}" Value="True">
-                                                    <Setter Property="Height" Value="600"/>
-                                                    <Setter Property="VerticalAlignment" Value="Top"/>
-                                                    <Setter Property="Stretch" Value="UniformToFill"/>
-                                                    <Setter Property="Clip">
-                                                        <Setter.Value>
-                                                            <RectangleGeometry Rect="0,0,99999,600"/>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[SteamBanner]}" Value="False">
-                                                    <Setter Property="Stretch" Value="UniformToFill"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding Items.Count, ElementName=PART_ListGameItems}" Value="0">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                    <Setter Property="Opacity" Value="0" />
-                                                </DataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-
-                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AnimationBackground]}"
-                                                                   Value="True"/>
-
-                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PerformanceMode]}"
-                                                                   Value="False"/>
-
-                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[SteamBanner]}"
-                                                                   Value="False"/>
-
-                                                        <!-- L’image BackgroundChanger doit réellement être affichée -->
-                                                        <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Visibility}"
-                                                                   Value="Visible"/>
-
-                                                        <!-- Playnite doit être la fenêtre active -->
-                                                        <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}"
-                                                                   Value="True"/>
-
-                                                    </MultiDataTrigger.Conditions>
-
-                                                    <MultiDataTrigger.EnterActions>
-                                                        <BeginStoryboard x:Name="BgZoomStoryboard"
-                                                                         HandoffBehavior="SnapshotAndReplace">
-
-                                                            <Storyboard RepeatBehavior="Forever"
-                                                                        Timeline.DesiredFrameRate="30"
-                                                                        AutoReverse="True">
-
-                                                                <DoubleAnimation
-                                                                    Storyboard.TargetProperty="RenderTransform.ScaleX"
-                                                                    From="1.0"
-                                                                    To="1.09"
-                                                                    Duration="0:0:35">
-
-                                                                    <DoubleAnimation.EasingFunction>
-                                                                        <PowerEase EasingMode="EaseInOut"
-                                                                                   Power="2"/>
-                                                                    </DoubleAnimation.EasingFunction>
-
-                                                                </DoubleAnimation>
-
-                                                                <DoubleAnimation
-                                                                    Storyboard.TargetProperty="RenderTransform.ScaleY"
-                                                                    From="1.0"
-                                                                    To="1.09"
-                                                                    Duration="0:0:35">
-
-                                                                    <DoubleAnimation.EasingFunction>
-                                                                        <PowerEase EasingMode="EaseInOut"
-                                                                                   Power="2"/>
-                                                                    </DoubleAnimation.EasingFunction>
-
-                                                                </DoubleAnimation>
-
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </MultiDataTrigger.EnterActions>
-
-                                                    <MultiDataTrigger.ExitActions>
-                                                        <RemoveStoryboard BeginStoryboardName="BgZoomStoryboard"/>
-                                                    </MultiDataTrigger.ExitActions>
-                                                </MultiDataTrigger>
-
-
-                                            </Style.Triggers>
-                                        </Style>
-                                    </FadeImage.Style>
-                                </FadeImage>
-
-
                                 <!--No Background-->
 
                                 <Grid x:Name="NoBackground" FocusVisualStyle="{x:Null}" Panel.ZIndex="-46" >
@@ -9584,7 +9457,7 @@
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
                                                         <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="True"/>
-                                                        <Condition Binding="{Binding ElementName=AnikiImageBackground, Path=Source}" Value="{x:Null}"/>
+                                                        <Condition Binding="{Binding ElementName=ControlRoot, Path=Source}" Value="{x:Null}"/>
                                                     </MultiDataTrigger.Conditions>
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                 </MultiDataTrigger>
@@ -9594,66 +9467,50 @@
                                     <Image x:Name="NoBackgroundImage" Source="{ThemeFile 'Images/ShadowBackground/NoBackground.png'}" Stretch="UniformToFill" />
                                 </Grid>
 
-                                <!--Video Background Changer-->
-                                <MediaElement x:Name="VideoBackgroundChanger"
-                                              Stretch="UniformToFill"
-                                              MediaElementBehaviors.Repeat="True"
-                                              Grid.Row="0"
-                                              Grid.RowSpan="4"
-                                              Grid.ColumnSpan="3"
-                                              HorizontalAlignment="Right"
-                                              VerticalAlignment="Top"
-                                              Panel.ZIndex="-46">
-
-                                    <MediaElement.Style>
-                                        <Style TargetType="MediaElement">
-                                            <Setter Property="LoadedBehavior" Value="Manual"/>
-                                            <Setter Property="UnloadedBehavior" Value="Close"/>
-                                            <Setter Property="IsMuted" Value="True"/>
-                                            <Setter Property="Opacity" Value="0"/>
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-
+                                <!-- BackgroundChanger : image et vidéo gérées directement par le plugin -->
+                                <ContentControl x:Name="BackgroundChanger_PluginBackgroundImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsHitTestVisible="False" ClipToBounds="True" Panel.ZIndex="0" RenderTransformOrigin="0.5,1">
+                                    <ContentControl.RenderTransform>
+                                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                    </ContentControl.RenderTransform>
+                                    <ContentControl.Style>
+                                        <Style TargetType="ContentControl">
                                             <Style.Triggers>
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[SteamBanner]}" Value="True">
+                                                    <Setter Property="Height" Value="600"/>
+                                                    <Setter Property="VerticalAlignment" Value="Top"/>
+                                                </DataTrigger>
+
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{PluginStatus Plugin=playnite-backgroundchanger-plugin, Status=Installed}"
-                                                                   Value="True"/>
-                                                        <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=EnableImageAnimatedBackground}"
-                                                                   Value="True"/>
-                                                        <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=BackgroundIsVideo}"
-                                                                   Value="True"/>
+                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AnimationBackground]}" Value="True"/>
+                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PerformanceMode]}" Value="False"/>
+                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[SteamBanner]}" Value="False"/>
+                                                        <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=BackgroundIsVideo}" Value="False"/>
+                                                        <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Visibility}" Value="Visible"/>
+                                                        <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="True"/>
                                                     </MultiDataTrigger.Conditions>
 
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Source"
-                                                                Value="{Binding ElementName=BackgroundChanger_PluginBackgroundImage, Path=Content.Source}"/>
-                                                        <Setter Property="LoadedBehavior" Value="Play"/>
-                                                        <Setter Property="Opacity" Value="1"/>
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </MultiDataTrigger.Setters>
+                                                    <MultiDataTrigger.EnterActions>
+                                                        <BeginStoryboard x:Name="BCBackgroundZoomStoryboard" HandoffBehavior="SnapshotAndReplace">
+                                                            <Storyboard RepeatBehavior="Forever" Timeline.DesiredFrameRate="30" AutoReverse="True">
+                                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="1.09" Duration="0:0:35">
+                                                                    <DoubleAnimation.EasingFunction><PowerEase EasingMode="EaseInOut" Power="2"/></DoubleAnimation.EasingFunction>
+                                                                </DoubleAnimation>
+                                                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="1.09" Duration="0:0:35">
+                                                                    <DoubleAnimation.EasingFunction><PowerEase EasingMode="EaseInOut" Power="2"/></DoubleAnimation.EasingFunction>
+                                                                </DoubleAnimation>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </MultiDataTrigger.EnterActions>
+
+                                                    <MultiDataTrigger.ExitActions>
+                                                        <RemoveStoryboard BeginStoryboardName="BCBackgroundZoomStoryboard"/>
+                                                    </MultiDataTrigger.ExitActions>
                                                 </MultiDataTrigger>
-
-                                                <Trigger Property="Visibility" Value="Collapsed">
-                                                    <Setter Property="Source" Value="{x:Null}"/>
-                                                    <Setter Property="LoadedBehavior" Value="Manual"/>
-                                                </Trigger>
-
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}"
-                                                             Value="False">
-                                                    <Setter Property="Source" Value="{x:Null}"/>
-                                                    <Setter Property="LoadedBehavior" Value="Manual"/>
-                                                </DataTrigger>
-
-                                                <DataTrigger Binding="{Binding ElementName=AcceuilSettings, Path=Visibility}"
-                                                             Value="Visible">
-                                                    <Setter Property="Source" Value="{x:Null}"/>
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                    <Setter Property="LoadedBehavior" Value="Manual"/>
-                                                </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </MediaElement.Style>
-                                </MediaElement>
+                                    </ContentControl.Style>
+                                </ContentControl>
 
                                 <!-- Shadow Background -->
                                 <Grid x:Name="ShadowBackground" Grid.Row="0" Grid.RowSpan="5" Grid.ColumnSpan="3"  Panel.ZIndex="1" >
@@ -9798,8 +9655,7 @@
 
                             </Grid>
 
-                            <ContentControl x:Name="BackgroundChanger_PluginBackgroundImage" Grid.Row="0" Grid.RowSpan="4" Grid.ColumnSpan="3" Width="1" Height="1"
-                                            HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Collapsed" Opacity="0"/>
+
 
                             <!-- Calque 5 : ShadeSteambanner -->
                             <Border Grid.Column="0"
@@ -14256,7 +14112,7 @@
 
 
                                             <TextBlock x:Name="MainLogoPath"
-                                                       Tag="{DynamicResource ExtraMetadataPath}"
+                                                       Tag="{Api Paths.ConfigurationPath}"
                                                        Visibility="Collapsed">
                                                 <TextBlock.Text>
                                                     <MultiBinding StringFormat="{}{0}\ExtraMetadata\games\{1}\logo.png">
@@ -16446,7 +16302,7 @@
                                 </Grid>
 
                                 <!-- FOOTER -->
-                                <TextBlock Text="Aniki ReMake v3.4"
+                                <TextBlock Text="Aniki ReMake v3.4.1"
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Bottom"
                                            Margin="0,0,22,18"

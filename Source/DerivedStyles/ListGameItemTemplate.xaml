@@ -498,23 +498,10 @@
                                                StretchDirection="Both"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center"
-                                               Stretch="{Settings CoverArtStretch}">
-                                            <Image.Style>
-                                                <Style TargetType="Image">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                    <Style.Triggers>
-                                                        <MultiDataTrigger>
-                                                            <MultiDataTrigger.Conditions>
-                                                                <Condition Binding="{PluginStatus Plugin=playnite-backgroundchanger-plugin, Status=Installed}" Value="True"/>
-                                                                <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=HasDataCover}" Value="True"/>
-                                                                <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=EnableCoverImage}" Value="True"/>
-                                                            </MultiDataTrigger.Conditions>
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </MultiDataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Image.Style>
-                                        </Image>
+                                               Stretch="{Settings CoverArtStretch}"/>
+
+
+                                        <!-- ImageRotater -->
 
                                         <ContentControl x:Name="ImageRotater_Cover"
                                                         HorizontalAlignment="Stretch"
@@ -564,41 +551,14 @@
                                                    Padding="0"
                                                    Background="{DynamicResource ControlBackgroundDarkBrush}"/>
 
-                                        <Grid x:Name="BackgroundChanger"
-                                              IsHitTestVisible="False">
-                                            <Grid.Style>
-                                                <Style TargetType="Grid">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                    <Style.Triggers>
-                                                        <MultiDataTrigger>
-                                                            <MultiDataTrigger.Conditions>
-                                                                <Condition Binding="{PluginStatus Plugin=playnite-backgroundchanger-plugin, Status=Installed}" Value="True"/>
-                                                                <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=EnableCoverImage}" Value="True"/>
-                                                                <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=HasDataCover}" Value="True"/>
-                                                            </MultiDataTrigger.Conditions>
-                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                        </MultiDataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Grid.Style>
-
-                                            <ContentControl x:Name="BackgroundChanger_PluginCoverImage"
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            HorizontalContentAlignment="Center"
-                                                            VerticalContentAlignment="Center"
-                                                            ClipToBounds="True">
-                                                <ContentControl.Resources>
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Stretch" Value="{Settings CoverArtStretch}"/>
-                                                        <Setter Property="StretchDirection" Value="Both"/>
-                                                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                                                        <Setter Property="VerticalAlignment" Value="Center"/>
-                                                        <Setter Property="RenderOptions.BitmapScalingMode" Value="Linear"/>
-                                                    </Style>
-                                                </ContentControl.Resources>
-                                            </ContentControl>
-                                        </Grid>
+                                        <!-- BackgroundChanger -->
+                                        <ContentControl x:Name="BackgroundChanger_PluginCoverImage"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        HorizontalContentAlignment="Stretch"
+                                                        VerticalContentAlignment="Stretch"
+                                                        ClipToBounds="True"
+                                                        IsHitTestVisible="False"/>
 
                                         <!-- Reflet sur la cover focus -->
                                         <Border x:Name="CoverPremiumFlash"

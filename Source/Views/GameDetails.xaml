@@ -131,6 +131,8 @@
                             </Grid.Style>
 
                             <ContentControl Content="{Binding}"
+                                            Focusable="False"
+                                            FocusVisualStyle="{x:Null}"
                                             ContentTemplate="{StaticResource AnikiSourceIconFallbackTemplate}"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Center"/>
@@ -408,6 +410,8 @@
                                             </Border.Style>
 
                                             <ContentControl Content="{Binding}"
+                                                            Focusable="False"
+                                                            FocusVisualStyle="{x:Null}"
                                                             ContentTemplate="{StaticResource AnikiSourceIconFallbackTemplate}"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
@@ -4550,10 +4554,12 @@
 
     <!--DLC-->
     <Style x:Key="CheckDLCWindowStyle" TargetType="ContentControl">
-        <Setter Property="Margin" Value="0,0,0,0"/>
+        <Setter Property="Margin" Value="0"/>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContentControl">
+
                     <Grid Background="{DynamicResource SecondaryViewBackground}"
                           KeyboardNavigation.DirectionalNavigation="Contained"
                           KeyboardNavigation.TabNavigation="Cycle"
@@ -4567,6 +4573,7 @@
                             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                                 <BeginStoryboard>
                                     <Storyboard>
+
                                         <DoubleAnimation Storyboard.TargetProperty="Opacity"
                                                          From="0"
                                                          To="1"
@@ -4576,193 +4583,268 @@
                                                          From="24"
                                                          To="0"
                                                          Duration="0:0:0.35">
+
                                             <DoubleAnimation.EasingFunction>
                                                 <CubicEase EasingMode="EaseOut"/>
                                             </DoubleAnimation.EasingFunction>
+
                                         </DoubleAnimation>
+
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
                         </Grid.Triggers>
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="280"/>
+                            <RowDefinition Height="125"/>
                             <RowDefinition Height="*"/>
-                            <RowDefinition Height="70"/>
+                            <RowDefinition Height="80"/>
                         </Grid.RowDefinitions>
 
-                        <!-- Background -->
-                        <FadeImage Source="{Binding SelectedGame.BackgroundImage}"
-                                   Margin="0,-120,0,0"
-                                   HorizontalContentAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Top"
-                                   Height="1000"
-                                   Stretch="UniformToFill"
-                                   Opacity="0.22" />
+                        <!-- ================================================= -->
+                        <!-- BACKGROUND -->
+                        <!-- ================================================= -->
 
-                        <!-- Top shade -->
-                        <Border Grid.Row="0"
-                                VerticalAlignment="Bottom"
-                                Height="120">
+                        <Border Grid.RowSpan="3"
+                                IsHitTestVisible="False">
+
                             <Border.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#00000000" Offset="0"/>
-                                    <GradientStop Color="#CC000000" Offset="1"/>
+                                <LinearGradientBrush StartPoint="0,0"
+                                                     EndPoint="0,1">
+
+                                    <GradientStop Color="#10000000"
+                                                  Offset="0"/>
+
+                                    <GradientStop Color="#00000000"
+                                                  Offset="0.35"/>
+
+                                    <GradientStop Color="#30000000"
+                                                  Offset="1"/>
+
                                 </LinearGradientBrush>
                             </Border.Background>
                         </Border>
 
-                        <!-- HEADER -->
-                        <Border Grid.Row="0" Margin="0,20,0,0"
-                                BorderThickness="0,0,0,0"
-                                BorderBrush="{DynamicResource TopBar}"
-                                Height="250"
-                                VerticalAlignment="Top">
+                        <!-- Decorative upper glow -->
+                        <Border Grid.RowSpan="2"
+                                Height="460"
+                                VerticalAlignment="Top"
+                                Opacity="0.12"
+                                IsHitTestVisible="False">
 
-                            <Grid Margin="100,0,100,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="200"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="200"/>
-                                </Grid.ColumnDefinitions>
+                            <Border.Background>
+                                <RadialGradientBrush Center="0.5,0"
+                                                     GradientOrigin="0.5,0"
+                                                     RadiusX="0.65"
+                                                     RadiusY="0.8">
+
+                                    <GradientStop Color="#FFFFFFFF"
+                                                  Offset="0"/>
+
+                                    <GradientStop Color="#00FFFFFF"
+                                                  Offset="1"/>
+
+                                </RadialGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <!-- ================================================= -->
+                        <!-- HEADER -->
+                        <!-- ================================================= -->
+
+                        <Border Grid.Row="0"
+                                Height="90"
+                                Margin="80,24,80,0"
+                                VerticalAlignment="Top"
+                                CornerRadius="{DynamicResource Corner}"
+                                Background="{DynamicResource HeaderMenu}"
+                                BorderBrush="{DynamicResource BorderListNewsBrush}"
+                                BorderThickness="1">
+
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="5"
+                                                  BlurRadius="18"
+                                                  Direction="90"
+                                                  Opacity="0.4"
+                                                  Color="Black"
+                                                  RenderingBias="Performance"/>
+                            </Border.Effect>
+
+                            <Grid>
+
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="3"/>
+                                    <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
 
+                                <Grid Grid.Row="1"
+                                      Margin="28,0">
 
-                                <StackPanel Grid.Column="1" HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <Border Grid.Column="0" HorizontalAlignment="Left"
-                                            Height="200"
-                                            Margin="0,20,0,0"
-                                            BorderThickness="2"
-                                            BorderBrush="{DynamicResource FocusGameBorderBrush}"
-                                            Background="{DynamicResource OverlayMenu}">
-                                        <Border.Effect>
-                                            <DropShadowEffect ShadowDepth="0"
-                                                              BlurRadius="10"
-                                                              Opacity="0.4"
-                                                              Color="Black" RenderingBias="Performance"/>
-                                        </Border.Effect>
-                                        <Image Source="{Binding SelectedGame.CoverImageObjectCached}"
-                                               Stretch="UniformToFill"
-                                               RenderOptions.BitmapScalingMode="Fant"
-                                               ClipToBounds="True"
-                                               SnapsToDevicePixels="True"
-                                               Height="200" />
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Title -->
+                                    <StackPanel Grid.Column="0"
+                                                VerticalAlignment="Center">
+
+                                        <TextBlock Text="{DynamicResource LOCDownloadableContent}"
+                                                   FontSize="34"
+                                                   FontWeight="SemiBold"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"/>
+
+                                        <TextBlock Text="{DynamicResource LOCDLCList}"
+                                                   Margin="1,3,0,0"
+                                                   FontSize="17"
+                                                   Opacity="0.65"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"/>
+
+                                    </StackPanel>
+
+                                    <!-- DLC counter -->
+                                    <Border Grid.Column="1"
+                                            MinWidth="100"
+                                            Padding="18,9"
+                                            VerticalAlignment="Center"
+                                            Background="{DynamicResource CardNewsBackgroundBrush}"
+                                            BorderBrush="{DynamicResource CardNewsBorderBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="18">
+
+                                        <StackPanel Orientation="Horizontal"
+                                                    HorizontalAlignment="Center">
+
+                                            <TextBlock Text="{Binding ElementName=ListDlcAll,
+                                                       Path=Items.Count}"
+                                                       FontSize="22"
+                                                       FontWeight="SemiBold"
+                                                       VerticalAlignment="Center"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"/>
+
+                                            <TextBlock Text=" DLC"
+                                                       Margin="3,0,0,0"
+                                                       FontSize="16"
+                                                       Opacity="0.7"
+                                                       VerticalAlignment="Center"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"/>
+
+                                        </StackPanel>
                                     </Border>
 
-                                    <StackPanel Grid.Column="1" Orientation="Vertical"
-                                                VerticalAlignment="Center"
-                                                Margin="20,0,0,0"
-                                                HorizontalAlignment="Center">
-                                        <TextBlock Text="{DynamicResource LOCDownloadableContent}"
-                                                   HorizontalAlignment="Left"
-                                                   FontSize="24"
-                                                   Opacity="0.8"
-                                                   Typography.Capitals="AllSmallCaps"
-                                                   TextWrapping="Wrap"
-                                                   TextTrimming="WordEllipsis"
-                                                   MaxWidth="1500"
-                                                   Style="{DynamicResource TextBlockBaseStyle}" />
-
-                                        <TextBlock Text="{Binding SelectedGame.DisplayName}"
-                                                   HorizontalAlignment="Left"
-                                                   FontSize="50"
-                                                   TextWrapping="Wrap"
-                                                   TextTrimming="WordEllipsis"
-                                                   MaxWidth="1000"
-                                                   Style="{DynamicResource TextBlockBaseStyle}" />
-                                    </StackPanel>
-                                </StackPanel>
+                                </Grid>
                             </Grid>
                         </Border>
 
-                        <Border Margin="0,290,0,0" Background="{DynamicResource SecondaryViewBackground}">
-                            <Border.Effect>
-                                <DropShadowEffect ShadowDepth="5"
-                                                  BlurRadius="15"
-                                                  Direction="90"
-                                                  Opacity="0.8"
-                                                  Color="Black" RenderingBias="Performance"/>
-                            </Border.Effect>
-                        </Border>
+                        <!-- ================================================= -->
+                        <!-- MAIN CONTENT -->
+                        <!-- ================================================= -->
 
-                        <!-- CONTENT -->
-                        <Grid Grid.Row="1" VerticalAlignment="Center"
-                              Margin="100,20,100,0">
+                        <Grid Grid.Row="1"
+                              Margin="80,20,80,10">
+
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="760"/>
-                                <ColumnDefinition Width="30"/>
+                                <ColumnDefinition Width="700"/>
+                                <ColumnDefinition Width="28"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <!-- LEFT : DLC LIST -->
-                            <Border Grid.Column="0" Height="700"
-                                    CornerRadius="18">
+                            <!-- ============================================= -->
+                            <!-- LEFT PANEL : DLC LIST -->
+                            <!-- ============================================= -->
+
+                            <Border Grid.Column="0"
+                                    CornerRadius="{DynamicResource Corner}">
+
                                 <Border.Effect>
                                     <DropShadowEffect ShadowDepth="5"
-                                                      BlurRadius="15"
+                                                      BlurRadius="18"
                                                       Direction="90"
                                                       Opacity="0.45"
-                                                      Color="Black" RenderingBias="Performance"/>
+                                                      Color="Black"
+                                                      RenderingBias="Performance"/>
                                 </Border.Effect>
+
                                 <Border.Style>
                                     <Style TargetType="Border">
-                                        <Setter Property="Background" Value="{DynamicResource BackgroundListNewsBrush}" />
-                                        <Setter Property="BorderBrush" Value="{DynamicResource BorderListNewsBrush}" />
-                                        <Setter Property="BorderThickness" Value="1" />
+
+                                        <Setter Property="Background"
+                                                Value="{DynamicResource BackgroundListNewsBrush}"/>
+
+                                        <Setter Property="BorderBrush"
+                                                Value="{DynamicResource BorderListNewsBrush}"/>
+
+                                        <Setter Property="BorderThickness"
+                                                Value="1"/>
+
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ElementName=ListDlcAll, Path=IsKeyboardFocusWithin}" Value="True">
-                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusBorderListNews}"/>
-                                                <Setter Property="BorderThickness" Value="3" />
+
+                                            <DataTrigger Binding="{Binding ElementName=ListDlcAll,
+                                                         Path=IsKeyboardFocusWithin}"
+                                                         Value="True">
+
+                                                <Setter Property="BorderBrush"
+                                                        Value="{DynamicResource FocusBorderListNews}"/>
+
+                                                <Setter Property="BorderThickness"
+                                                        Value="3"/>
+
                                             </DataTrigger>
+
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
 
                                 <Grid>
+
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="64"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
-                                    <!-- list header -->
-                                    <Border Grid.Row="0" CornerRadius="18,18,0,0"
+                                    <!-- List title -->
+                                    <Border Grid.Row="0"
+                                            CornerRadius="{DynamicResource Corner}"
                                             Background="{DynamicResource HeaderMenu}">
-                                        <Grid Margin="20,0,20,0">
+
+                                        <Grid Margin="22,0">
+
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
 
                                             <TextBlock Grid.Column="0"
-                                                       VerticalAlignment="Center"
                                                        Text="{DynamicResource LOCDLCList}"
-                                                       FontSize="26"
-                                                       Style="{DynamicResource TextBlockBaseStyle}" />
+                                                       FontSize="25"
+                                                       FontWeight="SemiBold"
+                                                       VerticalAlignment="Center"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"/>
 
-                                            <!-- compteur -->
                                             <Border Grid.Column="1"
+                                                    Padding="12,5"
                                                     VerticalAlignment="Center"
-                                                    Padding="12,4"
                                                     Background="#22000000"
                                                     BorderBrush="#33FFFFFF"
                                                     BorderThickness="1"
                                                     CornerRadius="14">
-                                                <TextBlock FontSize="16"
-                                                           Opacity="0.9"
-                                                           Style="{DynamicResource TextBlockBaseStyle}"
-                                                           Text="{Binding ElementName=ListDlcAll, Path=Items.Count, StringFormat={}{0} DLC}" />
+
+                                                <TextBlock Text="{Binding ElementName=ListDlcAll,
+                                                           Path=Items.Count,
+                                                           StringFormat={}{0} DLC}"
+                                                           FontSize="15"
+                                                           Opacity="0.8"
+                                                           Style="{DynamicResource TextBlockBaseStyle}"/>
+
                                             </Border>
                                         </Grid>
                                     </Border>
 
-                                    <!-- list -->
+                                    <!-- DLC list -->
                                     <ListView x:Name="ListDlcAll"
                                               Grid.Row="1"
-                                              Margin="10,10,10,10"
+                                              Margin="12"
                                               ItemsSource="{PluginSettings Plugin=CheckDlc, Path=ListDlcs}"
                                               SelectedIndex="-1"
                                               IsSynchronizedWithCurrentItem="True"
@@ -4784,9 +4866,14 @@
                                             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                                                 <BeginStoryboard>
                                                     <Storyboard>
+
                                                         <Int32AnimationUsingKeyFrames Storyboard.TargetProperty="SelectedIndex">
-                                                            <DiscreteInt32KeyFrame KeyTime="0:0:0.05" Value="0"/>
+
+                                                            <DiscreteInt32KeyFrame KeyTime="0:0:0.05"
+                                                                                   Value="0"/>
+
                                                         </Int32AnimationUsingKeyFrames>
+
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </EventTrigger>
@@ -4798,495 +4885,837 @@
                                             </ItemsPanelTemplate>
                                         </ListView.ItemsPanel>
 
+                                        <!-- List item container -->
                                         <ListView.ItemContainerStyle>
                                             <Style TargetType="ListViewItem">
-                                                <Setter Property="Focusable" Value="True"/>
-                                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                                <Setter Property="Margin" Value="0,0,0,14"/>
+
+                                                <Setter Property="Focusable"
+                                                        Value="True"/>
+
+                                                <Setter Property="FocusVisualStyle"
+                                                        Value="{x:Null}"/>
+
+                                                <Setter Property="HorizontalContentAlignment"
+                                                        Value="Stretch"/>
+
+                                                <Setter Property="Margin"
+                                                        Value="0,0,0,12"/>
+
                                                 <Setter Property="Template">
                                                     <Setter.Value>
-                                                        <ControlTemplate TargetType="ListViewItem">
-                                                            <Border x:Name="CardBorder"
-                                                                    Background="{DynamicResource CardNewsBackgroundBrush}"
-                                                                    BorderBrush="{DynamicResource CardNewsBorderBrush}"
-                                                                    BorderThickness="2"
-                                                                    CornerRadius="{DynamicResource Corner}"
-                                                                    Padding="0">
-                                                                <Border.Effect>
-                                                                    <DropShadowEffect ShadowDepth="0"
-                                                                                      BlurRadius="6"
-                                                                                      Opacity="0.20"
-                                                                                      Color="Black" RenderingBias="Performance"/>
-                                                                </Border.Effect>
 
-                                                                <ContentPresenter/>
-                                                            </Border>
+                                                        <ControlTemplate TargetType="ListViewItem">
+
+                                                            <Grid>
+
+                                                                <Border x:Name="CardBorder"
+                                                                        Background="{DynamicResource CardNewsBackgroundBrush}"
+                                                                        BorderBrush="{DynamicResource CardNewsBorderBrush}"
+                                                                        BorderThickness="2"
+                                                                        CornerRadius="{DynamicResource Corner}">
+
+                                                                    <Border.Effect>
+                                                                        <DropShadowEffect ShadowDepth="0"
+                                                                                          BlurRadius="8"
+                                                                                          Opacity="0.22"
+                                                                                          Color="Black"
+                                                                                          RenderingBias="Performance"/>
+                                                                    </Border.Effect>
+
+                                                                    <ContentPresenter/>
+
+                                                                </Border>
+
+                                                                <!-- Focus accent -->
+                                                                <Border x:Name="FocusAccent"
+                                                                        Width="5"
+                                                                        Margin="0,16,0,16"
+                                                                        HorizontalAlignment="Left"
+                                                                        Background="{DynamicResource FocusCardNewsBorder}"
+                                                                        CornerRadius="0,4,4,0"
+                                                                        Opacity="0"/>
+
+                                                            </Grid>
 
                                                             <ControlTemplate.Triggers>
-                                                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                                                                    <Setter TargetName="CardBorder" Property="BorderBrush" Value="{DynamicResource FocusCardNewsBorder}"/>
-                                                                    <Setter TargetName="CardBorder" Property="Background" Value="{DynamicResource FocusCardNewsBackgroundBrush}"/>
-                                                                    <Setter TargetName="CardBorder" Property="BorderThickness" Value="3"/>
+
+                                                                <Trigger Property="IsKeyboardFocusWithin"
+                                                                         Value="True">
+
+                                                                    <Setter TargetName="CardBorder"
+                                                                            Property="BorderBrush"
+                                                                            Value="{DynamicResource FocusCardNewsBorder}"/>
+
+                                                                    <Setter TargetName="CardBorder"
+                                                                            Property="Background"
+                                                                            Value="{DynamicResource FocusCardNewsBackgroundBrush}"/>
+
+                                                                    <Setter TargetName="CardBorder"
+                                                                            Property="BorderThickness"
+                                                                            Value="3"/>
+
+                                                                    <Setter TargetName="FocusAccent"
+                                                                            Property="Opacity"
+                                                                            Value="1"/>
+
                                                                 </Trigger>
+
                                                             </ControlTemplate.Triggers>
+
                                                         </ControlTemplate>
                                                     </Setter.Value>
                                                 </Setter>
+
                                             </Style>
                                         </ListView.ItemContainerStyle>
 
+                                        <!-- DLC card -->
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
-                                                <Grid Height="120" Margin="14,10,14,10">
+
+                                                <Grid Height="126"
+                                                      Margin="14,10">
+
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="230"/>
+                                                        <ColumnDefinition Width="220"/>
+                                                        <ColumnDefinition Width="16"/>
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <!-- IMAGE -->
+                                                    <!-- DLC image -->
                                                     <Border Grid.Column="0"
-                                                            Margin="0,0,14,0"
                                                             CornerRadius="{DynamicResource Corner}"
                                                             Background="#16000000"
                                                             BorderBrush="#22000000"
                                                             BorderThickness="1"
                                                             ClipToBounds="True">
+
                                                         <Grid Background="#12000000">
+
                                                             <Image Source="{Binding Image}"
+                                                                   Margin="8"
                                                                    Stretch="Uniform"
                                                                    RenderOptions.BitmapScalingMode="Fant"
                                                                    HorizontalAlignment="Center"
-                                                                   VerticalAlignment="Center"
-                                                                   Margin="8"/>
+                                                                   VerticalAlignment="Center"/>
+
                                                         </Grid>
                                                     </Border>
 
-                                                    <!-- RIGHT SIDE -->
-                                                    <Grid Grid.Column="1" Margin="0,4,0,4">
+                                                    <!-- DLC information -->
+                                                    <Grid Grid.Column="2"
+                                                          Margin="0,3">
+
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="Auto"/>
                                                             <RowDefinition Height="*"/>
                                                             <RowDefinition Height="Auto"/>
                                                         </Grid.RowDefinitions>
 
-                                                        <!-- TITLE -->
                                                         <TextBlock Grid.Row="0"
                                                                    Text="{Binding Name}"
                                                                    FontSize="19"
-                                                                   MaxHeight="48"
-                                                                   Margin="0,0,0,6"
+                                                                   FontWeight="SemiBold"
+                                                                   MaxHeight="50"
                                                                    TextWrapping="Wrap"
                                                                    TextTrimming="CharacterEllipsis"
-                                                                   Style="{DynamicResource TextBlockBaseStyle}" />
+                                                                   Style="{DynamicResource TextBlockBaseStyle}"/>
 
-                                                        <Grid Grid.Row="1"/>
-
-                                                        <!-- BOTTOM ROW -->
                                                         <Grid Grid.Row="2">
+
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="*"/>
                                                                 <ColumnDefinition Width="Auto"/>
                                                             </Grid.ColumnDefinitions>
 
-                                                            <!-- BADGES -->
+                                                            <!-- Status badges -->
                                                             <StackPanel Grid.Column="0"
                                                                         Orientation="Horizontal"
                                                                         VerticalAlignment="Bottom">
 
-                                                                <!-- OWNED -->
-                                                                <Border Padding="10,3"
-                                                                        Margin="0,0,8,0"
+                                                                <!-- Owned -->
+                                                                <Border Padding="10,4"
+                                                                        Margin="0,0,7,0"
                                                                         Background="#5536B36B"
                                                                         CornerRadius="12">
+
                                                                     <Border.Style>
                                                                         <Style TargetType="Border">
-                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Collapsed"/>
+
                                                                             <Style.Triggers>
-                                                                                <DataTrigger Binding="{Binding IsOwned}" Value="True">
-                                                                                    <Setter Property="Visibility" Value="Visible"/>
+
+                                                                                <DataTrigger Binding="{Binding IsOwned}"
+                                                                                             Value="True">
+
+                                                                                    <Setter Property="Visibility"
+                                                                                            Value="Visible"/>
+
                                                                                 </DataTrigger>
+
                                                                             </Style.Triggers>
                                                                         </Style>
                                                                     </Border.Style>
+
                                                                     <TextBlock Text="{DynamicResource LOCCheckDlcOwned}"
-                                                                               FontSize="15"
-                                                                               Style="{DynamicResource TextBlockBaseStyle}" />
+                                                                               FontSize="14"
+                                                                               Style="{DynamicResource TextBlockBaseStyle}"/>
+
                                                                 </Border>
 
-                                                                <!-- FREE -->
-                                                                <Border Padding="10,3"
-                                                                        Margin="0,0,8,0"
+                                                                <!-- Free -->
+                                                                <Border Padding="10,4"
+                                                                        Margin="0,0,7,0"
                                                                         Background="#553A86FF"
                                                                         CornerRadius="12">
+
                                                                     <Border.Style>
                                                                         <Style TargetType="Border">
-                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Collapsed"/>
+
                                                                             <Style.Triggers>
-                                                                                <DataTrigger Binding="{Binding IsFree}" Value="True">
-                                                                                    <Setter Property="Visibility" Value="Visible"/>
+
+                                                                                <DataTrigger Binding="{Binding IsFree}"
+                                                                                             Value="True">
+
+                                                                                    <Setter Property="Visibility"
+                                                                                            Value="Visible"/>
+
                                                                                 </DataTrigger>
-                                                                                <DataTrigger Binding="{Binding IsOwned}" Value="True">
-                                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                                                <DataTrigger Binding="{Binding IsOwned}"
+                                                                                             Value="True">
+
+                                                                                    <Setter Property="Visibility"
+                                                                                            Value="Collapsed"/>
+
                                                                                 </DataTrigger>
+
                                                                             </Style.Triggers>
                                                                         </Style>
                                                                     </Border.Style>
+
                                                                     <TextBlock Text="{DynamicResource LOCCheckDlcFree}"
-                                                                               FontSize="15"
-                                                                               Style="{DynamicResource TextBlockBaseStyle}" />
+                                                                               FontSize="14"
+                                                                               Style="{DynamicResource TextBlockBaseStyle}"/>
+
                                                                 </Border>
 
-                                                                <!-- DISCOUNT -->
-                                                                <Border Padding="10,3"
+                                                                <!-- Discount -->
+                                                                <Border Padding="10,4"
                                                                         Background="#55C48B18"
                                                                         CornerRadius="12">
+
                                                                     <Border.Style>
                                                                         <Style TargetType="Border">
-                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Collapsed"/>
+
                                                                             <Style.Triggers>
-                                                                                <DataTrigger Binding="{Binding IsDiscount}" Value="True">
-                                                                                    <Setter Property="Visibility" Value="Visible"/>
+
+                                                                                <DataTrigger Binding="{Binding IsDiscount}"
+                                                                                             Value="True">
+
+                                                                                    <Setter Property="Visibility"
+                                                                                            Value="Visible"/>
+
                                                                                 </DataTrigger>
-                                                                                <DataTrigger Binding="{Binding PriceBase}" Value="">
-                                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                                                <DataTrigger Binding="{Binding PriceBase}"
+                                                                                             Value="">
+
+                                                                                    <Setter Property="Visibility"
+                                                                                            Value="Collapsed"/>
+
                                                                                 </DataTrigger>
-                                                                                <DataTrigger Binding="{Binding IsOwned}" Value="True">
-                                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                                                <DataTrigger Binding="{Binding IsOwned}"
+                                                                                             Value="True">
+
+                                                                                    <Setter Property="Visibility"
+                                                                                            Value="Collapsed"/>
+
                                                                                 </DataTrigger>
+
                                                                             </Style.Triggers>
                                                                         </Style>
                                                                     </Border.Style>
+
                                                                     <TextBlock Text="{DynamicResource LOCDiscount}"
-                                                                               FontSize="15"
-                                                                               Style="{DynamicResource TextBlockBaseStyle}" />
+                                                                               FontSize="14"
+                                                                               Style="{DynamicResource TextBlockBaseStyle}"/>
+
                                                                 </Border>
                                                             </StackPanel>
 
-                                                            <!-- PRICE -->
+                                                            <!-- Price -->
                                                             <StackPanel Grid.Column="1"
                                                                         HorizontalAlignment="Right"
                                                                         VerticalAlignment="Bottom">
 
                                                                 <TextBlock HorizontalAlignment="Right"
-                                                                           FontSize="24"
+                                                                           FontSize="23"
                                                                            FontWeight="SemiBold">
+
                                                                     <TextBlock.Style>
-                                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-                                                                            <Setter Property="Text" Value="{Binding Price}" />
-                                                                            <Setter Property="Visibility" Value="Visible" />
+                                                                        <Style TargetType="TextBlock"
+                                                                               BasedOn="{StaticResource TextBlockBaseStyle}">
+
+                                                                            <Setter Property="Text"
+                                                                                    Value="{Binding Price}"/>
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Visible"/>
+
                                                                             <Style.Triggers>
-                                                                                <DataTrigger Binding="{Binding Price}" Value="0">
-                                                                                    <Setter Property="Text" Value="" />
-                                                                                    <Setter Property="Visibility" Value="Collapsed" />
+
+                                                                                <DataTrigger Binding="{Binding Price}"
+                                                                                             Value="0">
+
+                                                                                    <Setter Property="Text"
+                                                                                            Value=""/>
+
+                                                                                    <Setter Property="Visibility"
+                                                                                            Value="Collapsed"/>
+
                                                                                 </DataTrigger>
-                                                                                <DataTrigger Binding="{Binding Price}" Value="">
-                                                                                    <Setter Property="Text" Value="" />
-                                                                                    <Setter Property="Visibility" Value="Collapsed" />
+
+                                                                                <DataTrigger Binding="{Binding Price}"
+                                                                                             Value="">
+
+                                                                                    <Setter Property="Text"
+                                                                                            Value=""/>
+
+                                                                                    <Setter Property="Visibility"
+                                                                                            Value="Collapsed"/>
+
                                                                                 </DataTrigger>
-                                                                                <DataTrigger Binding="{Binding IsOwned}" Value="True">
-                                                                                    <Setter Property="Visibility" Value="Collapsed" />
+
+                                                                                <DataTrigger Binding="{Binding IsOwned}"
+                                                                                             Value="True">
+
+                                                                                    <Setter Property="Visibility"
+                                                                                            Value="Collapsed"/>
+
                                                                                 </DataTrigger>
+
                                                                             </Style.Triggers>
                                                                         </Style>
                                                                     </TextBlock.Style>
+
                                                                 </TextBlock>
 
                                                                 <TextBlock Margin="0,2,0,0"
                                                                            HorizontalAlignment="Right"
-                                                                           FontSize="15"
-                                                                           Opacity="0.68"
+                                                                           FontSize="14"
+                                                                           Opacity="0.65"
                                                                            TextDecorations="Strikethrough">
+
                                                                     <TextBlock.Style>
-                                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-                                                                            <Setter Property="Text" Value="{Binding PriceBase}" />
-                                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                                        <Style TargetType="TextBlock"
+                                                                               BasedOn="{StaticResource TextBlockBaseStyle}">
+
+                                                                            <Setter Property="Text"
+                                                                                    Value="{Binding PriceBase}"/>
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Collapsed"/>
+
                                                                             <Style.Triggers>
-                                                                                <DataTrigger Binding="{Binding IsDiscount}" Value="True">
-                                                                                    <Setter Property="Visibility" Value="Visible" />
-                                                                                    <Setter Property="Text" Value="{Binding PriceBase}" />
+
+                                                                                <DataTrigger Binding="{Binding IsDiscount}"
+                                                                                             Value="True">
+
+                                                                                    <Setter Property="Visibility"
+                                                                                            Value="Visible"/>
+
+                                                                                    <Setter Property="Text"
+                                                                                            Value="{Binding PriceBase}"/>
+
                                                                                 </DataTrigger>
-                                                                                <DataTrigger Binding="{Binding IsDiscount}" Value="False">
-                                                                                    <Setter Property="Text" Value="" />
-                                                                                    <Setter Property="Visibility" Value="Collapsed" />
+
+                                                                                <DataTrigger Binding="{Binding IsDiscount}"
+                                                                                             Value="False">
+
+                                                                                    <Setter Property="Text"
+                                                                                            Value=""/>
+
+                                                                                    <Setter Property="Visibility"
+                                                                                            Value="Collapsed"/>
+
                                                                                 </DataTrigger>
-                                                                                <DataTrigger Binding="{Binding PriceBase}" Value="">
-                                                                                    <Setter Property="Text" Value="" />
-                                                                                    <Setter Property="Visibility" Value="Collapsed" />
+
+                                                                                <DataTrigger Binding="{Binding PriceBase}"
+                                                                                             Value="">
+
+                                                                                    <Setter Property="Text"
+                                                                                            Value=""/>
+
+                                                                                    <Setter Property="Visibility"
+                                                                                            Value="Collapsed"/>
+
                                                                                 </DataTrigger>
-                                                                                <DataTrigger Binding="{Binding IsOwned}" Value="True">
-                                                                                    <Setter Property="Visibility" Value="Collapsed" />
+
+                                                                                <DataTrigger Binding="{Binding IsOwned}"
+                                                                                             Value="True">
+
+                                                                                    <Setter Property="Visibility"
+                                                                                            Value="Collapsed"/>
+
                                                                                 </DataTrigger>
+
                                                                             </Style.Triggers>
                                                                         </Style>
                                                                     </TextBlock.Style>
+
                                                                 </TextBlock>
                                                             </StackPanel>
+
                                                         </Grid>
                                                     </Grid>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
+
                                     </ListView>
                                 </Grid>
                             </Border>
 
-                            <!-- RIGHT : DETAILS -->
-                            <Border Grid.Column="2" Height="700"
+                            <!-- ============================================= -->
+                            <!-- RIGHT PANEL : DLC DETAILS -->
+                            <!-- ============================================= -->
+
+                            <Border Grid.Column="2"
                                     CornerRadius="{DynamicResource Corner}"
                                     DataContext="{Binding SelectedItem, ElementName=ListDlcAll}">
+
                                 <Border.Effect>
                                     <DropShadowEffect ShadowDepth="5"
-                                                      BlurRadius="15"
+                                                      BlurRadius="18"
                                                       Direction="90"
                                                       Opacity="0.45"
-                                                      Color="Black" RenderingBias="Performance"/>
+                                                      Color="Black"
+                                                      RenderingBias="Performance"/>
                                 </Border.Effect>
+
                                 <Border.Style>
                                     <Style TargetType="Border">
-                                        <Setter Property="Background" Value="{DynamicResource BackgroundListNewsBrush}" />
-                                        <Setter Property="BorderBrush" Value="{DynamicResource BorderListNewsBrush}" />
-                                        <Setter Property="BorderThickness" Value="1" />
+
+                                        <Setter Property="Background"
+                                                Value="{DynamicResource BackgroundListNewsBrush}"/>
+
+                                        <Setter Property="BorderBrush"
+                                                Value="{DynamicResource BorderListNewsBrush}"/>
+
+                                        <Setter Property="BorderThickness"
+                                                Value="1"/>
+
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ElementName=DlcDescContentScroll, Path=IsKeyboardFocusWithin}" Value="True">
-                                                <Setter Property="BorderBrush" Value="{DynamicResource FocusBorderListNews}"/>
-                                                <Setter Property="BorderThickness" Value="3" />
+
+                                            <DataTrigger Binding="{Binding ElementName=DlcDescContentScroll,
+                                                         Path=IsKeyboardFocusWithin}"
+                                                         Value="True">
+
+                                                <Setter Property="BorderBrush"
+                                                        Value="{DynamicResource FocusBorderListNews}"/>
+
+                                                <Setter Property="BorderThickness"
+                                                        Value="3"/>
+
                                             </DataTrigger>
+
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
 
-                                <Grid Margin="24">
+                                <Grid>
+
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="270"/>
-                                        <RowDefinition Height="1"/>
-                                        <RowDefinition Height="20"/>
+                                        <RowDefinition Height="64"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
-                                    <!-- Top detail block -->
-                                    <Grid Grid.Row="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="440"/>
-                                            <ColumnDefinition Width="30"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
+                                    <!-- Detail header -->
+                                    <Border Grid.Row="0"
+                                            CornerRadius="{DynamicResource Corner}"
+                                            Background="{DynamicResource HeaderMenu}">
 
-                                        <!-- IMAGE -->
-                                        <Border Grid.Column="0"
-                                                CornerRadius="{DynamicResource Corner}"
-                                                Background="#16000000"
-                                                BorderBrush="#22000000"
-                                                BorderThickness="1"
-                                                ClipToBounds="True">
-                                            <Grid Background="#12000000">
-                                                <Image Source="{Binding Image}"
-                                                       Stretch="Uniform"
-                                                       RenderOptions.BitmapScalingMode="Fant"
-                                                       HorizontalAlignment="Center"
+                                        <Grid Margin="24,0">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{DynamicResource LOCDownloadableContent}"
+                                                       FontSize="25"
+                                                       FontWeight="SemiBold"
                                                        VerticalAlignment="Center"
-                                                       Margin="10"/>
-                                            </Grid>
-                                        </Border>
+                                                       Style="{DynamicResource TextBlockBaseStyle}"/>
 
-                                        <!-- RIGHT INFO -->
-                                        <Grid Grid.Column="2"
-                                              VerticalAlignment="Stretch">
-                                            <Grid.RowDefinitions>
-                                                <!-- zone qui prend toute la hauteur du visuel -->
-                                                <RowDefinition Height="*"/>
-                                                <!-- séparateur -->
-                                                <RowDefinition Height="Auto"/>
-                                            </Grid.RowDefinitions>
+                                            <Border Grid.Column="1"
+                                                    Width="8"
+                                                    Height="8"
+                                                    VerticalAlignment="Center"
+                                                    Background="{DynamicResource FocusBorderListNews}"
+                                                    CornerRadius="4"/>
 
-                                            <!-- CONTENU ALIGNÉ SUR LA HAUTEUR DE L'IMAGE -->
-                                            <Grid Grid.Row="0"
-                                                  VerticalAlignment="Stretch">
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- Details body -->
+                                    <Grid Grid.Row="1"
+                                          Margin="26,24,26,22">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="285"/>
+                                            <RowDefinition Height="1"/>
+                                            <RowDefinition Height="22"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Top details -->
+                                        <Grid Grid.Row="0">
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="430"/>
+                                                <ColumnDefinition Width="30"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Large DLC image -->
+                                            <Border Grid.Column="0"
+                                                    CornerRadius="{DynamicResource Corner}"
+                                                    Background="#16000000"
+                                                    BorderBrush="#22000000"
+                                                    BorderThickness="1"
+                                                    ClipToBounds="True">
+
+                                                <Grid Background="#12000000">
+
+                                                    <Image Source="{Binding Image}"
+                                                           Margin="12"
+                                                           Stretch="Uniform"
+                                                           RenderOptions.BitmapScalingMode="Fant"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"/>
+
+                                                </Grid>
+                                            </Border>
+
+                                            <!-- Information -->
+                                            <Grid Grid.Column="2">
+
                                                 <Grid.RowDefinitions>
-                                                    <!-- titre prend toute la place libre -->
+                                                    <RowDefinition Height="Auto"/>
                                                     <RowDefinition Height="*"/>
-                                                    <!-- badges + prix restent en bas -->
                                                     <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
 
-                                                <!-- TITLE -->
+                                                <!-- Name -->
                                                 <TextBlock Grid.Row="0"
                                                            Text="{Binding Name}"
-                                                           FontSize="30"
-                                                           MaxHeight="110"
-                                                           Margin="0,0,0,0"
-                                                           VerticalAlignment="Top"
+                                                           FontSize="32"
+                                                           FontWeight="SemiBold"
+                                                           MaxHeight="125"
                                                            TextWrapping="Wrap"
                                                            TextTrimming="CharacterEllipsis"
-                                                           Style="{DynamicResource TextBlockBaseStyle}" />
+                                                           Style="{DynamicResource TextBlockBaseStyle}"/>
 
-                                                <!-- BADGE + PRICE LINE -->
-                                                <Grid Grid.Row="1"
-                                                      Margin="0,12,0,0"
-                                                      VerticalAlignment="Bottom">
+                                                <!-- Status and price -->
+                                                <Grid Grid.Row="2"
+                                                      Margin="0,18,0,0">
+
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <!-- badges left -->
-                                                    <StackPanel Grid.Column="0"
-                                                                Orientation="Horizontal"
-                                                                VerticalAlignment="Bottom">
+                                                    <!-- Large badges -->
+                                                    <WrapPanel Grid.Column="0"
+                                                               VerticalAlignment="Bottom">
 
-                                                        <Border Padding="10,4"
-                                                                Margin="0,0,8,0"
+                                                        <!-- Owned -->
+                                                        <Border Padding="14,7"
+                                                                Margin="0,0,9,0"
                                                                 Background="#5536B36B"
-                                                                CornerRadius="12">
+                                                                CornerRadius="15">
+
                                                             <Border.Style>
                                                                 <Style TargetType="Border">
-                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Collapsed"/>
+
                                                                     <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding IsOwned}" Value="True">
-                                                                            <Setter Property="Visibility" Value="Visible"/>
+
+                                                                        <DataTrigger Binding="{Binding IsOwned}"
+                                                                                     Value="True">
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Visible"/>
+
                                                                         </DataTrigger>
+
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </Border.Style>
+
                                                             <TextBlock Text="{DynamicResource LOCCheckDlcOwned}"
                                                                        FontSize="18"
-                                                                       Style="{DynamicResource TextBlockBaseStyle}" />
+                                                                       FontWeight="SemiBold"
+                                                                       Style="{DynamicResource TextBlockBaseStyle}"/>
+
                                                         </Border>
 
-                                                        <Border Padding="10,4"
-                                                                Margin="0,0,8,0"
+                                                        <!-- Free -->
+                                                        <Border Padding="14,7"
+                                                                Margin="0,0,9,0"
                                                                 Background="#553A86FF"
-                                                                CornerRadius="12">
+                                                                CornerRadius="15">
+
                                                             <Border.Style>
                                                                 <Style TargetType="Border">
-                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Collapsed"/>
+
                                                                     <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding IsFree}" Value="True">
-                                                                            <Setter Property="Visibility" Value="Visible"/>
+
+                                                                        <DataTrigger Binding="{Binding IsFree}"
+                                                                                     Value="True">
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Visible"/>
+
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding IsOwned}" Value="True">
-                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                                        <DataTrigger Binding="{Binding IsOwned}"
+                                                                                     Value="True">
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Collapsed"/>
+
                                                                         </DataTrigger>
+
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </Border.Style>
+
                                                             <TextBlock Text="{DynamicResource LOCCheckDlcFree}"
                                                                        FontSize="18"
-                                                                       Style="{DynamicResource TextBlockBaseStyle}" />
+                                                                       FontWeight="SemiBold"
+                                                                       Style="{DynamicResource TextBlockBaseStyle}"/>
+
                                                         </Border>
 
-                                                        <Border Padding="10,4"
+                                                        <!-- Discount -->
+                                                        <Border Padding="14,7"
                                                                 Background="#55C48B18"
-                                                                CornerRadius="12">
+                                                                CornerRadius="15">
+
                                                             <Border.Style>
                                                                 <Style TargetType="Border">
-                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Collapsed"/>
+
                                                                     <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding IsDiscount}" Value="True">
-                                                                            <Setter Property="Visibility" Value="Visible"/>
+
+                                                                        <DataTrigger Binding="{Binding IsDiscount}"
+                                                                                     Value="True">
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Visible"/>
+
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding PriceBase}" Value="">
-                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                                        <DataTrigger Binding="{Binding PriceBase}"
+                                                                                     Value="">
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Collapsed"/>
+
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding IsOwned}" Value="True">
-                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                                        <DataTrigger Binding="{Binding IsOwned}"
+                                                                                     Value="True">
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Collapsed"/>
+
                                                                         </DataTrigger>
+
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </Border.Style>
+
                                                             <TextBlock Text="{DynamicResource LOCDiscount}"
                                                                        FontSize="18"
-                                                                       Style="{DynamicResource TextBlockBaseStyle}" />
-                                                        </Border>
-                                                    </StackPanel>
+                                                                       FontWeight="SemiBold"
+                                                                       Style="{DynamicResource TextBlockBaseStyle}"/>
 
-                                                    <!-- price right -->
+                                                        </Border>
+
+                                                    </WrapPanel>
+
+                                                    <!-- Large price -->
                                                     <StackPanel Grid.Column="1"
+                                                                Margin="20,0,0,0"
                                                                 HorizontalAlignment="Right"
                                                                 VerticalAlignment="Bottom">
 
                                                         <TextBlock HorizontalAlignment="Right"
-                                                                   FontSize="34"
+                                                                   FontSize="38"
                                                                    FontWeight="SemiBold">
+
                                                             <TextBlock.Style>
-                                                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-                                                                    <Setter Property="Text" Value="{Binding Price}" />
-                                                                    <Setter Property="Visibility" Value="Visible" />
+                                                                <Style TargetType="TextBlock"
+                                                                       BasedOn="{StaticResource TextBlockBaseStyle}">
+
+                                                                    <Setter Property="Text"
+                                                                            Value="{Binding Price}"/>
+
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Visible"/>
+
                                                                     <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding Price}" Value="0">
-                                                                            <Setter Property="Text" Value="" />
-                                                                            <Setter Property="Visibility" Value="Collapsed" />
+
+                                                                        <DataTrigger Binding="{Binding Price}"
+                                                                                     Value="0">
+
+                                                                            <Setter Property="Text"
+                                                                                    Value=""/>
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Collapsed"/>
+
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding Price}" Value="">
-                                                                            <Setter Property="Text" Value="" />
-                                                                            <Setter Property="Visibility" Value="Collapsed" />
+
+                                                                        <DataTrigger Binding="{Binding Price}"
+                                                                                     Value="">
+
+                                                                            <Setter Property="Text"
+                                                                                    Value=""/>
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Collapsed"/>
+
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding IsOwned}" Value="True">
-                                                                            <Setter Property="Visibility" Value="Collapsed" />
+
+                                                                        <DataTrigger Binding="{Binding IsOwned}"
+                                                                                     Value="True">
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Collapsed"/>
+
                                                                         </DataTrigger>
+
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </TextBlock.Style>
+
                                                         </TextBlock>
 
-                                                        <TextBlock Margin="0,2,0,0"
+                                                        <TextBlock Margin="0,3,0,0"
                                                                    HorizontalAlignment="Right"
                                                                    FontSize="20"
-                                                                   Opacity="0.68"
+                                                                   Opacity="0.65"
                                                                    TextDecorations="Strikethrough">
+
                                                             <TextBlock.Style>
-                                                                <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-                                                                    <Setter Property="Text" Value="{Binding PriceBase}" />
-                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                <Style TargetType="TextBlock"
+                                                                       BasedOn="{StaticResource TextBlockBaseStyle}">
+
+                                                                    <Setter Property="Text"
+                                                                            Value="{Binding PriceBase}"/>
+
+                                                                    <Setter Property="Visibility"
+                                                                            Value="Collapsed"/>
+
                                                                     <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding IsDiscount}" Value="True">
-                                                                            <Setter Property="Visibility" Value="Visible" />
-                                                                            <Setter Property="Text" Value="{Binding PriceBase}" />
+
+                                                                        <DataTrigger Binding="{Binding IsDiscount}"
+                                                                                     Value="True">
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Visible"/>
+
+                                                                            <Setter Property="Text"
+                                                                                    Value="{Binding PriceBase}"/>
+
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding IsDiscount}" Value="False">
-                                                                            <Setter Property="Text" Value="" />
-                                                                            <Setter Property="Visibility" Value="Collapsed" />
+
+                                                                        <DataTrigger Binding="{Binding IsDiscount}"
+                                                                                     Value="False">
+
+                                                                            <Setter Property="Text"
+                                                                                    Value=""/>
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Collapsed"/>
+
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding PriceBase}" Value="">
-                                                                            <Setter Property="Text" Value="" />
-                                                                            <Setter Property="Visibility" Value="Collapsed" />
+
+                                                                        <DataTrigger Binding="{Binding PriceBase}"
+                                                                                     Value="">
+
+                                                                            <Setter Property="Text"
+                                                                                    Value=""/>
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Collapsed"/>
+
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding IsOwned}" Value="True">
-                                                                            <Setter Property="Visibility" Value="Collapsed" />
+
+                                                                        <DataTrigger Binding="{Binding IsOwned}"
+                                                                                     Value="True">
+
+                                                                            <Setter Property="Visibility"
+                                                                                    Value="Collapsed"/>
+
                                                                         </DataTrigger>
+
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </TextBlock.Style>
+
                                                         </TextBlock>
                                                     </StackPanel>
+
                                                 </Grid>
                                             </Grid>
-
-                                            <!-- divider -->
-                                            <Rectangle Grid.Row="1"
-                                                       Margin="0,14,0,0"
-                                                       Height="1"
-                                                       VerticalAlignment="Top"
-                                                       Fill="{DynamicResource SeparatorBrush}"
-                                                       Opacity="0.45"/>
                                         </Grid>
-                                    </Grid>
 
+                                        <!-- Separator -->
+                                        <Rectangle Grid.Row="1"
+                                                   Height="1"
+                                                   Fill="{DynamicResource SeparatorBrush}"
+                                                   Opacity="0.45"/>
 
+                                        <!-- DLC description -->
+                                        <Border Grid.Row="3"
+                                                x:Name="BorderNews"
+                                                Focusable="False"
+                                                CornerRadius="12"
+                                                HorizontalAlignment="Stretch">
 
-                                    <!-- spacer -->
-                                    <Grid Grid.Row="2"/>
-
-                                    <!-- description -->
-                                    <Grid Grid.Row="3">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Border x:Name="BorderNews" Grid.Row="1" Grid.Column="1" Margin="10,20,0,0" Focusable="False" CornerRadius="12" HorizontalAlignment="Stretch">
                                             <Border.OpacityMask>
-                                                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
-                                                    <GradientStop Color="#00FFFFFF" Offset="0"/>
-                                                    <GradientStop Color="#FF000000" Offset="0.5"/>
+                                                <LinearGradientBrush StartPoint="0,1"
+                                                                     EndPoint="0,0">
+
+                                                    <GradientStop Color="#00FFFFFF"
+                                                                  Offset="0"/>
+
+                                                    <GradientStop Color="#FF000000"
+                                                                  Offset="0.22"/>
+
                                                 </LinearGradientBrush>
                                             </Border.OpacityMask>
 
@@ -5297,6 +5726,7 @@
                                                             PanningMode="VerticalOnly"
                                                             ScrollViewer.CanContentScroll="False"
                                                             VerticalScrollBarVisibility="Auto">
+
                                                 <HtmlTextView x:Name="DlcDescription"
                                                               HtmlText="{Binding Description}"
                                                               HtmlFontFamily="{DynamicResource FontFamily}"
@@ -5304,44 +5734,86 @@
                                                               LinkForeground="{DynamicResource GlyphColor}"
                                                               HtmlFontSize="20"
                                                               Focusable="False"
-                                                              IsTabStop="False" />
+                                                              IsTabStop="False"/>
+
                                             </ScrollViewerEx>
                                         </Border>
+
                                     </Grid>
                                 </Grid>
                             </Border>
                         </Grid>
 
-                        <Grid Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="80" Margin="0,0,0,0">
-                            <StackPanel Orientation="Horizontal"  VerticalAlignment="Bottom" Effect="{DynamicResource SoftTextShadow}" HorizontalAlignment="Right" Margin="0,0,20,10">
+                        <!-- ================================================= -->
+                        <!-- BOTTOM CONTROLLER BAR -->
+                        <!-- ================================================= -->
+
+                        <Grid Grid.Row="2"
+                              Height="80"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Bottom">
+
+                            <Border Height="1"
+                                    VerticalAlignment="Top"
+                                    Margin="80,0"
+                                    Background="{DynamicResource SeparatorBrush}"
+                                    Opacity="0.25"/>
+
+                            <StackPanel Orientation="Horizontal"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Margin="0,0,28,0"
+                                        Effect="{DynamicResource SoftTextShadow}">
 
                                 <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
                                           Tag="Dpad"
-                                          Content="{DynamicResource LOCButtonPrompt_Navigate}" />
+                                          Content="{DynamicResource LOCButtonPrompt_Navigate}"/>
 
                                 <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                          Tag="CancelAction" Command="{Binding CloseCommand}"
-                                          Content="{DynamicResource LOCBackLabel}" />
+                                          Tag="CancelAction"
+                                          Command="{Binding CloseCommand}"
+                                          Content="{DynamicResource LOCBackLabel}"/>
 
                             </StackPanel>
                         </Grid>
+
                     </Grid>
+
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=PART_ViewHost, Path=ActualWidth}" Value="1728">
-                            <Setter Property="Margin" Value="-140,80,30,80" />
+
+                        <DataTrigger Binding="{Binding ElementName=PART_ViewHost,
+                                     Path=ActualWidth}"
+                                     Value="1728">
+
+                            <Setter Property="Margin"
+                                    Value="-140,80,30,80"/>
+
                         </DataTrigger>
+
                     </ControlTemplate.Triggers>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
 
         <Style.Triggers>
-            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp1610">
-                <Setter Property="Margin" Value="0,-60,0,-60"/>
+
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}"
+                         Value="dsp1610">
+
+                <Setter Property="Margin"
+                        Value="0,-60,0,-60"/>
+
             </DataTrigger>
-            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp219">
-                <Setter Property="Margin" Value="-320,0,-320,0"/>
+
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}"
+                         Value="dsp219">
+
+                <Setter Property="Margin"
+                        Value="-320,0,-320,0"/>
+
             </DataTrigger>
+
         </Style.Triggers>
     </Style>
 
@@ -5356,7 +5828,6 @@
 
                         <Grid.Resources>
 
-                            <!-- Button style local pour les lignes DuplicateHider -->
                             <Style x:Key="DuplicateHiderVersionButtonStyle"
                                    BasedOn="{StaticResource {x:Type ButtonEx}}"
                                    TargetType="ButtonEx">
@@ -5389,7 +5860,6 @@
                                                         CornerRadius="{DynamicResource Corner}"
                                                         Visibility="Collapsed"/>
 
-                                                <!-- Important : ContentPresenter direct, pas dans un TextBlock -->
                                                 <ContentPresenter Margin="22,0"
                                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -5417,7 +5887,6 @@
                                 </Setter>
 
                                 <Style.Triggers>
-                                    <!-- La version actuelle reste visible mais pas sélectionnable -->
                                     <DataTrigger Binding="{Binding IsCurrent}" Value="True">
                                         <Setter Property="IsEnabled" Value="False"/>
                                         <Setter Property="Opacity" Value="0.55"/>
