@@ -1,0 +1,383 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Aniki ReMake step-by-step user guide for Playnite."><title>Troubleshooting &amp; FAQ — Aniki ReMake User Guide</title><style>
+:root{
+ --bg:#0d1117;--side:#0f141b;--panel:#161b22;--border:#30363d;
+ --text:#e6edf3;--muted:#8b949e;--blue:#58a6ff;--soft:#21262d;--code:#090d12
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.66}
+.shell{display:grid;grid-template-columns:315px minmax(0,1fr);min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;overflow:auto;background:var(--side);border-right:1px solid var(--border);padding:20px 17px 40px}
+.brand{font-size:20px;font-weight:850;padding:5px 10px 17px;border-bottom:1px solid var(--border)}
+.search{width:100%;margin:12px 0;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:#0d1117;color:var(--text)}
+.nav-group{margin:20px 10px 7px;color:var(--muted);font-size:11px;font-weight:850;letter-spacing:.1em;text-transform:uppercase}
+.nav-link{display:block;padding:8px 10px;border-radius:8px;color:#c9d1d9;text-decoration:none;font-size:14px}
+.nav-link:hover{background:var(--soft);color:#fff}.nav-link.active{background:#1f6feb2e;color:#79c0ff;font-weight:750}.nav-link.hidden{display:none}
+.main{min-width:0}.topbar{height:58px;border-bottom:1px solid var(--border);padding:0 34px;display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:13px;position:sticky;top:0;background:#0d1117f3;z-index:5}
+.content{max-width:1000px;margin:0 auto;padding:44px 48px 70px}
+h1,h2,h3,h4{line-height:1.24;scroll-margin-top:78px}
+h1{font-size:38px;margin-top:0;border-bottom:1px solid var(--border);padding-bottom:15px}
+h2{font-size:25px;margin-top:46px;border-bottom:1px solid #21262d;padding-bottom:8px}
+h3{font-size:19px;margin-top:30px}
+p,li{font-size:16px}li{margin:5px 0}ul,ol{padding-left:28px}
+a{color:var(--blue)}strong{color:#f0f6fc}
+code{background:var(--code);border:1px solid #21262d;border-radius:5px;padding:2px 6px}
+blockquote{margin:22px 0;padding:14px 16px;border-left:4px solid #1f6feb;background:var(--panel);border-radius:0 8px 8px 0}
+hr{border:0;border-top:1px solid var(--border);margin:36px 0}
+
+.image-slot{margin:26px 0}
+.image-slot>a{display:block}
+.image-slot img{display:none;max-width:100%;height:auto;margin:0 auto;border:1px solid var(--border);border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.3)}
+.image-slot.loaded img{display:block}
+.image-slot.loaded .image-placeholder{display:none}
+.image-slot.missing-hidden{display:none}
+.image-placeholder{display:none;min-height:165px;border:2px dashed #3d4958;border-radius:12px;background:#111820;align-items:center;justify-content:center;gap:18px;padding:26px;color:var(--muted)}
+.image-slot.missing-preview .image-placeholder{display:flex}
+.ph-icon{font-size:40px;color:#52606f}
+.image-placeholder strong{display:block;color:#9fb4ca;font-size:12px;letter-spacing:.08em;margin-bottom:6px}
+.image-placeholder span{display:block;max-width:620px;margin-bottom:10px}
+.image-placeholder code{display:inline-block;color:#79c0ff}
+
+.page-nav{max-width:1000px;margin:0 auto 60px;padding:0 48px;display:flex;gap:20px}
+.page-nav a{flex:1;border:1px solid var(--border);border-radius:10px;padding:14px 16px;text-decoration:none;background:#111820;color:#c9d1d9}
+.page-nav .next{text-align:right}.page-nav small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+@media(max-width:900px){.shell{display:block}.sidebar{position:relative;height:auto}.topbar{position:relative}.content{padding:28px 20px}.page-nav{padding:0 20px;flex-direction:column}}
+</style></head><body><div class="shell"><aside class="sidebar"><div class="brand">Aniki ReMake Guide</div><input id="navSearch" class="search" placeholder="Search guide pages..."><div class="brand">Aniki ReMake Guide</div>
+<div class="nav-group">Start Here</div>
+<a class="nav-link" href="index.html" data-title="home">Home</a>
+<a class="nav-link" href="New-to-Playnite.html" data-title="new to playnite?">New to Playnite?</a>
+<a class="nav-link" href="Install-Aniki-ReMake.html" data-title="install aniki remake">Install Aniki ReMake</a>
+<a class="nav-link" href="First-Setup-Assistant.html" data-title="first setup assistant">First Setup Assistant</a>
+<a class="nav-link" href="Controller-and-Navigation.html" data-title="controller &amp; navigation">Controller &amp; Navigation</a>
+<div class="nav-group">Set Up Your Library</div>
+<a class="nav-link" href="Artwork-and-Metadata.html" data-title="artwork &amp; metadata">Artwork &amp; Metadata</a>
+<a class="nav-link" href="Logos-and-Trailers.html" data-title="logos &amp; trailers">Logos &amp; Trailers</a>
+<a class="nav-link" href="Screenshots-and-Capture-Gallery.html" data-title="screenshots &amp; capture gallery">Screenshots &amp; Capture Gallery</a>
+<div class="nav-group">Customize Aniki</div>
+<a class="nav-link" href="Theme-Customization.html" data-title="theme customization">Theme Customization</a>
+<a class="nav-link" href="Library-and-Game-Details.html" data-title="library &amp; game details">Library &amp; Game Details</a>
+<a class="nav-link" href="Backgrounds-and-Visual-Packs.html" data-title="backgrounds &amp; visual packs">Backgrounds &amp; Visual Packs</a>
+<a class="nav-link" href="Covers-Banners-and-Custom-Assets.html" data-title="covers, banners &amp; custom assets">Covers, Banners &amp; Custom Assets</a>
+<a class="nav-link" href="Profile-and-Startup.html" data-title="profile &amp; startup">Profile &amp; Startup</a>
+<div class="nav-group">Aniki Features</div>
+<a class="nav-link" href="Hub-Quick-Access-and-Extra.html" data-title="hub, quick access &amp; extra">Hub, Quick Access &amp; Extra</a>
+<a class="nav-link" href="Splash-Screens.html" data-title="splash screens">Splash Screens</a>
+<a class="nav-link" href="Aniki-ScreenSaver.html" data-title="aniki screensaver">Aniki ScreenSaver</a>
+<a class="nav-link" href="In-Game-Overlay.html" data-title="in-game overlay">In-Game Overlay</a>
+<a class="nav-link" href="Keyboard-Mouse-and-Web-Browser.html" data-title="keyboard, mouse &amp; web browser">Keyboard, Mouse &amp; Web Browser</a>
+<a class="nav-link" href="Aniki-Video-Center.html" data-title="aniki video center">Aniki Video Center</a>
+<div class="nav-group">Add-ons &amp; Integrations</div>
+<a class="nav-link" href="Steam.html" data-title="steam">Steam</a>
+<a class="nav-link" href="Achievements-and-Music.html" data-title="achievements &amp; music">Achievements &amp; Music</a>
+<a class="nav-link" href="Other-Integrations-and-Software-Tools.html" data-title="other add-ons &amp; software tools">Other Add-ons &amp; Software Tools</a>
+<div class="nav-group">Advanced</div>
+<a class="nav-link" href="Dynamic-Colors-News-and-Statistics.html" data-title="dynamic colors, news &amp; statistics">Dynamic Colors, News &amp; Statistics</a>
+<a class="nav-link" href="Backup-Reset-and-Diagnostics.html" data-title="backup, reset &amp; diagnostics">Backup, Reset &amp; Diagnostics</a>
+<div class="nav-group">Help</div>
+<a class="nav-link" href="Performance-and-Recommended-Settings.html" data-title="performance &amp; recommended settings">Performance &amp; Recommended Settings</a>
+<a class="nav-link" href="Troubleshooting-and-FAQ.html" data-title="troubleshooting &amp; faq">Troubleshooting &amp; FAQ</a></aside><main class="main"><div class="topbar"><span>Aniki ReMake User Guide</span><span>V3.6</span></div><article class="content"><h1 id="troubleshooting-faq">Troubleshooting &amp; FAQ</h1>
+<p>Use this page as a starting point.</p>
+<p>If the problem belongs to one feature, also open that feature's dedicated guide.</p>
+<hr>
+<h1 id="aniki-shows-aniki-helper-required">Aniki shows "ANIKI HELPER REQUIRED"</h1>
+<p>This is the theme's <strong>requirement screen</strong>, not the First Setup Assistant.</p>
+<ol>
+<li>Select <strong>Install Aniki Helper</strong> on the screen.</li>
+<li>Let Playnite install it.</li>
+<li>Restart Playnite.</li>
+<li>Return to Fullscreen.</li>
+</ol>
+<figure class="image-slot"><a href="images/troubleshooting-and-faq-01.png.html" target="_blank" rel="noopener noreferrer"><img src="images/troubleshooting-and-faq-01.png" alt="ANIKI HELPER REQUIRED screen with Install Aniki Helper button." onload="this.closest('.image-slot').classList.add('loaded')" onerror="this.closest('.image-slot').classList.add((location.protocol==='file:'||new URLSearchParams(location.search).has('placeholders'))?'missing-preview':'missing-hidden')"></a><div class="image-placeholder"><div class="ph-icon">▧</div><div><strong>IMAGE TO ADD</strong><span>ANIKI HELPER REQUIRED screen with Install Aniki Helper button.</span><code>images/troubleshooting-and-faq-01.png</code></div></div></figure>
+<p>If direct installation fails:</p>
+<ol>
+<li>Open Playnite Desktop.</li>
+<li>Press <strong>F9</strong>.</li>
+<li>Open <strong>Browse → Generic</strong>.</li>
+<li>Search for <strong>Aniki Helper</strong>.</li>
+<li>Install it manually.</li>
+<li>Restart Playnite.</li>
+</ol>
+<hr>
+<h1 id="aniki-says-aniki-helper-needs-an-update">Aniki says Aniki Helper needs an update</h1>
+<ol>
+<li>Select <strong>Update Aniki Helper</strong> on the warning screen.</li>
+<li>Restart Playnite after the update.</li>
+</ol>
+<p>If it cannot update:</p>
+<ol>
+<li>Open Desktop mode.</li>
+<li>Press <strong>F9</strong>.</li>
+<li>Check <strong>Updates</strong>.</li>
+<li>Update Playnite itself if the newest Helper requires a newer Playnite build.</li>
+<li>Update Aniki Helper.</li>
+<li>Restart.</li>
+</ol>
+<hr>
+<h1 id="i-cannot-find-a-setting">I cannot find a setting</h1>
+<h2 id="it-changes-how-aniki-looks">It changes how Aniki looks</h2>
+<p>Open:</p>
+<p><code>Fullscreen → Start / Menu → Settings → Customization</code></p>
+<h2 id="it-configures-an-aniki-feature">It configures an Aniki feature</h2>
+<p>Open:</p>
+<p><code>Desktop → F9 → Extension settings → Generic → Aniki Helper</code></p>
+<h2 id="it-changes-one-game-only">It changes one game only</h2>
+<p>Try:</p>
+<ul>
+<li>Fullscreen: select game → <strong>Y → Extensions → Aniki Helper</strong></li>
+<li>Desktop: right-click game → <strong>Aniki Helper</strong></li>
+</ul>
+<hr>
+<h1 id="aniki-says-unsupported-layout-settings">Aniki says "Unsupported layout settings"</h1>
+<p>The selected columns/rows do not match the cover format.</p>
+<p>Open:</p>
+<p><code>Fullscreen → Start / Menu → Settings → Layout</code></p>
+<p>Supported ranges are:</p>
+<ul>
+<li><strong>Standard covers:</strong> 6–10 columns and 1–2 rows.</li>
+<li><strong>Square covers:</strong> 5–9 columns and 2 rows.</li>
+<li><strong>Banner / hero covers:</strong> 2–4 columns and 2–3 rows.</li>
+</ul>
+<p>If the <strong>cover shape itself</strong> is wrong, change Playnite's aspect ratio instead:</p>
+<p><code>Desktop → Settings → Appearance → Grid View → Target aspect ratio</code></p>
+<p>Use one of Playnite's normal aspect-ratio presets.</p>
+<hr>
+<h1 id="i-changed-the-visual-pack-but-the-library-still-uses-game-backgrounds">I changed the Visual Pack but the Library still uses game backgrounds</h1>
+<p>Selecting a Visual Pack and selecting the Library background source are two different settings.</p>
+<ol>
+<li>Open <strong>Settings → Customization → Backgrounds and Videos</strong>.</li>
+<li>Change <strong>Main library background</strong> to the Visual Pack mode.</li>
+</ol>
+<p>See <strong><a href="Backgrounds-and-Visual-Packs.html">Backgrounds &amp; Visual Packs</a></strong>.</p>
+<hr>
+<h1 id="no-background-appears-in-the-library">No background appears in the Library</h1>
+<p>Check:</p>
+<ol>
+<li>Does the game have a Playnite Background Image?</li>
+<li>Is <strong>Main library background</strong> set to Game Backgrounds, Visual Pack or another real source instead of None?</li>
+<li>If using filter backgrounds, is the custom folder configured and is the filename correct?</li>
+</ol>
+<p>See <strong><a href="Artwork-and-Metadata.html">Artwork &amp; Metadata</a></strong>.</p>
+<hr>
+<h1 id="logos-do-not-appear">Logos do not appear</h1>
+<p>Check:</p>
+<ol>
+<li>Extra Metadata Loader is installed.</li>
+<li>Extra Metadata Fullscreen Mode Helper is installed.</li>
+<li>Logos are enabled in Extra Metadata Loader.</li>
+<li>The game actually has a logo.</li>
+<li>Try the Aniki recommended logo size limits: <strong>600 × 320</strong>.</li>
+<li>Enable automatic logo downloads on library update if desired.</li>
+<li>Download the affected game's logo manually.</li>
+</ol>
+<p>See <strong><a href="Logos-and-Trailers.html">Logos &amp; Trailers</a></strong>.</p>
+<hr>
+<h1 id="trailers-cause-stutter-when-changing-games">Trailers cause stutter when changing games</h1>
+<p>First test:</p>
+<ol>
+<li>Open <strong>Extra Metadata Loader → Videos</strong>.</li>
+<li>Disable <strong>Stream Steam videos on demand</strong>.</li>
+<li>Prefer downloaded/local trailers.</li>
+<li>Test Aniki with trailers enabled only in Game Details.</li>
+</ol>
+<p>If navigation is still slow, see:</p>
+<p><strong><a href="Performance-and-Recommended-Settings.html">Performance &amp; Recommended Settings</a></strong>.</p>
+<hr>
+<h1 id="trailers-do-not-play">Trailers do not play</h1>
+<p>Check:</p>
+<ol>
+<li>Extra Metadata Loader and its Fullscreen Mode Helper are installed.</li>
+<li>The game has a compatible local video or an available configured video source.</li>
+<li>Aniki trailers are enabled for the current view.</li>
+<li>FFmpeg/FFprobe/yt-dlp paths are configured if the download action needs them.</li>
+</ol>
+<hr>
+<h1 id="no-playnite-videos-work-at-all">No Playnite videos work at all</h1>
+<p>If trailers, login videos and other Playnite video features all fail, check Windows media support.</p>
+<p>This is especially relevant on:</p>
+<ul>
+<li>Windows <strong>N</strong> editions;</li>
+<li>stripped/custom Windows builds;</li>
+<li>systems where normal Windows media components were removed.</li>
+</ul>
+<p>Microsoft's official instructions are here:</p>
+<p><a href="https://support.microsoft.com/en-us/windows/media-feature-pack-for-windows-n-8622b390-4ce6-43c9-9b42-549e5328e407" target="_blank" rel="noopener noreferrer">Media Feature Pack for Windows N — Microsoft Support</a></p>
+<h2 id="windows-11-n">Windows 11 N</h2>
+<ol>
+<li>Open <strong>Windows Settings</strong>.</li>
+<li>Open <strong>Apps</strong>.</li>
+<li>Open <strong>Optional features</strong>.</li>
+<li>Select <strong>View features</strong> next to <strong>Add an optional feature</strong>.</li>
+<li>Search for <strong>Media Feature Pack</strong>.</li>
+<li>Install it.</li>
+<li>Restart Windows.</li>
+</ol>
+<h2 id="windows-10-n">Windows 10 N</h2>
+<ol>
+<li>Open <strong>Windows Settings</strong>.</li>
+<li>Open <strong>Apps → Apps &amp; features</strong>.</li>
+<li>Open <strong>Optional features</strong>.</li>
+<li>Select <strong>Add a feature</strong>.</li>
+<li>Search for <strong>Media Feature Pack</strong>.</li>
+<li>Install it.</li>
+<li>Restart Windows.</li>
+</ol>
+<p>If you are <strong>not</strong> using an N edition, do not install random codec packs just because one trailer fails. First check whether other Playnite videos work normally.</p>
+<hr>
+<h1 id="howlongtobeat-text-is-cut">HowLongToBeat text is cut</h1>
+<p>If you use the HowLongToBeat add-on and long values such as hours + minutes are clipped in a compact Aniki layout:</p>
+<ol>
+<li>Open Playnite Desktop.</li>
+<li>Press <strong>F9</strong>.</li>
+<li>Open the <strong>HowLongToBeat</strong> add-on settings.</li>
+<li>Open its <strong>Appearance</strong> options.</li>
+<li>Choose a shorter / hours-only time format if your installed HowLongToBeat version provides it.</li>
+<li>Save and return to Fullscreen.</li>
+</ol>
+<p>A value such as <code>46h</code> uses less horizontal space than <code>45h 48min</code>.</p>
+<hr>
+<h1 id="dynamic-colors-do-not-update">Dynamic Colors do not update</h1>
+<p>The current Aniki Helper uses the game's Playnite <strong>Background Image</strong>, with the Cover Image as fallback.</p>
+<p>Check:</p>
+<ol>
+<li>the game has a usable Background or Cover;</li>
+<li>the image is JPG/JPEG/PNG/BMP/WEBP;</li>
+<li>the image is not just a tiny thumbnail;</li>
+<li>Dynamic Colors is selected in Theme Color.</li>
+</ol>
+<p>Then reset:</p>
+<p><code>Aniki Helper → Advanced → Color processing → Reset color cache</code></p>
+<p>See <strong><a href="Dynamic-Colors-News-and-Statistics.html">Dynamic Colors, News &amp; Statistics</a></strong>.</p>
+<hr>
+<h1 id="splash-screen-disappears-too-quickly">Splash Screen disappears too quickly</h1>
+<ol>
+<li>Open Splash Screen settings.</li>
+<li>Check <strong>Minimum display duration</strong>.</li>
+<li>Check whether that game has a custom per-game timer.</li>
+<li>Consider <strong>Auto-detect when the game window is ready</strong>.</li>
+</ol>
+<p>A per-game timer overrides the global minimum.</p>
+<hr>
+<h1 id="one-game-has-the-wrong-splash-screen-duration">One game has the wrong Splash Screen duration</h1>
+<p>Reset its override:</p>
+<p><code>Game Options / right-click → Aniki Helper → Splash Screen → Reset minimum timer for this game</code></p>
+<hr>
+<h1 id="i-want-one-splash-screen-timer-for-an-entire-platform">I want one Splash Screen timer for an entire platform</h1>
+<p>Current custom duration overrides are per game.</p>
+<p>Platform/source configuration changes <strong>which splash media is used</strong>, not one shared platform timer.</p>
+<hr>
+<h1 id="overlay-does-not-appear-over-a-game">Overlay does not appear over a game</h1>
+<p>Try:</p>
+<ul>
+<li>borderless fullscreen;</li>
+<li>windowed fullscreen.</li>
+</ul>
+<p>Exclusive fullscreen, anti-cheat and elevated/admin games can prevent the Aniki Overlay from appearing correctly.</p>
+<hr>
+<h1 id="game-reacts-to-buttons-while-the-overlay-is-open">Game reacts to buttons while the Overlay is open</h1>
+<p>For compatible offline/single-player games:</p>
+<ol>
+<li>Open <strong>Aniki Helper → Exclusive Features → In-game overlay</strong>.</li>
+<li>Set behavior to <strong>Suspend game while overlay is open</strong>.</li>
+</ol>
+<p>Do not suspend online, multiplayer, anti-cheat or elevated games.</p>
+<p>Use per-game Never Suspend exceptions where needed.</p>
+<hr>
+<h1 id="aniki-web-browser-says-webview2-is-missing">Aniki Web Browser says WebView2 is missing</h1>
+<p>Download Microsoft's official runtime:</p>
+<p><a href="https://developer.microsoft.com/en-us/microsoft-edge/webview2/" target="_blank" rel="noopener noreferrer">Microsoft Edge WebView2 Runtime</a></p>
+<p>Use the <strong>Evergreen Bootstrapper</strong>, run it, then restart Playnite.</p>
+<p>See <strong><a href="Keyboard-Mouse-and-Web-Browser.html#browser-will-not-open">Keyboard, Mouse &amp; Web Browser</a></strong> for the complete steps.</p>
+<hr>
+<h1 id="controller-guide-shortcut-does-not-work">Controller Guide shortcut does not work</h1>
+<p>The Guide button can be intercepted by:</p>
+<ul>
+<li>Steam;</li>
+<li>Xbox Game Bar;</li>
+<li>Windows;</li>
+<li>controller/remapping utilities.</li>
+</ul>
+<p>Use another Aniki shortcut if Guide is unreliable.</p>
+<hr>
+<h1 id="steam-friends-store-wishlist-stop-working-together">Steam Friends / Store / wishlist stop working together</h1>
+<p>Check the shared Steam session:</p>
+<ol>
+<li>Open <strong>Aniki Helper → Steam → Account</strong>.</li>
+<li>Click <strong>Check connection</strong>.</li>
+<li>Reconnect if needed.</li>
+</ol>
+<hr>
+<h1 id="steam-login-repeatedly-refreshes">Steam login repeatedly refreshes</h1>
+<p>Use Aniki Helper's <strong>Clear web cache and restart</strong> repair action in the Steam Account page.</p>
+<p>This can sign browser-based integrations out, so use it only when the login flow is actually broken.</p>
+<hr>
+<h1 id="friends-played-data-is-outdated">Friends played data is outdated</h1>
+<p>Run:</p>
+<p><code>Aniki Helper → Steam → Friends → Refresh friends played games</code></p>
+<hr>
+<h1 id="achievements-are-missingoutdated">Achievements are missing/outdated</h1>
+<ol>
+<li>Confirm PlayniteAchievements is installed/configured.</li>
+<li>Rebuild Achievement Memories in Aniki Helper.</li>
+<li>If only one game is wrong, use that game's refresh action.</li>
+</ol>
+<hr>
+<h1 id="screenshots-are-missing">Screenshots are missing</h1>
+<p>Check:</p>
+<ol>
+<li>the screenshot provider can see the files;</li>
+<li>the correct provider is selected in Aniki Helper;</li>
+<li>Screenshot Utilities Local Provider is present when using that setup;</li>
+<li>Aniki thumbnails were generated.</li>
+</ol>
+<hr>
+<h1 id="video-center-has-no-thumbnails">Video Center has no thumbnails</h1>
+<p>Check <code>ffmpeg.exe</code> in:</p>
+<p><code>Aniki Helper → Video Center → General</code></p>
+<p>Then rebuild/clear thumbnails if needed.</p>
+<hr>
+<h1 id="video-center-chapter-features-are-missing">Video Center chapter features are missing</h1>
+<p>Check <code>ffprobe.exe</code>.</p>
+<p>The video must also contain useful chapter information.</p>
+<hr>
+<h1 id="movie-artwork-does-not-download">Movie artwork does not download</h1>
+<p>Movie scraping uses TMDB and requires your <strong>TMDB API Read Access Token</strong>.</p>
+<p>TV and Anime providers do not require your own API key.</p>
+<hr>
+<h1 id="network-location-does-not-open-in-video-center">Network location does not open in Video Center</h1>
+<p>Test the same UNC path in Windows File Explorer.</p>
+<p>Windows must already be able to access it. Aniki Helper does not store network credentials.</p>
+<hr>
+<h1 id="navigation-is-not-smooth">Navigation is not smooth</h1>
+<p>Do not randomly disable everything.</p>
+<p>Use the dedicated checklist:</p>
+<p><strong><a href="Performance-and-Recommended-Settings.html">Performance &amp; Recommended Settings</a></strong></p>
+<p>It covers Aniki effects, Playnite asynchronous image loading, image scaler, blur, smooth scrolling, Extra Metadata streaming/logo effects, GPU selection and VRR.</p>
+<hr>
+<h1 id="i-want-to-report-a-bug">I want to report a bug</h1>
+<p>Create a clean log:</p>
+<ol>
+<li>Open <strong>Aniki Helper → Advanced → Diagnostics</strong>.</li>
+<li>Clear the current log.</li>
+<li>Enable <strong>Debug Mode</strong>.</li>
+<li>Reproduce the issue once.</li>
+<li>Send <code>extensions.log</code>.</li>
+<li>Disable Debug Mode afterward.</li>
+</ol>
+<p>Include:</p>
+<ul>
+<li>what you expected;</li>
+<li>what happened;</li>
+<li>whether it happens every time;</li>
+<li>the affected game/feature;</li>
+<li>screenshots or a short video when they help.</li>
+</ul></article><nav class="page-nav"><a href="Performance-and-Recommended-Settings.html"><small>Previous</small>← Performance &amp; Recommended Settings</a></nav></main></div><script>
+        const current=(location.pathname.split('/').pop()||'index.html').split('#')[0];
+        document.querySelectorAll('.nav-link').forEach(a=>{
+          if((a.getAttribute('href')||'').split('#')[0]===current)a.classList.add('active');
+        });
+        document.getElementById('navSearch').addEventListener('input',e=>{
+          const q=e.target.value.trim().toLowerCase();
+          document.querySelectorAll('.nav-link').forEach(a=>{
+            a.classList.toggle('hidden',q&&!a.dataset.title.includes(q));
+          });
+        });
+        </script></body></html>

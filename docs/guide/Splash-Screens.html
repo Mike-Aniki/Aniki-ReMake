@@ -1,0 +1,310 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Aniki ReMake step-by-step user guide for Playnite."><title>Splash Screens — Aniki ReMake User Guide</title><style>
+:root{
+ --bg:#0d1117;--side:#0f141b;--panel:#161b22;--border:#30363d;
+ --text:#e6edf3;--muted:#8b949e;--blue:#58a6ff;--soft:#21262d;--code:#090d12
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.66}
+.shell{display:grid;grid-template-columns:315px minmax(0,1fr);min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;overflow:auto;background:var(--side);border-right:1px solid var(--border);padding:20px 17px 40px}
+.brand{font-size:20px;font-weight:850;padding:5px 10px 17px;border-bottom:1px solid var(--border)}
+.search{width:100%;margin:12px 0;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:#0d1117;color:var(--text)}
+.nav-group{margin:20px 10px 7px;color:var(--muted);font-size:11px;font-weight:850;letter-spacing:.1em;text-transform:uppercase}
+.nav-link{display:block;padding:8px 10px;border-radius:8px;color:#c9d1d9;text-decoration:none;font-size:14px}
+.nav-link:hover{background:var(--soft);color:#fff}.nav-link.active{background:#1f6feb2e;color:#79c0ff;font-weight:750}.nav-link.hidden{display:none}
+.main{min-width:0}.topbar{height:58px;border-bottom:1px solid var(--border);padding:0 34px;display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:13px;position:sticky;top:0;background:#0d1117f3;z-index:5}
+.content{max-width:1000px;margin:0 auto;padding:44px 48px 70px}
+h1,h2,h3,h4{line-height:1.24;scroll-margin-top:78px}
+h1{font-size:38px;margin-top:0;border-bottom:1px solid var(--border);padding-bottom:15px}
+h2{font-size:25px;margin-top:46px;border-bottom:1px solid #21262d;padding-bottom:8px}
+h3{font-size:19px;margin-top:30px}
+p,li{font-size:16px}li{margin:5px 0}ul,ol{padding-left:28px}
+a{color:var(--blue)}strong{color:#f0f6fc}
+code{background:var(--code);border:1px solid #21262d;border-radius:5px;padding:2px 6px}
+blockquote{margin:22px 0;padding:14px 16px;border-left:4px solid #1f6feb;background:var(--panel);border-radius:0 8px 8px 0}
+hr{border:0;border-top:1px solid var(--border);margin:36px 0}
+
+.image-slot{margin:26px 0}
+.image-slot>a{display:block}
+.image-slot img{display:none;max-width:100%;height:auto;margin:0 auto;border:1px solid var(--border);border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.3)}
+.image-slot.loaded img{display:block}
+.image-slot.loaded .image-placeholder{display:none}
+.image-slot.missing-hidden{display:none}
+.image-placeholder{display:none;min-height:165px;border:2px dashed #3d4958;border-radius:12px;background:#111820;align-items:center;justify-content:center;gap:18px;padding:26px;color:var(--muted)}
+.image-slot.missing-preview .image-placeholder{display:flex}
+.ph-icon{font-size:40px;color:#52606f}
+.image-placeholder strong{display:block;color:#9fb4ca;font-size:12px;letter-spacing:.08em;margin-bottom:6px}
+.image-placeholder span{display:block;max-width:620px;margin-bottom:10px}
+.image-placeholder code{display:inline-block;color:#79c0ff}
+
+.page-nav{max-width:1000px;margin:0 auto 60px;padding:0 48px;display:flex;gap:20px}
+.page-nav a{flex:1;border:1px solid var(--border);border-radius:10px;padding:14px 16px;text-decoration:none;background:#111820;color:#c9d1d9}
+.page-nav .next{text-align:right}.page-nav small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+@media(max-width:900px){.shell{display:block}.sidebar{position:relative;height:auto}.topbar{position:relative}.content{padding:28px 20px}.page-nav{padding:0 20px;flex-direction:column}}
+</style></head><body><div class="shell"><aside class="sidebar"><div class="brand">Aniki ReMake Guide</div><input id="navSearch" class="search" placeholder="Search guide pages..."><div class="brand">Aniki ReMake Guide</div>
+<div class="nav-group">Start Here</div>
+<a class="nav-link" href="index.html" data-title="home">Home</a>
+<a class="nav-link" href="New-to-Playnite.html" data-title="new to playnite?">New to Playnite?</a>
+<a class="nav-link" href="Install-Aniki-ReMake.html" data-title="install aniki remake">Install Aniki ReMake</a>
+<a class="nav-link" href="First-Setup-Assistant.html" data-title="first setup assistant">First Setup Assistant</a>
+<a class="nav-link" href="Controller-and-Navigation.html" data-title="controller &amp; navigation">Controller &amp; Navigation</a>
+<div class="nav-group">Set Up Your Library</div>
+<a class="nav-link" href="Artwork-and-Metadata.html" data-title="artwork &amp; metadata">Artwork &amp; Metadata</a>
+<a class="nav-link" href="Logos-and-Trailers.html" data-title="logos &amp; trailers">Logos &amp; Trailers</a>
+<a class="nav-link" href="Screenshots-and-Capture-Gallery.html" data-title="screenshots &amp; capture gallery">Screenshots &amp; Capture Gallery</a>
+<div class="nav-group">Customize Aniki</div>
+<a class="nav-link" href="Theme-Customization.html" data-title="theme customization">Theme Customization</a>
+<a class="nav-link" href="Library-and-Game-Details.html" data-title="library &amp; game details">Library &amp; Game Details</a>
+<a class="nav-link" href="Backgrounds-and-Visual-Packs.html" data-title="backgrounds &amp; visual packs">Backgrounds &amp; Visual Packs</a>
+<a class="nav-link" href="Covers-Banners-and-Custom-Assets.html" data-title="covers, banners &amp; custom assets">Covers, Banners &amp; Custom Assets</a>
+<a class="nav-link" href="Profile-and-Startup.html" data-title="profile &amp; startup">Profile &amp; Startup</a>
+<div class="nav-group">Aniki Features</div>
+<a class="nav-link" href="Hub-Quick-Access-and-Extra.html" data-title="hub, quick access &amp; extra">Hub, Quick Access &amp; Extra</a>
+<a class="nav-link" href="Splash-Screens.html" data-title="splash screens">Splash Screens</a>
+<a class="nav-link" href="Aniki-ScreenSaver.html" data-title="aniki screensaver">Aniki ScreenSaver</a>
+<a class="nav-link" href="In-Game-Overlay.html" data-title="in-game overlay">In-Game Overlay</a>
+<a class="nav-link" href="Keyboard-Mouse-and-Web-Browser.html" data-title="keyboard, mouse &amp; web browser">Keyboard, Mouse &amp; Web Browser</a>
+<a class="nav-link" href="Aniki-Video-Center.html" data-title="aniki video center">Aniki Video Center</a>
+<div class="nav-group">Add-ons &amp; Integrations</div>
+<a class="nav-link" href="Steam.html" data-title="steam">Steam</a>
+<a class="nav-link" href="Achievements-and-Music.html" data-title="achievements &amp; music">Achievements &amp; Music</a>
+<a class="nav-link" href="Other-Integrations-and-Software-Tools.html" data-title="other add-ons &amp; software tools">Other Add-ons &amp; Software Tools</a>
+<div class="nav-group">Advanced</div>
+<a class="nav-link" href="Dynamic-Colors-News-and-Statistics.html" data-title="dynamic colors, news &amp; statistics">Dynamic Colors, News &amp; Statistics</a>
+<a class="nav-link" href="Backup-Reset-and-Diagnostics.html" data-title="backup, reset &amp; diagnostics">Backup, Reset &amp; Diagnostics</a>
+<div class="nav-group">Help</div>
+<a class="nav-link" href="Performance-and-Recommended-Settings.html" data-title="performance &amp; recommended settings">Performance &amp; Recommended Settings</a>
+<a class="nav-link" href="Troubleshooting-and-FAQ.html" data-title="troubleshooting &amp; faq">Troubleshooting &amp; FAQ</a></aside><main class="main"><div class="topbar"><span>Aniki ReMake User Guide</span><span>V3.6</span></div><article class="content"><h1 id="splash-screens">Splash Screens</h1>
+<p>The Aniki game launch Splash Screen displays an image or video while a game is starting.</p>
+<p>You can use one global splash for everything, or choose different media depending on the game, platform or source.</p>
+<hr>
+<h1 id="open-splash-screen-settings">Open Splash Screen settings</h1>
+<p>The complete Splash Screen configuration is in Aniki Helper Desktop settings.</p>
+<ol>
+<li>Open Playnite in <strong>Desktop mode</strong>.</li>
+<li>Click the Playnite icon in the top-left corner.</li>
+<li>Select <strong>Add-ons...</strong> or press <strong>F9</strong>.</li>
+<li>Open <strong>Extension settings → Generic</strong>.</li>
+<li>Select <strong>Aniki Helper</strong>.</li>
+<li>Open <strong>Exclusive Features</strong> at the top.</li>
+<li>Select <strong>Splash screen</strong> on the left.</li>
+</ol>
+<figure class="image-slot"><a href="images/splash-screens-01.png.html" target="_blank" rel="noopener noreferrer"><img src="images/splash-screens-01.png" alt="Aniki Helper → Exclusive Features → Splash screen." onload="this.closest('.image-slot').classList.add('loaded')" onerror="this.closest('.image-slot').classList.add((location.protocol==='file:'||new URLSearchParams(location.search).has('placeholders'))?'missing-preview':'missing-hidden')"></a><div class="image-placeholder"><div class="ph-icon">▧</div><div><strong>IMAGE TO ADD</strong><span>Aniki Helper → Exclusive Features → Splash screen.</span><code>images/splash-screens-01.png</code></div></div></figure>
+<hr>
+<h1 id="first-time-setup">First-time setup</h1>
+<p>Use this if you want to enable the feature without creating a complicated priority system.</p>
+<ol>
+<li>Enable <strong>Game launch screen</strong>.</li>
+<li>Leave the selection mode on the normal/default priority mode unless you already know you want something else.</li>
+<li>Open <strong>Global splash</strong>.</li>
+<li>Click <strong>Add local files</strong>.</li>
+<li>Select an image or video.</li>
+<li>Close the splash manager.</li>
+<li>Set a <strong>Minimum display duration</strong>.</li>
+<li>Save the Aniki Helper settings.</li>
+<li>Launch a game from Fullscreen to test it.</li>
+</ol>
+<figure class="image-slot"><a href="images/splash-screens-02.png.html" target="_blank" rel="noopener noreferrer"><img src="images/splash-screens-02.png" alt="Global Splash manager with Add local files visible." onload="this.closest('.image-slot').classList.add('loaded')" onerror="this.closest('.image-slot').classList.add((location.protocol==='file:'||new URLSearchParams(location.search).has('placeholders'))?'missing-preview':'missing-hidden')"></a><div class="image-placeholder"><div class="ph-icon">▧</div><div><strong>IMAGE TO ADD</strong><span>Global Splash manager with Add local files visible.</span><code>images/splash-screens-02.png</code></div></div></figure>
+<p>If no more specific splash is selected, the global splash is used as the fallback.</p>
+<hr>
+<h1 id="add-more-than-one-splash">Add more than one splash</h1>
+<p>The splash manager can contain multiple files.</p>
+<ol>
+<li>Open the relevant Global, Source, Platform or Game splash manager.</li>
+<li>Click <strong>Add local files</strong>.</li>
+<li>Add several images/videos.</li>
+</ol>
+<p>By default Aniki can choose between the files.</p>
+<p>If you want one file to always be used:</p>
+<ol>
+<li>Select it.</li>
+<li>Choose <strong>Always use this image</strong>.</li>
+</ol>
+<p>To return to random choice, use <strong>Return to random choice</strong>.</p>
+<hr>
+<h1 id="choose-which-splash-is-displayed">Choose which splash is displayed</h1>
+<p>The <strong>Splash selection mode</strong> decides which source is tried first.</p>
+<p>Priority modes can fall back to other available sources.</p>
+<h2 id="game-priority">Game priority</h2>
+<p>Use this when game-specific content should be preferred.</p>
+<p>Aniki can fall back through other available sources when the preferred game content is unavailable.</p>
+<h2 id="platform-priority">Platform priority</h2>
+<p>Use this when platform identity should be preferred.</p>
+<p>For example, games assigned to the same Playnite platform can share a platform splash.</p>
+<h2 id="source-priority">Source priority</h2>
+<p>Use this when the Playnite source should be preferred.</p>
+<p>This is useful if you want different launch media for sources such as Steam, GOG or Epic.</p>
+<h2 id="global-only">Global only</h2>
+<p>Always use the global splash.</p>
+<p>No source/platform/game-specific splash is used.</p>
+<h2 id="custom-priority">Custom priority</h2>
+<p>Lets you define your own order using:</p>
+<ul>
+<li>Game custom</li>
+<li>Game background</li>
+<li>Platform</li>
+<li>Source</li>
+<li>Global</li>
+<li>None</li>
+</ul>
+<hr>
+<h1 id="configure-a-platform-splash">Configure a platform splash</h1>
+<ol>
+<li>Open the Splash Screen settings.</li>
+<li>Find <strong>Splash management</strong>.</li>
+<li>Select <strong>Splashes by platform</strong>.</li>
+<li>Choose the Playnite platform.</li>
+<li>Add one or more files.</li>
+<li>Close the manager.</li>
+<li>Use a selection mode where Platform can be chosen before the global fallback.</li>
+<li>Save.</li>
+<li>Launch a game assigned to that platform and test it.</li>
+</ol>
+<p>The game must actually have that Playnite platform assigned.</p>
+<hr>
+<h1 id="configure-a-source-splash">Configure a source splash</h1>
+<ol>
+<li>Open <strong>Splashes by source</strong>.</li>
+<li>Choose the source.</li>
+<li>Add the media.</li>
+<li>Close the manager.</li>
+<li>Use a selection mode where Source is part of the priority.</li>
+<li>Save and test a game from that source.</li>
+</ol>
+<hr>
+<h1 id="configure-a-splash-for-one-game">Configure a splash for one game</h1>
+<p>Game-specific splash management is available from Playnite Desktop.</p>
+<ol>
+<li>Find the game in the Playnite Desktop Library.</li>
+<li>Right-click it.</li>
+<li>Open <strong>Aniki Helper</strong>.</li>
+<li>Open <strong>Splash Screen</strong>.</li>
+<li>Select <strong>Manage splash screens</strong>.</li>
+<li>Add the media you want.</li>
+<li>Close the manager.</li>
+</ol>
+<p>Use <strong>Game priority</strong> or a suitable custom priority if you want game-specific media to be preferred.</p>
+<hr>
+<h1 id="change-the-display-duration-for-all-games">Change the display duration for all games</h1>
+<p>The global timer is in:</p>
+<p><code>Aniki Helper → Exclusive Features → Splash screen → Global timers</code></p>
+<ol>
+<li>Set <strong>Minimum display duration</strong>.</li>
+<li>Save.</li>
+<li>Test a normal game.</li>
+</ol>
+<p>This value applies by default to every game that does not have its own timer override.</p>
+<hr>
+<h1 id="change-the-duration-for-one-game">Change the duration for one game</h1>
+<p>A per-game timer is useful when one game takes longer or shorter to start than the rest of your library.</p>
+<h2 id="desktop">Desktop</h2>
+<ol>
+<li>Right-click the game.</li>
+<li>Open <strong>Aniki Helper → Splash Screen</strong>.</li>
+<li>Select <strong>Set minimum timer for this game</strong>.</li>
+<li>Enter the duration in seconds.</li>
+<li>Confirm.</li>
+</ol>
+<h2 id="fullscreen">Fullscreen</h2>
+<ol>
+<li>Select the game in the Library.</li>
+<li>Press <strong>Y</strong> to open Game Options.</li>
+<li>Open <strong>Extensions → Aniki Helper → Splash Screen</strong>.</li>
+<li>Open <strong>Set minimum timer for this game</strong>.</li>
+<li>Choose one of the available presets.</li>
+</ol>
+<p>Fullscreen offers preset values from seconds up to several minutes.</p>
+<figure class="image-slot"><a href="images/splash-screens-03.png.html" target="_blank" rel="noopener noreferrer"><img src="images/splash-screens-03.png" alt="Fullscreen Game Options → Extensions → Aniki Helper → Splash Screen → Set minimum timer for this game." onload="this.closest('.image-slot').classList.add('loaded')" onerror="this.closest('.image-slot').classList.add((location.protocol==='file:'||new URLSearchParams(location.search).has('placeholders'))?'missing-preview':'missing-hidden')"></a><div class="image-placeholder"><div class="ph-icon">▧</div><div><strong>IMAGE TO ADD</strong><span>Fullscreen Game Options → Extensions → Aniki Helper → Splash Screen → Set minimum timer for this game.</span><code>images/splash-screens-03.png</code></div></div></figure>
+<p>The per-game timer takes priority over the global minimum duration.</p>
+<hr>
+<h1 id="reset-a-games-custom-duration">Reset a game's custom duration</h1>
+<h2 id="fullscreen-or-desktop">Fullscreen or Desktop</h2>
+<p>Open the same game's:</p>
+<p><code>Aniki Helper → Splash Screen</code></p>
+<p>Then select:</p>
+<p><strong>Reset minimum timer for this game</strong></p>
+<p>The game returns to the normal global timer.</p>
+<hr>
+<h1 id="can-i-set-a-timer-for-an-entire-platform">Can I set a timer for an entire platform?</h1>
+<p>The current custom duration override is <strong>per game</strong>.</p>
+<p>Platform/source settings control the <strong>splash media selection</strong>, not one shared custom minimum-duration override.</p>
+<p>If several games need longer launch times, set the timer on those games individually.</p>
+<hr>
+<h1 id="let-aniki-wait-for-the-actual-game-window">Let Aniki wait for the actual game window</h1>
+<p>Enable:</p>
+<p><strong>Auto-detect when the game window is ready</strong></p>
+<p>When enabled, Aniki Helper keeps the splash visible until the real game window is detected.</p>
+<p>This is useful when game launch time varies.</p>
+<p>Per-game custom minimum timers still take priority.</p>
+<hr>
+<h1 id="automatic-close-safety-timer">Automatic close safety timer</h1>
+<p>The <strong>Automatic close safety timer</strong> prevents a splash from staying visible forever.</p>
+<p>If the game never reaches the foreground as expected, Aniki closes the splash after this maximum wait.</p>
+<p>Use it as a safety fallback, not as your normal minimum display duration.</p>
+<hr>
+<h1 id="show-the-game-logo">Show the game logo</h1>
+<ol>
+<li>Enable <strong>Show game logo on the splash screen</strong>.</li>
+<li>Select <strong>Logo position</strong>.</li>
+<li>Choose the placement you prefer.</li>
+<li>Save and test.</li>
+</ol>
+<p>Available positions cover left, center and right areas at the top, middle and bottom.</p>
+<hr>
+<h1 id="video-splash-sound">Video splash sound</h1>
+<p>If you use video splashes:</p>
+<ol>
+<li>Enable <strong>splash video sound</strong> if you want audio.</li>
+<li>Adjust <strong>Video volume</strong>.</li>
+<li>Save.</li>
+</ol>
+<p>This setting affects video splashes only.</p>
+<hr>
+<h1 id="a-video-ends-before-the-splash-screen-timer">A video ends before the Splash Screen timer</h1>
+<p>Choose <strong>When a splash video ends early</strong>.</p>
+<p>You can:</p>
+<ul>
+<li>show the game background for the remaining time;</li>
+<li>keep the last video frame.</li>
+</ul>
+<p>Choose whichever looks better with your launch videos.</p>
+<hr>
+<h1 id="pause-uniplaysong-during-the-splash">Pause UniPlaySong during the splash</h1>
+<p>If UniPlaySong is installed:</p>
+<ol>
+<li>Enable <strong>Pause UniPlaySong while splash screen is visible</strong>.</li>
+<li>Save.</li>
+</ol>
+<p>Aniki pauses the background music while the launch splash is visible, then resumes it afterward.</p>
+<hr>
+<h1 id="troubleshooting">Troubleshooting</h1>
+<h2 id="the-splash-disappears-too-quickly">The splash disappears too quickly</h2>
+<p>Check:</p>
+<ol>
+<li>the global Minimum display duration;</li>
+<li>whether that game has a custom timer;</li>
+<li>Auto-detect game window.</li>
+</ol>
+<h2 id="the-splash-stays-too-long">The splash stays too long</h2>
+<p>Check:</p>
+<ol>
+<li>whether the game has a long per-game timer;</li>
+<li>your global minimum;</li>
+<li>the auto-detection behavior;</li>
+<li>the safety timer.</li>
+</ol>
+<h2 id="the-wrong-splash-is-displayed">The wrong splash is displayed</h2>
+<p>Review your <strong>Splash selection mode</strong> and the available Game/Platform/Source/Global media.</p>
+<h2 id="one-game-behaves-differently">One game behaves differently</h2>
+<p>Reset its per-game timer and check whether it also has a game-specific splash.</p></article><nav class="page-nav"><a href="Hub-Quick-Access-and-Extra.html"><small>Previous</small>← Hub, Quick Access &amp; Extra</a><a class="next" href="Aniki-ScreenSaver.html"><small>Next</small>Aniki ScreenSaver →</a></nav></main></div><script>
+        const current=(location.pathname.split('/').pop()||'index.html').split('#')[0];
+        document.querySelectorAll('.nav-link').forEach(a=>{
+          if((a.getAttribute('href')||'').split('#')[0]===current)a.classList.add('active');
+        });
+        document.getElementById('navSearch').addEventListener('input',e=>{
+          const q=e.target.value.trim().toLowerCase();
+          document.querySelectorAll('.nav-link').forEach(a=>{
+            a.classList.toggle('hidden',q&&!a.dataset.title.includes(q));
+          });
+        });
+        </script></body></html>
