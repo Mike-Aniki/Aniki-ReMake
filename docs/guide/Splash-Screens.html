@@ -41,6 +41,109 @@ hr{border:0;border-top:1px solid var(--border);margin:36px 0}
 .page-nav a{flex:1;border:1px solid var(--border);border-radius:10px;padding:14px 16px;text-decoration:none;background:#111820;color:#c9d1d9}
 .page-nav .next{text-align:right}.page-nav small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
 @media(max-width:900px){.shell{display:block}.sidebar{position:relative;height:auto}.topbar{position:relative}.content{padding:28px 20px}.page-nav{padding:0 20px;flex-direction:column}}
+
+/* Section permalinks --------------------------------------------------- */
+h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]{
+  position:relative;
+}
+
+.section-anchor{
+  position:absolute;
+  right:100%;
+  top:50%;
+  transform:translateY(-50%);
+  width:30px;
+  height:30px;
+  margin-right:7px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:0;
+  border-radius:7px;
+  padding:0;
+  background:transparent;
+  color:var(--muted);
+  opacity:0;
+  cursor:pointer;
+  text-decoration:none;
+  transition:opacity .14s ease, color .14s ease, background .14s ease;
+}
+
+.section-anchor svg{
+  width:17px;
+  height:17px;
+  fill:currentColor;
+}
+
+h1[id]:hover > .section-anchor,
+h2[id]:hover > .section-anchor,
+h3[id]:hover > .section-anchor,
+h4[id]:hover > .section-anchor,
+h5[id]:hover > .section-anchor,
+h6[id]:hover > .section-anchor,
+.section-anchor:focus-visible{
+  opacity:1;
+}
+
+.section-anchor:hover,
+.section-anchor:focus-visible{
+  color:var(--blue);
+  background:var(--soft);
+  outline:none;
+}
+
+h1[id]:target,
+h2[id]:target,
+h3[id]:target,
+h4[id]:target,
+h5[id]:target,
+h6[id]:target{
+  border-radius:6px;
+  animation:section-target-flash 1.4s ease;
+}
+
+@keyframes section-target-flash{
+  0%,35%{background:rgba(88,166,255,.16)}
+  100%{background:transparent}
+}
+
+.section-copy-toast{
+  position:fixed;
+  left:50%;
+  bottom:24px;
+  z-index:1000;
+  transform:translate(-50%,16px);
+  padding:9px 13px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#161b22;
+  color:var(--text);
+  box-shadow:0 10px 35px rgba(0,0,0,.4);
+  font-size:13px;
+  font-weight:650;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .16s ease, transform .16s ease;
+}
+
+.section-copy-toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+@media (hover:none){
+  .section-anchor{opacity:.65}
+}
+
+@media(max-width:1100px){
+  .section-anchor{
+    position:static;
+    transform:none;
+    margin:0 7px 0 0;
+    vertical-align:middle;
+  }
+}
+
 </style></head><body><div class="shell"><aside class="sidebar"><div class="brand">Aniki ReMake Guide</div><input id="navSearch" class="search" placeholder="Search guide pages..."><div class="brand">Aniki ReMake Guide</div>
 <div class="nav-group">Start Here</div>
 <a class="nav-link" href="index.html" data-title="home">Home</a>
@@ -307,4 +410,78 @@ hr{border:0;border-top:1px solid var(--border);margin:36px 0}
             a.classList.toggle('hidden',q&&!a.dataset.title.includes(q));
           });
         });
-        </script></body></html>
+        
+        // Section permalink buttons ------------------------------------
+        (() => {
+          const icon = `
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M7.775 3.275a.75.75 0 0 0-1.06-1.06l-2.5 2.5a3 3 0 0 0 4.24 4.24l.5-.5a.75.75 0 0 0-1.06-1.06l-.5.5a1.5 1.5 0 0 1-2.12-2.12l2.5-2.5Zm.45 9.45a.75.75 0 0 0 1.06 1.06l2.5-2.5a3 3 0 0 0-4.24-4.24l-.5.5a.75.75 0 0 0 1.06 1.06l.5-.5a1.5 1.5 0 0 1 2.12 2.12l-2.5 2.5Z"></path>
+            </svg>`;
+
+          const toast = document.createElement('div');
+          toast.className = 'section-copy-toast';
+          toast.textContent = 'Section link copied!';
+          document.body.appendChild(toast);
+
+          let toastTimer = null;
+
+          function showToast(message = 'Section link copied!'){
+            toast.textContent = message;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 1600);
+          }
+
+          async function copyText(text){
+            if (navigator.clipboard && window.isSecureContext){
+              await navigator.clipboard.writeText(text);
+              return;
+            }
+
+            const area = document.createElement('textarea');
+            area.value = text;
+            area.setAttribute('readonly', '');
+            area.style.position = 'fixed';
+            area.style.opacity = '0';
+            document.body.appendChild(area);
+            area.select();
+            document.execCommand('copy');
+            area.remove();
+          }
+
+          const pageTitle = document.querySelector('.content > h1[id]');
+          document.querySelectorAll('.content h1[id],.content h2[id],.content h3[id],.content h4[id],.content h5[id],.content h6[id]').forEach(heading => {
+            if (heading === pageTitle) return;
+            if (heading.querySelector(':scope > .section-anchor')) return;
+
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'section-anchor';
+            button.innerHTML = icon;
+            button.title = 'Copy link to this section';
+            button.setAttribute('aria-label', `Copy link to section: ${heading.textContent.trim()}`);
+
+            button.addEventListener('click', async event => {
+              event.preventDefault();
+              event.stopPropagation();
+
+              const url = new URL(window.location.href);
+              url.search = '';
+              url.hash = heading.id;
+
+              // Also update the current address bar without jumping away.
+              history.replaceState(null, '', `#${heading.id}`);
+
+              try{
+                await copyText(url.href);
+                showToast();
+              }catch{
+                showToast('Copy failed — use the address bar');
+              }
+            });
+
+            heading.prepend(button);
+          });
+        })();
+
+</script></body></html>
