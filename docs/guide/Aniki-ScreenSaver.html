@@ -473,16 +473,233 @@ body.drawer-open .nav-backdrop{display:block}
   .topbar-action{width:38px;justify-content:center;padding:0}
   .version{font-size:11px}
 }
-</style></head><body><div class="shell"><aside aria-label="Guide navigation" class="sidebar" id="guideSidebar"><div class="sidebar-head"><a class="sidebar-brand" href="index.html">Aniki ReMake Guide</a><button aria-label="Close guide navigation" class="drawer-close" id="guideCloseBtn" type="button">×</button></div><div class="guide-search-wrap"><input aria-label="Search guide" autocomplete="off" class="search" id="navSearch" placeholder="Search pages and sections..." spellcheck="false"/><div aria-label="Search results" class="search-results" id="searchResults" role="listbox"></div></div><nav class="nav-sections" id="navSections"><section class="nav-section" data-group-index="0"><button aria-expanded="true" class="nav-group-button" type="button"><span>Start Here</span><span aria-hidden="true" class="nav-chevron">›</span></button><div class="nav-group-links"><a class="nav-link" data-title="home" href="index.html">Home</a><a class="nav-link" data-title="new to playnite?" href="New-to-Playnite.html">New to Playnite?</a><a class="nav-link" data-title="install aniki remake" href="Install-Aniki-ReMake.html">Install Aniki ReMake</a><a class="nav-link" data-title="first setup assistant" href="First-Setup-Assistant.html">First Setup Assistant</a><a class="nav-link" data-title="controller &amp; navigation" href="Controller-and-Navigation.html">Controller &amp; Navigation</a></div></section><section class="nav-section" data-group-index="1"><button aria-expanded="true" class="nav-group-button" type="button"><span>Set Up Your Library</span><span aria-hidden="true" class="nav-chevron">›</span></button><div class="nav-group-links"><a class="nav-link" data-title="artwork &amp; metadata" href="Artwork-and-Metadata.html">Artwork &amp; Metadata</a><a class="nav-link" data-title="logos &amp; trailers" href="Logos-and-Trailers.html">Logos &amp; Trailers</a><a class="nav-link" data-title="screenshots &amp; capture gallery" href="Screenshots-and-Capture-Gallery.html">Screenshots &amp; Capture Gallery</a></div></section><section class="nav-section" data-group-index="2"><button aria-expanded="true" class="nav-group-button" type="button"><span>Customize Aniki</span><span aria-hidden="true" class="nav-chevron">›</span></button><div class="nav-group-links"><a class="nav-link" data-title="theme customization" href="Theme-Customization.html">Theme Customization</a><a class="nav-link" data-title="library &amp; game details" href="Library-and-Game-Details.html">Library &amp; Game Details</a><a class="nav-link" data-title="backgrounds &amp; visual packs" href="Backgrounds-and-Visual-Packs.html">Backgrounds &amp; Visual Packs</a><a class="nav-link" data-title="covers, banners &amp; custom assets" href="Covers-Banners-and-Custom-Assets.html">Covers, Banners &amp; Custom Assets</a><a class="nav-link" data-title="profile &amp; startup" href="Profile-and-Startup.html">Profile &amp; Startup</a></div></section><section class="nav-section" data-group-index="3"><button aria-expanded="true" class="nav-group-button" type="button"><span>Aniki Features</span><span aria-hidden="true" class="nav-chevron">›</span></button><div class="nav-group-links"><a class="nav-link" data-title="hub, quick access &amp; extra" href="Hub-Quick-Access-and-Extra.html">Hub, Quick Access &amp; Extra</a><a class="nav-link" data-title="splash screens" href="Splash-Screens.html">Splash Screens</a><a class="nav-link" data-title="aniki screensaver" href="Aniki-ScreenSaver.html">Aniki ScreenSaver</a><a class="nav-link" data-title="in-game overlay" href="In-Game-Overlay.html">In-Game Overlay</a><a class="nav-link" data-title="keyboard, mouse &amp; web browser" href="Keyboard-Mouse-and-Web-Browser.html">Keyboard, Mouse &amp; Web Browser</a><a class="nav-link" data-title="aniki video center" href="Aniki-Video-Center.html">Aniki Video Center</a></div></section><section class="nav-section" data-group-index="4"><button aria-expanded="true" class="nav-group-button" type="button"><span>Add-ons &amp; Integrations</span><span aria-hidden="true" class="nav-chevron">›</span></button><div class="nav-group-links"><a class="nav-link" data-title="steam" href="Steam.html">Steam</a><a class="nav-link" data-title="achievements &amp; music" href="Achievements-and-Music.html">Achievements &amp; Music</a><a class="nav-link" data-title="other add-ons &amp; software tools" href="Other-Integrations-and-Software-Tools.html">Other Add-ons &amp; Software Tools</a></div></section><section class="nav-section" data-group-index="5"><button aria-expanded="true" class="nav-group-button" type="button"><span>Advanced</span><span aria-hidden="true" class="nav-chevron">›</span></button><div class="nav-group-links"><a class="nav-link" data-title="dynamic colors, news &amp; statistics" href="Dynamic-Colors-News-and-Statistics.html">Dynamic Colors, News &amp; Statistics</a><a class="nav-link" data-title="backup, reset &amp; diagnostics" href="Backup-Reset-and-Diagnostics.html">Backup, Reset &amp; Diagnostics</a></div></section><section class="nav-section" data-group-index="6"><button aria-expanded="true" class="nav-group-button" type="button"><span>Help</span><span aria-hidden="true" class="nav-chevron">›</span></button><div class="nav-group-links"><a class="nav-link" data-title="performance &amp; recommended settings" href="Performance-and-Recommended-Settings.html">Performance &amp; Recommended Settings</a><a class="nav-link" data-title="troubleshooting &amp; faq" href="Troubleshooting-and-FAQ.html">Troubleshooting &amp; FAQ</a></div></section></nav></aside><main class="main"><div class="topbar"><button aria-label="Open guide navigation" class="topbar-action" id="guideMenuBtn" type="button">
+
+
+/* V4.0 navigation + document styling -------------------------------- */
+:root{
+  --left-nav:285px;
+  --right-nav:255px;
+  --side-collapsed:50px;
+  --left-nav-current:var(--left-nav);
+  --right-nav-current:var(--right-nav);
+}
+
+body.left-collapsed{--left-nav-current:var(--side-collapsed)}
+body.right-collapsed{--right-nav-current:var(--side-collapsed)}
+
+.shell{
+  grid-template-columns:var(--left-nav-current) minmax(0,1fr) var(--right-nav-current);
+  transition:grid-template-columns .18s ease;
+}
+
+.home-page .home-shell{
+  grid-template-columns:var(--left-nav-current) minmax(0,1fr);
+}
+
+.desktop-collapse{
+  width:31px;
+  height:31px;
+  flex:0 0 31px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#111820;
+  color:var(--muted);
+  cursor:pointer;
+  font-size:22px;
+  line-height:1;
+  transition:color .14s ease,border-color .14s ease,background .14s ease;
+}
+.desktop-collapse:hover{
+  color:#79c0ff;
+  border-color:#42658d;
+  background:#162231;
+}
+
+.sidebar-head{gap:8px}
+.sidebar-brand{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.left-collapse{margin-left:auto}
+.drawer-close{margin-left:0}
+
+body.left-collapsed .sidebar{
+  padding-left:7px;
+  padding-right:7px;
+  overflow:hidden;
+}
+body.left-collapsed .sidebar-head{
+  justify-content:center;
+  padding-left:0;
+  padding-right:0;
+}
+body.left-collapsed .sidebar-brand,
+body.left-collapsed .guide-search-wrap,
+body.left-collapsed .nav-sections{
+  display:none;
+}
+body.left-collapsed .left-collapse{
+  margin:0;
+}
+
+.toc-head{gap:7px}
+.right-collapse{margin-left:auto}
+
+body.right-collapsed .toc-sidebar{overflow:hidden}
+body.right-collapsed .toc-inner{
+  padding-left:7px;
+  padding-right:7px;
+}
+body.right-collapsed .toc-head{
+  justify-content:center;
+}
+body.right-collapsed .toc-title,
+body.right-collapsed .toc-list{
+  display:none;
+}
+body.right-collapsed .right-collapse{
+  margin:0;
+}
+
+/* Slight Aniki-style identity for documentation pages. */
+.doc-page .content{
+  max-width:980px;
+  padding-top:38px;
+}
+.doc-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  min-height:34px;
+  margin-bottom:10px;
+  padding:6px 11px;
+  border:1px solid rgba(88,166,255,.22);
+  border-radius:999px;
+  background:rgba(31,111,235,.08);
+  color:#79c0ff;
+  font-size:10px;
+  font-weight:850;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+.doc-kicker img{
+  width:22px;
+  height:22px;
+  object-fit:contain;
+}
+.doc-kicker .doc-css-icon{
+  width:21px;
+  height:21px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1.5px solid currentColor;
+  border-radius:50%;
+  font-size:12px;
+  font-weight:900;
+}
+.doc-page .doc-title{
+  margin:0 0 15px;
+  padding:27px 30px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:
+    radial-gradient(circle at 90% 0%,rgba(88,166,255,.13),transparent 31%),
+    linear-gradient(135deg,rgba(31,111,235,.09),rgba(255,255,255,.018));
+  box-shadow:0 20px 55px rgba(0,0,0,.18);
+  font-size:clamp(34px,4vw,46px);
+  letter-spacing:-.045em;
+}
+.doc-page .doc-lead{
+  color:#b8c2cc;
+  font-size:17px;
+  line-height:1.62;
+}
+.doc-page .content > h1:not(.doc-title),
+.doc-page .content > h2{
+  border-bottom:0;
+  padding-bottom:10px;
+  position:relative;
+}
+.doc-page .content > h1:not(.doc-title)::after,
+.doc-page .content > h2::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:54px;
+  height:2px;
+  border-radius:2px;
+  background:linear-gradient(90deg,#58a6ff,rgba(88,166,255,.12));
+}
+.doc-page blockquote{
+  border:1px solid rgba(88,166,255,.16);
+  border-left:4px solid #58a6ff;
+  background:linear-gradient(135deg,rgba(31,111,235,.08),rgba(255,255,255,.015));
+}
+.doc-page .image-slot.loaded img{
+  box-shadow:0 22px 60px rgba(0,0,0,.28);
+}
+
+/* Search result polish. */
+.search-results{
+  max-height:min(66vh,520px);
+  overflow:auto;
+  box-shadow:0 18px 48px rgba(0,0,0,.38);
+}
+.search-result-title mark{
+  background:transparent;
+  color:#79c0ff;
+}
+
+/* Home image override assets. */
+.home-logo,
+.home-hero-media img,
+.feature-card .feature-image img{
+  image-rendering:auto;
+}
+
+@media(max-width:1250px){
+  /* Right side becomes a drawer; desktop collapse is no longer relevant. */
+  body.right-collapsed{--right-nav-current:var(--right-nav)}
+  .right-collapse{display:none}
+  body.right-collapsed .toc-title,
+  body.right-collapsed .toc-list{display:block}
+  body.right-collapsed .toc-inner{padding:18px 16px 40px}
+  body.right-collapsed .toc-head{justify-content:space-between}
+}
+
+@media(max-width:900px){
+  /* Left side becomes a drawer; never hide its content because of a saved desktop state. */
+  body.left-collapsed{--left-nav-current:var(--left-nav)}
+  .left-collapse{display:none}
+  body.left-collapsed .sidebar{
+    padding:0 14px 28px;
+    overflow-y:auto;
+    overflow-x:hidden;
+  }
+  body.left-collapsed .sidebar-head{
+    justify-content:space-between;
+    padding:13px 8px 10px;
+  }
+  body.left-collapsed .sidebar-brand,
+  body.left-collapsed .guide-search-wrap,
+  body.left-collapsed .nav-sections{
+    display:block;
+  }
+  .doc-page .content{padding-top:26px}
+  .doc-page .doc-title{padding:22px 20px;font-size:34px}
+}
+</style></head><body class="doc-page"><div class="shell"><aside aria-label="Guide navigation" class="sidebar" id="guideSidebar"><div class="sidebar-head"><a class="sidebar-brand" href="index.html">Aniki ReMake Guide</a><button aria-label="Collapse guide navigation" class="desktop-collapse left-collapse" id="leftCollapseBtn" title="Collapse guide navigation" type="button">‹</button><button aria-label="Close guide navigation" class="drawer-close" id="guideCloseBtn" type="button">×</button></div><div class="guide-search-wrap"><input aria-label="Search guide" autocomplete="off" class="search" id="navSearch" placeholder="Search pages and sections..." spellcheck="false"/><div aria-label="Search results" class="search-results" id="searchResults" role="listbox"></div></div><nav class="nav-sections" id="navSections"><section class="nav-section" data-group-index="0"><button aria-expanded="true" class="nav-group-button" type="button"><span>Start Here</span><span aria-hidden="true" class="nav-chevron">›</span></button><div class="nav-group-links"><a class="nav-link" data-title="home" href="index.html">Home</a><a class="nav-link" data-title="new to playnite?" href="New-to-Playnite.html">New to Playnite?</a><a class="nav-link" data-title="install aniki remake" href="Install-Aniki-ReMake.html">Install Aniki ReMake</a><a class="nav-link" data-title="first setup assistant" href="First-Setup-Assistant.html">First Setup Assistant</a><a class="nav-link" data-title="controller &amp; navigation" href="Controller-and-Navigation.html">Controller &amp; Navigation</a></div></section><section class="nav-section" data-group-index="1"><button aria-expanded="true" class="nav-group-button" type="button"><span>Set Up Your Library</span><span aria-hidden="true" class="nav-chevron">›</span></button><div class="nav-group-links"><a class="nav-link" data-title="artwork &amp; metadata" href="Artwork-and-Metadata.html">Artwork &amp; Metadata</a><a class="nav-link" data-title="logos &amp; trailers" href="Logos-and-Trailers.html">Logos &amp; Trailers</a><a class="nav-link" data-title="screenshots &amp; capture gallery" href="Screenshots-and-Capture-Gallery.html">Screenshots &amp; Capture Gallery</a></div></section><section class="nav-section" data-group-index="2"><button aria-expanded="true" class="nav-group-button" type="button"><span>Customize Aniki</span><span aria-hidden="true" class="nav-chevron">›</span></button><div class="nav-group-links"><a class="nav-link" data-title="theme customization" href="Theme-Customization.html">Theme Customization</a><a class="nav-link" data-title="library &amp; game details" href="Library-and-Game-Details.html">Library &amp; Game Details</a><a class="nav-link" data-title="backgrounds &amp; visual packs" href="Backgrounds-and-Visual-Packs.html">Backgrounds &amp; Visual Packs</a><a class="nav-link" data-title="covers, banners &amp; custom assets" href="Covers-Banners-and-Custom-Assets.html">Covers, Banners &amp; Custom Assets</a><a class="nav-link" data-title="profile &amp; startup" href="Profile-and-Startup.html">Profile &amp; Startup</a></div></section><section class="nav-section" data-group-index="3"><button aria-expanded="true" class="nav-group-button" type="button"><span>Aniki Features</span><span aria-hidden="true" class="nav-chevron">›</span></button><div class="nav-group-links"><a class="nav-link" data-title="hub, quick access &amp; extra" href="Hub-Quick-Access-and-Extra.html">Hub, Quick Access &amp; Extra</a><a class="nav-link" data-title="splash screens" href="Splash-Screens.html">Splash Screens</a><a class="nav-link" data-title="aniki screensaver" href="Aniki-ScreenSaver.html">Aniki ScreenSaver</a><a class="nav-link" data-title="in-game overlay" href="In-Game-Overlay.html">In-Game Overlay</a><a class="nav-link" data-title="keyboard, mouse &amp; web browser" href="Keyboard-Mouse-and-Web-Browser.html">Keyboard, Mouse &amp; Web Browser</a><a class="nav-link" data-title="aniki video center" href="Aniki-Video-Center.html">Aniki Video Center</a></div></section><section class="nav-section" data-group-index="4"><button aria-expanded="true" class="nav-group-button" type="button"><span>Add-ons &amp; Integrations</span><span aria-hidden="true" class="nav-chevron">›</span></button><div class="nav-group-links"><a class="nav-link" data-title="steam" href="Steam.html">Steam</a><a class="nav-link" data-title="achievements &amp; music" href="Achievements-and-Music.html">Achievements &amp; Music</a><a class="nav-link" data-title="other add-ons &amp; software tools" href="Other-Integrations-and-Software-Tools.html">Other Add-ons &amp; Software Tools</a></div></section><section class="nav-section" data-group-index="5"><button aria-expanded="true" class="nav-group-button" type="button"><span>Advanced</span><span aria-hidden="true" class="nav-chevron">›</span></button><div class="nav-group-links"><a class="nav-link" data-title="dynamic colors, news &amp; statistics" href="Dynamic-Colors-News-and-Statistics.html">Dynamic Colors, News &amp; Statistics</a><a class="nav-link" data-title="backup, reset &amp; diagnostics" href="Backup-Reset-and-Diagnostics.html">Backup, Reset &amp; Diagnostics</a></div></section><section class="nav-section" data-group-index="6"><button aria-expanded="true" class="nav-group-button" type="button"><span>Help</span><span aria-hidden="true" class="nav-chevron">›</span></button><div class="nav-group-links"><a class="nav-link" data-title="performance &amp; recommended settings" href="Performance-and-Recommended-Settings.html">Performance &amp; Recommended Settings</a><a class="nav-link" data-title="troubleshooting &amp; faq" href="Troubleshooting-and-FAQ.html">Troubleshooting &amp; FAQ</a></div></section></nav></aside><main class="main"><div class="topbar"><button aria-label="Open guide navigation" class="topbar-action" id="guideMenuBtn" type="button">
 <svg aria-hidden="true" viewbox="0 0 16 16">
 <path d="M1.75 3.5a.75.75 0 0 1 .75-.75h11a.75.75 0 0 1 0 1.5h-11a.75.75 0 0 1-.75-.75Zm0 4.5a.75.75 0 0 1 .75-.75h11a.75.75 0 0 1 0 1.5h-11A.75.75 0 0 1 1.75 8Zm0 4.5a.75.75 0 0 1 .75-.75h11a.75.75 0 0 1 0 1.5h-11a.75.75 0 0 1-.75-.75Z"></path>
 </svg>
-<span class="action-label">Guide</span></button><span class="topbar-title">Aniki ReMake User Guide</span><div class="topbar-actions"><button aria-label="Open sections on this page" class="topbar-action" id="tocMenuBtn" type="button">
+<span class="action-label">Guide</span></button><span class="topbar-title">Aniki ReMake Guide  /  Aniki ScreenSaver</span><div class="topbar-actions"><button aria-label="Open sections on this page" class="topbar-action" id="tocMenuBtn" type="button">
 <svg aria-hidden="true" viewbox="0 0 16 16">
 <path d="M2.5 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm3-.25h8a.75.75 0 0 1 0 1.5h-8a.75.75 0 0 1 0-1.5ZM2.5 7a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm3-.25h8a.75.75 0 0 1 0 1.5h-8a.75.75 0 0 1 0-1.5ZM2.5 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm3-.25h8a.75.75 0 0 1 0 1.5h-8a.75.75 0 0 1 0-1.5Z"></path>
 </svg>
-<span class="action-label">On this page</span></button><span class="version">V3.9</span></div></div><article class="content"><h1 id="aniki-screensaver">Aniki ScreenSaver</h1>
-<p>Aniki ScreenSaver automatically presents games from your Playnite library after a period of inactivity.</p>
+<span class="action-label">On this page</span></button><span class="version">V4.0</span></div></div><article class="content"><div class="doc-kicker"><span aria-hidden="true" class="doc-css-icon">!</span><span>Aniki Features</span></div><h1 class="doc-title" id="aniki-screensaver">Aniki ScreenSaver</h1>
+<p class="doc-lead">Aniki ScreenSaver automatically presents games from your Playnite library after a period of inactivity.</p>
 <p>It is separate from Windows Screen Saver and separate from game launch Splash Screens.</p>
 <hr/>
 <h1 id="first-time-screensaver-setup">First-time setup</h1>
@@ -565,323 +782,401 @@ body.drawer-open .nav-backdrop{display:block}
 <li>Press any keyboard/controller button or move/click the mouse to close it.</li>
 </ol>
 <figure class="image-slot"><a href="images/aniki-screensaver-01.png" rel="noopener noreferrer" target="_blank"><img alt="ScreenSaver settings with Preview ScreenSaver highlighted." onerror="this.closest('.image-slot').classList.add((location.protocol==='file:'||new URLSearchParams(location.search).has('placeholders'))?'missing-preview':'missing-hidden')" onload="this.closest('.image-slot').classList.add('loaded')" src="images/aniki-screensaver-01.png"/></a><div class="image-placeholder"><div class="ph-icon">▧</div><div><strong>IMAGE TO ADD</strong><span>ScreenSaver settings with Preview ScreenSaver highlighted.</span><code>images/aniki-screensaver-01.png</code></div></div></figure>
-<p>Use Preview before waiting for the inactivity timer.</p></article><nav class="page-nav"><a href="Splash-Screens.html"><small>Previous</small>← Splash Screens</a><a class="next" href="In-Game-Overlay.html"><small>Next</small>In-Game Overlay →</a></nav></main><aside aria-label="Sections on this page" class="toc-sidebar" id="tocSidebar"><div class="toc-inner"><div class="toc-head"><div class="toc-title">On this page</div><button aria-label="Close section navigation" class="drawer-close toc-close" id="tocCloseBtn" type="button">×</button></div><nav class="toc-list" id="tocList"></nav></div></aside></div><script>
-});
-        
-        
-        // V3.8 guide navigation ----------------------------------------
-        (() => {
-          const SEARCH_INDEX = [{"title":"Achievements & Music","page":"Achievements & Music","href":"Achievements-and-Music.html","type":"page"},{"title":"Quick setup — Achievements","page":"Achievements & Music","href":"Achievements-and-Music.html#quick-setup-achievements","type":"section"},{"title":"Achievements — install PlayniteAchievements","page":"Achievements & Music","href":"Achievements-and-Music.html#achievements-install-playniteachievements","type":"section"},{"title":"Open Achievements in Aniki","page":"Achievements & Music","href":"Achievements-and-Music.html#open-achievements-in-aniki","type":"section"},{"title":"Change how achievements are displayed","page":"Achievements & Music","href":"Achievements-and-Music.html#change-how-achievements-are-displayed","type":"section"},{"title":"Rebuild Achievement Memories","page":"Achievements & Music","href":"Achievements-and-Music.html#rebuild-achievement-memories","type":"section"},{"title":"Refresh achievements for one game","page":"Achievements & Music","href":"Achievements-and-Music.html#refresh-achievements-for-one-game","type":"section"},{"title":"Fullscreen","page":"Achievements & Music","href":"Achievements-and-Music.html#fullscreen","type":"section"},{"title":"Desktop","page":"Achievements & Music","href":"Achievements-and-Music.html#desktop","type":"section"},{"title":"Quick setup — Music","page":"Achievements & Music","href":"Achievements-and-Music.html#quick-setup-music","type":"section"},{"title":"Music — install UniPlaySong","page":"Achievements & Music","href":"Achievements-and-Music.html#music-install-uniplaysong","type":"section"},{"title":"Open the Music Player","page":"Achievements & Music","href":"Achievements-and-Music.html#open-the-music-player","type":"section"},{"title":"Avoid duplicate event sounds","page":"Achievements & Music","href":"Achievements-and-Music.html#avoid-duplicate-event-sounds","type":"section"},{"title":"Pause music during game Splash Screens","page":"Achievements & Music","href":"Achievements-and-Music.html#pause-music-during-game-splash-screens","type":"section"},{"title":"Aniki ScreenSaver","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html","type":"page"},{"title":"First-time setup","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#first-time-screensaver-setup","type":"section"},{"title":"Open ScreenSaver settings","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#open-screensaver-settings","type":"section"},{"title":"Enable the ScreenSaver","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#enable-the-screensaver","type":"section"},{"title":"Choose which games are shown","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#choose-which-games-are-shown","type":"section"},{"title":"Use the current filter","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#use-the-current-filter","type":"section"},{"title":"Use Splash Screen images","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#use-splash-screen-images","type":"section"},{"title":"Change what the ScreenSaver shows","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#change-what-the-screensaver-shows","type":"section"},{"title":"Preview the ScreenSaver","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#preview-the-screensaver","type":"section"},{"title":"Aniki Video Center","page":"Aniki Video Center","href":"Aniki-Video-Center.html","type":"page"},{"title":"First-time setup","page":"Aniki Video Center","href":"Aniki-Video-Center.html#first-time-video-center-setup","type":"section"},{"title":"Open Video Center","page":"Aniki Video Center","href":"Aniki-Video-Center.html#open-video-center","type":"section"},{"title":"Open Video Center settings","page":"Aniki Video Center","href":"Aniki-Video-Center.html#open-video-center-settings","type":"section"},{"title":"Use Video Center without creating libraries","page":"Aniki Video Center","href":"Aniki-Video-Center.html#use-video-center-without-creating-libraries","type":"section"},{"title":"Add a folder to Favorites","page":"Aniki Video Center","href":"Aniki-Video-Center.html#add-a-folder-to-favorites","type":"section"},{"title":"Configure media libraries","page":"Aniki Video Center","href":"Aniki-Video-Center.html#configure-media-libraries","type":"section"},{"title":"Configure FFmpeg and FFprobe","page":"Aniki Video Center","href":"Aniki-Video-Center.html#configure-ffmpeg-and-ffprobe","type":"section"},{"title":"If you already installed FFmpeg for Extra Metadata Loader","page":"Aniki Video Center","href":"Aniki-Video-Center.html#if-you-already-installed-ffmpeg-for-extra-metadata-loader","type":"section"},{"title":"If you have not installed FFmpeg yet","page":"Aniki Video Center","href":"Aniki-Video-Center.html#if-you-have-not-installed-ffmpeg-yet","type":"section"},{"title":"Set the FFmpeg path","page":"Aniki Video Center","href":"Aniki-Video-Center.html#set-the-ffmpeg-path","type":"section"},{"title":"Set the FFprobe path","page":"Aniki Video Center","href":"Aniki-Video-Center.html#set-the-ffprobe-path","type":"section"},{"title":"Configure playback","page":"Aniki Video Center","href":"Aniki-Video-Center.html#configure-playback","type":"section"},{"title":"Automatically play next video","page":"Aniki Video Center","href":"Aniki-Video-Center.html#automatically-play-next-video","type":"section"},{"title":"Preferred audio language","page":"Aniki Video Center","href":"Aniki-Video-Center.html#preferred-audio-language","type":"section"},{"title":"Subtitles","page":"Aniki Video Center","href":"Aniki-Video-Center.html#subtitles","type":"section"},{"title":"Configure automatic artwork","page":"Aniki Video Center","href":"Aniki-Video-Center.html#configure-automatic-artwork","type":"section"},{"title":"Movies — TMDB","page":"Aniki Video Center","href":"Aniki-Video-Center.html#movies-tmdb","type":"section"},{"title":"Create your TMDB API access","page":"Aniki Video Center","href":"Aniki-Video-Center.html#create-your-tmdb-api-access","type":"section"},{"title":"Add the token to Aniki","page":"Aniki Video Center","href":"Aniki-Video-Center.html#add-the-token-to-aniki","type":"section"},{"title":"TV Shows — TVMaze","page":"Aniki Video Center","href":"Aniki-Video-Center.html#tv-shows-tvmaze","type":"section"},{"title":"Anime — AniList","page":"Aniki Video Center","href":"Aniki-Video-Center.html#anime-anilist","type":"section"},{"title":"Fix incorrect automatic artwork","page":"Aniki Video Center","href":"Aniki-Video-Center.html#fix-incorrect-automatic-artwork","type":"section"},{"title":"Add a NAS or network folder","page":"Aniki Video Center","href":"Aniki-Video-Center.html#add-a-nas-or-network-folder","type":"section"},{"title":"Player controls","page":"Aniki Video Center","href":"Aniki-Video-Center.html#player-controls","type":"section"},{"title":"Resume playback","page":"Aniki Video Center","href":"Aniki-Video-Center.html#resume-playback","type":"section"},{"title":"Mark watched/unwatched","page":"Aniki Video Center","href":"Aniki-Video-Center.html#mark-watchedunwatched","type":"section"},{"title":"Clear caches","page":"Aniki Video Center","href":"Aniki-Video-Center.html#clear-caches","type":"section"},{"title":"Video Center troubleshooting","page":"Aniki Video Center","href":"Aniki-Video-Center.html#video-center-troubleshooting","type":"section"},{"title":"No thumbnails","page":"Aniki Video Center","href":"Aniki-Video-Center.html#no-thumbnails","type":"section"},{"title":"Chapter features do not work","page":"Aniki Video Center","href":"Aniki-Video-Center.html#chapter-features-do-not-work","type":"section"},{"title":"Movie artwork does not download","page":"Aniki Video Center","href":"Aniki-Video-Center.html#movie-artwork-does-not-download","type":"section"},{"title":"TV/Anime artwork does not download","page":"Aniki Video Center","href":"Aniki-Video-Center.html#tvanime-artwork-does-not-download","type":"section"},{"title":"Network folder is unavailable","page":"Aniki Video Center","href":"Aniki-Video-Center.html#network-folder-is-unavailable","type":"section"},{"title":"Artwork & Metadata","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html","type":"page"},{"title":"First-time metadata setup","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#first-time-metadata-setup","type":"section"},{"title":"Background images are strongly recommended","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#background-images-are-strongly-recommended","type":"section"},{"title":"Check one game's metadata","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#check-one-games-metadata","type":"section"},{"title":"Configure automatic metadata sources","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#configure-automatic-metadata-sources","type":"section"},{"title":"Optional metadata sources that work well with Aniki","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#optional-metadata-sources-that-work-well-with-aniki","type":"section"},{"title":"Universal PSN Metadata","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#universal-psn-metadata","type":"section"},{"title":"IGN Metadata","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#ign-metadata","type":"section"},{"title":"Download metadata for existing games","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#download-metadata-for-existing-games","type":"section"},{"title":"Refresh the entire library","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#refresh-the-entire-library","type":"section"},{"title":"Cover shape and grid layout","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#cover-shape-and-grid-layout","type":"section"},{"title":"Change the cover aspect ratio","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#change-the-cover-aspect-ratio","type":"section"},{"title":"Change Aniki's columns and rows","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#change-anikis-columns-and-rows","type":"section"},{"title":"Steam Feature icons","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#steam-feature-icons","type":"section"},{"title":"Backgrounds are missing","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#backgrounds-are-missing","type":"section"},{"title":"Backgrounds & Visual Packs","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html","type":"page"},{"title":"Quick setup — use a Visual Pack background","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#quick-setup-visual-pack-backgrounds","type":"section"},{"title":"Open Background settings","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#open-background-settings","type":"section"},{"title":"Use each game's normal background","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#use-each-games-normal-background","type":"section"},{"title":"Use Visual Pack backgrounds","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#use-visual-pack-backgrounds","type":"section"},{"title":"Use Visual Pack backgrounds in the Library but game backgrounds in Details","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#use-visual-pack-backgrounds-in-the-library-but-game-backgrounds-in-details","type":"section"},{"title":"Use the current filter as the background","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#use-the-current-filter-as-the-background","type":"section"},{"title":"Use no background","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#use-no-background","type":"section"},{"title":"Background images are cropped too much","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#background-images-are-cropped-too-much","type":"section"},{"title":"SteamGridDB Hero images do not fit well","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#steamgriddb-hero-images-do-not-fit-well","type":"section"},{"title":"Animate backgrounds","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#animate-backgrounds","type":"section"},{"title":"Trailers","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#trailers","type":"section"},{"title":"Backup, Reset & Diagnostics","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html","type":"page"},{"title":"Back up the theme configuration","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#back-up-the-theme-configuration","type":"section"},{"title":"Restore a theme configuration","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#restore-a-theme-configuration","type":"section"},{"title":"Back up Monthly Stats","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#back-up-monthly-stats","type":"section"},{"title":"Restore Monthly Stats","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#restore-monthly-stats","type":"section"},{"title":"Delete all Monthly Stats","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#delete-all-monthly-stats","type":"section"},{"title":"Restore Aniki Helper defaults","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#restore-aniki-helper-defaults","type":"section"},{"title":"Create a clean debug log","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#create-a-clean-debug-log","type":"section"},{"title":"When to use Diagnostics","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#when-to-use-diagnostics","type":"section"},{"title":"Controller & Navigation","page":"Controller & Navigation","href":"Controller-and-Navigation.html","type":"page"},{"title":"Library controls","page":"Controller & Navigation","href":"Controller-and-Navigation.html#library-controls","type":"section"},{"title":"Play a game","page":"Controller & Navigation","href":"Controller-and-Navigation.html#play-a-game","type":"section"},{"title":"Open Game Details","page":"Controller & Navigation","href":"Controller-and-Navigation.html#open-game-details","type":"section"},{"title":"Open Game Options","page":"Controller & Navigation","href":"Controller-and-Navigation.html#open-game-options","type":"section"},{"title":"Change layout","page":"Controller & Navigation","href":"Controller-and-Navigation.html#change-layout","type":"section"},{"title":"Search","page":"Controller & Navigation","href":"Controller-and-Navigation.html#search","type":"section"},{"title":"Open filters","page":"Controller & Navigation","href":"Controller-and-Navigation.html#open-filters","type":"section"},{"title":"Open the Hub","page":"Controller & Navigation","href":"Controller-and-Navigation.html#open-the-hub","type":"section"},{"title":"Open Quick Access","page":"Controller & Navigation","href":"Controller-and-Navigation.html#open-quick-access","type":"section"},{"title":"Open Settings","page":"Controller & Navigation","href":"Controller-and-Navigation.html#open-settings","type":"section"},{"title":"From Quick Access","page":"Controller & Navigation","href":"Controller-and-Navigation.html#from-quick-access","type":"section"},{"title":"Direct shortcut","page":"Controller & Navigation","href":"Controller-and-Navigation.html#direct-shortcut","type":"section"},{"title":"Open Quick Options","page":"Controller & Navigation","href":"Controller-and-Navigation.html#open-quick-options","type":"section"},{"title":"Change controller icon style","page":"Controller & Navigation","href":"Controller-and-Navigation.html#change-controller-icon-style","type":"section"},{"title":"Per-game Aniki Helper settings","page":"Controller & Navigation","href":"Controller-and-Navigation.html#per-game-aniki-helper-settings","type":"section"},{"title":"Fullscreen","page":"Controller & Navigation","href":"Controller-and-Navigation.html#fullscreen","type":"section"},{"title":"Desktop","page":"Controller & Navigation","href":"Controller-and-Navigation.html#desktop","type":"section"},{"title":"Covers, Banners & Custom Assets","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html","type":"page"},{"title":"Open Cover settings","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#open-cover-settings","type":"section"},{"title":"Make the selected cover stand out","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#make-the-selected-cover-stand-out","type":"section"},{"title":"Show completion status on covers","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#show-completion-status-on-covers","type":"section"},{"title":"Create or edit completion statuses","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#create-or-edit-completion-statuses","type":"section"},{"title":"Show platform/source banners","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#show-platformsource-banners","type":"section"},{"title":"Show a small source/platform logo on covers","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#show-a-small-sourceplatform-logo-on-covers","type":"section"},{"title":"Open Custom Resources settings","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#open-custom-resources-settings","type":"section"},{"title":"Exact filename matching","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#exact-filename-matching","type":"section"},{"title":"Add a custom source icon","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#add-a-custom-source-icon","type":"section"},{"title":"Add a custom filter icon","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#add-a-custom-filter-icon","type":"section"},{"title":"Add a custom filter background","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#add-a-custom-filter-background","type":"section"},{"title":"Add your own cover banners","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#custom-banners","type":"section"},{"title":"Custom icon priority","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#custom-icon-priority","type":"section"},{"title":"Where are the theme's default icon files?","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#where-are-the-themes-default-icon-files","type":"section"},{"title":"Dynamic Colors, News & Statistics","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html","type":"page"},{"title":"Dynamic Colors","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#dynamic-colors","type":"section"},{"title":"Enable Dynamic Colors","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#enable-dynamic-colors","type":"section"},{"title":"Which image does Dynamic Colors use?","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#which-image-does-dynamic-colors-use","type":"section"},{"title":"Pre-load Dynamic Colors","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#pre-load-dynamic-colors","type":"section"},{"title":"Dynamic Colors do not change","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#dynamic-colors-do-not-change","type":"section"},{"title":"Reset the Dynamic Colors cache","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#reset-the-dynamic-colors-cache","type":"section"},{"title":"Aniki News","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#aniki-news","type":"section"},{"title":"Enable or disable News","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#enable-or-disable-news","type":"section"},{"title":"Use custom RSS feeds","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#use-custom-rss-feeds","type":"section"},{"title":"Reset one News source cache","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#reset-one-news-source-cache","type":"section"},{"title":"Library statistics","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#library-statistics","type":"section"},{"title":"Monthly statistics","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#monthly-statistics","type":"section"},{"title":"First Setup Assistant","page":"First Setup Assistant","href":"First-Setup-Assistant.html","type":"page"},{"title":"Open the assistant","page":"First Setup Assistant","href":"First-Setup-Assistant.html#open-the-assistant","type":"section"},{"title":"On a new installation","page":"First Setup Assistant","href":"First-Setup-Assistant.html#on-a-new-installation","type":"section"},{"title":"Open it again later","page":"First Setup Assistant","href":"First-Setup-Assistant.html#open-it-again-later","type":"section"},{"title":"Step 1 — Profile","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-1-profile","type":"section"},{"title":"Step 2 — Startup","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-2-startup","type":"section"},{"title":"Login screen","page":"First Setup Assistant","href":"First-Setup-Assistant.html#login-screen","type":"section"},{"title":"Startup destination","page":"First Setup Assistant","href":"First-Setup-Assistant.html#startup-destination","type":"section"},{"title":"Step 3 — Interface style","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-3-interface-style","type":"section"},{"title":"Clean","page":"First Setup Assistant","href":"First-Setup-Assistant.html#clean","type":"section"},{"title":"Standard","page":"First Setup Assistant","href":"First-Setup-Assistant.html#standard","type":"section"},{"title":"Enhanced","page":"First Setup Assistant","href":"First-Setup-Assistant.html#enhanced","type":"section"},{"title":"Complete","page":"First Setup Assistant","href":"First-Setup-Assistant.html#complete","type":"section"},{"title":"Step 4 — Theme color","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-4-theme-color","type":"section"},{"title":"Step 5 — Details layout","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-5-details-layout","type":"section"},{"title":"Step 6 — Visual experience","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-6-visual-experience","type":"section"},{"title":"Full Animated","page":"First Setup Assistant","href":"First-Setup-Assistant.html#full-animated","type":"section"},{"title":"Animated","page":"First Setup Assistant","href":"First-Setup-Assistant.html#animated","type":"section"},{"title":"Balanced","page":"First Setup Assistant","href":"First-Setup-Assistant.html#balanced","type":"section"},{"title":"Performance","page":"First Setup Assistant","href":"First-Setup-Assistant.html#performance","type":"section"},{"title":"Step 7 — Trailers","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-7-trailers","type":"section"},{"title":"Step 8 — Optional integrations (Playnite add-ons)","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-8-optional-integrations-playnite-add-ons","type":"section"},{"title":"PlayniteAchievements","page":"First Setup Assistant","href":"First-Setup-Assistant.html#playniteachievements","type":"section"},{"title":"UniPlaySong","page":"First Setup Assistant","href":"First-Setup-Assistant.html#uniplaysong","type":"section"},{"title":"Extra Metadata Loader","page":"First Setup Assistant","href":"First-Setup-Assistant.html#extra-metadata-loader","type":"section"},{"title":"Screenshot provider","page":"First Setup Assistant","href":"First-Setup-Assistant.html#screenshot-provider","type":"section"},{"title":"AudioSwitcher","page":"First Setup Assistant","href":"First-Setup-Assistant.html#audioswitcher","type":"section"},{"title":"Custom Fade Animations (CustomFadeAnim)","page":"First Setup Assistant","href":"First-Setup-Assistant.html#custom-fade-animations-customfadeanim","type":"section"},{"title":"Step 9 — Discover Aniki Helper","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-9-discover-aniki-helper","type":"section"},{"title":"Step 10 — Apply settings","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-10-apply-settings","type":"section"},{"title":"Change something later","page":"First Setup Assistant","href":"First-Setup-Assistant.html#change-something-later","type":"section"},{"title":"Hub, Quick Access & Extra","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html","type":"page"},{"title":"What is the top bar?","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#what-is-the-top-bar","type":"section"},{"title":"Open the Welcome Hub","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#open-the-welcome-hub","type":"section"},{"title":"From the top bar","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#from-the-top-bar","type":"section"},{"title":"Faster controller shortcut","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#faster-controller-shortcut","type":"section"},{"title":"Start on the Hub automatically","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#start-on-the-hub-automatically","type":"section"},{"title":"Configure Features & Apps","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#configure-features-apps","type":"section"},{"title":"Open Quick Access","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#open-quick-access","type":"section"},{"title":"What is Extras?","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#what-is-extras","type":"section"},{"title":"Open Quick Options","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#open-quick-options","type":"section"},{"title":"In-Game Overlay","page":"In-Game Overlay","href":"In-Game-Overlay.html","type":"page"},{"title":"First-time setup","page":"In-Game Overlay","href":"In-Game-Overlay.html#first-time-overlay-setup","type":"section"},{"title":"Open Overlay settings","page":"In-Game Overlay","href":"In-Game-Overlay.html#open-overlay-settings","type":"section"},{"title":"Enable the Overlay","page":"In-Game Overlay","href":"In-Game-Overlay.html#enable-the-overlay","type":"section"},{"title":"Choose a controller shortcut","page":"In-Game Overlay","href":"In-Game-Overlay.html#choose-a-controller-shortcut","type":"section"},{"title":"Start + Back","page":"In-Game Overlay","href":"In-Game-Overlay.html#start-back","type":"section"},{"title":"Back + Y","page":"In-Game Overlay","href":"In-Game-Overlay.html#back-y","type":"section"},{"title":"Guide button","page":"In-Game Overlay","href":"In-Game-Overlay.html#guide-button","type":"section"},{"title":"Use the Overlay in a game","page":"In-Game Overlay","href":"In-Game-Overlay.html#use-the-overlay-in-a-game","type":"section"},{"title":"Prevent the game from reacting to Overlay inputs","page":"In-Game Overlay","href":"In-Game-Overlay.html#prevent-the-game-from-reacting-to-overlay-inputs","type":"section"},{"title":"When not to use Suspend","page":"In-Game Overlay","href":"In-Game-Overlay.html#when-not-to-use-suspend","type":"section"},{"title":"Never suspend one game","page":"In-Game Overlay","href":"In-Game-Overlay.html#never-suspend-one-game","type":"section"},{"title":"Fullscreen","page":"In-Game Overlay","href":"In-Game-Overlay.html#fullscreen","type":"section"},{"title":"Desktop","page":"In-Game Overlay","href":"In-Game-Overlay.html#desktop","type":"section"},{"title":"Remove an exception","page":"In-Game Overlay","href":"In-Game-Overlay.html#remove-an-exception","type":"section"},{"title":"Overlay does not appear","page":"In-Game Overlay","href":"In-Game-Overlay.html#overlay-does-not-appear","type":"section"},{"title":"Keyboard and mouse tools","page":"In-Game Overlay","href":"In-Game-Overlay.html#keyboard-and-mouse-tools","type":"section"},{"title":"Install Aniki ReMake","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html","type":"page"},{"title":"1. Install the Aniki ReMake theme","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#1-install-the-aniki-remake-theme","type":"section"},{"title":"2. Activate Aniki ReMake in Fullscreen","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#2-activate-aniki-remake-in-fullscreen","type":"section"},{"title":"3. If Aniki Helper is missing or outdated","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#3-if-aniki-helper-is-missing-or-outdated","type":"section"},{"title":"If Aniki Helper is missing","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#if-aniki-helper-is-missing","type":"section"},{"title":"If Aniki Helper needs an update","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#if-aniki-helper-needs-an-update","type":"section"},{"title":"Install or update Aniki Helper manually","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#install-or-update-aniki-helper-manually","type":"section"},{"title":"Install","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#install","type":"section"},{"title":"Update","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#update","type":"section"},{"title":"4. First Setup Assistant","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#4-first-setup-assistant","type":"section"},{"title":"Optional add-ons / integrations","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#optional-add-ons-integrations","type":"section"},{"title":"Also recommended: ControlUp","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#also-recommended-controlup","type":"section"},{"title":"Keyboard, Mouse & Web Browser","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html","type":"page"},{"title":"Open Keyboard & Mouse settings","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#open-keyboard-mouse-settings","type":"section"},{"title":"Configure the virtual keyboard","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#configure-the-virtual-keyboard","type":"section"},{"title":"Aniki Keyboard","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#aniki-keyboard","type":"section"},{"title":"Windows Keyboard","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#windows-keyboard","type":"section"},{"title":"Choose the keyboard shortcut","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#choose-the-keyboard-shortcut","type":"section"},{"title":"Open the keyboard","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#open-the-keyboard","type":"section"},{"title":"Configure Gamepad Mouse","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#configure-gamepad-mouse","type":"section"},{"title":"Gamepad Mouse controls","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#gamepad-mouse-controls","type":"section"},{"title":"Open Aniki Web Browser","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#open-aniki-web-browser","type":"section"},{"title":"Browser controls","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#browser-controls","type":"section"},{"title":"Add Fullscreen favorites","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#add-fullscreen-favorites","type":"section"},{"title":"Clear only the browser cache","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#clear-only-the-browser-cache","type":"section"},{"title":"Delete all Aniki browser data","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#delete-all-aniki-browser-data","type":"section"},{"title":"Browser will not open","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#browser-will-not-open","type":"section"},{"title":"Easiest installation","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#easiest-installation","type":"section"},{"title":"Library & Game Details","page":"Library & Game Details","href":"Library-and-Game-Details.html","type":"page"},{"title":"Open the relevant settings","page":"Library & Game Details","href":"Library-and-Game-Details.html#open-the-relevant-settings","type":"section"},{"title":"Make the Library cleaner","page":"Library & Game Details","href":"Library-and-Game-Details.html#make-the-library-cleaner","type":"section"},{"title":"Auto-hide navigation bars","page":"Library & Game Details","href":"Library-and-Game-Details.html#auto-hide-navigation-bars","type":"section"},{"title":"Remove the top or bottom bars completely","page":"Library & Game Details","href":"Library-and-Game-Details.html#remove-the-top-or-bottom-bars-completely","type":"section"},{"title":"Choose which top-bar shortcuts are shown","page":"Library & Game Details","href":"Library-and-Game-Details.html#choose-which-top-bar-shortcuts-are-shown","type":"section"},{"title":"Choose how game information is displayed in the Library","page":"Library & Game Details","href":"Library-and-Game-Details.html#choose-how-game-information-is-displayed-in-the-library","type":"section"},{"title":"Controller Shortcut Bar","page":"Library & Game Details","href":"Library-and-Game-Details.html#controller-shortcut-bar","type":"section"},{"title":"Compact Game Info Bar","page":"Library & Game Details","href":"Library-and-Game-Details.html#compact-game-info-bar","type":"section"},{"title":"Detailed Side Info Panel","page":"Library & Game Details","href":"Library-and-Game-Details.html#detailed-side-info-panel","type":"section"},{"title":"Hide individual Library information","page":"Library & Game Details","href":"Library-and-Game-Details.html#hide-individual-library-information","type":"section"},{"title":"Feature icons come from Playnite metadata","page":"Library & Game Details","href":"Library-and-Game-Details.html#feature-icons-come-from-playnite-metadata","type":"section"},{"title":"Change Library visual effects","page":"Library & Game Details","href":"Library-and-Game-Details.html#change-library-visual-effects","type":"section"},{"title":"Customize Game Details","page":"Library & Game Details","href":"Library-and-Game-Details.html#customize-game-details","type":"section"},{"title":"Hide metadata from Game Details","page":"Library & Game Details","href":"Library-and-Game-Details.html#hide-metadata-from-game-details","type":"section"},{"title":"Example: simple Details page","page":"Library & Game Details","href":"Library-and-Game-Details.html#example-simple-details-page","type":"section"},{"title":"Example: information-heavy Details page","page":"Library & Game Details","href":"Library-and-Game-Details.html#example-information-heavy-details-page","type":"section"},{"title":"Add or remove the frame behind the game list","page":"Library & Game Details","href":"Library-and-Game-Details.html#add-or-remove-the-frame-behind-the-game-list","type":"section"},{"title":"Navigation feels slower after enabling effects","page":"Library & Game Details","href":"Library-and-Game-Details.html#navigation-feels-slower-after-enabling-effects","type":"section"},{"title":"Logos & Trailers","page":"Logos & Trailers","href":"Logos-and-Trailers.html","type":"page"},{"title":"First-time setup","page":"Logos & Trailers","href":"Logos-and-Trailers.html#first-time-logos-and-trailers-setup","type":"section"},{"title":"What you need","page":"Logos & Trailers","href":"Logos-and-Trailers.html#what-you-need","type":"section"},{"title":"Open Extra Metadata Loader settings","page":"Logos & Trailers","href":"Logos-and-Trailers.html#open-extra-metadata-loader-settings","type":"section"},{"title":"Configure the video download tools","page":"Logos & Trailers","href":"Logos-and-Trailers.html#configure-the-video-download-tools","type":"section"},{"title":"Download FFmpeg and FFprobe","page":"Logos & Trailers","href":"Logos-and-Trailers.html#download-ffmpeg-and-ffprobe","type":"section"},{"title":"What to download","page":"Logos & Trailers","href":"Logos-and-Trailers.html#what-to-download","type":"section"},{"title":"Extract FFmpeg","page":"Logos & Trailers","href":"Logos-and-Trailers.html#extract-ffmpeg","type":"section"},{"title":"Download yt-dlp","page":"Logos & Trailers","href":"Logos-and-Trailers.html#download-yt-dlp","type":"section"},{"title":"Recommended for YouTube: install Deno next to yt-dlp","page":"Logos & Trailers","href":"Logos-and-Trailers.html#recommended-for-youtube-install-deno-next-to-yt-dlp","type":"section"},{"title":"Configure the paths in Extra Metadata Loader","page":"Logos & Trailers","href":"Logos-and-Trailers.html#configure-the-paths-in-extra-metadata-loader","type":"section"},{"title":"Recommended logo settings for Aniki ReMake","page":"Logos & Trailers","href":"Logos-and-Trailers.html#recommended-logo-settings-for-aniki-remake","type":"section"},{"title":"Download a logo manually","page":"Logos & Trailers","href":"Logos-and-Trailers.html#download-a-logo-manually","type":"section"},{"title":"One game","page":"Logos & Trailers","href":"Logos-and-Trailers.html#one-game","type":"section"},{"title":"Several games","page":"Logos & Trailers","href":"Logos-and-Trailers.html#several-games","type":"section"},{"title":"Recommended video settings for Aniki ReMake","page":"Logos & Trailers","href":"Logos-and-Trailers.html#recommended-video-settings-for-aniki-remake","type":"section"},{"title":"Prefer downloaded trailers instead of Steam streaming","page":"Logos & Trailers","href":"Logos-and-Trailers.html#prefer-downloaded-trailers-instead-of-steam-streaming","type":"section"},{"title":"Start trailers muted","page":"Logos & Trailers","href":"Logos-and-Trailers.html#start-trailers-muted","type":"section"},{"title":"Disable unused video previews","page":"Logos & Trailers","href":"Logos-and-Trailers.html#disable-unused-video-previews","type":"section"},{"title":"Download trailers","page":"Logos & Trailers","href":"Logos-and-Trailers.html#download-trailers","type":"section"},{"title":"One game","page":"Logos & Trailers","href":"Logos-and-Trailers.html#one-game","type":"section"},{"title":"Several games","page":"Logos & Trailers","href":"Logos-and-Trailers.html#several-games","type":"section"},{"title":"Enable trailers in Aniki","page":"Logos & Trailers","href":"Logos-and-Trailers.html#enable-trailers-in-aniki","type":"section"},{"title":"Choose how the trailer appears in Game Details","page":"Logos & Trailers","href":"Logos-and-Trailers.html#choose-how-the-trailer-appears-in-game-details","type":"section"},{"title":"Full background","page":"Logos & Trailers","href":"Logos-and-Trailers.html#full-background","type":"section"},{"title":"Smaller video / picture-in-picture","page":"Logos & Trailers","href":"Logos-and-Trailers.html#smaller-video-picture-in-picture","type":"section"},{"title":"A good starting configuration","page":"Logos & Trailers","href":"Logos-and-Trailers.html#a-good-starting-configuration","type":"section"},{"title":"Logo performance options","page":"Logos & Trailers","href":"Logos-and-Trailers.html#logo-performance-options","type":"section"},{"title":"A logo does not appear","page":"Logos & Trailers","href":"Logos-and-Trailers.html#a-logo-does-not-appear","type":"section"},{"title":"A trailer does not appear","page":"Logos & Trailers","href":"Logos-and-Trailers.html#a-trailer-does-not-appear","type":"section"},{"title":"Trailer navigation causes stutter","page":"Logos & Trailers","href":"Logos-and-Trailers.html#trailer-navigation-causes-stutter","type":"section"},{"title":"Videos do not work anywhere","page":"Logos & Trailers","href":"Logos-and-Trailers.html#videos-do-not-work-anywhere","type":"section"},{"title":"New to Playnite?","page":"New to Playnite?","href":"New-to-Playnite.html","type":"page"},{"title":"What is Playnite?","page":"New to Playnite?","href":"New-to-Playnite.html#what-is-playnite","type":"section"},{"title":"Don't have Playnite yet?","page":"New to Playnite?","href":"New-to-Playnite.html#dont-have-playnite-yet","type":"section"},{"title":"Desktop mode vs Fullscreen mode","page":"New to Playnite?","href":"New-to-Playnite.html#desktop-mode-vs-fullscreen-mode","type":"section"},{"title":"Desktop mode","page":"New to Playnite?","href":"New-to-Playnite.html#desktop-mode","type":"section"},{"title":"Fullscreen mode","page":"New to Playnite?","href":"New-to-Playnite.html#fullscreen-mode","type":"section"},{"title":"Automatically switch to Fullscreen with a controller","page":"New to Playnite?","href":"New-to-Playnite.html#automatically-switch-to-fullscreen-with-a-controller","type":"section"},{"title":"Open the Playnite main menu in Desktop mode","page":"New to Playnite?","href":"New-to-Playnite.html#open-the-playnite-main-menu-in-desktop-mode","type":"section"},{"title":"Install an add-on","page":"New to Playnite?","href":"New-to-Playnite.html#install-an-add-on","type":"section"},{"title":"Add your game libraries","page":"New to Playnite?","href":"New-to-Playnite.html#add-your-game-libraries","type":"section"},{"title":"Add emulated games","page":"New to Playnite?","href":"New-to-Playnite.html#add-emulated-games","type":"section"},{"title":"Part 1 — Configure the emulator","page":"New to Playnite?","href":"New-to-Playnite.html#part-1-configure-the-emulator","type":"section"},{"title":"Part 2 — Import the games","page":"New to Playnite?","href":"New-to-Playnite.html#part-2-import-the-games","type":"section"},{"title":"Recommended: create an Auto-scan configuration","page":"New to Playnite?","href":"New-to-Playnite.html#recommended-create-an-auto-scan-configuration","type":"section"},{"title":"Manual import","page":"New to Playnite?","href":"New-to-Playnite.html#manual-import","type":"section"},{"title":"Need more help with Playnite itself?","page":"New to Playnite?","href":"New-to-Playnite.html#need-more-help-with-playnite-itself","type":"section"},{"title":"Other Add-ons & Software Tools","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html","type":"page"},{"title":"ControlUp","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#controlup","type":"section"},{"title":"Install","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#install","type":"section"},{"title":"Configure automatic Fullscreen switching","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#configure-automatic-fullscreen-switching","type":"section"},{"title":"AudioSwitcher","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#audioswitcher","type":"section"},{"title":"Install","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#install","type":"section"},{"title":"Open from Aniki","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#open-from-aniki","type":"section"},{"title":"Custom Fade Animations for Playnite (CustomFadeAnim)","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#custom-fade-animations-for-playnite-customfadeanim","type":"section"},{"title":"Extra Metadata Loader","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#extra-metadata-loader","type":"section"},{"title":"Playnite Software Tools","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#playnite-software-tools","type":"section"},{"title":"Example: add VacuumTube for a console-style YouTube app","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#example-add-vacuumtube-for-a-console-style-youtube-app","type":"section"},{"title":"1. Install VacuumTube","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#1-install-vacuumtube","type":"section"},{"title":"2. Optional — make VacuumTube start in fullscreen","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#2-optional-make-vacuumtube-start-in-fullscreen","type":"section"},{"title":"3. Add VacuumTube to Playnite Software Tools","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#3-add-vacuumtube-to-playnite-software-tools","type":"section"},{"title":"4. Launch it from Aniki","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#4-launch-it-from-aniki","type":"section"},{"title":"From Extras","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#from-extras","type":"section"},{"title":"Put VacuumTube directly on the Hub","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#put-vacuumtube-directly-on-the-hub","type":"section"},{"title":"Add a Software Tool to the Hub","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#add-a-software-tool-to-the-hub","type":"section"},{"title":"Open Software Tools from Extras","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#open-software-tools-from-extras","type":"section"},{"title":"Performance & Recommended Settings","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html","type":"page"},{"title":"1. Start with Aniki Performance Mode","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#1-start-with-aniki-performance-mode","type":"section"},{"title":"2. Reduce the heaviest Aniki visual effects","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#2-reduce-the-heaviest-aniki-visual-effects","type":"section"},{"title":"3. Enable Playnite Asynchronous image loading","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#3-enable-playnite-asynchronous-image-loading","type":"section"},{"title":"4. Use a sensible Playnite image scaler","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#4-use-a-sensible-playnite-image-scaler","type":"section"},{"title":"5. Disable Playnite background blur","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#5-disable-playnite-background-blur","type":"section"},{"title":"6. Test Smooth scrolling","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#6-test-smooth-scrolling","type":"section"},{"title":"7. Extra Metadata Loader — prefer downloaded trailers","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#7-extra-metadata-loader-prefer-downloaded-trailers","type":"section"},{"title":"8. Extra Metadata Loader — test logo effects","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#8-extra-metadata-loader-test-logo-effects","type":"section"},{"title":"9. Make sure Playnite uses the correct GPU","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#9-make-sure-playnite-uses-the-correct-gpu","type":"section"},{"title":"10. VRR / G-Sync / FreeSync and Playnite UI stutter","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#10-vrr-g-sync-freesync-and-playnite-ui-stutter","type":"section"},{"title":"Recommended troubleshooting order","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#recommended-troubleshooting-order","type":"section"},{"title":"Profile & Startup","page":"Profile & Startup","href":"Profile-and-Startup.html","type":"page"},{"title":"Change your username","page":"Profile & Startup","href":"Profile-and-Startup.html#change-your-username","type":"section"},{"title":"Change the built-in avatar","page":"Profile & Startup","href":"Profile-and-Startup.html#change-the-built-in-avatar","type":"section"},{"title":"Use your own custom profile picture","page":"Profile & Startup","href":"Profile-and-Startup.html#use-your-own-custom-profile-picture","type":"section"},{"title":"Advanced: replace one of the built-in avatar files","page":"Profile & Startup","href":"Profile-and-Startup.html#advanced-replace-one-of-the-built-in-avatar-files","type":"section"},{"title":"Use your Steam profile avatar","page":"Profile & Startup","href":"Profile-and-Startup.html#use-your-steam-profile-avatar","type":"section"},{"title":"Change the login screen background","page":"Profile & Startup","href":"Profile-and-Startup.html#change-the-login-screen-background","type":"section"},{"title":"Enable or disable the login screen","page":"Profile & Startup","href":"Profile-and-Startup.html#enable-or-disable-the-login-screen","type":"section"},{"title":"Choose Hub or Library as the startup destination","page":"Profile & Startup","href":"Profile-and-Startup.html#choose-hub-or-library-as-the-startup-destination","type":"section"},{"title":"Desktop method","page":"Profile & Startup","href":"Profile-and-Startup.html#desktop-method","type":"section"},{"title":"Fullscreen method","page":"Profile & Startup","href":"Profile-and-Startup.html#fullscreen-method","type":"section"},{"title":"Hide Playnite's normal game status screen","page":"Profile & Startup","href":"Profile-and-Startup.html#hide-playnites-normal-game-status-screen","type":"section"},{"title":"Configure startup, shutdown and event sounds","page":"Profile & Startup","href":"Profile-and-Startup.html#configure-startup-shutdown-and-event-sounds","type":"section"},{"title":"Run the Initial Setup assistant again","page":"Profile & Startup","href":"Profile-and-Startup.html#run-the-initial-setup-assistant-again","type":"section"},{"title":"Screenshots & Capture Gallery","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html","type":"page"},{"title":"First-time setup","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#first-time-screenshot-setup","type":"section"},{"title":"Choose a screenshot provider","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#choose-a-screenshot-provider","type":"section"},{"title":"Install a provider manually","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#install-a-provider-manually","type":"section"},{"title":"Configure screenshot folders in the provider first","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#configure-screenshot-folders-in-the-provider-first","type":"section"},{"title":"Screenshots Visualizer — useful folder options","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#screenshots-visualizer-useful-folder-options","type":"section"},{"title":"Global path for per-game folders","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#global-path-for-per-game-folders","type":"section"},{"title":"Add an extra folder for one game","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#add-an-extra-folder-for-one-game","type":"section"},{"title":"Tell Aniki Helper which provider to use","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#tell-aniki-helper-which-provider-to-use","type":"section"},{"title":"Generate Aniki thumbnails","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#generate-aniki-thumbnails","type":"section"},{"title":"Open Capture Gallery","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#open-capture-gallery","type":"section"},{"title":"Refresh one game's media","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#refresh-one-games-media","type":"section"},{"title":"Fullscreen","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#fullscreen","type":"section"},{"title":"Desktop","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#desktop","type":"section"},{"title":"Captures do not appear","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#captures-do-not-appear","type":"section"},{"title":"Splash Screens","page":"Splash Screens","href":"Splash-Screens.html","type":"page"},{"title":"Open Splash Screen settings","page":"Splash Screens","href":"Splash-Screens.html#open-splash-screen-settings","type":"section"},{"title":"First-time setup","page":"Splash Screens","href":"Splash-Screens.html#first-time-setup","type":"section"},{"title":"Add more than one splash","page":"Splash Screens","href":"Splash-Screens.html#add-more-than-one-splash","type":"section"},{"title":"Choose which splash is displayed","page":"Splash Screens","href":"Splash-Screens.html#choose-which-splash-is-displayed","type":"section"},{"title":"Game priority","page":"Splash Screens","href":"Splash-Screens.html#game-priority","type":"section"},{"title":"Platform priority","page":"Splash Screens","href":"Splash-Screens.html#platform-priority","type":"section"},{"title":"Source priority","page":"Splash Screens","href":"Splash-Screens.html#source-priority","type":"section"},{"title":"Global only","page":"Splash Screens","href":"Splash-Screens.html#global-only","type":"section"},{"title":"Custom priority","page":"Splash Screens","href":"Splash-Screens.html#custom-priority","type":"section"},{"title":"Configure a platform splash","page":"Splash Screens","href":"Splash-Screens.html#configure-a-platform-splash","type":"section"},{"title":"Configure a source splash","page":"Splash Screens","href":"Splash-Screens.html#configure-a-source-splash","type":"section"},{"title":"Configure a splash for one game","page":"Splash Screens","href":"Splash-Screens.html#configure-a-splash-for-one-game","type":"section"},{"title":"Change the display duration for all games","page":"Splash Screens","href":"Splash-Screens.html#change-the-display-duration-for-all-games","type":"section"},{"title":"Change the duration for one game","page":"Splash Screens","href":"Splash-Screens.html#change-the-duration-for-one-game","type":"section"},{"title":"Desktop","page":"Splash Screens","href":"Splash-Screens.html#desktop","type":"section"},{"title":"Fullscreen","page":"Splash Screens","href":"Splash-Screens.html#fullscreen","type":"section"},{"title":"Reset a game's custom duration","page":"Splash Screens","href":"Splash-Screens.html#reset-a-games-custom-duration","type":"section"},{"title":"Fullscreen or Desktop","page":"Splash Screens","href":"Splash-Screens.html#fullscreen-or-desktop","type":"section"},{"title":"Can I set a timer for an entire platform?","page":"Splash Screens","href":"Splash-Screens.html#can-i-set-a-timer-for-an-entire-platform","type":"section"},{"title":"Let Aniki wait for the actual game window","page":"Splash Screens","href":"Splash-Screens.html#let-aniki-wait-for-the-actual-game-window","type":"section"},{"title":"Automatic close safety timer","page":"Splash Screens","href":"Splash-Screens.html#automatic-close-safety-timer","type":"section"},{"title":"Show the game logo","page":"Splash Screens","href":"Splash-Screens.html#show-the-game-logo","type":"section"},{"title":"Video splash sound","page":"Splash Screens","href":"Splash-Screens.html#video-splash-sound","type":"section"},{"title":"A video ends before the Splash Screen timer","page":"Splash Screens","href":"Splash-Screens.html#a-video-ends-before-the-splash-screen-timer","type":"section"},{"title":"Pause UniPlaySong during the splash","page":"Splash Screens","href":"Splash-Screens.html#pause-uniplaysong-during-the-splash","type":"section"},{"title":"Troubleshooting","page":"Splash Screens","href":"Splash-Screens.html#troubleshooting","type":"section"},{"title":"The splash disappears too quickly","page":"Splash Screens","href":"Splash-Screens.html#the-splash-disappears-too-quickly","type":"section"},{"title":"The splash stays too long","page":"Splash Screens","href":"Splash-Screens.html#the-splash-stays-too-long","type":"section"},{"title":"The wrong splash is displayed","page":"Splash Screens","href":"Splash-Screens.html#the-wrong-splash-is-displayed","type":"section"},{"title":"One game behaves differently","page":"Splash Screens","href":"Splash-Screens.html#one-game-behaves-differently","type":"section"},{"title":"Steam","page":"Steam","href":"Steam.html","type":"page"},{"title":"First-time setup","page":"Steam","href":"Steam.html#first-time-steam-setup","type":"section"},{"title":"Open Steam settings","page":"Steam","href":"Steam.html#open-steam-settings","type":"section"},{"title":"Connect your Steam account","page":"Steam","href":"Steam.html#connect-your-steam-account","type":"section"},{"title":"Steam is connected but features say the session is missing","page":"Steam","href":"Steam.html#steam-is-connected-but-features-say-the-session-is-missing","type":"section"},{"title":"Steam login keeps refreshing","page":"Steam","href":"Steam.html#steam-login-keeps-refreshing","type":"section"},{"title":"Enable Steam Friends","page":"Steam","href":"Steam.html#enable-steam-friends","type":"section"},{"title":"Show friends who played a game","page":"Steam","href":"Steam.html#show-friends-who-played-a-game","type":"section"},{"title":"Configure Steam Store","page":"Steam","href":"Steam.html#configure-steam-store","type":"section"},{"title":"Enable Steam update information","page":"Steam","href":"Steam.html#enable-steam-update-information","type":"section"},{"title":"Enable current player counts","page":"Steam","href":"Steam.html#enable-current-player-counts","type":"section"},{"title":"Open Steam features in Fullscreen","page":"Steam","href":"Steam.html#open-steam-features-in-fullscreen","type":"section"},{"title":"Theme Customization","page":"Theme Customization","href":"Theme-Customization.html","type":"page"},{"title":"Open Theme Customization","page":"Theme Customization","href":"Theme-Customization.html#open-theme-customization","type":"section"},{"title":"Change the overall look","page":"Theme Customization","href":"Theme-Customization.html#change-the-overall-look","type":"section"},{"title":"Change the theme color","page":"Theme Customization","href":"Theme-Customization.html#change-the-theme-color","type":"section"},{"title":"Change the Visual Pack","page":"Theme Customization","href":"Theme-Customization.html#change-the-visual-pack","type":"section"},{"title":"Change the Game Details layout","page":"Theme Customization","href":"Theme-Customization.html#change-the-game-details-layout","type":"section"},{"title":"Change font, avatar and controller icons","page":"Theme Customization","href":"Theme-Customization.html#change-font-avatar-and-controller-icons","type":"section"},{"title":"Performance Mode","page":"Theme Customization","href":"Theme-Customization.html#performance-mode","type":"section"},{"title":"Open Aniki Helper from Fullscreen","page":"Theme Customization","href":"Theme-Customization.html#open-aniki-helper-from-fullscreen","type":"section"},{"title":"Troubleshooting & FAQ","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html","type":"page"},{"title":"Aniki shows \"ANIKI HELPER REQUIRED\"","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#aniki-shows-aniki-helper-required","type":"section"},{"title":"Aniki says Aniki Helper needs an update","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#aniki-says-aniki-helper-needs-an-update","type":"section"},{"title":"I cannot find a setting","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#i-cannot-find-a-setting","type":"section"},{"title":"It changes how Aniki looks","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#it-changes-how-aniki-looks","type":"section"},{"title":"It configures an Aniki feature","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#it-configures-an-aniki-feature","type":"section"},{"title":"It changes one game only","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#it-changes-one-game-only","type":"section"},{"title":"Aniki says \"Unsupported layout settings\"","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#aniki-says-unsupported-layout-settings","type":"section"},{"title":"I changed the Visual Pack but the Library still uses game backgrounds","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#i-changed-the-visual-pack-but-the-library-still-uses-game-backgrounds","type":"section"},{"title":"No background appears in the Library","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#no-background-appears-in-the-library","type":"section"},{"title":"Logos do not appear","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#logos-do-not-appear","type":"section"},{"title":"Trailers cause stutter when changing games","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#trailers-cause-stutter-when-changing-games","type":"section"},{"title":"Trailers do not play","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#trailers-do-not-play","type":"section"},{"title":"No Playnite videos work at all","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#no-playnite-videos-work-at-all","type":"section"},{"title":"Windows 11 N","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#windows-11-n","type":"section"},{"title":"Windows 10 N","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#windows-10-n","type":"section"},{"title":"HowLongToBeat text is cut","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#howlongtobeat-text-is-cut","type":"section"},{"title":"Dynamic Colors do not update","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#dynamic-colors-do-not-update","type":"section"},{"title":"Splash Screen disappears too quickly","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#splash-screen-disappears-too-quickly","type":"section"},{"title":"One game has the wrong Splash Screen duration","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#one-game-has-the-wrong-splash-screen-duration","type":"section"},{"title":"I want one Splash Screen timer for an entire platform","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#i-want-one-splash-screen-timer-for-an-entire-platform","type":"section"},{"title":"Overlay does not appear over a game","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#overlay-does-not-appear-over-a-game","type":"section"},{"title":"Game reacts to buttons while the Overlay is open","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#game-reacts-to-buttons-while-the-overlay-is-open","type":"section"},{"title":"Aniki Web Browser says WebView2 is missing","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#aniki-web-browser-says-webview2-is-missing","type":"section"},{"title":"Controller Guide shortcut does not work","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#controller-guide-shortcut-does-not-work","type":"section"},{"title":"Steam Friends / Store / wishlist stop working together","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#steam-friends-store-wishlist-stop-working-together","type":"section"},{"title":"Steam login repeatedly refreshes","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#steam-login-repeatedly-refreshes","type":"section"},{"title":"Friends played data is outdated","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#friends-played-data-is-outdated","type":"section"},{"title":"Achievements are missing/outdated","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#achievements-are-missingoutdated","type":"section"},{"title":"Screenshots are missing","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#screenshots-are-missing","type":"section"},{"title":"Video Center has no thumbnails","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#video-center-has-no-thumbnails","type":"section"},{"title":"Video Center chapter features are missing","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#video-center-chapter-features-are-missing","type":"section"},{"title":"Movie artwork does not download","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#movie-artwork-does-not-download","type":"section"},{"title":"Network location does not open in Video Center","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#network-location-does-not-open-in-video-center","type":"section"},{"title":"Navigation is not smooth","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#navigation-is-not-smooth","type":"section"},{"title":"I want to report a bug","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#i-want-to-report-a-bug","type":"section"},{"title":"Home","page":"Home","href":"index.html","type":"page"},{"title":"Where do you want to start?","page":"Home","href":"index.html#choose-title","type":"section"},{"title":"Popular guides","page":"Home","href":"index.html#popular-title","type":"section"},{"title":"Start here. We’ll take it one step at a time.","page":"Home","href":"index.html#beginner-title","type":"section"},{"title":"More than a game list.","page":"Home","href":"index.html#explore-title","type":"section"}];
-          const sidebar = document.getElementById('guideSidebar');
-          const backdrop = document.getElementById('navBackdrop');
-          const guideOpen = document.getElementById('guideMenuBtn');
-          const guideClose = document.getElementById('guideCloseBtn');
-          const tocPanel = document.getElementById('tocSidebar');
-          const tocOpen = document.getElementById('tocMenuBtn');
-          const tocClose = document.getElementById('tocCloseBtn');
-          const search = document.getElementById('navSearch');
-          const results = document.getElementById('searchResults');
-          const navSections = document.getElementById('navSections');
-          const currentPage = (location.pathname.split('/').pop() || 'index.html').split('#')[0];
-          const mobileMQ = window.matchMedia('(max-width: 900px)');
-          const tabletMQ = window.matchMedia('(max-width: 1250px)');
+<p>Use Preview before waiting for the inactivity timer.</p></article><nav class="page-nav"><a href="Splash-Screens.html"><small>Previous</small>← Splash Screens</a><a class="next" href="In-Game-Overlay.html"><small>Next</small>In-Game Overlay →</a></nav></main><aside aria-label="Sections on this page" class="toc-sidebar" id="tocSidebar"><div class="toc-inner"><div class="toc-head"><div class="toc-title">On this page</div><button aria-label="Collapse section navigation" class="desktop-collapse right-collapse" id="rightCollapseBtn" title="Collapse section navigation" type="button">›</button><button aria-label="Close section navigation" class="drawer-close toc-close" id="tocCloseBtn" type="button">×</button></div><nav class="toc-list" id="tocList"></nav></div></aside></div><div class="nav-backdrop" id="navBackdrop"></div><script>
+(() => {
+  'use strict';
 
-          function setBodyLock(){
-            const open = sidebar.classList.contains('open') || tocPanel.classList.contains('open');
-            document.body.classList.toggle('drawer-open', open);
-          }
+  const SEARCH_INDEX = [{"title":"Achievements & Music","page":"Achievements & Music","href":"Achievements-and-Music.html","type":"page"},{"title":"Quick setup — Achievements","page":"Achievements & Music","href":"Achievements-and-Music.html#quick-setup-achievements","type":"section"},{"title":"Achievements — install PlayniteAchievements","page":"Achievements & Music","href":"Achievements-and-Music.html#achievements-install-playniteachievements","type":"section"},{"title":"Open Achievements in Aniki","page":"Achievements & Music","href":"Achievements-and-Music.html#open-achievements-in-aniki","type":"section"},{"title":"Change how achievements are displayed","page":"Achievements & Music","href":"Achievements-and-Music.html#change-how-achievements-are-displayed","type":"section"},{"title":"Rebuild Achievement Memories","page":"Achievements & Music","href":"Achievements-and-Music.html#rebuild-achievement-memories","type":"section"},{"title":"Refresh achievements for one game","page":"Achievements & Music","href":"Achievements-and-Music.html#refresh-achievements-for-one-game","type":"section"},{"title":"Fullscreen","page":"Achievements & Music","href":"Achievements-and-Music.html#fullscreen","type":"section"},{"title":"Desktop","page":"Achievements & Music","href":"Achievements-and-Music.html#desktop","type":"section"},{"title":"Quick setup — Music","page":"Achievements & Music","href":"Achievements-and-Music.html#quick-setup-music","type":"section"},{"title":"Music — install UniPlaySong","page":"Achievements & Music","href":"Achievements-and-Music.html#music-install-uniplaysong","type":"section"},{"title":"Open the Music Player","page":"Achievements & Music","href":"Achievements-and-Music.html#open-the-music-player","type":"section"},{"title":"Avoid duplicate event sounds","page":"Achievements & Music","href":"Achievements-and-Music.html#avoid-duplicate-event-sounds","type":"section"},{"title":"Pause music during game Splash Screens","page":"Achievements & Music","href":"Achievements-and-Music.html#pause-music-during-game-splash-screens","type":"section"},{"title":"Aniki ScreenSaver","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html","type":"page"},{"title":"First-time setup","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#first-time-screensaver-setup","type":"section"},{"title":"Open ScreenSaver settings","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#open-screensaver-settings","type":"section"},{"title":"Enable the ScreenSaver","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#enable-the-screensaver","type":"section"},{"title":"Choose which games are shown","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#choose-which-games-are-shown","type":"section"},{"title":"Use the current filter","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#use-the-current-filter","type":"section"},{"title":"Use Splash Screen images","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#use-splash-screen-images","type":"section"},{"title":"Change what the ScreenSaver shows","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#change-what-the-screensaver-shows","type":"section"},{"title":"Preview the ScreenSaver","page":"Aniki ScreenSaver","href":"Aniki-ScreenSaver.html#preview-the-screensaver","type":"section"},{"title":"Aniki Video Center","page":"Aniki Video Center","href":"Aniki-Video-Center.html","type":"page"},{"title":"First-time setup","page":"Aniki Video Center","href":"Aniki-Video-Center.html#first-time-video-center-setup","type":"section"},{"title":"Open Video Center","page":"Aniki Video Center","href":"Aniki-Video-Center.html#open-video-center","type":"section"},{"title":"Open Video Center settings","page":"Aniki Video Center","href":"Aniki-Video-Center.html#open-video-center-settings","type":"section"},{"title":"Use Video Center without creating libraries","page":"Aniki Video Center","href":"Aniki-Video-Center.html#use-video-center-without-creating-libraries","type":"section"},{"title":"Add a folder to Favorites","page":"Aniki Video Center","href":"Aniki-Video-Center.html#add-a-folder-to-favorites","type":"section"},{"title":"Configure media libraries","page":"Aniki Video Center","href":"Aniki-Video-Center.html#configure-media-libraries","type":"section"},{"title":"Configure FFmpeg and FFprobe","page":"Aniki Video Center","href":"Aniki-Video-Center.html#configure-ffmpeg-and-ffprobe","type":"section"},{"title":"If you already installed FFmpeg for Extra Metadata Loader","page":"Aniki Video Center","href":"Aniki-Video-Center.html#if-you-already-installed-ffmpeg-for-extra-metadata-loader","type":"section"},{"title":"If you have not installed FFmpeg yet","page":"Aniki Video Center","href":"Aniki-Video-Center.html#if-you-have-not-installed-ffmpeg-yet","type":"section"},{"title":"Set the FFmpeg path","page":"Aniki Video Center","href":"Aniki-Video-Center.html#set-the-ffmpeg-path","type":"section"},{"title":"Set the FFprobe path","page":"Aniki Video Center","href":"Aniki-Video-Center.html#set-the-ffprobe-path","type":"section"},{"title":"Configure playback","page":"Aniki Video Center","href":"Aniki-Video-Center.html#configure-playback","type":"section"},{"title":"Automatically play next video","page":"Aniki Video Center","href":"Aniki-Video-Center.html#automatically-play-next-video","type":"section"},{"title":"Preferred audio language","page":"Aniki Video Center","href":"Aniki-Video-Center.html#preferred-audio-language","type":"section"},{"title":"Subtitles","page":"Aniki Video Center","href":"Aniki-Video-Center.html#subtitles","type":"section"},{"title":"Configure automatic artwork","page":"Aniki Video Center","href":"Aniki-Video-Center.html#configure-automatic-artwork","type":"section"},{"title":"Movies — TMDB","page":"Aniki Video Center","href":"Aniki-Video-Center.html#movies-tmdb","type":"section"},{"title":"Create your TMDB API access","page":"Aniki Video Center","href":"Aniki-Video-Center.html#create-your-tmdb-api-access","type":"section"},{"title":"Add the token to Aniki","page":"Aniki Video Center","href":"Aniki-Video-Center.html#add-the-token-to-aniki","type":"section"},{"title":"TV Shows — TVMaze","page":"Aniki Video Center","href":"Aniki-Video-Center.html#tv-shows-tvmaze","type":"section"},{"title":"Anime — AniList","page":"Aniki Video Center","href":"Aniki-Video-Center.html#anime-anilist","type":"section"},{"title":"Fix incorrect automatic artwork","page":"Aniki Video Center","href":"Aniki-Video-Center.html#fix-incorrect-automatic-artwork","type":"section"},{"title":"Add a NAS or network folder","page":"Aniki Video Center","href":"Aniki-Video-Center.html#add-a-nas-or-network-folder","type":"section"},{"title":"Player controls","page":"Aniki Video Center","href":"Aniki-Video-Center.html#player-controls","type":"section"},{"title":"Resume playback","page":"Aniki Video Center","href":"Aniki-Video-Center.html#resume-playback","type":"section"},{"title":"Mark watched/unwatched","page":"Aniki Video Center","href":"Aniki-Video-Center.html#mark-watchedunwatched","type":"section"},{"title":"Clear caches","page":"Aniki Video Center","href":"Aniki-Video-Center.html#clear-caches","type":"section"},{"title":"Video Center troubleshooting","page":"Aniki Video Center","href":"Aniki-Video-Center.html#video-center-troubleshooting","type":"section"},{"title":"No thumbnails","page":"Aniki Video Center","href":"Aniki-Video-Center.html#no-thumbnails","type":"section"},{"title":"Chapter features do not work","page":"Aniki Video Center","href":"Aniki-Video-Center.html#chapter-features-do-not-work","type":"section"},{"title":"Movie artwork does not download","page":"Aniki Video Center","href":"Aniki-Video-Center.html#movie-artwork-does-not-download","type":"section"},{"title":"TV/Anime artwork does not download","page":"Aniki Video Center","href":"Aniki-Video-Center.html#tvanime-artwork-does-not-download","type":"section"},{"title":"Network folder is unavailable","page":"Aniki Video Center","href":"Aniki-Video-Center.html#network-folder-is-unavailable","type":"section"},{"title":"Artwork & Metadata","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html","type":"page"},{"title":"First-time metadata setup","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#first-time-metadata-setup","type":"section"},{"title":"Background images are strongly recommended","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#background-images-are-strongly-recommended","type":"section"},{"title":"Check one game's metadata","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#check-one-games-metadata","type":"section"},{"title":"Configure automatic metadata sources","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#configure-automatic-metadata-sources","type":"section"},{"title":"Optional metadata sources that work well with Aniki","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#optional-metadata-sources-that-work-well-with-aniki","type":"section"},{"title":"Universal PSN Metadata","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#universal-psn-metadata","type":"section"},{"title":"IGN Metadata","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#ign-metadata","type":"section"},{"title":"Download metadata for existing games","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#download-metadata-for-existing-games","type":"section"},{"title":"Refresh the entire library","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#refresh-the-entire-library","type":"section"},{"title":"Cover shape and grid layout","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#cover-shape-and-grid-layout","type":"section"},{"title":"Change the cover aspect ratio","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#change-the-cover-aspect-ratio","type":"section"},{"title":"Change Aniki's columns and rows","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#change-anikis-columns-and-rows","type":"section"},{"title":"Steam Feature icons","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#steam-feature-icons","type":"section"},{"title":"Backgrounds are missing","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#backgrounds-are-missing","type":"section"},{"title":"Next: logos and trailers","page":"Artwork & Metadata","href":"Artwork-and-Metadata.html#next-logos-and-trailers","type":"section"},{"title":"Backgrounds & Visual Packs","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html","type":"page"},{"title":"Quick setup — use a Visual Pack background","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#quick-setup-visual-pack-backgrounds","type":"section"},{"title":"Open Background settings","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#open-background-settings","type":"section"},{"title":"Use each game's normal background","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#use-each-games-normal-background","type":"section"},{"title":"Use Visual Pack backgrounds","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#use-visual-pack-backgrounds","type":"section"},{"title":"Use Visual Pack backgrounds in the Library but game backgrounds in Details","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#use-visual-pack-backgrounds-in-the-library-but-game-backgrounds-in-details","type":"section"},{"title":"Use the current filter as the background","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#use-the-current-filter-as-the-background","type":"section"},{"title":"Use no background","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#use-no-background","type":"section"},{"title":"Background images are cropped too much","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#background-images-are-cropped-too-much","type":"section"},{"title":"SteamGridDB Hero images do not fit well","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#steamgriddb-hero-images-do-not-fit-well","type":"section"},{"title":"Animate backgrounds","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#animate-backgrounds","type":"section"},{"title":"Trailers","page":"Backgrounds & Visual Packs","href":"Backgrounds-and-Visual-Packs.html#trailers","type":"section"},{"title":"Backup, Reset & Diagnostics","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html","type":"page"},{"title":"Back up the theme configuration","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#back-up-the-theme-configuration","type":"section"},{"title":"Restore a theme configuration","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#restore-a-theme-configuration","type":"section"},{"title":"Back up Monthly Stats","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#back-up-monthly-stats","type":"section"},{"title":"Restore Monthly Stats","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#restore-monthly-stats","type":"section"},{"title":"Delete all Monthly Stats","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#delete-all-monthly-stats","type":"section"},{"title":"Restore Aniki Helper defaults","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#restore-aniki-helper-defaults","type":"section"},{"title":"Create a clean debug log","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#create-a-clean-debug-log","type":"section"},{"title":"When to use Diagnostics","page":"Backup, Reset & Diagnostics","href":"Backup-Reset-and-Diagnostics.html#when-to-use-diagnostics","type":"section"},{"title":"Controller & Navigation","page":"Controller & Navigation","href":"Controller-and-Navigation.html","type":"page"},{"title":"Library controls","page":"Controller & Navigation","href":"Controller-and-Navigation.html#library-controls","type":"section"},{"title":"Play a game","page":"Controller & Navigation","href":"Controller-and-Navigation.html#play-a-game","type":"section"},{"title":"Open Game Details","page":"Controller & Navigation","href":"Controller-and-Navigation.html#open-game-details","type":"section"},{"title":"Open Game Options","page":"Controller & Navigation","href":"Controller-and-Navigation.html#open-game-options","type":"section"},{"title":"Change layout","page":"Controller & Navigation","href":"Controller-and-Navigation.html#change-layout","type":"section"},{"title":"Search","page":"Controller & Navigation","href":"Controller-and-Navigation.html#search","type":"section"},{"title":"Open filters","page":"Controller & Navigation","href":"Controller-and-Navigation.html#open-filters","type":"section"},{"title":"Open the Hub","page":"Controller & Navigation","href":"Controller-and-Navigation.html#open-the-hub","type":"section"},{"title":"Open Quick Access","page":"Controller & Navigation","href":"Controller-and-Navigation.html#open-quick-access","type":"section"},{"title":"Open Settings","page":"Controller & Navigation","href":"Controller-and-Navigation.html#open-settings","type":"section"},{"title":"From Quick Access","page":"Controller & Navigation","href":"Controller-and-Navigation.html#from-quick-access","type":"section"},{"title":"Direct shortcut","page":"Controller & Navigation","href":"Controller-and-Navigation.html#direct-shortcut","type":"section"},{"title":"Open Quick Options","page":"Controller & Navigation","href":"Controller-and-Navigation.html#open-quick-options","type":"section"},{"title":"Change controller icon style","page":"Controller & Navigation","href":"Controller-and-Navigation.html#change-controller-icon-style","type":"section"},{"title":"Per-game Aniki Helper settings","page":"Controller & Navigation","href":"Controller-and-Navigation.html#per-game-aniki-helper-settings","type":"section"},{"title":"Fullscreen","page":"Controller & Navigation","href":"Controller-and-Navigation.html#fullscreen","type":"section"},{"title":"Desktop","page":"Controller & Navigation","href":"Controller-and-Navigation.html#desktop","type":"section"},{"title":"Covers, Banners & Custom Assets","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html","type":"page"},{"title":"Open Cover settings","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#open-cover-settings","type":"section"},{"title":"Make the selected cover stand out","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#make-the-selected-cover-stand-out","type":"section"},{"title":"Show completion status on covers","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#show-completion-status-on-covers","type":"section"},{"title":"Create or edit completion statuses","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#create-or-edit-completion-statuses","type":"section"},{"title":"Show platform/source banners","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#show-platformsource-banners","type":"section"},{"title":"Show a small source/platform logo on covers","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#show-a-small-sourceplatform-logo-on-covers","type":"section"},{"title":"Open Custom Resources settings","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#open-custom-resources-settings","type":"section"},{"title":"Exact filename matching","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#exact-filename-matching","type":"section"},{"title":"Add a custom source icon","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#add-a-custom-source-icon","type":"section"},{"title":"Add a custom filter icon","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#add-a-custom-filter-icon","type":"section"},{"title":"Add a custom filter background","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#add-a-custom-filter-background","type":"section"},{"title":"Add your own cover banners","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#custom-banners","type":"section"},{"title":"Custom icon priority","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#custom-icon-priority","type":"section"},{"title":"Where are the theme's default icon files?","page":"Covers, Banners & Custom Assets","href":"Covers-Banners-and-Custom-Assets.html#where-are-the-themes-default-icon-files","type":"section"},{"title":"Dynamic Colors, News & Statistics","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html","type":"page"},{"title":"Dynamic Colors","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#dynamic-colors","type":"section"},{"title":"Enable Dynamic Colors","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#enable-dynamic-colors","type":"section"},{"title":"Which image does Dynamic Colors use?","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#which-image-does-dynamic-colors-use","type":"section"},{"title":"Pre-load Dynamic Colors","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#pre-load-dynamic-colors","type":"section"},{"title":"Dynamic Colors do not change","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#dynamic-colors-do-not-change","type":"section"},{"title":"Reset the Dynamic Colors cache","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#reset-the-dynamic-colors-cache","type":"section"},{"title":"Aniki News","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#aniki-news","type":"section"},{"title":"Enable or disable News","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#enable-or-disable-news","type":"section"},{"title":"Use custom RSS feeds","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#use-custom-rss-feeds","type":"section"},{"title":"Reset one News source cache","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#reset-one-news-source-cache","type":"section"},{"title":"Library statistics","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#library-statistics","type":"section"},{"title":"Monthly statistics","page":"Dynamic Colors, News & Statistics","href":"Dynamic-Colors-News-and-Statistics.html#monthly-statistics","type":"section"},{"title":"First Setup Assistant","page":"First Setup Assistant","href":"First-Setup-Assistant.html","type":"page"},{"title":"Open the assistant","page":"First Setup Assistant","href":"First-Setup-Assistant.html#open-the-assistant","type":"section"},{"title":"On a new installation","page":"First Setup Assistant","href":"First-Setup-Assistant.html#on-a-new-installation","type":"section"},{"title":"Open it again later","page":"First Setup Assistant","href":"First-Setup-Assistant.html#open-it-again-later","type":"section"},{"title":"Step 1 — Profile","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-1-profile","type":"section"},{"title":"Step 2 — Startup","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-2-startup","type":"section"},{"title":"Login screen","page":"First Setup Assistant","href":"First-Setup-Assistant.html#login-screen","type":"section"},{"title":"Startup destination","page":"First Setup Assistant","href":"First-Setup-Assistant.html#startup-destination","type":"section"},{"title":"Step 3 — Interface style","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-3-interface-style","type":"section"},{"title":"Clean","page":"First Setup Assistant","href":"First-Setup-Assistant.html#clean","type":"section"},{"title":"Standard","page":"First Setup Assistant","href":"First-Setup-Assistant.html#standard","type":"section"},{"title":"Enhanced","page":"First Setup Assistant","href":"First-Setup-Assistant.html#enhanced","type":"section"},{"title":"Complete","page":"First Setup Assistant","href":"First-Setup-Assistant.html#complete","type":"section"},{"title":"Step 4 — Theme color","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-4-theme-color","type":"section"},{"title":"Step 5 — Details layout","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-5-details-layout","type":"section"},{"title":"Step 6 — Visual experience","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-6-visual-experience","type":"section"},{"title":"Full Animated","page":"First Setup Assistant","href":"First-Setup-Assistant.html#full-animated","type":"section"},{"title":"Animated","page":"First Setup Assistant","href":"First-Setup-Assistant.html#animated","type":"section"},{"title":"Balanced","page":"First Setup Assistant","href":"First-Setup-Assistant.html#balanced","type":"section"},{"title":"Performance","page":"First Setup Assistant","href":"First-Setup-Assistant.html#performance","type":"section"},{"title":"Step 7 — Trailers","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-7-trailers","type":"section"},{"title":"Step 8 — Optional integrations (Playnite add-ons)","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-8-optional-integrations-playnite-add-ons","type":"section"},{"title":"PlayniteAchievements","page":"First Setup Assistant","href":"First-Setup-Assistant.html#playniteachievements","type":"section"},{"title":"UniPlaySong","page":"First Setup Assistant","href":"First-Setup-Assistant.html#uniplaysong","type":"section"},{"title":"Extra Metadata Loader","page":"First Setup Assistant","href":"First-Setup-Assistant.html#extra-metadata-loader","type":"section"},{"title":"Screenshot provider","page":"First Setup Assistant","href":"First-Setup-Assistant.html#screenshot-provider","type":"section"},{"title":"AudioSwitcher","page":"First Setup Assistant","href":"First-Setup-Assistant.html#audioswitcher","type":"section"},{"title":"Custom Fade Animations (CustomFadeAnim)","page":"First Setup Assistant","href":"First-Setup-Assistant.html#custom-fade-animations-customfadeanim","type":"section"},{"title":"Step 9 — Discover Aniki Helper","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-9-discover-aniki-helper","type":"section"},{"title":"Step 10 — Apply settings","page":"First Setup Assistant","href":"First-Setup-Assistant.html#step-10-apply-settings","type":"section"},{"title":"Change something later","page":"First Setup Assistant","href":"First-Setup-Assistant.html#change-something-later","type":"section"},{"title":"Hub, Quick Access & Extra","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html","type":"page"},{"title":"What is the top bar?","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#what-is-the-top-bar","type":"section"},{"title":"Open the Welcome Hub","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#open-the-welcome-hub","type":"section"},{"title":"From the top bar","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#from-the-top-bar","type":"section"},{"title":"Faster controller shortcut","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#faster-controller-shortcut","type":"section"},{"title":"Start on the Hub automatically","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#start-on-the-hub-automatically","type":"section"},{"title":"Configure Features & Apps","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#configure-features-apps","type":"section"},{"title":"Open Quick Access","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#open-quick-access","type":"section"},{"title":"What is Extras?","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#what-is-extras","type":"section"},{"title":"Open Quick Options","page":"Hub, Quick Access & Extra","href":"Hub-Quick-Access-and-Extra.html#open-quick-options","type":"section"},{"title":"In-Game Overlay","page":"In-Game Overlay","href":"In-Game-Overlay.html","type":"page"},{"title":"First-time setup","page":"In-Game Overlay","href":"In-Game-Overlay.html#first-time-overlay-setup","type":"section"},{"title":"Open Overlay settings","page":"In-Game Overlay","href":"In-Game-Overlay.html#open-overlay-settings","type":"section"},{"title":"Enable the Overlay","page":"In-Game Overlay","href":"In-Game-Overlay.html#enable-the-overlay","type":"section"},{"title":"Choose a controller shortcut","page":"In-Game Overlay","href":"In-Game-Overlay.html#choose-a-controller-shortcut","type":"section"},{"title":"Start + Back","page":"In-Game Overlay","href":"In-Game-Overlay.html#start-back","type":"section"},{"title":"Back + Y","page":"In-Game Overlay","href":"In-Game-Overlay.html#back-y","type":"section"},{"title":"Guide button","page":"In-Game Overlay","href":"In-Game-Overlay.html#guide-button","type":"section"},{"title":"Use the Overlay in a game","page":"In-Game Overlay","href":"In-Game-Overlay.html#use-the-overlay-in-a-game","type":"section"},{"title":"Prevent the game from reacting to Overlay inputs","page":"In-Game Overlay","href":"In-Game-Overlay.html#prevent-the-game-from-reacting-to-overlay-inputs","type":"section"},{"title":"When not to use Suspend","page":"In-Game Overlay","href":"In-Game-Overlay.html#when-not-to-use-suspend","type":"section"},{"title":"Never suspend one game","page":"In-Game Overlay","href":"In-Game-Overlay.html#never-suspend-one-game","type":"section"},{"title":"Fullscreen","page":"In-Game Overlay","href":"In-Game-Overlay.html#fullscreen","type":"section"},{"title":"Desktop","page":"In-Game Overlay","href":"In-Game-Overlay.html#desktop","type":"section"},{"title":"Remove an exception","page":"In-Game Overlay","href":"In-Game-Overlay.html#remove-an-exception","type":"section"},{"title":"Overlay does not appear","page":"In-Game Overlay","href":"In-Game-Overlay.html#overlay-does-not-appear","type":"section"},{"title":"Keyboard and mouse tools","page":"In-Game Overlay","href":"In-Game-Overlay.html#keyboard-and-mouse-tools","type":"section"},{"title":"Install Aniki ReMake","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html","type":"page"},{"title":"1. Install the Aniki ReMake theme","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#1-install-the-aniki-remake-theme","type":"section"},{"title":"2. Activate Aniki ReMake in Fullscreen","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#2-activate-aniki-remake-in-fullscreen","type":"section"},{"title":"3. If Aniki Helper is missing or outdated","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#3-if-aniki-helper-is-missing-or-outdated","type":"section"},{"title":"If Aniki Helper is missing","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#if-aniki-helper-is-missing","type":"section"},{"title":"If Aniki Helper needs an update","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#if-aniki-helper-needs-an-update","type":"section"},{"title":"Install or update Aniki Helper manually","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#install-or-update-aniki-helper-manually","type":"section"},{"title":"Install","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#install","type":"section"},{"title":"Update","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#update","type":"section"},{"title":"4. First Setup Assistant","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#4-first-setup-assistant","type":"section"},{"title":"Optional add-ons / integrations","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#optional-add-ons-integrations","type":"section"},{"title":"Also recommended: ControlUp","page":"Install Aniki ReMake","href":"Install-Aniki-ReMake.html#also-recommended-controlup","type":"section"},{"title":"Keyboard, Mouse & Web Browser","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html","type":"page"},{"title":"Open Keyboard & Mouse settings","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#open-keyboard-mouse-settings","type":"section"},{"title":"Configure the virtual keyboard","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#configure-the-virtual-keyboard","type":"section"},{"title":"Aniki Keyboard","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#aniki-keyboard","type":"section"},{"title":"Windows Keyboard","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#windows-keyboard","type":"section"},{"title":"Choose the keyboard shortcut","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#choose-the-keyboard-shortcut","type":"section"},{"title":"Open the keyboard","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#open-the-keyboard","type":"section"},{"title":"Configure Gamepad Mouse","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#configure-gamepad-mouse","type":"section"},{"title":"Gamepad Mouse controls","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#gamepad-mouse-controls","type":"section"},{"title":"Open Aniki Web Browser","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#open-aniki-web-browser","type":"section"},{"title":"Browser controls","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#browser-controls","type":"section"},{"title":"Add Fullscreen favorites","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#add-fullscreen-favorites","type":"section"},{"title":"Clear only the browser cache","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#clear-only-the-browser-cache","type":"section"},{"title":"Delete all Aniki browser data","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#delete-all-aniki-browser-data","type":"section"},{"title":"Browser will not open","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#browser-will-not-open","type":"section"},{"title":"Easiest installation","page":"Keyboard, Mouse & Web Browser","href":"Keyboard-Mouse-and-Web-Browser.html#easiest-installation","type":"section"},{"title":"Library & Game Details","page":"Library & Game Details","href":"Library-and-Game-Details.html","type":"page"},{"title":"Open the relevant settings","page":"Library & Game Details","href":"Library-and-Game-Details.html#open-the-relevant-settings","type":"section"},{"title":"Make the Library cleaner","page":"Library & Game Details","href":"Library-and-Game-Details.html#make-the-library-cleaner","type":"section"},{"title":"Auto-hide navigation bars","page":"Library & Game Details","href":"Library-and-Game-Details.html#auto-hide-navigation-bars","type":"section"},{"title":"Remove the top or bottom bars completely","page":"Library & Game Details","href":"Library-and-Game-Details.html#remove-the-top-or-bottom-bars-completely","type":"section"},{"title":"Choose which top-bar shortcuts are shown","page":"Library & Game Details","href":"Library-and-Game-Details.html#choose-which-top-bar-shortcuts-are-shown","type":"section"},{"title":"Choose how game information is displayed in the Library","page":"Library & Game Details","href":"Library-and-Game-Details.html#choose-how-game-information-is-displayed-in-the-library","type":"section"},{"title":"Controller Shortcut Bar","page":"Library & Game Details","href":"Library-and-Game-Details.html#controller-shortcut-bar","type":"section"},{"title":"Compact Game Info Bar","page":"Library & Game Details","href":"Library-and-Game-Details.html#compact-game-info-bar","type":"section"},{"title":"Detailed Side Info Panel","page":"Library & Game Details","href":"Library-and-Game-Details.html#detailed-side-info-panel","type":"section"},{"title":"Hide individual Library information","page":"Library & Game Details","href":"Library-and-Game-Details.html#hide-individual-library-information","type":"section"},{"title":"Feature icons come from Playnite metadata","page":"Library & Game Details","href":"Library-and-Game-Details.html#feature-icons-come-from-playnite-metadata","type":"section"},{"title":"Change Library visual effects","page":"Library & Game Details","href":"Library-and-Game-Details.html#change-library-visual-effects","type":"section"},{"title":"Customize Game Details","page":"Library & Game Details","href":"Library-and-Game-Details.html#customize-game-details","type":"section"},{"title":"Hide metadata from Game Details","page":"Library & Game Details","href":"Library-and-Game-Details.html#hide-metadata-from-game-details","type":"section"},{"title":"Example: simple Details page","page":"Library & Game Details","href":"Library-and-Game-Details.html#example-simple-details-page","type":"section"},{"title":"Example: information-heavy Details page","page":"Library & Game Details","href":"Library-and-Game-Details.html#example-information-heavy-details-page","type":"section"},{"title":"Add or remove the frame behind the game list","page":"Library & Game Details","href":"Library-and-Game-Details.html#add-or-remove-the-frame-behind-the-game-list","type":"section"},{"title":"Navigation feels slower after enabling effects","page":"Library & Game Details","href":"Library-and-Game-Details.html#navigation-feels-slower-after-enabling-effects","type":"section"},{"title":"Logos & Trailers","page":"Logos & Trailers","href":"Logos-and-Trailers.html","type":"page"},{"title":"First-time setup","page":"Logos & Trailers","href":"Logos-and-Trailers.html#first-time-logos-and-trailers-setup","type":"section"},{"title":"What you need","page":"Logos & Trailers","href":"Logos-and-Trailers.html#what-you-need","type":"section"},{"title":"Open Extra Metadata Loader settings","page":"Logos & Trailers","href":"Logos-and-Trailers.html#open-extra-metadata-loader-settings","type":"section"},{"title":"Configure the video download tools","page":"Logos & Trailers","href":"Logos-and-Trailers.html#configure-the-video-download-tools","type":"section"},{"title":"Download FFmpeg and FFprobe","page":"Logos & Trailers","href":"Logos-and-Trailers.html#download-ffmpeg-and-ffprobe","type":"section"},{"title":"What to download","page":"Logos & Trailers","href":"Logos-and-Trailers.html#what-to-download","type":"section"},{"title":"Extract FFmpeg","page":"Logos & Trailers","href":"Logos-and-Trailers.html#extract-ffmpeg","type":"section"},{"title":"Download yt-dlp","page":"Logos & Trailers","href":"Logos-and-Trailers.html#download-yt-dlp","type":"section"},{"title":"Recommended for YouTube: install Deno next to yt-dlp","page":"Logos & Trailers","href":"Logos-and-Trailers.html#recommended-for-youtube-install-deno-next-to-yt-dlp","type":"section"},{"title":"Configure the paths in Extra Metadata Loader","page":"Logos & Trailers","href":"Logos-and-Trailers.html#configure-the-paths-in-extra-metadata-loader","type":"section"},{"title":"Recommended logo settings for Aniki ReMake","page":"Logos & Trailers","href":"Logos-and-Trailers.html#recommended-logo-settings-for-aniki-remake","type":"section"},{"title":"Download a logo manually","page":"Logos & Trailers","href":"Logos-and-Trailers.html#download-a-logo-manually","type":"section"},{"title":"One game","page":"Logos & Trailers","href":"Logos-and-Trailers.html#one-game","type":"section"},{"title":"Several games","page":"Logos & Trailers","href":"Logos-and-Trailers.html#several-games","type":"section"},{"title":"Recommended video settings for Aniki ReMake","page":"Logos & Trailers","href":"Logos-and-Trailers.html#recommended-video-settings-for-aniki-remake","type":"section"},{"title":"Prefer downloaded trailers instead of Steam streaming","page":"Logos & Trailers","href":"Logos-and-Trailers.html#prefer-downloaded-trailers-instead-of-steam-streaming","type":"section"},{"title":"Start trailers muted","page":"Logos & Trailers","href":"Logos-and-Trailers.html#start-trailers-muted","type":"section"},{"title":"Disable unused video previews","page":"Logos & Trailers","href":"Logos-and-Trailers.html#disable-unused-video-previews","type":"section"},{"title":"Download trailers","page":"Logos & Trailers","href":"Logos-and-Trailers.html#download-trailers","type":"section"},{"title":"One game","page":"Logos & Trailers","href":"Logos-and-Trailers.html#one-game","type":"section"},{"title":"Several games","page":"Logos & Trailers","href":"Logos-and-Trailers.html#several-games","type":"section"},{"title":"Enable trailers in Aniki","page":"Logos & Trailers","href":"Logos-and-Trailers.html#enable-trailers-in-aniki","type":"section"},{"title":"Choose how the trailer appears in Game Details","page":"Logos & Trailers","href":"Logos-and-Trailers.html#choose-how-the-trailer-appears-in-game-details","type":"section"},{"title":"Full background","page":"Logos & Trailers","href":"Logos-and-Trailers.html#full-background","type":"section"},{"title":"Smaller video / picture-in-picture","page":"Logos & Trailers","href":"Logos-and-Trailers.html#smaller-video-picture-in-picture","type":"section"},{"title":"A good starting configuration","page":"Logos & Trailers","href":"Logos-and-Trailers.html#a-good-starting-configuration","type":"section"},{"title":"Logo performance options","page":"Logos & Trailers","href":"Logos-and-Trailers.html#logo-performance-options","type":"section"},{"title":"A logo does not appear","page":"Logos & Trailers","href":"Logos-and-Trailers.html#a-logo-does-not-appear","type":"section"},{"title":"A trailer does not appear","page":"Logos & Trailers","href":"Logos-and-Trailers.html#a-trailer-does-not-appear","type":"section"},{"title":"Trailer navigation causes stutter","page":"Logos & Trailers","href":"Logos-and-Trailers.html#trailer-navigation-causes-stutter","type":"section"},{"title":"Videos do not work anywhere","page":"Logos & Trailers","href":"Logos-and-Trailers.html#videos-do-not-work-anywhere","type":"section"},{"title":"New to Playnite?","page":"New to Playnite?","href":"New-to-Playnite.html","type":"page"},{"title":"What is Playnite?","page":"New to Playnite?","href":"New-to-Playnite.html#what-is-playnite","type":"section"},{"title":"Don't have Playnite yet?","page":"New to Playnite?","href":"New-to-Playnite.html#dont-have-playnite-yet","type":"section"},{"title":"Desktop mode vs Fullscreen mode","page":"New to Playnite?","href":"New-to-Playnite.html#desktop-mode-vs-fullscreen-mode","type":"section"},{"title":"Desktop mode","page":"New to Playnite?","href":"New-to-Playnite.html#desktop-mode","type":"section"},{"title":"Fullscreen mode","page":"New to Playnite?","href":"New-to-Playnite.html#fullscreen-mode","type":"section"},{"title":"Automatically switch to Fullscreen with a controller","page":"New to Playnite?","href":"New-to-Playnite.html#automatically-switch-to-fullscreen-with-a-controller","type":"section"},{"title":"Open the Playnite main menu in Desktop mode","page":"New to Playnite?","href":"New-to-Playnite.html#open-the-playnite-main-menu-in-desktop-mode","type":"section"},{"title":"Install an add-on","page":"New to Playnite?","href":"New-to-Playnite.html#install-an-add-on","type":"section"},{"title":"Add your game libraries","page":"New to Playnite?","href":"New-to-Playnite.html#add-your-game-libraries","type":"section"},{"title":"Add emulated games","page":"New to Playnite?","href":"New-to-Playnite.html#add-emulated-games","type":"section"},{"title":"Part 1 — Configure the emulator","page":"New to Playnite?","href":"New-to-Playnite.html#part-1-configure-the-emulator","type":"section"},{"title":"Part 2 — Import the games","page":"New to Playnite?","href":"New-to-Playnite.html#part-2-import-the-games","type":"section"},{"title":"Recommended: create an Auto-scan configuration","page":"New to Playnite?","href":"New-to-Playnite.html#recommended-create-an-auto-scan-configuration","type":"section"},{"title":"Manual import","page":"New to Playnite?","href":"New-to-Playnite.html#manual-import","type":"section"},{"title":"Need more help with Playnite itself?","page":"New to Playnite?","href":"New-to-Playnite.html#need-more-help-with-playnite-itself","type":"section"},{"title":"Next step","page":"New to Playnite?","href":"New-to-Playnite.html#next-step","type":"section"},{"title":"Other Add-ons & Software Tools","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html","type":"page"},{"title":"ControlUp","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#controlup","type":"section"},{"title":"Install","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#install","type":"section"},{"title":"Configure automatic Fullscreen switching","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#configure-automatic-fullscreen-switching","type":"section"},{"title":"AudioSwitcher","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#audioswitcher","type":"section"},{"title":"Install","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#install","type":"section"},{"title":"Open from Aniki","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#open-from-aniki","type":"section"},{"title":"Custom Fade Animations for Playnite (CustomFadeAnim)","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#custom-fade-animations-for-playnite-customfadeanim","type":"section"},{"title":"Extra Metadata Loader","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#extra-metadata-loader","type":"section"},{"title":"Playnite Software Tools","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#playnite-software-tools","type":"section"},{"title":"Example: add VacuumTube for a console-style YouTube app","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#example-add-vacuumtube-for-a-console-style-youtube-app","type":"section"},{"title":"1. Install VacuumTube","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#1-install-vacuumtube","type":"section"},{"title":"2. Optional — make VacuumTube start in fullscreen","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#2-optional-make-vacuumtube-start-in-fullscreen","type":"section"},{"title":"3. Add VacuumTube to Playnite Software Tools","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#3-add-vacuumtube-to-playnite-software-tools","type":"section"},{"title":"4. Launch it from Aniki","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#4-launch-it-from-aniki","type":"section"},{"title":"From Extras","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#from-extras","type":"section"},{"title":"Put VacuumTube directly on the Hub","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#put-vacuumtube-directly-on-the-hub","type":"section"},{"title":"Add a Software Tool to the Hub","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#add-a-software-tool-to-the-hub","type":"section"},{"title":"Open Software Tools from Extras","page":"Other Add-ons & Software Tools","href":"Other-Integrations-and-Software-Tools.html#open-software-tools-from-extras","type":"section"},{"title":"Performance & Recommended Settings","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html","type":"page"},{"title":"1. Start with Aniki Performance Mode","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#1-start-with-aniki-performance-mode","type":"section"},{"title":"2. Reduce the heaviest Aniki visual effects","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#2-reduce-the-heaviest-aniki-visual-effects","type":"section"},{"title":"3. Enable Playnite Asynchronous image loading","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#3-enable-playnite-asynchronous-image-loading","type":"section"},{"title":"4. Use a sensible Playnite image scaler","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#4-use-a-sensible-playnite-image-scaler","type":"section"},{"title":"5. Disable Playnite background blur","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#5-disable-playnite-background-blur","type":"section"},{"title":"6. Test Smooth scrolling","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#6-test-smooth-scrolling","type":"section"},{"title":"7. Extra Metadata Loader — prefer downloaded trailers","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#7-extra-metadata-loader-prefer-downloaded-trailers","type":"section"},{"title":"8. Extra Metadata Loader — test logo effects","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#8-extra-metadata-loader-test-logo-effects","type":"section"},{"title":"9. Make sure Playnite uses the correct GPU","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#9-make-sure-playnite-uses-the-correct-gpu","type":"section"},{"title":"10. VRR / G-Sync / FreeSync and Playnite UI stutter","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#10-vrr-g-sync-freesync-and-playnite-ui-stutter","type":"section"},{"title":"Recommended troubleshooting order","page":"Performance & Recommended Settings","href":"Performance-and-Recommended-Settings.html#recommended-troubleshooting-order","type":"section"},{"title":"Profile & Startup","page":"Profile & Startup","href":"Profile-and-Startup.html","type":"page"},{"title":"Change your username","page":"Profile & Startup","href":"Profile-and-Startup.html#change-your-username","type":"section"},{"title":"Change the built-in avatar","page":"Profile & Startup","href":"Profile-and-Startup.html#change-the-built-in-avatar","type":"section"},{"title":"Use your own custom profile picture","page":"Profile & Startup","href":"Profile-and-Startup.html#use-your-own-custom-profile-picture","type":"section"},{"title":"Advanced: replace one of the built-in avatar files","page":"Profile & Startup","href":"Profile-and-Startup.html#advanced-replace-one-of-the-built-in-avatar-files","type":"section"},{"title":"Use your Steam profile avatar","page":"Profile & Startup","href":"Profile-and-Startup.html#use-your-steam-profile-avatar","type":"section"},{"title":"Change the login screen background","page":"Profile & Startup","href":"Profile-and-Startup.html#change-the-login-screen-background","type":"section"},{"title":"Enable or disable the login screen","page":"Profile & Startup","href":"Profile-and-Startup.html#enable-or-disable-the-login-screen","type":"section"},{"title":"Choose Hub or Library as the startup destination","page":"Profile & Startup","href":"Profile-and-Startup.html#choose-hub-or-library-as-the-startup-destination","type":"section"},{"title":"Desktop method","page":"Profile & Startup","href":"Profile-and-Startup.html#desktop-method","type":"section"},{"title":"Fullscreen method","page":"Profile & Startup","href":"Profile-and-Startup.html#fullscreen-method","type":"section"},{"title":"Hide Playnite's normal game status screen","page":"Profile & Startup","href":"Profile-and-Startup.html#hide-playnites-normal-game-status-screen","type":"section"},{"title":"Configure startup, shutdown and event sounds","page":"Profile & Startup","href":"Profile-and-Startup.html#configure-startup-shutdown-and-event-sounds","type":"section"},{"title":"Run the Initial Setup assistant again","page":"Profile & Startup","href":"Profile-and-Startup.html#run-the-initial-setup-assistant-again","type":"section"},{"title":"Screenshots & Capture Gallery","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html","type":"page"},{"title":"First-time setup","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#first-time-screenshot-setup","type":"section"},{"title":"Choose a screenshot provider","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#choose-a-screenshot-provider","type":"section"},{"title":"Install a provider manually","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#install-a-provider-manually","type":"section"},{"title":"Configure screenshot folders in the provider first","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#configure-screenshot-folders-in-the-provider-first","type":"section"},{"title":"Screenshots Visualizer — useful folder options","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#screenshots-visualizer-useful-folder-options","type":"section"},{"title":"Global path for per-game folders","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#global-path-for-per-game-folders","type":"section"},{"title":"Add an extra folder for one game","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#add-an-extra-folder-for-one-game","type":"section"},{"title":"Tell Aniki Helper which provider to use","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#tell-aniki-helper-which-provider-to-use","type":"section"},{"title":"Generate Aniki thumbnails","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#generate-aniki-thumbnails","type":"section"},{"title":"Open Capture Gallery","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#open-capture-gallery","type":"section"},{"title":"Refresh one game's media","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#refresh-one-games-media","type":"section"},{"title":"Fullscreen","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#fullscreen","type":"section"},{"title":"Desktop","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#desktop","type":"section"},{"title":"Captures do not appear","page":"Screenshots & Capture Gallery","href":"Screenshots-and-Capture-Gallery.html#captures-do-not-appear","type":"section"},{"title":"Splash Screens","page":"Splash Screens","href":"Splash-Screens.html","type":"page"},{"title":"Open Splash Screen settings","page":"Splash Screens","href":"Splash-Screens.html#open-splash-screen-settings","type":"section"},{"title":"First-time setup","page":"Splash Screens","href":"Splash-Screens.html#first-time-setup","type":"section"},{"title":"Add more than one splash","page":"Splash Screens","href":"Splash-Screens.html#add-more-than-one-splash","type":"section"},{"title":"Choose which splash is displayed","page":"Splash Screens","href":"Splash-Screens.html#choose-which-splash-is-displayed","type":"section"},{"title":"Game priority","page":"Splash Screens","href":"Splash-Screens.html#game-priority","type":"section"},{"title":"Platform priority","page":"Splash Screens","href":"Splash-Screens.html#platform-priority","type":"section"},{"title":"Source priority","page":"Splash Screens","href":"Splash-Screens.html#source-priority","type":"section"},{"title":"Global only","page":"Splash Screens","href":"Splash-Screens.html#global-only","type":"section"},{"title":"Custom priority","page":"Splash Screens","href":"Splash-Screens.html#custom-priority","type":"section"},{"title":"Configure a platform splash","page":"Splash Screens","href":"Splash-Screens.html#configure-a-platform-splash","type":"section"},{"title":"Configure a source splash","page":"Splash Screens","href":"Splash-Screens.html#configure-a-source-splash","type":"section"},{"title":"Configure a splash for one game","page":"Splash Screens","href":"Splash-Screens.html#configure-a-splash-for-one-game","type":"section"},{"title":"Change the display duration for all games","page":"Splash Screens","href":"Splash-Screens.html#change-the-display-duration-for-all-games","type":"section"},{"title":"Change the duration for one game","page":"Splash Screens","href":"Splash-Screens.html#change-the-duration-for-one-game","type":"section"},{"title":"Desktop","page":"Splash Screens","href":"Splash-Screens.html#desktop","type":"section"},{"title":"Fullscreen","page":"Splash Screens","href":"Splash-Screens.html#fullscreen","type":"section"},{"title":"Reset a game's custom duration","page":"Splash Screens","href":"Splash-Screens.html#reset-a-games-custom-duration","type":"section"},{"title":"Fullscreen or Desktop","page":"Splash Screens","href":"Splash-Screens.html#fullscreen-or-desktop","type":"section"},{"title":"Can I set a timer for an entire platform?","page":"Splash Screens","href":"Splash-Screens.html#can-i-set-a-timer-for-an-entire-platform","type":"section"},{"title":"Let Aniki wait for the actual game window","page":"Splash Screens","href":"Splash-Screens.html#let-aniki-wait-for-the-actual-game-window","type":"section"},{"title":"Automatic close safety timer","page":"Splash Screens","href":"Splash-Screens.html#automatic-close-safety-timer","type":"section"},{"title":"Show the game logo","page":"Splash Screens","href":"Splash-Screens.html#show-the-game-logo","type":"section"},{"title":"Video splash sound","page":"Splash Screens","href":"Splash-Screens.html#video-splash-sound","type":"section"},{"title":"A video ends before the Splash Screen timer","page":"Splash Screens","href":"Splash-Screens.html#a-video-ends-before-the-splash-screen-timer","type":"section"},{"title":"Pause UniPlaySong during the splash","page":"Splash Screens","href":"Splash-Screens.html#pause-uniplaysong-during-the-splash","type":"section"},{"title":"Troubleshooting","page":"Splash Screens","href":"Splash-Screens.html#troubleshooting","type":"section"},{"title":"The splash disappears too quickly","page":"Splash Screens","href":"Splash-Screens.html#the-splash-disappears-too-quickly","type":"section"},{"title":"The splash stays too long","page":"Splash Screens","href":"Splash-Screens.html#the-splash-stays-too-long","type":"section"},{"title":"The wrong splash is displayed","page":"Splash Screens","href":"Splash-Screens.html#the-wrong-splash-is-displayed","type":"section"},{"title":"One game behaves differently","page":"Splash Screens","href":"Splash-Screens.html#one-game-behaves-differently","type":"section"},{"title":"Steam","page":"Steam","href":"Steam.html","type":"page"},{"title":"First-time setup","page":"Steam","href":"Steam.html#first-time-steam-setup","type":"section"},{"title":"Open Steam settings","page":"Steam","href":"Steam.html#open-steam-settings","type":"section"},{"title":"Connect your Steam account","page":"Steam","href":"Steam.html#connect-your-steam-account","type":"section"},{"title":"Steam is connected but features say the session is missing","page":"Steam","href":"Steam.html#steam-is-connected-but-features-say-the-session-is-missing","type":"section"},{"title":"Steam login keeps refreshing","page":"Steam","href":"Steam.html#steam-login-keeps-refreshing","type":"section"},{"title":"Enable Steam Friends","page":"Steam","href":"Steam.html#enable-steam-friends","type":"section"},{"title":"Show friends who played a game","page":"Steam","href":"Steam.html#show-friends-who-played-a-game","type":"section"},{"title":"Configure Steam Store","page":"Steam","href":"Steam.html#configure-steam-store","type":"section"},{"title":"Enable Steam update information","page":"Steam","href":"Steam.html#enable-steam-update-information","type":"section"},{"title":"Enable current player counts","page":"Steam","href":"Steam.html#enable-current-player-counts","type":"section"},{"title":"Open Steam features in Fullscreen","page":"Steam","href":"Steam.html#open-steam-features-in-fullscreen","type":"section"},{"title":"Theme Customization","page":"Theme Customization","href":"Theme-Customization.html","type":"page"},{"title":"Open Theme Customization","page":"Theme Customization","href":"Theme-Customization.html#open-theme-customization","type":"section"},{"title":"Change the overall look","page":"Theme Customization","href":"Theme-Customization.html#change-the-overall-look","type":"section"},{"title":"Change the theme color","page":"Theme Customization","href":"Theme-Customization.html#change-the-theme-color","type":"section"},{"title":"Change the Visual Pack","page":"Theme Customization","href":"Theme-Customization.html#change-the-visual-pack","type":"section"},{"title":"Change the Game Details layout","page":"Theme Customization","href":"Theme-Customization.html#change-the-game-details-layout","type":"section"},{"title":"Change font, avatar and controller icons","page":"Theme Customization","href":"Theme-Customization.html#change-font-avatar-and-controller-icons","type":"section"},{"title":"Performance Mode","page":"Theme Customization","href":"Theme-Customization.html#performance-mode","type":"section"},{"title":"Open Aniki Helper from Fullscreen","page":"Theme Customization","href":"Theme-Customization.html#open-aniki-helper-from-fullscreen","type":"section"},{"title":"Troubleshooting & FAQ","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html","type":"page"},{"title":"Aniki shows \"ANIKI HELPER REQUIRED\"","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#aniki-shows-aniki-helper-required","type":"section"},{"title":"Aniki says Aniki Helper needs an update","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#aniki-says-aniki-helper-needs-an-update","type":"section"},{"title":"I cannot find a setting","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#i-cannot-find-a-setting","type":"section"},{"title":"It changes how Aniki looks","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#it-changes-how-aniki-looks","type":"section"},{"title":"It configures an Aniki feature","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#it-configures-an-aniki-feature","type":"section"},{"title":"It changes one game only","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#it-changes-one-game-only","type":"section"},{"title":"Aniki says \"Unsupported layout settings\"","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#aniki-says-unsupported-layout-settings","type":"section"},{"title":"I changed the Visual Pack but the Library still uses game backgrounds","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#i-changed-the-visual-pack-but-the-library-still-uses-game-backgrounds","type":"section"},{"title":"No background appears in the Library","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#no-background-appears-in-the-library","type":"section"},{"title":"Logos do not appear","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#logos-do-not-appear","type":"section"},{"title":"Trailers cause stutter when changing games","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#trailers-cause-stutter-when-changing-games","type":"section"},{"title":"Trailers do not play","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#trailers-do-not-play","type":"section"},{"title":"No Playnite videos work at all","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#no-playnite-videos-work-at-all","type":"section"},{"title":"Windows 11 N","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#windows-11-n","type":"section"},{"title":"Windows 10 N","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#windows-10-n","type":"section"},{"title":"HowLongToBeat text is cut","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#howlongtobeat-text-is-cut","type":"section"},{"title":"Dynamic Colors do not update","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#dynamic-colors-do-not-update","type":"section"},{"title":"Splash Screen disappears too quickly","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#splash-screen-disappears-too-quickly","type":"section"},{"title":"One game has the wrong Splash Screen duration","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#one-game-has-the-wrong-splash-screen-duration","type":"section"},{"title":"I want one Splash Screen timer for an entire platform","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#i-want-one-splash-screen-timer-for-an-entire-platform","type":"section"},{"title":"Overlay does not appear over a game","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#overlay-does-not-appear-over-a-game","type":"section"},{"title":"Game reacts to buttons while the Overlay is open","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#game-reacts-to-buttons-while-the-overlay-is-open","type":"section"},{"title":"Aniki Web Browser says WebView2 is missing","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#aniki-web-browser-says-webview2-is-missing","type":"section"},{"title":"Controller Guide shortcut does not work","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#controller-guide-shortcut-does-not-work","type":"section"},{"title":"Steam Friends / Store / wishlist stop working together","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#steam-friends-store-wishlist-stop-working-together","type":"section"},{"title":"Steam login repeatedly refreshes","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#steam-login-repeatedly-refreshes","type":"section"},{"title":"Friends played data is outdated","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#friends-played-data-is-outdated","type":"section"},{"title":"Achievements are missing/outdated","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#achievements-are-missingoutdated","type":"section"},{"title":"Screenshots are missing","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#screenshots-are-missing","type":"section"},{"title":"Video Center has no thumbnails","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#video-center-has-no-thumbnails","type":"section"},{"title":"Video Center chapter features are missing","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#video-center-chapter-features-are-missing","type":"section"},{"title":"Movie artwork does not download","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#movie-artwork-does-not-download","type":"section"},{"title":"Network location does not open in Video Center","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#network-location-does-not-open-in-video-center","type":"section"},{"title":"Navigation is not smooth","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#navigation-is-not-smooth","type":"section"},{"title":"I want to report a bug","page":"Troubleshooting & FAQ","href":"Troubleshooting-and-FAQ.html#i-want-to-report-a-bug","type":"section"},{"title":"Home","page":"Home","href":"index.html","type":"page"},{"title":"Where do you want to start?","page":"Home","href":"index.html#choose-title","type":"section"},{"title":"Popular guides","page":"Home","href":"index.html#popular-title","type":"section"},{"title":"Start here. We’ll take it one step at a time.","page":"Home","href":"index.html#beginner-title","type":"section"},{"title":"More than a game list.","page":"Home","href":"index.html#explore-title","type":"section"}];
 
-          function closeDrawers(){
-            sidebar.classList.remove('open');
-            tocPanel.classList.remove('open');
-            setBodyLock();
-          }
+  const sidebar = document.getElementById('guideSidebar');
+  const backdrop = document.getElementById('navBackdrop');
+  const guideOpen = document.getElementById('guideMenuBtn');
+  const guideClose = document.getElementById('guideCloseBtn');
+  const tocPanel = document.getElementById('tocSidebar');
+  const tocOpen = document.getElementById('tocMenuBtn');
+  const tocClose = document.getElementById('tocCloseBtn');
+  const leftCollapse = document.getElementById('leftCollapseBtn');
+  const rightCollapse = document.getElementById('rightCollapseBtn');
+  const search = document.getElementById('navSearch');
+  const results = document.getElementById('searchResults');
+  const navSections = document.getElementById('navSections');
+  const tocList = document.getElementById('tocList');
 
-          function openGuide(){
-            tocPanel.classList.remove('open');
-            sidebar.classList.add('open');
-            setBodyLock();
-            const active = sidebar.querySelector('.nav-link.active');
-            if (active) setTimeout(() => active.scrollIntoView({block:'center'}), 80);
-          }
+  const currentPage = (location.pathname.split('/').pop() || 'index.html').split('#')[0];
+  const mobileMQ = window.matchMedia('(max-width: 900px)');
+  const tabletMQ = window.matchMedia('(max-width: 1250px)');
 
-          function openToc(){
-            sidebar.classList.remove('open');
-            tocPanel.classList.add('open');
-            setBodyLock();
-            const active = tocPanel.querySelector('.toc-link.active');
-            if (active) setTimeout(() => active.scrollIntoView({block:'center'}), 80);
-          }
+  function safeGet(key){
+    try { return localStorage.getItem(key); } catch { return null; }
+  }
+  function safeSet(key, value){
+    try { localStorage.setItem(key, value); } catch {}
+  }
 
-          guideOpen?.addEventListener('click', openGuide);
-          guideClose?.addEventListener('click', closeDrawers);
-          tocOpen?.addEventListener('click', openToc);
-          tocClose?.addEventListener('click', closeDrawers);
-          backdrop?.addEventListener('click', closeDrawers);
-          document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') closeDrawers();
-            if (e.key === '/' && !/input|textarea|select/i.test(document.activeElement?.tagName || '')){
-              e.preventDefault();
-              if (mobileMQ.matches) openGuide();
-              setTimeout(() => search?.focus(), 40);
-            }
-          });
+  function setBodyLock(){
+    const open = !!(
+      sidebar?.classList.contains('open') ||
+      tocPanel?.classList.contains('open')
+    );
+    document.body.classList.toggle('drawer-open', open);
+  }
 
-          // Active page + accordion behavior.
-          const activePage = sidebar.querySelector(`.nav-link[href="${CSS.escape(currentPage)}"]`);
-          activePage?.classList.add('active');
+  function closeDrawers(){
+    sidebar?.classList.remove('open');
+    tocPanel?.classList.remove('open');
+    setBodyLock();
+  }
 
-          const navGroups = [...sidebar.querySelectorAll('.nav-section')];
-          const activeGroup = activePage?.closest('.nav-section');
+  function openGuide(){
+    tocPanel?.classList.remove('open');
+    sidebar?.classList.add('open');
+    setBodyLock();
+    const active = sidebar?.querySelector('.nav-link.active');
+    if (active) setTimeout(() => active.scrollIntoView({block:'center'}), 80);
+  }
 
-          function setGroup(section, expanded){
-            const button = section.querySelector('.nav-group-button');
-            button?.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-          }
+  function openToc(){
+    sidebar?.classList.remove('open');
+    tocPanel?.classList.add('open');
+    setBodyLock();
+    const active = tocPanel?.querySelector('.toc-link.active');
+    if (active) setTimeout(() => active.scrollIntoView({block:'center'}), 80);
+  }
 
-          function applyResponsiveGroups(){
-            if (mobileMQ.matches){
-              navGroups.forEach(g => setGroup(g, g === activeGroup));
-            } else {
-              navGroups.forEach(g => {
-                const saved = localStorage.getItem(`aniki-nav-group-${g.dataset.groupIndex}`);
-                setGroup(g, saved !== 'closed');
-              });
-            }
-          }
-          applyResponsiveGroups();
+  guideOpen?.addEventListener('click', openGuide);
+  guideClose?.addEventListener('click', closeDrawers);
+  tocOpen?.addEventListener('click', openToc);
+  tocClose?.addEventListener('click', closeDrawers);
+  backdrop?.addEventListener('click', closeDrawers);
 
-          navGroups.forEach(section => {
-            const button = section.querySelector('.nav-group-button');
-            button?.addEventListener('click', () => {
-              const expanded = button.getAttribute('aria-expanded') === 'true';
-              setGroup(section, !expanded);
-              if (!mobileMQ.matches){
-                localStorage.setItem(`aniki-nav-group-${section.dataset.groupIndex}`, expanded ? 'closed' : 'open');
-              }
-            });
-          });
+  // Desktop collapse state.
+  function updateLeftCollapse(){
+    const collapsed = document.body.classList.contains('left-collapsed');
+    if (!leftCollapse) return;
+    leftCollapse.textContent = collapsed ? '›' : '‹';
+    leftCollapse.title = collapsed ? 'Expand guide navigation' : 'Collapse guide navigation';
+    leftCollapse.setAttribute('aria-label', leftCollapse.title);
+    leftCollapse.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+  }
 
-          mobileMQ.addEventListener?.('change', applyResponsiveGroups);
+  function updateRightCollapse(){
+    const collapsed = document.body.classList.contains('right-collapsed');
+    if (!rightCollapse) return;
+    rightCollapse.textContent = collapsed ? '‹' : '›';
+    rightCollapse.title = collapsed ? 'Expand section navigation' : 'Collapse section navigation';
+    rightCollapse.setAttribute('aria-label', rightCollapse.title);
+    rightCollapse.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+  }
 
-          // Keep the active page easy to find on desktop too.
-          if (activePage && !mobileMQ.matches){
-            requestAnimationFrame(() => {
-              activePage.scrollIntoView({block:'center'});
-            });
-          }
+  if (safeGet('aniki-left-collapsed') === '1') {
+    document.body.classList.add('left-collapsed');
+  }
+  if (safeGet('aniki-right-collapsed') === '1') {
+    document.body.classList.add('right-collapsed');
+  }
+  updateLeftCollapse();
+  updateRightCollapse();
 
-          sidebar.querySelectorAll('.nav-link').forEach(a => {
-            a.addEventListener('click', () => {
-              if (mobileMQ.matches) closeDrawers();
-            });
-          });
+  leftCollapse?.addEventListener('click', () => {
+    document.body.classList.toggle('left-collapsed');
+    safeSet('aniki-left-collapsed',
+      document.body.classList.contains('left-collapsed') ? '1' : '0');
+    updateLeftCollapse();
+  });
 
-          // Search page + section titles globally.
-          const normalize = value => value
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g,'')
-            .replace(/[^a-z0-9]+/g,' ')
-            .trim();
+  rightCollapse?.addEventListener('click', () => {
+    document.body.classList.toggle('right-collapsed');
+    safeSet('aniki-right-collapsed',
+      document.body.classList.contains('right-collapsed') ? '1' : '0');
+    updateRightCollapse();
+  });
 
-          function score(entry, terms){
-            const title = normalize(entry.title);
-            const page = normalize(entry.page);
-            let total = 0;
-            for (const term of terms){
-              if (!title.includes(term) && !page.includes(term)) return -1;
-              if (title === term) total += 100;
-              else if (title.startsWith(term)) total += 45;
-              else if (title.includes(term)) total += 25;
-              if (page.includes(term)) total += 6;
-            }
-            if (entry.type === 'section') total += 5;
-            return total;
-          }
+  // Active page.
+  const navLinks = sidebar ? [...sidebar.querySelectorAll('.nav-link')] : [];
+  const activePage = navLinks.find(a => {
+    const href = (a.getAttribute('href') || '').split('#')[0];
+    return href === currentPage;
+  });
+  activePage?.classList.add('active');
 
-          function renderSearch(){
-            const q = normalize(search.value);
-            if (!q){
-              results.classList.remove('active');
-              results.innerHTML = '';
-              navSections.style.display = '';
-              return;
-            }
+  // Accordion groups.
+  const navGroups = sidebar ? [...sidebar.querySelectorAll('.nav-section')] : [];
+  const activeGroup = activePage?.closest('.nav-section');
 
-            const terms = q.split(/\s+/).filter(Boolean);
-            const matches = SEARCH_INDEX
-              .map(item => ({item, score:score(item, terms)}))
-              .filter(x => x.score >= 0)
-              .sort((a,b) => b.score - a.score || a.item.page.localeCompare(b.item.page))
-              .slice(0, 14);
+  function setGroup(section, expanded){
+    const button = section.querySelector('.nav-group-button');
+    button?.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  }
 
-            navSections.style.display = 'none';
-            results.classList.add('active');
+  function applyResponsiveGroups(){
+    if (mobileMQ.matches){
+      navGroups.forEach(g => setGroup(g, g === activeGroup));
+    } else {
+      navGroups.forEach(g => {
+        const saved = safeGet(`aniki-nav-group-${g.dataset.groupIndex}`);
+        setGroup(g, saved !== 'closed');
+      });
+    }
+  }
+  applyResponsiveGroups();
 
-            if (!matches.length){
-              results.innerHTML = '<div class="search-empty">No matching page or section.</div>';
-              return;
-            }
+  navGroups.forEach(section => {
+    const button = section.querySelector('.nav-group-button');
+    button?.addEventListener('click', () => {
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      setGroup(section, !expanded);
+      if (!mobileMQ.matches){
+        safeSet(`aniki-nav-group-${section.dataset.groupIndex}`,
+          expanded ? 'closed' : 'open');
+      }
+    });
+  });
 
-            results.innerHTML = matches.map(({item}) => `
-              <a class="search-result" role="option" href="${item.href}">
-                <span class="search-result-title">${escapeHtml(item.title)}</span>
-                <span class="search-result-page">${item.type === 'page' ? 'Page' : escapeHtml(item.page)}</span>
-              </a>
-            `).join('');
+  mobileMQ.addEventListener?.('change', applyResponsiveGroups);
 
-            results.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-              if (mobileMQ.matches) closeDrawers();
-            }));
-          }
+  navLinks.forEach(a => {
+    a.addEventListener('click', () => {
+      if (mobileMQ.matches) closeDrawers();
+    });
+  });
 
-          function escapeHtml(value){
-            return value.replace(/[&<>"']/g, ch => ({
-              '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
-            }[ch]));
-          }
+  // Global search for pages and section titles.
+  const normalize = value => (value || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,' ')
+    .trim();
 
-          search?.addEventListener('input', renderSearch);
+  function score(entry, terms){
+    const title = normalize(entry.title);
+    const page = normalize(entry.page);
+    let total = 0;
 
-          // Build "On this page" from the current page headings.
-          const pageTitle = document.querySelector('.content > h1[id]');
-          const headings = [...document.querySelectorAll('.content h1[id],.content h2[id],.content h3[id]')]
-            .filter(h => h !== pageTitle && !h.id.startsWith('next-'));
+    for (const term of terms){
+      if (!title.includes(term) && !page.includes(term)) return -1;
+      if (title === term) total += 120;
+      else if (title.startsWith(term)) total += 55;
+      else if (title.includes(term)) total += 28;
+      if (page.includes(term)) total += 7;
+    }
+    if (entry.type === 'section') total += 6;
+    return total;
+  }
 
-          const tocList = document.getElementById('tocList');
+  function escapeHtml(value){
+    return String(value).replace(/[&<>"']/g, ch => ({
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#039;'
+    }[ch]));
+  }
 
-          if (!headings.length){
-            tocList.innerHTML = '<div class="toc-empty">No sections on this page.</div>';
-          } else {
-            headings.forEach(h => {
-              const link = document.createElement('a');
-              link.className = `toc-link depth-${Math.min(3, Number(h.tagName.substring(1)))}`;
-              link.href = `#${h.id}`;
-              link.textContent = h.textContent.trim();
-              link.dataset.target = h.id;
-              link.addEventListener('click', () => {
-                if (tabletMQ.matches) closeDrawers();
-              });
-              tocList.appendChild(link);
-            });
+  function renderSearch(){
+    if (!search || !results || !navSections) return;
 
-            const tocLinks = [...tocList.querySelectorAll('.toc-link')];
-            function activate(id){
-              tocLinks.forEach(a => a.classList.toggle('active', a.dataset.target === id));
-              const active = tocList.querySelector('.toc-link.active');
-              if (active && tocPanel.classList.contains('open')){
-                active.scrollIntoView({block:'nearest'});
-              }
-            }
+    const q = normalize(search.value);
 
-            const observer = new IntersectionObserver(entries => {
-              const visible = entries
-                .filter(e => e.isIntersecting)
-                .sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top);
-              if (visible.length) activate(visible[0].target.id);
-            }, {rootMargin:'-80px 0px -72% 0px', threshold:[0,1]});
+    if (!q){
+      results.classList.remove('active');
+      results.innerHTML = '';
+      navSections.style.display = '';
+      return;
+    }
 
-            headings.forEach(h => observer.observe(h));
+    const terms = q.split(/\s+/).filter(Boolean);
+    const matches = SEARCH_INDEX
+      .map(item => ({item, score:score(item, terms)}))
+      .filter(x => x.score >= 0)
+      .sort((a,b) =>
+        b.score - a.score ||
+        a.item.page.localeCompare(b.item.page) ||
+        a.item.title.localeCompare(b.item.title))
+      .slice(0, 16);
 
-            // Fallback for sections near the bottom where IntersectionObserver
-            // may not put a heading inside the small active zone.
-            let scrollTick = false;
-            window.addEventListener('scroll', () => {
-              if (scrollTick) return;
-              scrollTick = true;
-              requestAnimationFrame(() => {
-                scrollTick = false;
-                let current = headings[0];
-                for (const h of headings){
-                  if (h.getBoundingClientRect().top <= 105) current = h;
-                  else break;
-                }
-                if (current) activate(current.id);
-              });
-            }, {passive:true});
+    navSections.style.display = 'none';
+    results.classList.add('active');
 
-            if (location.hash){
-              const id = decodeURIComponent(location.hash.slice(1));
-              if (document.getElementById(id)) activate(id);
-            } else if (headings[0]){
-              activate(headings[0].id);
-            }
-          }
-        })();
+    if (!matches.length){
+      results.innerHTML = '<div class="search-empty">No matching page or section.</div>';
+      return;
+    }
 
+    results.innerHTML = matches.map(({item}) => `
+      <a class="search-result" role="option" href="${escapeHtml(item.href)}">
+        <span class="search-result-title">${escapeHtml(item.title)}</span>
+        <span class="search-result-page">${item.type === 'page' ? 'Page' : escapeHtml(item.page)}</span>
+      </a>
+    `).join('');
 
-        // Section permalink buttons ------------------------------------
-        (() => {
-          const icon = `
-            <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M7.775 3.275a.75.75 0 0 0-1.06-1.06l-2.5 2.5a3 3 0 0 0 4.24 4.24l.5-.5a.75.75 0 0 0-1.06-1.06l-.5.5a1.5 1.5 0 0 1-2.12-2.12l2.5-2.5Zm.45 9.45a.75.75 0 0 0 1.06 1.06l2.5-2.5a3 3 0 0 0-4.24-4.24l-.5.5a.75.75 0 0 0 1.06 1.06l.5-.5a1.5 1.5 0 0 1 2.12 2.12l-2.5 2.5Z"></path>
-            </svg>`;
+    results.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        if (mobileMQ.matches) closeDrawers();
+      });
+    });
+  }
 
-          const toast = document.createElement('div');
-          toast.className = 'section-copy-toast';
-          toast.textContent = 'Section link copied!';
-          document.body.appendChild(toast);
+  search?.addEventListener('input', renderSearch);
 
-          let toastTimer = null;
+  // Build "On this page".
+  const content = document.querySelector('.content');
+  const allHeadings = content
+    ? [...content.querySelectorAll('h1[id],h2[id],h3[id]')]
+    : [];
+  const pageTitle = allHeadings[0] || null;
+  const headings = allHeadings.filter(h => h !== pageTitle);
 
-          function showToast(message = 'Section link copied!'){
-            toast.textContent = message;
-            toast.classList.add('show');
-            clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => toast.classList.remove('show'), 1600);
-          }
+  if (tocList){
+    tocList.innerHTML = '';
 
-          async function copyText(text){
-            if (navigator.clipboard && window.isSecureContext){
-              await navigator.clipboard.writeText(text);
-              return;
-            }
+    if (!headings.length){
+      tocList.innerHTML = '<div class="toc-empty">No sections on this page.</div>';
+    } else {
+      headings.forEach(h => {
+        const link = document.createElement('a');
+        const level = Math.min(3, Math.max(1, Number(h.tagName.substring(1))));
+        link.className = `toc-link depth-${level}`;
+        link.href = `#${h.id}`;
+        link.textContent = h.textContent.trim();
+        link.dataset.target = h.id;
+        link.addEventListener('click', () => {
+          if (tabletMQ.matches) closeDrawers();
+        });
+        tocList.appendChild(link);
+      });
 
-            const area = document.createElement('textarea');
-            area.value = text;
-            area.setAttribute('readonly', '');
-            area.style.position = 'fixed';
-            area.style.opacity = '0';
-            document.body.appendChild(area);
-            area.select();
-            document.execCommand('copy');
-            area.remove();
-          }
+      const tocLinks = [...tocList.querySelectorAll('.toc-link')];
 
-          const pageTitle = document.querySelector('.content > h1[id]');
-          document.querySelectorAll('.content h1[id],.content h2[id],.content h3[id],.content h4[id],.content h5[id],.content h6[id]').forEach(heading => {
-            if (heading === pageTitle) return;
-            if (heading.querySelector(':scope > .section-anchor')) return;
+      function activateToc(id){
+        tocLinks.forEach(a => a.classList.toggle('active', a.dataset.target === id));
+        const active = tocList.querySelector('.toc-link.active');
+        if (active && tocPanel?.classList.contains('open')){
+          active.scrollIntoView({block:'nearest'});
+        }
+      }
 
-            const button = document.createElement('button');
-            button.type = 'button';
-            button.className = 'section-anchor';
-            button.innerHTML = icon;
-            button.title = 'Copy link to this section';
-            button.setAttribute('aria-label', `Copy link to section: ${heading.textContent.trim()}`);
+      function updateTocFromScroll(){
+        let current = headings[0];
+        for (const h of headings){
+          if (h.getBoundingClientRect().top <= 110) current = h;
+          else break;
+        }
+        if (current) activateToc(current.id);
+      }
 
-            button.addEventListener('click', async event => {
-              event.preventDefault();
-              event.stopPropagation();
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          ticking = false;
+          updateTocFromScroll();
+        });
+      }, {passive:true});
 
-              const url = new URL(window.location.href);
-              url.search = '';
-              url.hash = heading.id;
+      if (location.hash){
+        const id = decodeURIComponent(location.hash.slice(1));
+        if (document.getElementById(id)) activateToc(id);
+        else updateTocFromScroll();
+      } else {
+        updateTocFromScroll();
+      }
+    }
+  }
 
-              // Also update the current address bar without jumping away.
-              history.replaceState(null, '', `#${heading.id}`);
+  // Section permalink buttons.
+  const linkIcon = `
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M7.775 3.275a.75.75 0 0 0-1.06-1.06l-2.5 2.5a3 3 0 0 0 4.24 4.24l.5-.5a.75.75 0 0 0-1.06-1.06l-.5.5a1.5 1.5 0 0 1-2.12-2.12l2.5-2.5Zm.45 9.45a.75.75 0 0 0 1.06 1.06l2.5-2.5a3 3 0 0 0-4.24-4.24l-.5.5a.75.75 0 0 0 1.06 1.06l.5-.5a1.5 1.5 0 0 1 2.12 2.12l-2.5 2.5Z"></path>
+    </svg>`;
 
-              try{
-                await copyText(url.href);
-                showToast();
-              }catch{
-                showToast('Copy failed — use the address bar');
-              }
-            });
+  const toast = document.createElement('div');
+  toast.className = 'section-copy-toast';
+  toast.textContent = 'Section link copied!';
+  document.body.appendChild(toast);
+  let toastTimer = null;
 
-            heading.prepend(button);
-          });
-        })();
+  function showToast(message='Section link copied!'){
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 1600);
+  }
 
-</script><div class="nav-backdrop" id="navBackdrop"></div></body></html>
+  async function copyText(text){
+    if (navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    const area = document.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly','');
+    area.style.position = 'fixed';
+    area.style.opacity = '0';
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand('copy');
+    area.remove();
+  }
+
+  headings.forEach(heading => {
+    if (heading.querySelector(':scope > .section-anchor')) return;
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'section-anchor';
+    button.innerHTML = linkIcon;
+    button.title = 'Copy link to this section';
+    button.setAttribute('aria-label',
+      `Copy link to section: ${heading.textContent.trim()}`);
+
+    button.addEventListener('click', async event => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const url = new URL(window.location.href);
+      url.search = '';
+      url.hash = heading.id;
+      history.replaceState(null, '', `#${heading.id}`);
+
+      try{
+        await copyText(url.href);
+        showToast();
+      }catch{
+        showToast('Copy failed — use the address bar');
+      }
+    });
+
+    heading.prepend(button);
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape'){
+      if (search && search.value){
+        search.value = '';
+        renderSearch();
+        search.blur();
+      }
+      closeDrawers();
+    }
+
+    if (event.key === '/' &&
+        !/input|textarea|select/i.test(document.activeElement?.tagName || '')){
+      event.preventDefault();
+
+      if (!mobileMQ.matches &&
+          document.body.classList.contains('left-collapsed')){
+        document.body.classList.remove('left-collapsed');
+        safeSet('aniki-left-collapsed','0');
+        updateLeftCollapse();
+      }
+
+      if (mobileMQ.matches) openGuide();
+      setTimeout(() => search?.focus(), 60);
+    }
+  });
+
+})();
+</script></body></html>
