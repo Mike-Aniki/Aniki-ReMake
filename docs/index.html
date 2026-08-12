@@ -1,429 +1,741 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Aniki ReMake</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="The story behind Aniki ReMake — from early Playnite theme experiments to Aniki Remix, Aniki ReMake and Aniki Lite.">
+<title>The Story of Aniki ReMake</title>
 
-  <style>
-    :root {
-      --bg: #070712;
-      --bg-soft: #101020;
-      --card: rgba(18, 18, 36, 0.78);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --accent: #e63b5f;
-      --accent-soft: rgba(230, 59, 95, 0.18);
-      --text: #f4f4f7;
-      --muted: #b6b6c8;
-      --line: rgba(255, 255, 255, 0.08);
-      --max-width: 980px;
-    }
+<style>
+:root {
+  --bg:#080c12;
+  --bg-soft:#0d131c;
+  --surface:#111925;
+  --surface-2:#151f2c;
+  --border:rgba(255,255,255,.085);
+  --border-strong:rgba(121,192,255,.22);
+  --text:#f1f5f9;
+  --muted:#98a6b5;
+  --muted-2:#748394;
+  --accent:#58a6ff;
+  --accent-2:#79c0ff;
+  --accent-soft:rgba(31,111,235,.12);
+  --story:#e35d7a;
+  --story-soft:rgba(227,93,122,.10);
+  --max:1160px;
+}
 
-    * {
-      box-sizing: border-box;
-    }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% -8%,rgba(31,111,235,.18),transparent 29%),
+    radial-gradient(circle at 92% 18%,rgba(227,93,122,.09),transparent 27%),
+    linear-gradient(180deg,#080c12,#0a1017 48%,#080c12);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  line-height:1.68;
+}
 
-    html {
-      scroll-behavior: smooth;
-    }
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:linear-gradient(to bottom,black,transparent 88%);
+}
 
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(230, 59, 95, 0.18), transparent 32%),
-        radial-gradient(circle at bottom right, rgba(80, 90, 180, 0.16), transparent 35%),
-        var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-    }
+a{color:var(--accent-2)}
+strong{color:var(--text)}
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 42px 42px;
-      mask-image: linear-gradient(to bottom, black, transparent 80%);
-      opacity: 0.35;
-    }
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:20;
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  padding:0 28px;
+  border-bottom:1px solid var(--border);
+  background:rgba(8,12,18,.88);
+  backdrop-filter:blur(14px);
+}
 
-    a {
-      color: var(--text);
-      text-decoration: none;
-    }
+.topbar-brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  min-width:0;
+  color:var(--text);
+  text-decoration:none;
+  font-weight:800;
+}
+.topbar-brand img{
+  width:28px;
+  height:28px;
+  object-fit:contain;
+}
+.topbar-brand span{
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
 
-    .hero {
-      min-height: 72vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 80px 24px 56px;
-      text-align: center;
-    }
+.topbar-links{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  font-size:13px;
+  font-weight:700;
+}
+.topbar-links a{
+  color:#c6d0da;
+  text-decoration:none;
+}
+.topbar-links a:hover{color:#fff}
 
-    .hero-inner {
-      max-width: var(--max-width);
-    }
+.hero{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:82px 28px 42px;
+  text-align:center;
+}
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      margin-bottom: 28px;
-      border: 1px solid var(--card-border);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--muted);
-      font-size: 0.9rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
+.hero-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:22px;
+  padding:7px 12px;
+  border:1px solid var(--border-strong);
+  border-radius:999px;
+  background:rgba(31,111,235,.07);
+  color:var(--accent-2);
+  font-size:11px;
+  font-weight:850;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.hero-badge::before{
+  content:"";
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--story);
+  box-shadow:0 0 16px rgba(227,93,122,.75);
+}
 
-    .badge span {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 18px var(--accent);
-    }
+.hero-logo{
+  display:block;
+  width:min(460px,82vw);
+  max-height:200px;
+  object-fit:contain;
+  margin:0 auto 25px;
+  filter:drop-shadow(0 18px 48px rgba(0,0,0,.35));
+}
 
-    h1 {
-      margin: 0;
-      font-size: clamp(3rem, 8vw, 6.4rem);
-      line-height: 0.95;
-      letter-spacing: -0.06em;
-    }
+.hero h1{
+  margin:0;
+  font-size:clamp(2.6rem,6vw,5.3rem);
+  line-height:.98;
+  letter-spacing:-.055em;
+}
+.hero h1 span{
+  background:linear-gradient(90deg,var(--accent-2),#d9ecff 45%,#ef90a4);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
 
-    .hero h1 span {
-      color: var(--accent);
-      text-shadow: 0 0 34px rgba(230, 59, 95, 0.35);
-    }
+.hero-subtitle{
+  max-width:760px;
+  margin:24px auto 0;
+  color:#aab7c5;
+  font-size:clamp(1.05rem,2vw,1.3rem);
+}
 
-    .subtitle {
-      max-width: 760px;
-      margin: 28px auto 0;
-      color: var(--muted);
-      font-size: clamp(1.05rem, 2.5vw, 1.35rem);
-    }
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:11px;
+  margin-top:30px;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:42px;
+  padding:0 17px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:rgba(255,255,255,.035);
+  color:var(--text);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:800;
+  transition:transform .15s ease,border-color .15s ease,background .15s ease;
+}
+.btn:hover{
+  transform:translateY(-1px);
+  border-color:rgba(255,255,255,.2);
+  background:rgba(255,255,255,.065);
+}
+.btn.primary{
+  border-color:rgba(88,166,255,.35);
+  background:linear-gradient(135deg,#1f6feb,#174e9e);
+  box-shadow:0 12px 30px rgba(31,111,235,.2);
+}
 
-    .buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 36px;
-    }
+.hero-note{
+  max-width:840px;
+  margin:54px auto 0;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:18px;
+  align-items:center;
+  padding:22px 24px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(88,166,255,.09),transparent 35%),
+    rgba(17,25,37,.72);
+  text-align:left;
+}
+.hero-note-icon{
+  width:50px;
+  height:50px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(88,166,255,.2);
+  border-radius:14px;
+  background:var(--accent-soft);
+  color:var(--accent-2);
+  font-size:22px;
+}
+.hero-note strong{
+  display:block;
+  margin-bottom:3px;
+  font-size:15px;
+}
+.hero-note span{
+  color:var(--muted);
+  font-size:14px;
+}
 
-    .button {
-      padding: 13px 20px;
-      border-radius: 14px;
-      border: 1px solid var(--card-border);
-      background: rgba(255, 255, 255, 0.05);
-      transition: 0.2s ease;
-      font-weight: 600;
-    }
+.story-wrap{
+  position:relative;
+  max-width:var(--max);
+  margin:0 auto;
+  padding:26px 28px 72px;
+}
 
-    .button.primary {
-      background: linear-gradient(135deg, var(--accent), #9d2642);
-      border-color: rgba(255, 255, 255, 0.14);
-      box-shadow: 0 10px 28px rgba(230, 59, 95, 0.22);
-    }
+.story-wrap::before{
+  content:"";
+  position:absolute;
+  left:72px;
+  top:48px;
+  bottom:110px;
+  width:1px;
+  background:linear-gradient(to bottom,transparent,rgba(88,166,255,.28) 8%,rgba(88,166,255,.15) 86%,transparent);
+}
 
-    .button:hover {
-      transform: translateY(-2px);
-      border-color: rgba(255, 255, 255, 0.24);
-      background-color: rgba(255, 255, 255, 0.08);
-    }
+.story-step{
+  position:relative;
+  display:grid;
+  grid-template-columns:88px minmax(0,1fr);
+  gap:18px;
+  margin:0 0 28px;
+  scroll-margin-top:82px;
+}
 
-    main {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 24px 80px;
-    }
+.timeline-marker{
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:9px;
+  padding-top:26px;
+}
+.timeline-dot{
+  width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(88,166,255,.28);
+  border-radius:13px;
+  background:#0d1520;
+  color:var(--accent-2);
+  box-shadow:0 10px 26px rgba(0,0,0,.25);
+  font-size:18px;
+}
+.timeline-number{
+  color:var(--muted-2);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.13em;
+}
 
-    .section {
-      position: relative;
-      margin: 26px 0;
-      padding: 34px;
-      border: 1px solid var(--card-border);
-      border-radius: 28px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.025)),
-        var(--card);
-      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
-      overflow: hidden;
-    }
+.story-card{
+  position:relative;
+  padding:30px 34px;
+  border:1px solid var(--border);
+  border-radius:20px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(88,166,255,.075),transparent 30%),
+    linear-gradient(145deg,rgba(255,255,255,.038),rgba(255,255,255,.014)),
+    rgba(14,21,31,.9);
+  box-shadow:0 22px 58px rgba(0,0,0,.18);
+  overflow:hidden;
+}
+.story-card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),rgba(227,93,122,.55),transparent);
+  opacity:.55;
+}
 
-    .section::before {
-      content: "";
-      position: absolute;
-      inset: 0 auto 0 0;
-      width: 4px;
-      background: linear-gradient(to bottom, transparent, var(--accent), transparent);
-      opacity: 0.85;
-    }
+.story-kicker{
+  margin-bottom:7px;
+  color:var(--accent-2);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
 
-    h2 {
-      margin: 0 0 18px;
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
-      letter-spacing: -0.04em;
-    }
+.story-card h2{
+  margin:0 0 20px;
+  font-size:clamp(1.55rem,3vw,2.25rem);
+  line-height:1.16;
+  letter-spacing:-.035em;
+}
 
-    p {
-      margin: 0 0 16px;
-      color: var(--muted);
-      font-size: 1.05rem;
-    }
+.story-content p{
+  margin:0 0 15px;
+  color:#aeb9c5;
+  font-size:15.5px;
+}
+.story-content p:last-child{margin-bottom:0}
 
-    strong {
-      color: var(--text);
-    }
+.story-content ul{
+  margin:17px 0 5px;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:8px;
+}
+.story-content li{
+  position:relative;
+  padding-left:19px;
+  color:#aeb9c5;
+}
+.story-content li::before{
+  content:"";
+  position:absolute;
+  left:2px;
+  top:.72em;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 10px rgba(88,166,255,.45);
+}
 
-    ul {
-      margin: 18px 0 4px;
-      padding-left: 22px;
-      color: var(--muted);
-    }
+.story-content blockquote{
+  margin:22px 0;
+  padding:19px 21px;
+  border:1px solid rgba(227,93,122,.18);
+  border-left:4px solid var(--story);
+  border-radius:0 12px 12px 0;
+  background:linear-gradient(135deg,var(--story-soft),rgba(255,255,255,.015));
+  color:#eef3f7;
+  font-size:17px;
+  font-weight:750;
+}
 
-    li {
-      margin: 8px 0;
-    }
+.story-inline-link{
+  margin-top:21px;
+  padding-top:17px;
+  border-top:1px solid var(--border);
+}
+.story-inline-link a{
+  color:var(--accent-2);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:800;
+}
+.story-inline-link a:hover{color:#b7dcff}
 
-    blockquote {
-      margin: 24px 0;
-      padding: 20px 22px;
-      border-left: 4px solid var(--accent);
-      border-radius: 14px;
-      background: var(--accent-soft);
-      color: var(--text);
-      font-size: 1.12rem;
-      font-weight: 600;
-    }
+.final-cta{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 28px 86px;
+}
+.final-card{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:24px;
+  align-items:center;
+  padding:28px 30px;
+  border:1px solid var(--border);
+  border-radius:20px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(227,93,122,.10),transparent 34%),
+    radial-gradient(circle at 0% 100%,rgba(88,166,255,.10),transparent 36%),
+    rgba(16,24,35,.92);
+}
+.final-card h2{
+  margin:0 0 7px;
+  font-size:23px;
+}
+.final-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+}
+.final-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:9px;
+}
 
-    .divider {
-      width: 100%;
-      height: 1px;
-      margin: 46px 0;
-      background: linear-gradient(to right, transparent, var(--line), transparent);
-    }
+.footer-banner{
+  width:100%;
+  display:block;
+  border-top:1px solid var(--border);
+}
 
-    footer {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 24px 60px;
-      color: var(--muted);
-      text-align: center;
-      font-size: 0.95rem;
-    }
+footer{
+  padding:23px 20px 35px;
+  text-align:center;
+  color:var(--muted-2);
+  font-size:12px;
+}
 
-    @media (max-width: 720px) {
-      .hero {
-        min-height: auto;
-        padding-top: 56px;
-      }
+@media(max-width:860px){
+  .topbar{padding:0 15px}
+  .topbar-links a:nth-child(1),
+  .topbar-links a:nth-child(2){display:none}
+  .hero{padding-top:58px}
+  .story-wrap::before{left:48px}
+  .story-step{grid-template-columns:54px minmax(0,1fr);gap:10px}
+  .timeline-dot{width:38px;height:38px;border-radius:11px}
+  .story-card{padding:25px 23px}
+  .final-card{grid-template-columns:1fr}
+  .final-actions{justify-content:flex-start}
+}
 
-      .section {
-        padding: 26px 22px;
-        border-radius: 22px;
-      }
-
-      .buttons {
-        flex-direction: column;
-      }
-
-      .button {
-        width: 100%;
-      }
-    }
-  </style>
+@media(max-width:560px){
+  .topbar-brand span{display:none}
+  .hero{padding:46px 18px 30px}
+  .hero-actions{flex-direction:column}
+  .btn{width:100%}
+  .hero-note{grid-template-columns:1fr;text-align:center}
+  .hero-note-icon{margin:0 auto}
+  .story-wrap{padding:20px 14px 58px}
+  .story-wrap::before{display:none}
+  .story-step{display:block}
+  .timeline-marker{
+    flex-direction:row;
+    justify-content:flex-start;
+    padding:0 0 9px 4px;
+  }
+  .timeline-number{order:-1}
+  .story-card{border-radius:16px}
+  .final-cta{padding:0 14px 60px}
+  .final-actions{display:grid}
+}
+</style>
 </head>
 
 <body>
-  <header class="hero">
-    <div class="hero-inner">
-      <div class="badge">
-        <span></span>
-        Creator Story
-      </div>
 
-      <h1>Aniki <span>ReMake</span></h1>
+<header class="topbar">
+  <a class="topbar-brand" href="guide/">
+    <img src="https://raw.githubusercontent.com/Mike-Aniki/Aniki-ReMake/main/Images/Remake.png" alt="">
+    <span>Aniki ReMake</span>
+  </a>
 
-      <p class="subtitle">
-        The story behind Aniki ReMake, from simple theme edits to a full console-like experience for Playnite.
-      </p>
+  <nav class="topbar-links" aria-label="Project links">
+    <a href="guide/">User Guide</a>
+    <a href="https://github.com/Mike-Aniki/Aniki-ReMake" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://discord.com/invite/BrtABqe" target="_blank" rel="noopener noreferrer">Discord</a>
+    <a href="https://ko-fi.com/W7W1Y9DRB" target="_blank" rel="noopener noreferrer">Ko-fi</a>
+  </nav>
+</header>
 
-      <div class="buttons">
-        <a class="button primary" href="#about">Read the Story</a>
-        <a class="button" href="https://github.com/Mike-Aniki/Aniki-ReMake" target="_blank" rel="noopener noreferrer">GitHub</a>
-       <a class="button" href="https://ko-fi.com/mikeaniki" target="_blank" rel="noopener noreferrer">Ko-fi</a>
+<main>
+  <section class="hero">
+    <div class="hero-badge">Creator Story</div>
+
+    <img class="hero-logo"
+         src="https://raw.githubusercontent.com/Mike-Aniki/Aniki-ReMake/main/Images/Remake.png"
+         alt="Aniki ReMake">
+
+    <h1>The Story Behind <span>Aniki ReMake</span></h1>
+
+    <p class="hero-subtitle">
+      From simple Playnite theme edits to a complete console-style experience —
+      a project built through curiosity, experimentation, community feedback and a lot of trial and error.
+    </p>
+
+    <div class="hero-actions">
+      <a class="btn primary" href="#about-me">Read the Story</a>
+      <a class="btn" href="guide/">Open User Guide</a>
+      <a class="btn" href="https://github.com/Mike-Aniki/Aniki-ReMake" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="btn" href="https://ko-fi.com/W7W1Y9DRB" target="_blank" rel="noopener noreferrer">Support on Ko-fi</a>
+    </div>
+
+    <div class="hero-note">
+      <div class="hero-note-icon">✦</div>
+      <div>
+        <strong>A passion project, built in my free time.</strong>
+        <span>
+          Aniki ReMake is not a commercial project. Everything around Aniki grew from learning,
+          experimenting and trying to recreate the console-like PC experience I wanted for myself.
+        </span>
       </div>
     </div>
-  </header>
+  </section>
 
-  <main id="about">
-    <section class="section">
-      <h2>About Me</h2>
+  <div class="story-wrap">
+    
+    <section class="story-step" id="about-me">
+      <div class="timeline-marker" aria-hidden="true">
+        <span class="timeline-dot">◎</span>
+        <span class="timeline-number">01</span>
+      </div>
+      <article class="story-card">
+        <div class="story-kicker">THE CREATOR</div>
+        <h2>About Me</h2>
+        <div class="story-content">
+          
+<p>I'm French and grew up with consoles in the 90s.</p>
+<p>That “plug &amp; play”, smooth, controller-first experience is something that has always stayed with me.</p>
+<p>My job has nothing to do with coding or development. I work in a completely different field, and everything I’ve built around Aniki comes from curiosity, experimentation, and a lot of time spent learning on my own.</p>
+<p>Aniki ReMake does not generate any income. I work on it entirely in my free time.</p>
+<p>The only financial support I receive comes from Ko-fi donations, and I sincerely thank everyone who buys me a coffee. I drink a lot of them while working on the project.</p>
 
-      <p>I'm French and grew up with consoles in the 90s.</p>
-      
-      <p>That “plug & play”, smooth, controller-first experience is something that has always stayed with me.</p>
-
-      <p>My job has nothing to do with coding or development. I work in a completely different field, and everything I’ve built around Aniki comes from curiosity, experimentation, and a lot of time spent learning on my own.</p>
-
-      <p>Aniki ReMake does not generate any income. I work on it entirely in my free time.</p>
-
-      <p>The only financial support I receive comes from Ko-fi donations, and I sincerely thank everyone who buys me a coffee. I drink a lot of them while working on the project.</p>
+        </div>
+      </article>
     </section>
-
-    <section class="section">
-      <h2>The Origin of the Aniki Themes</h2>
-      
-      <p>When I moved to PC, I quickly realized something was missing.</p>
-
-      <p>The power was there.<br>
-      The freedom was there.<br>
+    
+    <section class="story-step" id="the-origin-of-the-aniki-themes">
+      <div class="timeline-marker" aria-hidden="true">
+        <span class="timeline-dot">◈</span>
+        <span class="timeline-number">02</span>
+      </div>
+      <article class="story-card">
+        <div class="story-kicker">THE BEGINNING</div>
+        <h2>The Origin of the Aniki Themes</h2>
+        <div class="story-content">
+          
+<p>When I moved to PC, I quickly realized something was missing.</p>
+<p>The power was there.<br/>
+      The freedom was there.<br/>
       But the experience didn’t feel like a console.</p>
+<p>Playnite became my “home” on PC because it was the closest thing to that feeling. But despite the quality of the available fullscreen themes, none of them fully matched what I was looking for.</p>
+<p>Some were excellent, but there was always a detail, a feeling, or an approach that didn’t completely align with my vision.</p>
 
-      <p>Playnite became my “home” on PC because it was the closest thing to that feeling. But despite the quality of the available fullscreen themes, none of them fully matched what I was looking for.</p>
-
-      <p>Some were excellent, but there was always a detail, a feeling, or an approach that didn’t completely align with my vision.</p>
+        </div>
+      </article>
     </section>
-
-    <section class="section">
-      <h2>The Beginning with Aniki Remix</h2>
-
-      <p>It all started with existing themes.</p>
-
-      <p>I really liked <strong>Remix</strong> by Zeroantix and <strong>Ubiquity</strong> by Red Schism. Each of them had strong and interesting ideas, but not necessarily the same ones.</p>
-
-      <p>So I started modifying Remix to integrate some of the ideas I liked from Ubiquity, while also trying my own ideas step by step.</p>
-
-      <p>At first, it was very simple:</p>
-
-      <ul>
-        <li>changing colors</li>
-        <li>adding logos</li>
-        <li>adjusting some visual elements</li>
-        <li>testing ideas without really knowing where I was going</li>
-      </ul>
-
-      <p>I then shared this modified version with the Playnite community under the name <strong>Aniki Remix</strong>.</p>
-
-      <p>The name was intentionally simple: it was Remix, but with my vision — my “Aniki” version.</p>
-
-      <p>To my surprise, the theme received a lot of positive feedback and support. That’s what motivated me to keep going.</p>
+    
+    <section class="story-step" id="the-beginning-with-aniki-remix">
+      <div class="timeline-marker" aria-hidden="true">
+        <span class="timeline-dot">◇</span>
+        <span class="timeline-number">03</span>
+      </div>
+      <article class="story-card">
+        <div class="story-kicker">ANIKI REMIX</div>
+        <h2>The Beginning with Aniki Remix</h2>
+        <div class="story-content">
+          
+<p>It all started with existing themes.</p>
+<p>I really liked <strong>Remix</strong> by Zeroantix and <strong>Ubiquity</strong> by Red Schism. Each of them had strong and interesting ideas, but not necessarily the same ones.</p>
+<p>So I started modifying Remix to integrate some of the ideas I liked from Ubiquity, while also trying my own ideas step by step.</p>
+<p>At first, it was very simple:</p>
+<ul>
+<li>changing colors</li>
+<li>adding logos</li>
+<li>adjusting some visual elements</li>
+<li>testing ideas without really knowing where I was going</li>
+</ul>
+<p>I then shared this modified version with the Playnite community under the name <strong>Aniki Remix</strong>.</p>
+<p>The name was intentionally simple: it was Remix, but with my vision — my “Aniki” version.</p>
+<p>To my surprise, the theme received a lot of positive feedback and support. That’s what motivated me to keep going.</p>
+<div class="story-inline-link"><a href="https://github.com/Mike-Aniki/Aniki-Remix" rel="noopener noreferrer" target="_blank">Explore Aniki Remix on GitHub →</a></div>
+        </div>
+      </article>
     </section>
-
-    <section class="section">
-      <h2>Learning by Breaking Things</h2>
-
-      <p>I had no background in development.</p>
-
-      <p>I never took any courses.<br>
+    
+    <section class="story-step" id="learning-by-breaking-things">
+      <div class="timeline-marker" aria-hidden="true">
+        <span class="timeline-dot">⌁</span>
+        <span class="timeline-number">04</span>
+      </div>
+      <article class="story-card">
+        <div class="story-kicker">LEARNING</div>
+        <h2>Learning by Breaking Things</h2>
+        <div class="story-content">
+          
+<p>I had no background in development.</p>
+<p>I never took any courses.<br/>
       I learned by observing, testing, making mistakes, and starting over.</p>
+<p>I spent a lot of time analyzing other themes, understanding how certain elements were built, trying to reproduce ideas, and then adapting them in my own way.</p>
+<p>And of course, I also spent a lot of time crashing Playnite.</p>
+<p>Sometimes a single mistake in XAML was enough to break everything. One misplaced comma, an unclosed tag, a wrongly placed element… and nothing worked anymore.</p>
+<p>But that’s also how I learned.</p>
+<p>The Playnite community and several theme creators helped me a lot with advice, ideas, and feedback.</p>
 
-      <p>I spent a lot of time analyzing other themes, understanding how certain elements were built, trying to reproduce ideas, and then adapting them in my own way.</p>
-
-      <p>And of course, I also spent a lot of time crashing Playnite.</p>
-
-      <p>Sometimes a single mistake in XAML was enough to break everything. One misplaced comma, an unclosed tag, a wrongly placed element… and nothing worked anymore.</p>
-
-      <p>But that’s also how I learned.</p>
-
-      <p>The Playnite community and several theme creators helped me a lot with advice, ideas, and feedback.</p>
+        </div>
+      </article>
     </section>
-
-    <section class="section">
-      <h2>The Birth of Aniki ReMake</h2>
-
-      <p>Over time, I started to better understand how XAML works.</p>
-
-      <p>And at one point, I thought:</p>
-
-      <blockquote>
+    
+    <section class="story-step" id="the-birth-of-aniki-remake">
+      <div class="timeline-marker" aria-hidden="true">
+        <span class="timeline-dot">✦</span>
+        <span class="timeline-number">05</span>
+      </div>
+      <article class="story-card">
+        <div class="story-kicker">ANIKI REMAKE</div>
+        <h2>The Birth of Aniki ReMake</h2>
+        <div class="story-content">
+          
+<p>Over time, I started to better understand how XAML works.</p>
+<p>And at one point, I thought:</p>
+<blockquote>
         Aniki Remix is great, but now that I understand how things work better, I could probably build something more advanced.
       </blockquote>
-
-      <p>That’s how <strong>Aniki ReMake</strong> was born.</p>
-
-      <p>The name comes directly from that idea: remaking Aniki Remix, but better.<br>
+<p>That’s how <strong>Aniki ReMake</strong> was born.</p>
+<p>The name comes directly from that idea: remaking Aniki Remix, but better.<br/>
       A more advanced, more ambitious, more animated version, closer to what I originally had in mind.</p>
-
-      <p>Aniki ReMake was no longer just a modification of an existing theme.<br>
+<p>Aniki ReMake was no longer just a modification of an existing theme.<br/>
       It became a project with a clear direction:</p>
+<ul>
+<li>recreating a console-like experience on PC</li>
+<li>building an immersive interface</li>
+<li>improving controller navigation</li>
+<li>giving the theme a strong identity</li>
+<li>focusing more on animations and transitions</li>
+</ul>
+<p>When I released Aniki ReMake, I once again received a lot of support and positive feedback. That pushed me to keep improving the theme and learning more.</p>
 
-      <ul>
-        <li>recreating a console-like experience on PC</li>
-        <li>building an immersive interface</li>
-        <li>improving controller navigation</li>
-        <li>giving the theme a strong identity</li>
-        <li>focusing more on animations and transitions</li>
-      </ul>
-
-      <p>When I released Aniki ReMake, I once again received a lot of support and positive feedback. That pushed me to keep improving the theme and learning more.</p>
+        </div>
+      </article>
     </section>
-
-    <section class="section">
-      <h2>Aniki Lite</h2>
-
-      <p>With Aniki ReMake, animations became a key part of the theme’s identity.</p>
-
-      <p>But animations come at a cost.</p>
-
-      <p>On lower-end systems or handheld devices, the theme could become too heavy.</p>
-
-      <p>That’s when the idea for <strong>Aniki Lite</strong> came up.</p>
-
-      <p>The name was, once again, very straightforward: an Aniki theme, but built with a “Lite” mindset.</p>
-
-      <p>The goal was different:</p>
-
-      <ul>
-        <li>a lighter interface</li>
-        <li>a cleaner, more minimalist design</li>
-        <li>better performance</li>
-        <li>an experience better suited for lower-end systems and portable devices</li>
-      </ul>
-
-      <p>Aniki Lite allowed me to explore a different approach: less flashy, but more direct, smoother, and more accessible.</p>
+    
+    <section class="story-step" id="aniki-lite">
+      <div class="timeline-marker" aria-hidden="true">
+        <span class="timeline-dot">◐</span>
+        <span class="timeline-number">06</span>
+      </div>
+      <article class="story-card">
+        <div class="story-kicker">A DIFFERENT APPROACH</div>
+        <h2>Aniki Lite</h2>
+        <div class="story-content">
+          
+<p>With Aniki ReMake, animations became a key part of the theme’s identity.</p>
+<p>But animations come at a cost.</p>
+<p>On lower-end systems or handheld devices, the theme could become too heavy.</p>
+<p>That’s when the idea for <strong>Aniki Lite</strong> came up.</p>
+<p>The name was, once again, very straightforward: an Aniki theme, but built with a “Lite” mindset.</p>
+<p>The goal was different:</p>
+<ul>
+<li>a lighter interface</li>
+<li>a cleaner, more minimalist design</li>
+<li>better performance</li>
+<li>an experience better suited for lower-end systems and portable devices</li>
+</ul>
+<p>Aniki Lite allowed me to explore a different approach: less flashy, but more direct, smoother, and more accessible.</p>
+<div class="story-inline-link"><a href="https://github.com/Mike-Aniki/Aniki-Lite" rel="noopener noreferrer" target="_blank">Explore Aniki Lite on GitHub →</a></div>
+        </div>
+      </article>
     </section>
+    
+    <section class="story-step" id="today">
+      <div class="timeline-marker" aria-hidden="true">
+        <span class="timeline-dot">●</span>
+        <span class="timeline-number">07</span>
+      </div>
+      <article class="story-card">
+        <div class="story-kicker">TODAY</div>
+        <h2>Today</h2>
+        <div class="story-content">
+          
+<p>Managing two projects at the same time with limited free time meant making choices.</p>
+<p>So I decided to focus mainly on <strong>Aniki ReMake</strong>.</p>
+<p>This led to a major evolution of the theme with version 2.0, and later an even more ambitious step with version 3.0.</p>
+<p>Today, Aniki ReMake continues to evolve with the same goal as day one: turning Playnite into a true modern console-like experience on PC.</p>
 
-    <section class="section">
-      <h2>Today</h2>
-
-      <p>Managing two projects at the same time with limited free time meant making choices.</p>
-
-      <p>So I decided to focus mainly on <strong>Aniki ReMake</strong>.</p>
-
-      <p>This led to a major evolution of the theme with version 2.0, and later an even more ambitious step with version 3.0.</p>
-
-      <p>Today, Aniki ReMake continues to evolve with the same goal as day one: turning Playnite into a true modern console-like experience on PC.</p>
+        </div>
+      </article>
     </section>
+    
+    <section class="story-step" id="final-note">
+      <div class="timeline-marker" aria-hidden="true">
+        <span class="timeline-dot">♥</span>
+        <span class="timeline-number">08</span>
+      </div>
+      <article class="story-card">
+        <div class="story-kicker">THANK YOU</div>
+        <h2>Final Note</h2>
+        <div class="story-content">
+          
+<p>Aniki ReMake was never meant to be a commercial project.</p>
+<p>It’s first and foremost a passion project, built entirely in my free time.</p>
+<p>It was born from frustration, curiosity, and the desire to create something better.</p>
+<p>I started with simple color changes, and little by little, through trial and error, crashes, and support from the community, the project grew into something much bigger.</p>
+<p>And if Aniki still exists today, it’s also thanks to the users who supported it, tested it, gave feedback, and encouraged me to keep going.</p>
+<p>A big thank you as well to those who support the project via Ko-fi. Your coffees really help keep the energy going during long work sessions on Aniki.</p>
 
-    <section class="section">
-      <h2>Final Note</h2>
-
-      <p>Aniki ReMake was never meant to be a commercial project.</p>
-
-      <p>It’s first and foremost a passion project, built entirely in my free time.</p>
-
-      <p>It was born from frustration, curiosity, and the desire to create something better.</p>
-
-      <p>I started with simple color changes, and little by little, through trial and error, crashes, and support from the community, the project grew into something much bigger.</p>
-
-      <p>And if Aniki still exists today, it’s also thanks to the users who supported it, tested it, gave feedback, and encouraged me to keep going.</p>
-
-      <p>A big thank you as well to those who support the project via Ko-fi. Your coffees really help keep the energy going during long work sessions on Aniki.</p>
+        </div>
+      </article>
     </section>
-  </main>
+    
+  </div>
 
-  <footer>
-    Aniki ReMake — A passion project for Playnite.
-  </footer>
+  <section class="final-cta">
+    <div class="final-card">
+      <div>
+        <h2>Want to explore Aniki ReMake?</h2>
+        <p>
+          The complete User Guide covers installation, customization, Aniki Helper features,
+          integrations and troubleshooting.
+        </p>
+      </div>
+      <div class="final-actions">
+        <a class="btn primary" href="guide/">Open User Guide</a>
+        <a class="btn" href="https://ko-fi.com/W7W1Y9DRB" target="_blank" rel="noopener noreferrer">☕ Buy me a coffee</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<img class="footer-banner"
+     src="https://raw.githubusercontent.com/Mike-Aniki/Aniki-ReMake/main/Images/Banner.png"
+     alt="Mike Aniki">
+
+<footer>
+  Aniki ReMake — A passion project for Playnite.
+</footer>
+
 </body>
 </html>
