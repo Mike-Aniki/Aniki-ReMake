@@ -4,9 +4,9 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     mc:Ignorable="d">
 
-    <!-- Définition du style pour les éléments de la liste de jeux -->
+    <!-- Style de l'item. Le focus visuel est maintenant dessine dans ListGameItemTemplate.xaml
+         afin de pouvoir suivre la largeur reelle de PART_ImageCover. -->
     <Style x:Key="ListGameItemStyle" TargetType="ListBoxItem">
-        <!-- Définition des propriétés par défaut -->
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -20,44 +20,55 @@
                         <QuadraticEase x:Key="EaseOutFast" EasingMode="EaseOut"/>
 
                         <Storyboard x:Key="SB_ToNone">
-                            <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleX"
-                                             To="1" Duration="0:0:0.14" EasingFunction="{StaticResource EaseOutFast}"/>
-                            <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleY"
-                                             To="1" Duration="0:0:0.14" EasingFunction="{StaticResource EaseOutFast}"/>
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleX"
+                                             To="1" Duration="0:0:0.14"
+                                             EasingFunction="{StaticResource EaseOutFast}"/>
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleY"
+                                             To="1" Duration="0:0:0.14"
+                                             EasingFunction="{StaticResource EaseOutFast}"/>
                         </Storyboard>
 
                         <Storyboard x:Key="SB_ToFocus">
-                            <!-- Zoom uniquement -->
-                            <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleX"
-                                             To="1.035" Duration="0:0:0.16" EasingFunction="{StaticResource EaseOutSoft}"/>
-                            <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleY"
-                                             To="1.035" Duration="0:0:0.16" EasingFunction="{StaticResource EaseOutSoft}"/>
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleX"
+                                             To="1.035" Duration="0:0:0.16"
+                                             EasingFunction="{StaticResource EaseOutSoft}"/>
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleY"
+                                             To="1.035" Duration="0:0:0.16"
+                                             EasingFunction="{StaticResource EaseOutSoft}"/>
                         </Storyboard>
 
                         <Storyboard x:Key="SB_ToHover">
-                            <!-- Hover souris plus léger que le focus manette/clavier -->
-                            <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleX"
-                                             To="1.02" Duration="0:0:0.12" EasingFunction="{StaticResource EaseOutFast}"/>
-                            <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleY"
-                                             To="1.02" Duration="0:0:0.12" EasingFunction="{StaticResource EaseOutFast}"/>
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleX"
+                                             To="1.02" Duration="0:0:0.12"
+                                             EasingFunction="{StaticResource EaseOutFast}"/>
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleY"
+                                             To="1.02" Duration="0:0:0.12"
+                                             EasingFunction="{StaticResource EaseOutFast}"/>
                         </Storyboard>
 
                         <Storyboard x:Key="SB_ToFocusHover">
-                            <!-- Focus + hover : un peu plus marqué -->
-                            <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleX"
-                                             To="1.045" Duration="0:0:0.16" EasingFunction="{StaticResource EaseOutSoft}"/>
-                            <DoubleAnimation Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleY"
-                                             To="1.045" Duration="0:0:0.16" EasingFunction="{StaticResource EaseOutSoft}"/>
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleX"
+                                             To="1.045" Duration="0:0:0.16"
+                                             EasingFunction="{StaticResource EaseOutSoft}"/>
+                            <DoubleAnimation Storyboard.TargetName="ScaleTransform"
+                                             Storyboard.TargetProperty="ScaleY"
+                                             To="1.045" Duration="0:0:0.16"
+                                             EasingFunction="{StaticResource EaseOutSoft}"/>
                         </Storyboard>
                     </ControlTemplate.Resources>
 
-
-
-                    <!-- Contenu principal du modèle -->
                     <Grid x:Name="ListBoxGrid"
                           RenderTransformOrigin="0.5,0.5"
                           Margin="{Settings FullscreenItemSpacingMargin}"
                           d:DataContext="{x:Static DesignMainViewModel.DesignSelectedGameIntance}">
+
                         <Grid.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform x:Name="ScaleTransform" ScaleX="1" ScaleY="1" />
@@ -82,228 +93,37 @@
                             </ContentPresenter.Style>
                         </ContentPresenter>
 
+                        <Border x:Name="GameTitleBackground"
+                                CornerRadius="{DynamicResource Corner}"
+                                Margin="0"
+                                BorderThickness="0"
+                                Background="{DynamicResource GameTitleBrush}"
+                                Opacity="0.6"
+                                VerticalAlignment="Bottom"
+                                Visibility="Collapsed" />
 
-
-                        <Border x:Name="GameTitleBackground" CornerRadius="{DynamicResource Corner}" Margin="0" BorderThickness="0" Background="{DynamicResource GameTitleBrush}" Opacity="0.6"
-                                VerticalAlignment="Bottom" Visibility="Collapsed" />
-                        <Border x:Name="NonFocus" Opacity="0" CornerRadius="{DynamicResource Corner}" Margin="0" BorderThickness="0" Background="#7000" />
-
-                        <!-- Éléments visuels pour le focus -->
-
-                        <Grid x:Name="MainGrid">
-
-                            <Grid.Style>
-                                <Style TargetType="Grid">
-                                    <Setter Property="Margin" Value="-3,-3,-3,-3" />
-                                    <Style.Triggers>
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBanner]}" Value="True"/>
-                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBannerOverlay]}" Value="False"/>
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="Margin" Value="-3,-13,-3,-23"/>
-                                        </MultiDataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Grid.Style>
-
-                            <!-- Bordure de focus de la cover -->
-                            <Border x:Name="MainBorder"
-                                    Opacity="0"
-                                    CornerRadius="{DynamicResource Corner}"
-                                    Tag="False"
-                                    IsHitTestVisible="False"
-                                    SnapsToDevicePixels="True">
-
-                                <Border.Style>
-                                    <Style TargetType="Border">
-
-                                        <!-- Bordure statique par défaut -->
-                                        <Setter Property="BorderThickness"
-                                                Value="3.5"/>
-
-                                        <Setter Property="Visibility"
-                                                Value="Collapsed"/>
-
-                                        <Setter Property="BorderBrush"
-                                                Value="{DynamicResource FocusGameBorderBrush}"/>
-
-                                        <Style.Triggers>
-
-                                            <!-- Bordure animée -->
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-
-                                                    <!-- La cover possède le focus -->
-                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}"
-                                                               Value="True"/>
-
-                                                    <!-- La bordure est réellement visible -->
-                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Visibility}"
-                                                               Value="Visible"/>
-
-                                                    <!-- Option activée -->
-                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AnimatedBorderCover]}"
-                                                               Value="True"/>
-
-                                                    <!-- Désactivée en mode Performance -->
-                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PerformanceMode]}"
-                                                               Value="False"/>
-
-                                                    <!-- Playnite doit être la fenêtre active -->
-                                                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}"
-                                                               Value="True"/>
-
-                                                </MultiDataTrigger.Conditions>
-
-                                                <!-- Remplace la bordure statique par la variante animable -->
-                                                <MultiDataTrigger.Setters>
-                                                    <Setter Property="BorderBrush"
-                                                            Value="{DynamicResource AnimatedFocusGameBorderBrush}"/>
-                                                </MultiDataTrigger.Setters>
-
-                                                <MultiDataTrigger.EnterActions>
-
-                                                    <BeginStoryboard x:Name="StartAnimatedCoverBorder"
-                                                                     HandoffBehavior="SnapshotAndReplace">
-
-                                                        <Storyboard Timeline.DesiredFrameRate="30">
-
-                                                            <!-- Apparition douce de la bordure -->
-                                                            <DoubleAnimation
-                                                                Storyboard.TargetProperty="Opacity"
-                                                                From="0"
-                                                                To="1"
-                                                                Duration="0:0:0.22">
-
-                                                                <DoubleAnimation.EasingFunction>
-                                                                    <SineEase EasingMode="EaseOut"/>
-                                                                </DoubleAnimation.EasingFunction>
-
-                                                            </DoubleAnimation>
-
-                                                            <!-- Rotation lente et continue du reflet -->
-                                                            <DoubleAnimation
-                                                                Storyboard.TargetProperty="(Border.BorderBrush).(Brush.RelativeTransform).(RotateTransform.Angle)"
-                                                                From="0"
-                                                                To="360"
-                                                                Duration="0:0:8"
-                                                                RepeatBehavior="Forever"/>
-
-                                                        </Storyboard>
-
-                                                    </BeginStoryboard>
-
-                                                </MultiDataTrigger.EnterActions>
-
-                                                <MultiDataTrigger.ExitActions>
-
-                                                    <!-- Supprime réellement les clocks d’animation -->
-                                                    <RemoveStoryboard BeginStoryboardName="StartAnimatedCoverBorder"/>
-
-                                                </MultiDataTrigger.ExitActions>
-
-                                            </MultiDataTrigger>
-
-                                            <!-- Bordure spéciale pour un jeu terminé à 100 % -->
-                                            <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Percent}"
-                                                         Value="100">
-
-                                                <Setter Property="BorderThickness"
-                                                        Value="4"/>
-
-                                                <Setter Property="BorderBrush">
-                                                    <Setter.Value>
-
-                                                        <!--
-                                                        Le RotateTransform est nécessaire :
-                                                        si l’animation est activée, ce pinceau pourra
-                                                        également être animé sans erreur.
-                                                        -->
-                                                        <LinearGradientBrush StartPoint="0,0"
-                                                                             EndPoint="1,1">
-
-                                                            <GradientStop Color="#C0E8FF"
-                                                                          Offset="0"/>
-
-                                                            <GradientStop Color="#202040"
-                                                                          Offset="0.5"/>
-
-                                                            <GradientStop Color="#00E6FF"
-                                                                          Offset="1"/>
-
-                                                            <LinearGradientBrush.RelativeTransform>
-                                                                <RotateTransform CenterX="0.5"
-                                                                                 CenterY="0.5"
-                                                                                 Angle="0"/>
-                                                            </LinearGradientBrush.RelativeTransform>
-
-                                                        </LinearGradientBrush>
-
-                                                    </Setter.Value>
-                                                </Setter>
-
-                                            </DataTrigger>
-
-                                        </Style.Triggers>
-
-                                    </Style>
-                                </Border.Style>
-
-                            </Border>
-
-
-                        </Grid>
-
-
-
-
-                        <TextBlock x:Name="InstallFont" Visibility="Collapsed" Text="&#xef08;"
-                                   FontFamily="{StaticResource FontIcoFont}" Opacity="0"
-                                   FontSize="26" Foreground="White"
-                                   VerticalAlignment="Top" HorizontalAlignment="Right"
-                                   TextAlignment="Center" Margin="12,25"  />
-
-
+                        <Border x:Name="NonFocus"
+                                Opacity="0"
+                                CornerRadius="{DynamicResource Corner}"
+                                Margin="0"
+                                BorderThickness="0"
+                                Background="#7000" />
                     </Grid>
 
-                    <!-- Déclenchement des changements visuels en fonction des états -->
                     <ControlTemplate.Triggers>
-
-                        <!-- Focus -->
+                        <!-- Le contour de focus est gere dans ListGameItemTemplate.xaml.
+                             On conserve ici le ZIndex et les animations de zoom. -->
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="Tag" Value="True" TargetName="MainBorder" />
-                            <Setter Property="Visibility" Value="Visible" TargetName="MainBorder" />
-                            <Setter Property="Opacity" Value="1" TargetName="MainBorder" />
                             <Setter Property="Canvas.ZIndex" Value="90" />
                         </Trigger>
-                        <Trigger Property="IsFocused" Value="False">
-                            <Setter Property="Tag" Value="False" TargetName="MainBorder" />
-                            <Setter Property="Visibility" Value="Collapsed" TargetName="MainBorder" />
-                            <Setter Property="Opacity" Value="0.9" TargetName="InstallFont" />
-                        </Trigger>
-                        <!-- Sélection -->
+
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" TargetName="GameTitleBackground" />
                         </Trigger>
-                        <!-- Survole de la souris -->
+
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" TargetName="GameTitleBackground" />
                         </Trigger>
-
-
-
-                        <!-- Affichage de l'icône d'installation -->
-                        <MultiDataTrigger>
-                            <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding IsInstalled}" Value="False" />
-                                <Condition Binding="{Settings Fullscreen.DarkenUninstalledGamesGrid}" Value="True" />
-                            </MultiDataTrigger.Conditions>
-                            <Setter Property="Visibility" Value="Visible" TargetName="InstallFont" />
-                            <Setter Property="Opacity" Value="1" TargetName="InstallFont" />
-                        </MultiDataTrigger>
-
-
 
                         <!-- Etat 1 : Focus + Hover -->
                         <MultiDataTrigger>
@@ -316,7 +136,9 @@
                                 <RemoveStoryboard BeginStoryboardName="BS_None"/>
                                 <RemoveStoryboard BeginStoryboardName="BS_Hover"/>
                                 <RemoveStoryboard BeginStoryboardName="BS_Focus"/>
-                                <BeginStoryboard x:Name="BS_FocusHover" Storyboard="{StaticResource SB_ToFocusHover}" HandoffBehavior="SnapshotAndReplace"/>
+                                <BeginStoryboard x:Name="BS_FocusHover"
+                                                 Storyboard="{StaticResource SB_ToFocusHover}"
+                                                 HandoffBehavior="SnapshotAndReplace"/>
                             </MultiDataTrigger.EnterActions>
                         </MultiDataTrigger>
 
@@ -331,7 +153,9 @@
                                 <RemoveStoryboard BeginStoryboardName="BS_None"/>
                                 <RemoveStoryboard BeginStoryboardName="BS_Hover"/>
                                 <RemoveStoryboard BeginStoryboardName="BS_FocusHover"/>
-                                <BeginStoryboard x:Name="BS_Focus" Storyboard="{StaticResource SB_ToFocus}" HandoffBehavior="SnapshotAndReplace"/>
+                                <BeginStoryboard x:Name="BS_Focus"
+                                                 Storyboard="{StaticResource SB_ToFocus}"
+                                                 HandoffBehavior="SnapshotAndReplace"/>
                             </MultiDataTrigger.EnterActions>
                         </MultiDataTrigger>
 
@@ -346,7 +170,9 @@
                                 <RemoveStoryboard BeginStoryboardName="BS_None"/>
                                 <RemoveStoryboard BeginStoryboardName="BS_Focus"/>
                                 <RemoveStoryboard BeginStoryboardName="BS_FocusHover"/>
-                                <BeginStoryboard x:Name="BS_Hover" Storyboard="{StaticResource SB_ToHover}" HandoffBehavior="SnapshotAndReplace"/>
+                                <BeginStoryboard x:Name="BS_Hover"
+                                                 Storyboard="{StaticResource SB_ToHover}"
+                                                 HandoffBehavior="SnapshotAndReplace"/>
                             </MultiDataTrigger.EnterActions>
                         </MultiDataTrigger>
 
@@ -361,11 +187,11 @@
                                 <RemoveStoryboard BeginStoryboardName="BS_Hover"/>
                                 <RemoveStoryboard BeginStoryboardName="BS_Focus"/>
                                 <RemoveStoryboard BeginStoryboardName="BS_FocusHover"/>
-                                <BeginStoryboard x:Name="BS_None" Storyboard="{StaticResource SB_ToNone}" HandoffBehavior="SnapshotAndReplace"/>
+                                <BeginStoryboard x:Name="BS_None"
+                                                 Storyboard="{StaticResource SB_ToNone}"
+                                                 HandoffBehavior="SnapshotAndReplace"/>
                             </MultiDataTrigger.EnterActions>
                         </MultiDataTrigger>
-
-
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -395,5 +221,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary>

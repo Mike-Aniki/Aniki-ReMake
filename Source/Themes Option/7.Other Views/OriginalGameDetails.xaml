@@ -193,24 +193,55 @@
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoAvatarDetails]}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoAchievementsDetails]}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
 
                             <StackPanel Orientation="Horizontal"
                                         VerticalAlignment="Center">
-                                <ContentControl Content="{Binding}"
+                                <ContentControl x:Name="TrophiesNoBar"
+                                                Content="{Binding}"
                                                 ContentTemplate="{StaticResource AnikiPlayniteAchievementsSummaryTemplate}"
                                                 Tag="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}"
                                                 VerticalAlignment="Center"
                                                 Focusable="False"
-                                                IsTabStop="False"/>
+                                                IsTabStop="False">
+                                    <ContentControl.Style>
+                                        <Style TargetType="ContentControl">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoAchievementsDetails]}" Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ContentControl.Style>
+                                </ContentControl>
 
-                                <ContentControl Content="{Binding}"
+                                <ContentControl x:Name="AvatarNoBar"
+                                                Content="{Binding}"
                                                 ContentTemplate="{StaticResource AnikiUserAvatarTemplate}"
                                                 VerticalAlignment="Center"
                                                 Focusable="False"
-                                                IsTabStop="False"/>
+                                                IsTabStop="False">
+                                    <ContentControl.Style>
+                                        <Style TargetType="ContentControl">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoAvatarDetails]}" Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ContentControl.Style>
+                                </ContentControl>
                             </StackPanel>
                         </Grid>
 
@@ -414,7 +445,18 @@
                                                             ContentTemplate="{StaticResource AnikiUserAvatarTemplate}"
                                                             VerticalAlignment="Center"
                                                             Focusable="False"
-                                                            IsTabStop="False"/>
+                                                            IsTabStop="False">
+                                                <ContentControl.Style>
+                                                    <Style TargetType="ContentControl">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoAvatarDetails]}" Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContentControl.Style>
+                                            </ContentControl>
 
                                             <ContentControl x:Name="Trophee_PA"
                                                             Grid.Column="1"
@@ -423,7 +465,18 @@
                                                             Tag="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}"
                                                             VerticalAlignment="Center"
                                                             Focusable="False"
-                                                            IsTabStop="False"/>
+                                                            IsTabStop="False">
+                                                <ContentControl.Style>
+                                                    <Style TargetType="ContentControl">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoAchievementsDetails]}" Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContentControl.Style>
+                                            </ContentControl>
                                         </Grid>
 
                                         <!-- Image de Source -->
@@ -455,7 +508,7 @@
                             </Border>
                         </Grid>
 
-                        <!--Grid Panel Details-->
+                        <!-- Grid Panel Details -->
 
                         <Grid x:Name="GameDetailsStack"
                               Grid.Row="1" Grid.ColumnSpan="3"
@@ -573,7 +626,7 @@
                                 </Style>
                             </Grid.Style>
 
-                            <!--StackPanel Panel Details-->
+                            <!-- StackPanel Panel Details -->
 
 
 
@@ -591,6 +644,10 @@
                                             <Setter Property="VerticalAlignment" Value="Center"/>
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[NoLogo]}" Value="True">
+                                                    <Setter Property="Opacity" Value="0"/>
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowNoTittleAndLogo]}" Value="True">
                                                     <Setter Property="Opacity" Value="0"/>
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
@@ -619,6 +676,9 @@
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{PluginStatus Plugin=ExtraMetadataLoader_705fdbca-e1fc-4004-b839-1d040b8b4429, Status=Installed}" Value="False">
                                                     <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowNoTittleAndLogo]}" Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -1155,7 +1215,7 @@
 
                                 </Grid>
 
-                                <!--Game Button-->
+                                <!-- Game Button -->
                                 <Grid x:Name="GameButtons" IsEnabled="True" >
                                     <Grid.Style>
                                         <Style TargetType="Grid">
@@ -1176,7 +1236,7 @@
                                             <Grid x:Name="MainButton" Height="50" Grid.Row="1" MinWidth="200" Margin="0,0,10,0" HorizontalAlignment="Stretch">
 
 
-                                                <!-- Keep old button for graceful fallback to vanilla as needed -->
+                                                <!-- Keep old button as vanilla fallback. -->
                                                 <ButtonEx x:Name="PART_ButtonContext"
                                                           MinWidth="200"
                                                           HorizontalAlignment="Stretch"
@@ -1194,7 +1254,7 @@
                                                         </Style>
                                                     </ButtonEx.Style>
                                                 </ButtonEx>
-                                                <!-- Custom button that has one command but can change button text as needed -->
+                                                <!-- Custom button with dynamic text. -->
                                                 <ButtonEx x:Name="NowPlayingButton"
                                                           MinWidth="200"
                                                           HorizontalContentAlignment="Center"
@@ -1471,6 +1531,35 @@
                                             </ButtonEx>
 
 
+                                            <ButtonEx x:Name="GameLinksButton"
+                                                      Height="50"
+                                                      Width="50"
+                                                      Margin="0,0,10,0"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenGameLinksWindowCommand}"
+                                                      ToolTip="{DynamicResource GameLinks_ButtonTooltip}"
+                                                      Style="{StaticResource GameOptionScaleStyle}"
+                                                      FocusVisualStyle="{x:Null}">
+                                                <ButtonEx.Triggers>
+                                                    <EventTrigger RoutedEvent="ButtonBase.Click">
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <ObjectAnimationUsingKeyFrames
+                                                                    Storyboard.TargetName="OpenViewSound"
+                                                                    Storyboard.TargetProperty="LoadedBehavior">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger>
+                                                </ButtonEx.Triggers>
+                                                <TextBlock Text="&#xef71;"
+                                                           FontSize="22"
+                                                           FontFamily="{DynamicResource FontIcoFont}"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"/>
+                                            </ButtonEx>
+
                                             <ButtonEx x:Name="PART_ButtonOptions"
                                                       Height="50"
                                                       Width="50"
@@ -1590,7 +1679,7 @@
                                 </Style>
                             </Grid.Style>
 
-                            <!--HowLongToBeat-->
+                            <!-- HowLongToBeat -->
 
                             <StackPanel x:Name="HltbStack" Orientation="Horizontal" >
                                 <StackPanel.Style>
@@ -1701,7 +1790,7 @@
                                 </StackPanel>
                             </StackPanel>
 
-                            <!--Genres-->
+                            <!-- Genres -->
 
                             <Grid x:Name="Genres" >
                                 <Grid.Style>
@@ -1905,7 +1994,7 @@
                             </Grid.Effect>
                         </Grid>
 
-                        <!--Panel Update-->
+                        <!-- Panel Update -->
 
                         <Grid x:Name="PanelUpdateGrid" Grid.RowSpan="3" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Center"
                               Width="1100" Panel.ZIndex="50" FocusVisualStyle="{x:Null}" RenderTransformOrigin="1,0"
@@ -2356,7 +2445,7 @@
                         </Grid>
 
 
-                        <!--Trigger-->
+                        <!-- Trigger -->
 
                         <Grid Grid.Row="0" Height="10" Width="10" Focusable="False" >
                             <TextBlock x:Name="LogoTrigger" Text="{Binding Game.Id, NotifyOnTargetUpdated=True}" Foreground="Transparent">
@@ -2953,7 +3042,7 @@
 
                     </Grid>
 
-                    <!-- Visibilité des elements quand trailer joue-->
+                    <!-- Visibilité des elements quand trailer joue -->
 
                     <ControlTemplate.Triggers>
 
@@ -3068,7 +3157,7 @@
         </Setter>
     </Style>
 
-    <!--PlayniteAchievement-->
+    <!-- PlayniteAchievement -->
     <Style x:Key="GameAchievementsWindow" TargetType="ContentControl">
         <Setter Property="Margin" Value="0,0,0,0"/>
         <Setter Property="Template">
@@ -4005,7 +4094,7 @@
 
                             </Grid.Resources>
 
-                            <!-- CATEGORY VIEW: visible only when the game has at least two category labels and no category is selected. -->
+                            <!-- Category view: 2+ categories and none selected. -->
                             <Grid x:Name="CategorySummaryView">
                                 <Grid.Style>
                                     <Style TargetType="Grid">
@@ -4048,7 +4137,7 @@
                                           ItemsSource="{PluginSettings Plugin=PlayniteAchievements, Path=DynamicCategorySummaries}"/>
                             </Grid>
 
-                            <!-- ACHIEVEMENT VIEW: direct for games without categories, or filtered after selecting a category. -->
+                            <!-- Achievement view: direct or category-filtered. -->
                             <Grid x:Name="FilteredAchievementsView">
                                 <Grid.Style>
                                     <Style TargetType="Grid">
@@ -4461,7 +4550,7 @@
         </Setter>
     </Style>
 
-    <!--DLC-->
+    <!-- DLC -->
     <Style x:Key="CheckDLCWindowStyle" TargetType="ContentControl">
         <Setter Property="Margin" Value="0"/>
 
@@ -5875,10 +5964,7 @@
                                                       Command="{Binding SelectCommand}"
                                                       Tag="{Binding GameId}">
 
-                                                <!-- 3 colonnes :
-                                                gauche = espace fantôme
-                                                centre = icône + label vraiment centré
-                                                droite = badge Current -->
+                                                <!-- 3 colonnes : espace / label centré / badge Current. -->
                                                 <Grid HorizontalAlignment="Stretch"
                                                       VerticalAlignment="Center">
 
@@ -5960,5 +6046,453 @@
         </Setter>
     </Style>
 
+
+
+
+<Style x:Key="GameLinksWindowStyle" TargetType="ContentControl">
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="ContentControl">
+                <Grid KeyboardNavigation.TabNavigation="Contained"
+                      KeyboardNavigation.DirectionalNavigation="Contained"
+                      KeyboardNavigation.ControlTabNavigation="Contained">
+
+                    <Grid.Resources>
+
+                        <!-- Premium game-link button -->
+                        <Style x:Key="GameLinkButtonStyle"
+                               BasedOn="{StaticResource {x:Type ButtonEx}}"
+                               TargetType="ButtonEx">
+
+                            <Setter Property="Height" Value="82"/>
+                            <Setter Property="Width" Value="760"/>
+                            <Setter Property="Margin" Value="0,0,0,11"/>
+                            <Setter Property="Padding" Value="26,0"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Grid Background="Transparent"
+                                              SnapsToDevicePixels="True">
+
+                                            <!-- Subtle permanent card background -->
+                                            <Border x:Name="BaseBackground"
+                                                    Background="#0DFFFFFF"
+                                                    BorderBrush="#20FFFFFF"
+                                                    BorderThickness="1"
+                                                    CornerRadius="{DynamicResource Corner}"/>
+
+                                            <!-- Focus background -->
+                                            <Border x:Name="FocusBackground"
+                                                    Background="{DynamicResource ButtonBackgroundFocus}"
+                                                    CornerRadius="{DynamicResource Corner}"
+                                                    Visibility="Collapsed"/>
+
+                                            <!-- Focus border -->
+                                            <Border x:Name="FocusBorder"
+                                                    BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                    BorderThickness="3"
+                                                    CornerRadius="{DynamicResource Corner}"
+                                                    Visibility="Collapsed"/>
+
+                                            <!-- Premium accent bar -->
+                                            <Border x:Name="AccentBar"
+                                                    Width="4"
+                                                    Margin="10,15,0,15"
+                                                    HorizontalAlignment="Left"
+                                                    Background="{DynamicResource FocusGameBorderBrush}"
+                                                    CornerRadius="2"
+                                                    Visibility="Collapsed"/>
+
+                                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                              RecognizesAccessKey="True"/>
+                                        </Grid>
+
+                                        <ControlTemplate.Triggers>
+
+                                            <Trigger Property="IsFocused" Value="True">
+                                                <Setter TargetName="FocusBackground"
+                                                        Property="Visibility"
+                                                        Value="Visible"/>
+
+                                                <Setter TargetName="FocusBorder"
+                                                        Property="Visibility"
+                                                        Value="Visible"/>
+
+                                                <Setter TargetName="AccentBar"
+                                                        Property="Visibility"
+                                                        Value="Visible"/>
+                                            </Trigger>
+
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="FocusBackground"
+                                                        Property="Visibility"
+                                                        Value="Visible"/>
+
+                                                <Setter TargetName="FocusBorder"
+                                                        Property="Visibility"
+                                                        Value="Visible"/>
+
+                                                <Setter TargetName="AccentBar"
+                                                        Property="Visibility"
+                                                        Value="Visible"/>
+                                            </Trigger>
+
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="FocusBackground"
+                                                        Property="Opacity"
+                                                        Value="0.72"/>
+                                            </Trigger>
+
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                    </Grid.Resources>
+
+                    <!-- Background dim -->
+                    <Border Background="{DynamicResource SecondaryViewBackground}"
+                            Opacity="0.38"/>
+
+                    <!-- Complete panel area -->
+                    <Grid Width="930"
+                          Height="750"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+
+                        <!-- Lightweight fake shadow -->
+                        <Border Width="900"
+                                Height="720"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Background="#66000000"
+                                CornerRadius="{DynamicResource Corner}"
+                                IsHitTestVisible="False">
+
+                            <Border.RenderTransform>
+                                <TranslateTransform X="11" Y="13"/>
+                            </Border.RenderTransform>
+                        </Border>
+
+                        <!-- Main panel -->
+                        <Border Width="900"
+                                Height="720"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Padding="42,32,42,25"
+                                CornerRadius="{DynamicResource Corner}"
+                                Background="{DynamicResource BackgroundMenu}"
+                                BorderBrush="{DynamicResource MenuBorderBrush}"
+                                BorderThickness="2"
+                                SnapsToDevicePixels="True">
+
+                            <Grid>
+
+                                <!-- Subtle inner premium border -->
+                                <Border Margin="-40,-30,-40,-23"
+                                        BorderBrush="#18FFFFFF"
+                                        BorderThickness="1"
+                                        CornerRadius="{DynamicResource Corner}"
+                                        IsHitTestVisible="False"/>
+
+                                <!-- Small accent at the top -->
+                                <Border Width="180"
+                                        Height="3"
+                                        Margin="0,-32,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        Background="{DynamicResource FocusGameBorderBrush}"
+                                        CornerRadius="0,0,3,3"
+                                        IsHitTestVisible="False"/>
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Header -->
+                                    <StackPanel Grid.Row="0"
+                                                HorizontalAlignment="Center">
+
+                                        <!-- Premium link icon -->
+                                        <Border Width="48"
+                                                Height="48"
+                                                HorizontalAlignment="Center"
+                                                Background="#18FFFFFF"
+                                                BorderBrush="#28FFFFFF"
+                                                BorderThickness="1"
+                                                CornerRadius="24">
+
+                                            <TextBlock Text="&#xef71;"
+                                                       FontFamily="{DynamicResource FontIcoFont}"
+                                                       FontSize="22"
+                                                       Foreground="{DynamicResource FocusGameBorderBrush}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                                        </Border>
+
+                                        <TextBlock Text="{DynamicResource GameLinks_WindowTitle}"
+                                                   FontSize="36"
+                                                   FontWeight="Bold"
+                                                   Foreground="{DynamicResource TextBrush}"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0,12,0,0"/>
+
+                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameLinksGameName}"
+                                                   FontSize="19"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource TextBrush}"
+                                                   Opacity="0.9"
+                                                   HorizontalAlignment="Center"
+                                                   TextAlignment="Center"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   MaxWidth="760"
+                                                   Margin="0,7,0,0"/>
+
+                                        <!-- Visible only when links exist -->
+                                        <TextBlock Text="{DynamicResource GameLinks_OpenHint}"
+                                                   FontSize="14"
+                                                   Foreground="{DynamicResource TextBrush}"
+                                                   Opacity="0.58"
+                                                   HorizontalAlignment="Center"
+                                                   TextAlignment="Center"
+                                                   Margin="0,5,0,0">
+
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameLinks.Count}"
+                                                                     Value="0">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <!-- Header separator -->
+                                    <Border Grid.Row="1"
+                                            Height="1"
+                                            Margin="26,22,26,20"
+                                            Background="#22FFFFFF"/>
+
+                                    <!-- Links list -->
+                                    <Grid Grid.Row="2">
+
+                                        <!-- Liste des liens -->
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                                      HorizontalScrollBarVisibility="Disabled"
+                                                      Focusable="False"
+                                                      CanContentScroll="True">
+
+                                            <ScrollViewer.Style>
+                                                <Style TargetType="ScrollViewer">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameLinks.Count}"
+                                                                     Value="0">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ScrollViewer.Style>
+
+                                            <ItemsControl ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameLinks}"
+                                                          Focusable="False"
+                                                          IsTabStop="False"
+                                                          HorizontalAlignment="Center">
+
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Vertical"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <ButtonEx Style="{StaticResource GameLinkButtonStyle}"
+                                                                  Command="{Binding OpenCommand}">
+
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="50"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="38"/>
+                                                                </Grid.ColumnDefinitions>
+
+                                                                <Border Grid.Column="0"
+                                                                        Width="34"
+                                                                        Height="34"
+                                                                        HorizontalAlignment="Left"
+                                                                        VerticalAlignment="Center"
+                                                                        Background="#10FFFFFF"
+                                                                        CornerRadius="17">
+
+                                                                    <TextBlock Text="&#xef71;"
+                                                                               FontSize="19"
+                                                                               FontFamily="{DynamicResource FontIcoFont}"
+                                                                               Foreground="{DynamicResource TextBrush}"
+                                                                               HorizontalAlignment="Center"
+                                                                               VerticalAlignment="Center"/>
+                                                                </Border>
+
+                                                                <StackPanel Grid.Column="1"
+                                                                            VerticalAlignment="Center"
+                                                                            Margin="8,0,20,0">
+
+                                                                    <TextBlock Text="{Binding Name}"
+                                                                               FontSize="21"
+                                                                               FontWeight="SemiBold"
+                                                                               Foreground="{DynamicResource TextBrush}"
+                                                                               TextTrimming="CharacterEllipsis"/>
+
+                                                                    <TextBlock Text="{Binding Host}"
+                                                                               FontSize="13"
+                                                                               Foreground="{DynamicResource TextBrush}"
+                                                                               Opacity="0.54"
+                                                                               Margin="0,4,0,0"
+                                                                               TextTrimming="CharacterEllipsis"/>
+                                                                </StackPanel>
+
+                                                                <TextBlock Grid.Column="2"
+                                                                           Text="›"
+                                                                           FontSize="31"
+                                                                           FontWeight="Light"
+                                                                           Foreground="{DynamicResource TextBrush}"
+                                                                           Opacity="0.65"
+                                                                           HorizontalAlignment="Right"
+                                                                           VerticalAlignment="Center"/>
+                                                            </Grid>
+                                                        </ButtonEx>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+
+                                        <!-- Aucun lien -->
+                                        <Border Width="760"
+                                                MinHeight="220"
+                                                Padding="38"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Background="#0CFFFFFF"
+                                                BorderBrush="#22FFFFFF"
+                                                BorderThickness="1"
+                                                CornerRadius="{DynamicResource Corner}">
+
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameLinks.Count}"
+                                                                     Value="0">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+
+                                            <StackPanel HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center">
+
+                                                <TextBlock Text="&#xef71;"
+                                                           FontFamily="{DynamicResource FontIcoFont}"
+                                                           FontSize="34"
+                                                           Foreground="{DynamicResource TextBrush}"
+                                                           Opacity="0.6"
+                                                           HorizontalAlignment="Center"/>
+
+                                                <TextBlock Text="{DynamicResource GameLinks_EmptyTitle}"
+                                                           FontSize="22"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="{DynamicResource TextBrush}"
+                                                           HorizontalAlignment="Center"
+                                                           TextAlignment="Center"
+                                                           Margin="0,16,0,0"/>
+
+                                                <TextBlock Text="{DynamicResource GameLinks_EmptyDescription}"
+                                                           FontSize="15"
+                                                           Foreground="{DynamicResource TextBrush}"
+                                                           Opacity="0.62"
+                                                           HorizontalAlignment="Center"
+                                                           TextAlignment="Center"
+                                                           TextWrapping="Wrap"
+                                                           MaxWidth="650"
+                                                           Margin="0,9,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+
+                                    <!-- Footer -->
+                                    <Border Grid.Row="3"
+                                            Margin="0,18,0,0"
+                                            Padding="0,18,0,0"
+                                            BorderBrush="#22FFFFFF"
+                                            BorderThickness="0,1,0,0">
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- A Select: hidden when no link exists -->
+                                            <Grid Grid.Column="0"
+                                                  HorizontalAlignment="Left">
+
+                                                <Grid.Style>
+                                                    <Style TargetType="Grid">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedGameLinks.Count}"
+                                                                         Value="0">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Grid.Style>
+
+                                                <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                                          Tag="A"
+                                                          IsHitTestVisible="False"
+                                                          Focusable="False"
+                                                          Content="{DynamicResource LOCButtonPrompt_Select}"/>
+                                            </Grid>
+
+                                            <ButtonEx Grid.Column="1"
+                                                      Style="{DynamicResource ButtonBottomMenuDark}"
+                                                      Tag="CancelAction"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=CloseTopWindowCommand}"
+                                                      Content="{DynamicResource LOCBackLabel}"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
 
 </ResourceDictionary>

@@ -1,6 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:pc="clr-namespace:Playnite.Controls;assembly=Playnite" xmlns:pbeh="clr-namespace:Playnite.Behaviors;assembly=Playnite" mc:Ignorable="d">
 
-    <!-- Audio Switcher Menu - Premium console layout v9 - eager-loaded System / Media pages -->
+    <!-- Audio Switcher v9: eager-loaded System / Media pages. -->
     <Style x:Key="AudioSwitcherWindowStyle" TargetType="ContentControl">
         <Setter Property="Template">
             <Setter.Value>
@@ -10,7 +10,7 @@
 
                         <Grid.Resources>
 
-                            <!-- Compact action button used for device rows, mute row and volume focus row. -->
+                            <!-- Compact action button for audio rows. -->
                             <Style x:Key="AudioSwitcherPremiumButtonStyle" TargetType="ButtonEx">
                                 <Setter Property="Height" Value="56"/>
                                 <Setter Property="MinHeight" Value="56"/>
@@ -137,7 +137,7 @@
 
                             <!-- Device icon mapping from AudioSwitcher plugin. -->
                             <Style x:Key="AudioSwitcherDeviceIconStyle" TargetType="TextBlock">
-                                <Setter Property="Text" Value=""/>
+                                <Setter Property="Text" Value="&#xE994;"/>
                                 <Setter Property="FontFamily" Value="{DynamicResource FontIcons}"/>
                                 <Setter Property="FontSize" Value="24"/>
                                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
@@ -145,53 +145,53 @@
                                 <Setter Property="VerticalAlignment" Value="Center"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Icon}" Value="volume">
-                                        <Setter Property="Text" Value=""/>
+                                        <Setter Property="Text" Value="&#xE994;"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Icon}" Value="volume-1">
-                                        <Setter Property="Text" Value=""/>
+                                        <Setter Property="Text" Value="&#xE993;"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Icon}" Value="volume-2">
-                                        <Setter Property="Text" Value=""/>
+                                        <Setter Property="Text" Value="&#xE995;"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Icon}" Value="headphones">
-                                        <Setter Property="Text" Value=""/>
+                                        <Setter Property="Text" Value="&#xE7F6;"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Icon}" Value="speaker">
-                                        <Setter Property="Text" Value=""/>
+                                        <Setter Property="Text" Value="&#xE7F5;"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Icon}" Value="tv">
-                                        <Setter Property="Text" Value=""/>
+                                        <Setter Property="Text" Value="&#xE7F4;"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Icon}" Value="monitor">
-                                        <Setter Property="Text" Value=""/>
+                                        <Setter Property="Text" Value="&#xEC4E;"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Icon}" Value="gamepad">
-                                        <Setter Property="Text" Value=""/>
+                                        <Setter Property="Text" Value="&#xE7FC;"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Icon}" Value="gamepad-1">
-                                        <Setter Property="Text" Value=""/>
+                                        <Setter Property="Text" Value="&#xE7FC;"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Icon}" Value="gamepad-2">
-                                        <Setter Property="Text" Value=""/>
+                                        <Setter Property="Text" Value="&#xE7FC;"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Icon}" Value="bluetooth">
-                                        <Setter Property="Text" Value=""/>
+                                        <Setter Property="Text" Value="&#xE702;"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Icon}" Value="usb">
-                                        <Setter Property="Text" Value=""/>
+                                        <Setter Property="Text" Value="&#xE88E;"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
 
 
 
-                            <!-- Local fallback labels. These keys can later be moved to the theme localization files. -->
+                            <!-- TODO: move local fallback labels to localization. -->
                             <sys:String x:Key="LOCAudioSwitcherSystemTab">SYSTEM</sys:String>
                             <sys:String x:Key="LOCAudioSwitcherMediaTab">MEDIA</sys:String>
                             <sys:String x:Key="LOCAudioSwitcherMediaTitle">MEDIA APPLICATIONS</sys:String>
                             <sys:String x:Key="LOCAudioSwitcherMediaDesc">Control each active background audio session separately.</sys:String>
 
-                            <!-- Controller-friendly tabs used to separate system/game audio from media applications. -->
+                            <!-- Tabs: system/game audio vs media apps. -->
                             <Style x:Key="AudioSwitcherTabItemStyle" TargetType="TabItem">
                                 <Setter Property="Width" Value="190"/>
                                 <Setter Property="Margin" Value="10,0"/>
@@ -369,7 +369,7 @@
                                 <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,20" Effect="{DynamicResource SoftTextShadow}">
 
                                     <Border Width="54" Height="54" CornerRadius="27" Background="{DynamicResource ButtonBackgroundFocus}" BorderBrush="{DynamicResource FocusGameBorderBrush}" BorderThickness="1" HorizontalAlignment="Center" Margin="0,0,0,13">
-                                        <TextBlock Text="" FontFamily="{DynamicResource FontIcons}" FontSize="27" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <TextBlock Text="&#xE995;" FontFamily="{DynamicResource FontIcons}" FontSize="27" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
 
                                     <TextBlock Text="{DynamicResource LOCAudioSwitcher}" FontFamily="{DynamicResource FontMain}" FontSize="34" FontWeight="Bold" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center"/>
@@ -402,7 +402,7 @@
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
 
-                                                    <TextBlock Grid.Column="0" Text="" FontFamily="{DynamicResource FontIcons}" FontSize="25" Foreground="{DynamicResource TextBrush}" Opacity="0.92" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,5,0,0"/>
+                                                    <TextBlock Grid.Column="0" Text="&#xE995;" FontFamily="{DynamicResource FontIcons}" FontSize="25" Foreground="{DynamicResource TextBrush}" Opacity="0.92" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,5,0,0"/>
 
                                                     <Grid Grid.Column="1" KeyboardNavigation.TabNavigation="Continue" KeyboardNavigation.DirectionalNavigation="Continue" KeyboardNavigation.ControlTabNavigation="Continue">
                                                         <Grid.RowDefinitions>
@@ -446,7 +446,7 @@
                                                             </Grid.ColumnDefinitions>
 
                                                             <!-- Game audio icon -->
-                                                            <TextBlock Grid.Column="0" Text="" FontFamily="{DynamicResource FontIcons}" FontSize="24" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                                                            <TextBlock Grid.Column="0" Text="&#xE7FC;" FontFamily="{DynamicResource FontIcons}" FontSize="24" Foreground="{DynamicResource TextBrush}" VerticalAlignment="Center" Margin="0,0,14,0"/>
 
                                                             <!-- Game name and state -->
                                                             <StackPanel Grid.Column="1" VerticalAlignment="Center">
@@ -512,10 +512,10 @@
                                                         <TextBlock Grid.Column="0" FontFamily="{DynamicResource FontIcons}" FontSize="25" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,0,0,0">
                                                             <TextBlock.Style>
                                                                 <Style TargetType="TextBlock">
-                                                                    <Setter Property="Text" Value=""/>
+                                                                    <Setter Property="Text" Value="&#xE994;"/>
                                                                     <Style.Triggers>
                                                                         <DataTrigger Binding="{PluginSettings Plugin=AudioSwitcher, Path=IsMuted}" Value="True">
-                                                                            <Setter Property="Text" Value=""/>
+                                                                            <Setter Property="Text" Value="&#xE74F;"/>
                                                                         </DataTrigger>
                                                                     </Style.Triggers>
                                                                 </Style>
@@ -539,18 +539,82 @@
                                                             <TextBlock Text="{DynamicResource LOCMuteVolumeDesc}" FontFamily="{DynamicResource FontMain}" FontSize="12" Style="{DynamicResource TextBlockBaseStyle}" Opacity="0.60" Margin="0,3,0,0"/>
                                                         </StackPanel>
 
-                                                        <Border Grid.Column="2" MinWidth="76" Height="28" CornerRadius="14" Background="{DynamicResource ButtonBackgroundNoFocus}" BorderBrush="{DynamicResource SeparatorBrush}" BorderThickness="1" VerticalAlignment="Center" Margin="14,0,4,0">
-                                                            <TextBlock FontFamily="{DynamicResource FontMain}" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextDetailBrush}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Border Grid.Column="2"
+                                                                MinWidth="76"
+                                                                Height="28"
+                                                                CornerRadius="14"
+                                                                BorderThickness="1"
+                                                                VerticalAlignment="Center"
+                                                                Margin="14,0,4,0">
+
+                                                            <Border.Style>
+                                                                <Style TargetType="Border">
+                                                                    <!-- Mute désactivé -->
+                                                                    <Setter Property="Background"
+                                                                            Value="{DynamicResource ButtonBackgroundNoFocus}"/>
+
+                                                                    <Setter Property="BorderBrush"
+                                                                            Value="{DynamicResource SeparatorBrush}"/>
+
+                                                                    <Style.Triggers>
+
+                                                                        <!-- Mute activé -->
+                                                                        <DataTrigger Binding="{PluginSettings Plugin=AudioSwitcher,
+                                                                                     Path=IsMuted}"
+                                                                                     Value="True">
+
+                                                                            <Setter Property="Background"
+                                                                                    Value="{DynamicResource ButtonBackgroundFocus}"/>
+
+                                                                            <Setter Property="BorderBrush"
+                                                                                    Value="{DynamicResource FocusGameBorderBrush}"/>
+
+                                                                        </DataTrigger>
+
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+
+                                                            <TextBlock HorizontalAlignment="Center"
+                                                                       VerticalAlignment="Center">
+
                                                                 <TextBlock.Style>
-                                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-                                                                        <Setter Property="Text" Value="{DynamicResource LOCActive}"/>
+                                                                    <Style TargetType="TextBlock"
+                                                                           BasedOn="{StaticResource TextBlockBaseStyle}">
+
+                                                                        <Setter Property="Text"
+                                                                                Value="{DynamicResource LOCOff}"/>
+
+                                                                        <Setter Property="FontFamily"
+                                                                                Value="{DynamicResource FontMain}"/>
+
+                                                                        <Setter Property="FontSize"
+                                                                                Value="12"/>
+
+                                                                        <Setter Property="FontWeight"
+                                                                                Value="Bold"/>
+
+                                                                        <Setter Property="Foreground"
+                                                                                Value="{DynamicResource TextDetailBrush}"/>
+
                                                                         <Style.Triggers>
-                                                                            <DataTrigger Binding="{PluginSettings Plugin=AudioSwitcher, Path=IsMuted}" Value="True">
-                                                                                <Setter Property="Text" Value="{DynamicResource LOCMuted}"/>
+
+                                                                            <DataTrigger Binding="{PluginSettings Plugin=AudioSwitcher,
+                                                                                         Path=IsMuted}"
+                                                                                         Value="True">
+
+                                                                                <Setter Property="Text"
+                                                                                        Value="{DynamicResource LOCOn}"/>
+
+                                                                                <Setter Property="Foreground"
+                                                                                        Value="{DynamicResource TextHighlightBrush}"/>
+
                                                                             </DataTrigger>
+
                                                                         </Style.Triggers>
                                                                     </Style>
                                                                 </TextBlock.Style>
+
                                                             </TextBlock>
                                                         </Border>
                                                     </Grid>
@@ -681,7 +745,7 @@
                                                             </TextBlock.Style>
                                                         </TextBlock>
 
-                                                        <!-- Audio Switcher 1.6+: every row controls its own media session directly. -->
+                                                        <!-- Audio Switcher 1.6+: per-session controls. -->
                                                         <ScrollViewer Grid.Row="0"
                                                                       VerticalScrollBarVisibility="Auto"
                                                                       HorizontalScrollBarVisibility="Disabled"
@@ -794,7 +858,7 @@
                                                                                                     </Style>
                                                                                                 </TextBlock.Style>
                                                                                             </TextBlock>
-                                                                                            <TextBlock Text=""
+                                                                                            <TextBlock Text="&#xE74F;"
                                                                                                        FontFamily="{DynamicResource FontIcons}"
                                                                                                        FontSize="16"
                                                                                                        Foreground="{DynamicResource TextHighlightBrush}"
@@ -845,10 +909,10 @@
                                                                                                    Margin="4,0,0,0">
                                                                                             <TextBlock.Style>
                                                                                                 <Style TargetType="TextBlock">
-                                                                                                    <Setter Property="Text" Value=""/>
+                                                                                                    <Setter Property="Text" Value="&#xE994;"/>
                                                                                                     <Style.Triggers>
                                                                                                         <DataTrigger Binding="{Binding IsMuted}" Value="True">
-                                                                                                            <Setter Property="Text" Value=""/>
+                                                                                                            <Setter Property="Text" Value="&#xE74F;"/>
                                                                                                         </DataTrigger>
                                                                                                     </Style.Triggers>
                                                                                                 </Style>

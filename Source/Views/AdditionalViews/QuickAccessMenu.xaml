@@ -522,6 +522,7 @@
                         <!-- MAIN PANEL -->
                         <Grid x:Name="QuickAccessPanel"
                               Width="520"
+                              Height="1048"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Top"
                               Margin="42,20,0,0"
@@ -769,6 +770,15 @@
                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="148">
                                                 <Setter Property="Background" Value="{DynamicResource MainMenuImage140}" />
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="149">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage149}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="151">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage151}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="152">
+                                                <Setter Property="Background" Value="{DynamicResource MainMenuImage152}" />
+                                            </DataTrigger>
 
                                             <!-- Rare / Lucky Mode background override -->
                                             <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="True">
@@ -787,7 +797,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="1"/>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
                                     <RowDefinition Height="1"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
@@ -797,6 +807,16 @@
                                 <Grid Grid.Row="0"
                                       Height="90"
                                       Margin="22,16,22,10">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsQuickAccessFeaturesOpen}" Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
 
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -1170,6 +1190,51 @@
                                     </StackPanel>
                                 </Grid>
 
+                                <!-- EXTRAS HEADER -->
+                                <Grid Grid.Row="0"
+                                      Height="90"
+                                      Margin="22,16,22,10">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsQuickAccessFeaturesOpen}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="56"/>
+                                        <ColumnDefinition Width="12"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0"
+                                            Width="56"
+                                            Height="56"
+                                            CornerRadius="28"
+                                            Background="#14000000"
+                                            BorderBrush="{DynamicResource TextBrush}"
+                                            BorderThickness="1.2"
+                                            VerticalAlignment="Center">
+                                        <TextBlock Text="&#xE8A9;"
+                                                   FontFamily="{DynamicResource FontIcons}"
+                                                   FontSize="27"
+                                                   Foreground="{DynamicResource TextBrush}"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <TextBlock Grid.Column="2"
+                                               Text="{DynamicResource LOCExtras}"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="26"
+                                               FontWeight="SemiBold"
+                                               VerticalAlignment="Center"/>
+                                </Grid>
+
 
                                 <!-- SEPARATOR -->
                                 <Border Grid.Row="1"
@@ -1179,10 +1244,21 @@
 
 
                                 <!-- BUTTON LIST -->
-                                <StackPanel Grid.Row="2"
+                                <StackPanel x:Name="QuickMainButtonList"
+                                            Grid.Row="2"
                                             Orientation="Vertical"
                                             FocusVisualStyle="{x:Null}"
                                             Margin="16,12,16,12">
+                                    <StackPanel.Style>
+                                        <Style TargetType="StackPanel">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsQuickAccessFeaturesOpen}" Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
 
                                     <ButtonEx x:Name="QuickProfileButton"
                                               Style="{StaticResource QuickAccessButtonStyle}"
@@ -1231,13 +1307,6 @@
                                         </ButtonEx.Style>
                                     </ButtonEx>
 
-                                    <ButtonEx x:Name="QuickMediaButton"
-                                              Style="{StaticResource QuickAccessButtonStyle}"
-                                              Tag="&#xE91B;"
-                                              Content="{DynamicResource LOCMediaGallery}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenMediaGalleryGamesWindowCommand}"/>
-
-
                                     <ButtonEx x:Name="QuickNewsButton"
                                               Style="{StaticResource QuickAccessButtonStyle2}"
                                               Tag="&#xefa6;"
@@ -1249,6 +1318,12 @@
                                               Tag="&#xE719;"
                                               Content="{DynamicResource LOCSteamStoreTitle}"
                                               Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[SteamStoreStyle|SecondaryMusic]}"/>
+
+                                    <ButtonEx x:Name="QuickFeaturesButton"
+                                              Style="{StaticResource QuickAccessButtonStyle}"
+                                              Tag="&#xE8A9;"
+                                              Content="{DynamicResource LOCExtras}"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessFeaturesCommand}"/>
 
 
                                     <!-- SEPARATOR -->
@@ -1289,6 +1364,127 @@
 
                                 </StackPanel>
 
+                                <!-- EXTRAS SUBMENU -->
+                                <StackPanel x:Name="QuickFeaturesButtonList"
+                                            Grid.Row="2"
+                                            Orientation="Vertical"
+                                            FocusVisualStyle="{x:Null}"
+                                            Margin="16,12,16,12">
+                                    <StackPanel.Style>
+                                        <Style TargetType="StackPanel">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsQuickAccessFeaturesOpen}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
+
+                                    <ButtonEx x:Name="FeatureWebBrowserButton"
+                                              Style="{StaticResource QuickAccessButtonStyle}"
+                                              Tag="&#xE774;"
+                                              Content="{DynamicResource HubFeature_WebBrowser}"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessFeatureCommand}"
+                                              CommandParameter="builtin:web-browser"/>
+
+                                    <ButtonEx x:Name="FeatureMusicPlayerButton"
+                                              Style="{StaticResource QuickAccessButtonStyle}"
+                                              Tag="&#xE8D6;"
+                                              Content="{DynamicResource HubFeature_MusicPlayer}"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessFeatureCommand}"
+                                              CommandParameter="builtin:music-player"/>
+
+                                    <ButtonEx x:Name="FeatureCaptureGalleryButton"
+                                              Style="{StaticResource QuickAccessButtonStyle}"
+                                              Tag="&#xE91B;"
+                                              Content="{DynamicResource HubFeature_MediaGallery}"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessFeatureCommand}"
+                                              CommandParameter="builtin:media-gallery"/>
+
+                                    <ButtonEx x:Name="FeatureVideoPlayerButton"
+                                              Style="{StaticResource QuickAccessButtonStyle}"
+                                              Tag="&#xE714;"
+                                              Content="{DynamicResource HubFeature_VideoPlayer}"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessFeatureCommand}"
+                                              CommandParameter="builtin:video-player"/>
+
+                                    <ButtonEx x:Name="ExtraSoftwareToolsButton"
+                                              Style="{StaticResource QuickAccessButtonStyle}"
+                                              Tag="&#xECAA;"
+                                              Content="{DynamicResource LOCSoftwareTools}"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessSoftwareToolsCommand}"/>
+
+                                    <!-- EXTRA UTILITIES -->
+                                    <Border Height="1"
+                                            Margin="22,5,22,5"
+                                            Background="#20FFFFFF"/>
+
+                                    <ButtonEx x:Name="ExtraAudioSwitcherButton"
+                                              Tag="&#xE995;"
+                                              Content="{DynamicResource LOCAudioSwitcher}"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessAudioSwitcherCommand}">
+                                        <ButtonEx.Style>
+                                            <Style TargetType="ButtonEx" BasedOn="{StaticResource QuickAccessButtonStyle}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginStatus Plugin=PlayniteAudioSwitcher_708b6ec4-bf96-4c0d-bd9d-fe0aa04d6bf1, Status=Installed}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ButtonEx.Style>
+                                    </ButtonEx>
+
+                                    <ButtonEx x:Name="ExtraUniPlaySongButton"
+                                              Tag="&#xE7F3;"
+                                              Content="{DynamicResource LOCInGameOverlayUniPlaySong}"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessUniPlaySongCommand}">
+                                        <ButtonEx.Style>
+                                            <Style TargetType="ButtonEx" BasedOn="{StaticResource QuickAccessButtonStyle}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginStatus Plugin=UniPlaySong.a1b2c3d4-e5f6-7890-abcd-ef1234567890, Status=Installed}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ButtonEx.Style>
+                                    </ButtonEx>
+
+                                    <ButtonEx x:Name="ExtraGamepadTesterButton"
+                                              Tag="&#xE7FC;"
+                                              Content="Gamepad Tester"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[GamepadTesterWindowStyle|GamepadTester_ButtonMap]}">
+                                        <ButtonEx.Style>
+                                            <Style TargetType="ButtonEx" BasedOn="{StaticResource QuickAccessButtonStyle}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginStatus Plugin=GamepadTester_518dc982-32b5-4493-b32d-1f71de2fe4ad, Status=Installed}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{PluginStatus Plugin=ControllerSessionManager_6f3e7a21-98f4-4f2b-92ad-3fc0e6e941dc, Status=Installed}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ButtonEx.Style>
+                                    </ButtonEx>
+
+                                    <ButtonEx x:Name="ExtraWhatsNewButton"
+                                              Style="{StaticResource QuickAccessButtonStyle}"
+                                              Tag="&#xE789;"
+                                              Content="{DynamicResource LOCWhatsNew}"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWhatsNewCommand}"/>
+
+                                    <ButtonEx x:Name="ExtraFirstSetupButton"
+                                              Style="{StaticResource QuickAccessButtonStyle}"
+                                              Tag="&#xE713;"
+                                              Content="{DynamicResource LOCFirstSetupRelaunch}"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenFirstSetupCommand}"/>
+
+                                </StackPanel>
+
 
                                 <!-- SEPARATOR -->
                                 <Border Grid.Row="3"
@@ -1310,16 +1506,68 @@
                                     <TextBlock Text="{DynamicResource LOCMainMenu}"
                                                FontSize="13"
                                                FontWeight="Bold"
-                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                               VerticalAlignment="Center"/>
+                                               VerticalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsQuickAccessFeaturesOpen}" Value="True">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+
+                                    <TextBlock Text="{DynamicResource LOCExtras}"
+                                               FontSize="13"
+                                               FontWeight="Bold"
+                                               VerticalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsQuickAccessFeaturesOpen}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
 
                                     <StackPanel Grid.Column="1"
                                                 Orientation="Horizontal"
                                                 VerticalAlignment="Center">
 
-                                        <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                                  Tag="B" Command="{Binding CloseCommand}"
-                                                  Content="{DynamicResource LOCBackLabel}" />
+                                        <ButtonEx Tag="B"
+                                                  Command="{Binding CloseCommand}"
+                                                  Content="{DynamicResource LOCBackLabel}">
+                                            <ButtonEx.Style>
+                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonBottomMenuDark}">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsQuickAccessFeaturesOpen}" Value="True">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ButtonEx.Style>
+                                        </ButtonEx>
+
+                                        <ButtonEx Tag="B"
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=CloseQuickAccessFeaturesCommand}"
+                                                  Content="{DynamicResource LOCBackLabel}">
+                                            <ButtonEx.Style>
+                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource ButtonBottomMenuDark}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsQuickAccessFeaturesOpen}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ButtonEx.Style>
+                                        </ButtonEx>
 
                                     </StackPanel>
 

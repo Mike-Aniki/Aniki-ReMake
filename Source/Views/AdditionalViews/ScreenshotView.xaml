@@ -1,8 +1,7 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:pc="clr-namespace:Playnite.Controls;assembly=Playnite"
                     xmlns:pbeh="clr-namespace:Playnite.Behaviors;assembly=Playnite"
@@ -334,7 +333,23 @@
 
                                     <ListBox.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <UniformGrid Columns="3"/>
+                                            <UniformGrid>
+                                                <UniformGrid.Style>
+                                                    <Style TargetType="UniformGrid">
+                                                        <!-- Normal Capture view: keep the existing 3-column grid. -->
+                                                        <Setter Property="Columns" Value="3"/>
+                                                        <Setter Property="Rows" Value="0"/>
+
+                                                        <Style.Triggers>
+                                                            <!-- Single-row captures for native Left/Right navigation. -->
+                                                            <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource AncestorType=ListBox}}" Value="True">
+                                                                <Setter Property="Columns" Value="0"/>
+                                                                <Setter Property="Rows" Value="1"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </UniformGrid.Style>
+                                            </UniformGrid>
                                         </ItemsPanelTemplate>
                                     </ListBox.ItemsPanel>
 
@@ -378,7 +393,11 @@
                                                             Style="{StaticResource ScreenshotThumbToggleStyle}"
                                                             Width="460"
                                                             Height="259"
-                                                            IsChecked="{Binding ElementName=ThumbGrid, Path=Tag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                            IsChecked="{Binding ElementName=ThumbGrid, Path=Tag, Mode=OneWay}"
+                                                            Command="{PluginSettings Plugin=AnikiHelper, Path=OpenMediaGalleryFullscreenViewerCommand}"
+                                                            CommandParameter="{Binding ElementName=ThumbGrid}">
+
+                                                <!-- A opens the viewer; B closes it. -->
 
                                                 <Grid Width="460"
                                                       Height="259"
@@ -622,13 +641,13 @@
                             <!-- VIDEO FULLSCREEN -->
                             <MediaElement x:Name="FullscreenVideo"
                                           Visibility="Collapsed"
-                                          Volume="{Settings Fullscreen.BackgroundVolume}"
+                                          Volume="{PluginSettings Plugin=AnikiHelper, Path=MediaGalleryVideoVolume}"
                                           Stretch="Uniform"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
-                                          LoadedBehavior="Play"
+                                          LoadedBehavior="Manual"
                                           UnloadedBehavior="Stop"
-                                          ScrubbingEnabled="False"
+                                          ScrubbingEnabled="True"
                                           MediaElementBehaviors.Repeat="True"
                                           Source="{x:Null}"/>
 
@@ -649,22 +668,236 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
 
-                            <!-- Prompt bas droite -->
-                            <StackPanel Orientation="Horizontal"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Bottom"
-                                        Margin="0,0,28,20"
+                            <!-- Fullscreen viewer controls; video auto-hides after inactivity. -->
+                            <Grid x:Name="FullscreenViewerChrome"
+                                  IsHitTestVisible="False"
+                                  Opacity="1">
+
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Setter Property="Opacity" Value="1"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=ThumbGrid, Path=Tag}" Value="True"/>
+                                                    <Condition Binding="{Binding ElementName=ThumbGrid, Path=SelectedItem.IsVideo}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsMediaGalleryVideoControlsVisible}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+
+                                                <MultiDataTrigger.EnterActions>
+                                                    <BeginStoryboard Name="HideFullscreenVideoChromeStoryboard">
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                             To="0"
+                                                                             Duration="0:0:0.35">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <CubicEase EasingMode="EaseOut"/>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </MultiDataTrigger.EnterActions>
+
+                                                <MultiDataTrigger.ExitActions>
+                                                    <RemoveStoryboard BeginStoryboardName="HideFullscreenVideoChromeStoryboard"/>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                             To="1"
+                                                                             Duration="0:0:0.15"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </MultiDataTrigger.ExitActions>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+
+                                <!-- Current capture position -->
+                                <Border HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        Margin="0,24,30,0"
+                                        Padding="14,7"
+                                        CornerRadius="12"
+                                        Background="#99000000"
+                                        BorderBrush="#35FFFFFF"
+                                        BorderThickness="1"
                                         Effect="{DynamicResource SoftTextShadow}">
+                                    <TextBlock Text="{Binding ElementName=ThumbGrid, Path=SelectedItem.MediaIndexString}"
+                                               Foreground="White"
+                                               FontSize="20"
+                                               FontWeight="SemiBold"/>
+                                </Border>
 
-                                <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                          Tag="Dpad"
-                                          Content="{DynamicResource LOCButtonPrompt_Navigate}"/>
+                                <!-- Image viewer prompts -->
+                                <StackPanel x:Name="FullscreenImagePrompts"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Bottom"
+                                            Margin="0,0,28,20"
+                                            Effect="{DynamicResource SoftTextShadow}">
 
-                                <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                          Tag="A"
-                                          Content="{DynamicResource LOCBackLabel}"/>
+                                    <StackPanel.Style>
+                                        <Style TargetType="StackPanel">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=ThumbGrid, Path=SelectedItem.IsVideo}" Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
 
-                            </StackPanel>
+                                    <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                              Tag="Dpad"
+                                              Content="{DynamicResource LOCButtonPrompt_Navigate}"/>
+
+                                    <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                              Tag="B"
+                                              Content="{DynamicResource LOCBackLabel}"/>
+                                </StackPanel>
+
+                                <!-- Video player - cinema HUD matching the standalone Aniki Video Player -->
+                                <Grid x:Name="FullscreenVideoPlayerPanel"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      IsHitTestVisible="False">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=ThumbGrid, Path=SelectedItem.IsVideo}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+
+                                    <!-- Full-width cinema fade instead of the old floating black card. -->
+                                    <Rectangle Height="430"
+                                               VerticalAlignment="Bottom"
+                                               IsHitTestVisible="False">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Color="#00000000" Offset="0"/>
+                                                <GradientStop Color="#30000000" Offset="0.16"/>
+                                                <GradientStop Color="#78000000" Offset="0.36"/>
+                                                <GradientStop Color="#C0000000" Offset="0.60"/>
+                                                <GradientStop Color="#E8000000" Offset="0.82"/>
+                                                <GradientStop Color="#F8000000" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+
+                                    <Grid Width="1776"
+                                          Height="222"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Bottom"
+                                          Margin="0,0,0,26">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="44"/>
+                                            <RowDefinition Height="28"/>
+                                            <RowDefinition Height="24"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Capture title -->
+                                        <TextBlock Grid.Row="0"
+                                                   Text="{Binding ElementName=ThumbGrid, Path=SelectedItem.FileName}"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"
+                                                   FontFamily="{DynamicResource FontMain}"
+                                                   Foreground="{DynamicResource TextBrush}"
+                                                   FontSize="30"
+                                                   FontWeight="SemiBold"
+                                                   VerticalAlignment="Center"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   Effect="{DynamicResource SoftTextShadow}"/>
+
+                                        <!-- Full-width progress line -->
+                                        <Grid Grid.Row="1" Margin="0,2,0,0">
+                                            <Border Height="4"
+                                                    VerticalAlignment="Center"
+                                                    CornerRadius="2"
+                                                    Background="#55FFFFFF"/>
+                                            <ProgressBar Minimum="0"
+                                                         Maximum="100"
+                                                         Value="{PluginSettings Plugin=AnikiHelper, Path=MediaGalleryVideoProgress}"
+                                                         Height="4"
+                                                         VerticalAlignment="Center"
+                                                         Background="#00FFFFFF"
+                                                         Foreground="{DynamicResource TextHighlightBrush}"
+                                                         BorderThickness="0"
+                                                         IsHitTestVisible="False"/>
+                                        </Grid>
+
+                                        <!-- Time left, volume right; keep elapsed/duration combined. -->
+                                        <Grid Grid.Row="2" IsHitTestVisible="False">
+                                            <TextBlock HorizontalAlignment="Left"
+                                                       Text="{PluginSettings Plugin=AnikiHelper, Path=MediaGalleryVideoTimeText}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontFamily="{DynamicResource FontMain}"
+                                                       Foreground="{DynamicResource TextBrush}"
+                                                       Opacity="0.85"
+                                                       FontSize="14"
+                                                       FontWeight="SemiBold"/>
+                                            <TextBlock HorizontalAlignment="Right"
+                                                       Text="{PluginSettings Plugin=AnikiHelper, Path=MediaGalleryVideoVolumeText}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontFamily="{DynamicResource FontMain}"
+                                                       Foreground="{DynamicResource TextBrush}"
+                                                       Opacity="0.85"
+                                                       FontSize="14"
+                                                       FontWeight="SemiBold"/>
+                                        </Grid>
+
+                                        <!-- Gallery shortcuts use the cinema layout. -->
+                                        <Grid Grid.Row="3" Margin="0,6,0,0">
+                                            <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Center"
+                                                        Effect="{DynamicResource SoftTextShadow}">
+                                                <TextBlock Text="&#xE767;"
+                                                           FontFamily="{DynamicResource FontIcons}"
+                                                           FontSize="22"
+                                                           Foreground="{DynamicResource TextBrush}"
+                                                           Opacity="0.85"
+                                                           VerticalAlignment="Center"
+                                                           Margin="0,0,8,0"/>
+                                                <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                                          Tag="Dpad"
+                                                          Content="VOL +/-"/>
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Effect="{DynamicResource SoftTextShadow}">
+                                                <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                                          Tag="Dpad"
+                                                          Content="{DynamicResource LOCButtonPrompt_Navigate}"/>
+                                                <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                                          Tag="L1"
+                                                          Content="-10s"/>
+                                                <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                                          Tag="X"
+                                                          Content="{PluginSettings Plugin=AnikiHelper, Path=MediaGalleryVideoPlayPauseGlyph}"/>
+                                                <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                                          Tag="R1"
+                                                          Content="+10s"/>
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        Effect="{DynamicResource SoftTextShadow}">
+                                                <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                                          Tag="B"
+                                                          Content="{DynamicResource LOCBackLabel}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
                         </Grid>
 
                     </Grid>

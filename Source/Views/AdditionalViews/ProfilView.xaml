@@ -12,7 +12,7 @@
         <ResourceDictionary Source="{ThemeFile 'DerivedStyles/WelcomeHubResources.xaml'}" />
     </ResourceDictionary.MergedDictionaries>
 
-    <!--Vue Profil-->
+    <!-- Vue Profil -->
     <Style x:Key="PlayerProfileWindowStyle" TargetType="ContentControl">
         <Setter Property="Template">
             <Setter.Value>
@@ -40,19 +40,25 @@
                         </Style>
 
                         <Style x:Key="ProfileCardBodyText" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-                            <Setter Property="FontSize" Value="17"/>
+                            <Setter Property="FontSize" Value="18"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TextTitleStatViewBrush}"/>
+                        </Style>
+
+                        <!-- V2.1: slightly larger text for the compact Page 2 lists only. -->
+                        <Style x:Key="ProfileRecentBodyText" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                            <Setter Property="FontSize" Value="20"/>
                             <Setter Property="Foreground" Value="{DynamicResource TextTitleStatViewBrush}"/>
                         </Style>
 
                         <Style x:Key="ProfileStatLabelStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-                            <Setter Property="FontSize" Value="13"/>
-                            <Setter Property="Opacity" Value="0.80"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Opacity" Value="0.82"/>
                             <Setter Property="Foreground" Value="{DynamicResource TextTitleStatViewBrush}"/>
                             <Setter Property="TextWrapping" Value="Wrap"/>
                         </Style>
 
                         <Style x:Key="ProfileStatValueStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-                            <Setter Property="FontSize" Value="28"/>
+                            <Setter Property="FontSize" Value="24"/>
                             <Setter Property="FontWeight" Value="Bold"/>
                             <Setter Property="Foreground" Value="{DynamicResource TextTitleStatViewBrush}"/>
                         </Style>
@@ -269,8 +275,17 @@
                             </Grid>
                         </DataTemplate>
 
+                        <!-- V2 compact template; hide dates and values. -->
+                        <DataTemplate x:Key="PlayerProfileRecentNameOnlyTemplate">
+                            <Grid Margin="0,5">
+                                <TextBlock Text="{Binding Name}"
+                                           TextTrimming="CharacterEllipsis"
+                                           Style="{StaticResource ProfileRecentBodyText}"/>
+                            </Grid>
+                        </DataTemplate>
+
                         <DataTemplate x:Key="PlayerProfileOneColTemplate">
-                            <Grid Margin="0,4">
+                            <Grid Margin="0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
@@ -286,7 +301,7 @@
                                 <TextBlock Grid.Column="1"
                                            Text="{Binding Name}"
                                            TextTrimming="CharacterEllipsis"
-                                           Style="{StaticResource ProfileCardBodyText}"/>
+                                           Style="{StaticResource ProfileRecentBodyText}"/>
                             </Grid>
                         </DataTemplate>
 
@@ -539,6 +554,18 @@
                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="148">
                                                 <Setter Property="Background" Value="{DynamicResource StatViewImage148}"/>
                                                 <Setter Property="Opacity" Value="0.1"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="149">
+                                                <Setter Property="Background" Value="{DynamicResource StatViewImage149}"/>
+                                                <Setter Property="Opacity" Value="0.1"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="151">
+                                                <Setter Property="Background" Value="{DynamicResource StatViewImage151}"/>
+                                                <Setter Property="Opacity" Value="0.1"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="152">
+                                                <Setter Property="Background" Value="{DynamicResource StatViewImage152}"/>
+                                                <Setter Property="Opacity" Value="0.4"/>
                                             </DataTrigger>
 
                                             <!-- Rare / Lucky Mode background override -->
@@ -903,80 +930,80 @@
                                                 <UniformGrid Grid.Row="1"
                                                              Rows="2"
                                                              Columns="5"
-                                                             Width="1500"
-                                                             Height="190"
-                                                             Margin="0,26,0,0"
+                                                             Width="1380"
+                                                             Height="164"
+                                                             Margin="0,22,0,0"
                                                              HorizontalAlignment="Center"
                                                              VerticalAlignment="Top">
 
                                                     <!-- TOTAL GAMES -->
-                                                    <Border Margin="6" Padding="14,12" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
-                                                        <StackPanel VerticalAlignment="Top">
+                                                    <Border Margin="5" Padding="14,8" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
+                                                        <StackPanel VerticalAlignment="Center">
                                                             <TextBlock Text="{DynamicResource LOCAllGames}" Style="{StaticResource ProfileStatLabelStyle}"/>
-                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=TotalCount}" Style="{StaticResource ProfileStatValueStyle}" FontSize="22"/>
+                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=TotalCount}" Style="{StaticResource ProfileStatValueStyle}" FontSize="24"/>
                                                         </StackPanel>
                                                     </Border>
 
                                                     <!-- INSTALLED -->
-                                                    <Border Margin="6" Padding="14,12" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
-                                                        <StackPanel VerticalAlignment="Top">
+                                                    <Border Margin="5" Padding="14,8" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
+                                                        <StackPanel VerticalAlignment="Center">
                                                             <TextBlock Text="{DynamicResource LOCGameIsInstalledTitle}" Style="{StaticResource ProfileStatLabelStyle}"/>
-                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=InstalledCount}" Style="{StaticResource ProfileStatValueStyle}" FontSize="22"/>
+                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=InstalledCount}" Style="{StaticResource ProfileStatValueStyle}" FontSize="24"/>
                                                         </StackPanel>
                                                     </Border>
 
                                                     <!-- FAVORITE -->
-                                                    <Border Margin="6" Padding="14,12" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
-                                                        <StackPanel VerticalAlignment="Top">
+                                                    <Border Margin="5" Padding="14,8" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
+                                                        <StackPanel VerticalAlignment="Center">
                                                             <TextBlock Text="{DynamicResource LOCGameFavoriteTitle}" Style="{StaticResource ProfileStatLabelStyle}"/>
-                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=FavoriteCount}" Style="{StaticResource ProfileStatValueStyle}" FontSize="22"/>
+                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=FavoriteCount}" Style="{StaticResource ProfileStatValueStyle}" FontSize="24"/>
                                                         </StackPanel>
                                                     </Border>
 
                                                     <!-- HIDDEN -->
-                                                    <Border Margin="6" Padding="14,12" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
-                                                        <StackPanel VerticalAlignment="Top">
+                                                    <Border Margin="5" Padding="14,8" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
+                                                        <StackPanel VerticalAlignment="Center">
                                                             <TextBlock Text="{DynamicResource LOCGameHiddenTitle}" Style="{StaticResource ProfileStatLabelStyle}"/>
-                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=HiddenCount}" Style="{StaticResource ProfileStatValueStyle}" FontSize="22"/>
+                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=HiddenCount}" Style="{StaticResource ProfileStatValueStyle}" FontSize="24"/>
                                                         </StackPanel>
                                                     </Border>
 
                                                     <!-- TOTAL PLAYTIME -->
-                                                    <Border Margin="6" Padding="14,12" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
-                                                        <StackPanel VerticalAlignment="Top">
+                                                    <Border Margin="5" Padding="14,8" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
+                                                        <StackPanel VerticalAlignment="Center">
                                                             <TextBlock Text="{DynamicResource LOCStatsTotalPlayTime}" Style="{StaticResource ProfileStatLabelStyle}"/>
-                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=TotalPlaytimeString}" Style="{StaticResource ProfileStatValueStyle}" FontSize="22" TextTrimming="CharacterEllipsis"/>
+                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=TotalPlaytimeString}" Style="{StaticResource ProfileStatValueStyle}" FontSize="24" TextTrimming="CharacterEllipsis"/>
                                                         </StackPanel>
                                                     </Border>
 
                                                     <!-- MONTHLY PLAYTIME -->
-                                                    <Border Margin="6" Padding="14,12" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
-                                                        <StackPanel VerticalAlignment="Top">
+                                                    <Border Margin="5" Padding="14,8" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
+                                                        <StackPanel VerticalAlignment="Center">
                                                             <TextBlock Text="{DynamicResource LOCStatsMonthPlayTime}" Style="{StaticResource ProfileStatLabelStyle}"/>
-                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=ThisMonthPlayedTotalString}" Style="{StaticResource ProfileStatValueStyle}" FontSize="22" TextTrimming="CharacterEllipsis"/>
+                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=ThisMonthPlayedTotalString}" Style="{StaticResource ProfileStatValueStyle}" FontSize="24" TextTrimming="CharacterEllipsis"/>
                                                         </StackPanel>
                                                     </Border>
 
                                                     <!-- PLAYED THIS MONTH -->
-                                                    <Border Margin="6" Padding="14,12" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
-                                                        <StackPanel VerticalAlignment="Top">
+                                                    <Border Margin="5" Padding="14,8" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
+                                                        <StackPanel VerticalAlignment="Center">
                                                             <TextBlock Text="{DynamicResource LOCPlayedThisMonth}" Style="{StaticResource ProfileStatLabelStyle}"/>
-                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=ThisMonthPlayedCount}" Style="{StaticResource ProfileStatValueStyle}" FontSize="22"/>
+                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=ThisMonthPlayedCount}" Style="{StaticResource ProfileStatValueStyle}" FontSize="24"/>
                                                         </StackPanel>
                                                     </Border>
 
                                                     <!-- AVERAGE PLAYTIME -->
-                                                    <Border Margin="6" Padding="14,12" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
-                                                        <StackPanel VerticalAlignment="Top">
+                                                    <Border Margin="5" Padding="14,8" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
+                                                        <StackPanel VerticalAlignment="Center">
                                                             <TextBlock Text="{DynamicResource LOCStatsAveragePlaytime}" Style="{StaticResource ProfileStatLabelStyle}"/>
-                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=AveragePlaytimeString}" Style="{StaticResource ProfileStatValueStyle}" FontSize="22"/>
+                                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=AveragePlaytimeString}" Style="{StaticResource ProfileStatValueStyle}" FontSize="24"/>
                                                         </StackPanel>
                                                     </Border>
 
                                                     <!-- TOTAL TROPHIES -->
-                                                    <Border Margin="6" Padding="14,12" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
+                                                    <Border Margin="5" Padding="14,8" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
                                                         <Grid>
-                                                            <StackPanel VerticalAlignment="Top">
+                                                            <StackPanel VerticalAlignment="Center">
                                                                 <StackPanel.Style>
                                                                     <Style TargetType="StackPanel">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -989,18 +1016,18 @@
                                                                 </StackPanel.Style>
 
                                                                 <TextBlock Text="{DynamicResource LOCStatsTotalTrophiesUnlocked}" Style="{StaticResource ProfileStatLabelStyle}"/>
-                                                                <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=GSTotal}" Style="{StaticResource ProfileStatValueStyle}" FontSize="22"/>
+                                                                <TextBlock Text="{PluginSettings Plugin=PlayniteAchievements, Path=GSTotal}" Style="{StaticResource ProfileStatValueStyle}" FontSize="24"/>
                                                             </StackPanel>
                                                         </Grid>
                                                     </Border>
 
                                                     <!-- TOP FRANCHISE -->
-                                                    <Border Margin="6" Padding="14,12" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
-                                                        <StackPanel VerticalAlignment="Top">
+                                                    <Border Margin="5" Padding="14,8" CornerRadius="14" Background="#18FFFFFF" BorderBrush="#22FFFFFF" BorderThickness="1">
+                                                        <StackPanel VerticalAlignment="Center">
                                                             <TextBlock Text="{DynamicResource LOCTopFranchise}" Style="{StaticResource ProfileStatLabelStyle}"/>
                                                             <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=ProfileTopFranchiseName}"
                                                                        Style="{StaticResource ProfileStatValueStyle}"
-                                                                       FontSize="22"
+                                                                       FontSize="24"
                                                                        TextTrimming="CharacterEllipsis"/>
                                                         </StackPanel>
                                                     </Border>
@@ -1551,7 +1578,9 @@
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
 
-                                            <Grid Grid.Row="0" Margin="0,50,0,0">
+                                            <Grid Grid.Row="0" Margin="0,50,0,0"
+                                                  Width="1560"
+                                                  HorizontalAlignment="Center">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="24"/>
@@ -1568,7 +1597,7 @@
                                                           HorizontalAlignment="Center"
                                                           Style="{StaticResource PlayerProfileFocusableCardButtonStyle}"
                                                           Padding="0"
-                                                          Width="1000"
+                                                          Width="800"
                                                           Height="300">
                                                     <Grid>
                                                         <Grid.RowDefinitions>
@@ -1659,7 +1688,7 @@
                                                             <ItemsControl Grid.Row="1"
                                                                           Focusable="False"
                                                                           ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=RecentAdded}"
-                                                                          ItemTemplate="{StaticResource PlayerProfileTwoColTemplate}">
+                                                                          ItemTemplate="{StaticResource PlayerProfileRecentNameOnlyTemplate}">
                                                                 <ItemsControl.ItemContainerStyle>
                                                                     <Style TargetType="ContentPresenter">
                                                                         <Setter Property="Margin" Value="0,3"/>
@@ -1674,11 +1703,13 @@
 
 
                                             <!-- BOTTOM ROW -->
-                                            <Grid Grid.Row="1" Margin="0,80,0,0">
+                                            <Grid Grid.Row="1" Margin="0,70,0,0"
+                                                  Width="1560"
+                                                  HorizontalAlignment="Center">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="24"/>
-                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
 
                                                 <!-- RECENTLY PLAYED -->
@@ -1797,7 +1828,7 @@
                                                             <ItemsControl Grid.Row="1"
                                                                           Focusable="False"
                                                                           ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=RecentPlayed}"
-                                                                          ItemTemplate="{StaticResource PlayerProfileTwoColTemplate}">
+                                                                          ItemTemplate="{StaticResource PlayerProfileRecentNameOnlyTemplate}">
                                                                 <ItemsControl.ItemContainerStyle>
                                                                     <Style TargetType="ContentPresenter">
                                                                         <Setter Property="Margin" Value="0,3"/>
@@ -2811,7 +2842,9 @@
                                             </Grid.RowDefinitions>
 
                                             <!-- TOP ROW -->
-                                            <Grid Grid.Row="0" Margin="0,50,0,0">
+                                            <Grid Grid.Row="0" Margin="0,50,0,0"
+                                                  Width="1560"
+                                                  HorizontalAlignment="Center">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="24"/>
@@ -2885,7 +2918,9 @@
                                             <ButtonEx x:Name="PlayerStorageCard"
                                                       FocusVisualStyle="{x:Null}"
                                                       Grid.Row="1"
-                                                      Margin="0,100,0,0"
+                                                      Margin="15,75,15,0"
+                                                      Width="1200"
+                                                      HorizontalAlignment="Center"
                                                       Style="{StaticResource PlayerProfileFocusableCardButtonStyle}"
                                                       Padding="18"
                                                       MinHeight="150"

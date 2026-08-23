@@ -92,6 +92,18 @@
                                                 <Setter Property="Background" Value="{DynamicResource FriendsViewImage105}"/>
                                                 <Setter Property="Opacity" Value="0.15"/>
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="149">
+                                                <Setter Property="Background" Value="{DynamicResource FriendsViewImage149}"/>
+                                                <Setter Property="Opacity" Value="0.15"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="151">
+                                                <Setter Property="Background" Value="{DynamicResource FriendsViewImage151}"/>
+                                                <Setter Property="Opacity" Value="0.15"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="152">
+                                                <Setter Property="Background" Value="{DynamicResource FriendsViewImage152}"/>
+                                                <Setter Property="Opacity" Value="0.15"/>
+                                            </DataTrigger>
 
                                             <!-- Rare / Lucky Mode background override -->
                                             <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="True">
@@ -306,8 +318,7 @@
                                                                   IsTabStop="True"
                                                                   Focusable="True">
 
-                                                            <!-- Remove the inner button focus visual.
-                                                            The ListBoxItem keeps the only visible focus border. -->
+                                                            <!-- ListBoxItem owns the only visible focus border. -->
                                                             <ButtonEx.Template>
                                                                 <ControlTemplate TargetType="ButtonEx">
                                                                     <ContentPresenter HorizontalAlignment="Stretch"
@@ -469,8 +480,7 @@
                                                         Padding="14,7"
                                                         VerticalAlignment="Center">
 
-                                                    <!-- Friend trophy summary.
-                                                    Bindings are intentionally separated so they can be adjusted easily if PA exposes different names. -->
+                                                    <!-- Keep friend trophy bindings separate for PA compatibility. -->
                                                     <StackPanel Orientation="Horizontal"
                                                                 VerticalAlignment="Center"
                                                                 HorizontalAlignment="Right">
@@ -583,8 +593,7 @@
 
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate>
-                                                        <!-- Click currently sets the PA friend game scope.
-                                                        Later, add OpenWindow[FriendGameAchievementsWindow] when the detail view is ready. -->
+                                                        <!-- TODO: open friend achievements after setting PA game scope. -->
                                                         <ButtonEx Command="{PluginSettings Plugin=PlayniteAchievements, Path=SetDynamicFriendScopeGameCommand}"
                                                                   CommandParameter="{Binding}"
                                                                   Height="148"
@@ -700,7 +709,7 @@
                                                                                            HorizontalAlignment="Center"
                                                                                            VerticalAlignment="Center"/>
 
-                                                                                <!-- Keep this test binding in case PA exposes a cover later -->
+                                                                                <!-- Keep PA cover test binding. -->
                                                                                 <Image Source="{Binding CoverImagePath}"
                                                                                        Stretch="UniformToFill"
                                                                                        RenderOptions.BitmapScalingMode="Fant"/>

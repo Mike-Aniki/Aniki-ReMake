@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -1331,7 +1331,8 @@
                                                        Style="{StaticResource FirstSetupExtensionDescriptionStyle}"
                                                        Margin="71,8,0,0"/>
                                             <Grid Grid.Row="2">
-                                                <ButtonEx Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ChooseAndInstallScreenshotProviderCommand}">
+                                                <ButtonEx x:Name="FirstSetupScreenshotProviderButton"
+                                                          Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ChooseAndInstallScreenshotProviderCommand}">
                                                     <ButtonEx.Style>
                                                         <Style TargetType="ButtonEx" BasedOn="{StaticResource FirstSetupExtensionInstallButtonStyle}">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -1998,6 +1999,87 @@
                                                   Content="{DynamicResource LOCFirstSetupOfferStart}"
                                                   Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.StartOfferedSetupCommand}"/>
                                     </StackPanel>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <!-- Keep the provider picker inside First Setup for controller focus. -->
+                        <Grid x:Name="FirstSetupScreenshotProviderOverlay"
+                              Panel.ZIndex="940"
+                              Background="#F708090C"
+                              KeyboardNavigation.DirectionalNavigation="Contained"
+                              KeyboardNavigation.TabNavigation="Cycle">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.IsScreenshotProviderChoiceOpen}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+
+                            <Border Width="980"
+                                    Padding="52,44"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    CornerRadius="24"
+                                    Background="#F217191F"
+                                    BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                    BorderThickness="2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="{DynamicResource LOCFirstSetupScreenshotChoiceTitle}"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="34"
+                                               FontWeight="Bold"
+                                               HorizontalAlignment="Center"
+                                               TextAlignment="Center"/>
+
+                                    <TextBlock Grid.Row="1"
+                                               Text="{DynamicResource LOCFirstSetupScreenshotChoiceMessage}"
+                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                               FontSize="18"
+                                               LineHeight="27"
+                                               Opacity="0.78"
+                                               TextWrapping="Wrap"
+                                               TextAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               MaxWidth="760"
+                                               Margin="0,14,0,0"/>
+
+                                    <StackPanel Grid.Row="2"
+                                                Orientation="Horizontal"
+                                                HorizontalAlignment="Center"
+                                                Margin="0,34,0,0">
+                                        <ButtonEx x:Name="FirstSetupScreenshotVisualizerChoiceButton"
+                                                  Style="{StaticResource FirstSetupNavButtonStyle}"
+                                                  MinWidth="330"
+                                                  Content="{DynamicResource LOCFirstSetupScreenshotChoiceVisualizer}"
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ChooseScreenshotsVisualizerCommand}"/>
+
+                                        <ButtonEx x:Name="FirstSetupScreenshotUtilitiesChoiceButton"
+                                                  Style="{StaticResource FirstSetupNavButtonStyle}"
+                                                  MinWidth="330"
+                                                  Content="{DynamicResource LOCFirstSetupScreenshotChoiceUtilities}"
+                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.ChooseScreenshotUtilitiesCommand}"/>
+                                    </StackPanel>
+
+                                    <ButtonEx Grid.Row="3"
+                                              x:Name="FirstSetupScreenshotChoiceCancelButton"
+                                              Style="{StaticResource FirstSetupNavButtonStyle}"
+                                              MinWidth="260"
+                                              HorizontalAlignment="Center"
+                                              Margin="0,18,0,0"
+                                              Content="{DynamicResource LOCFirstSetupScreenshotChoiceCancel}"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=FirstSetup.CancelScreenshotProviderChoiceCommand}"/>
                                 </Grid>
                             </Border>
                         </Grid>

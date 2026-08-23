@@ -265,6 +265,18 @@
                                                 <Setter Property="Background" Value="{DynamicResource SuccessMainImage148}"/>
                                                 <Setter Property="Opacity" Value="0.15"/>
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="149">
+                                                <Setter Property="Background" Value="{DynamicResource SuccessMainImage149}"/>
+                                                <Setter Property="Opacity" Value="0.15"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="151">
+                                                <Setter Property="Background" Value="{DynamicResource SuccessMainImage151}"/>
+                                                <Setter Property="Opacity" Value="0.15"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="152">
+                                                <Setter Property="Background" Value="{DynamicResource SuccessMainImage152}"/>
+                                                <Setter Property="Opacity" Value="0.15"/>
+                                            </DataTrigger>
 
                                             <!-- Rare / Lucky Mode background override -->
                                             <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="True">
@@ -432,7 +444,7 @@
                                 </CheckBoxEx.Style>
                             </CheckBoxEx>
 
-                            <!-- Mode switch button: unchecked = Last trophies, checked = Per game -->
+                            <!-- Mode switch: Last trophies / Per game. -->
                             <CheckBoxEx x:Name="FriendActivityModeToggle"
                                         Margin="50,270,0,0"
                                         Width="60"
@@ -606,8 +618,7 @@
                                                                   Focusable="True">
 
                                                             <i:Interaction.Triggers>
-                                                                <!-- Reset game scope when selecting/focusing a friend.
-                                                                Otherwise PA keeps the previous FriendGameScopeKey and filters the game list. -->
+                                                                <!-- Reset PA game scope when friend changes. -->
                                                                 <i:EventTrigger EventName="GotKeyboardFocus">
                                                                     <i:InvokeCommandAction Command="{Binding Tag, RelativeSource={RelativeSource AncestorType=ButtonEx}}"
                                                                                            CommandParameter="All"/>
@@ -619,7 +630,7 @@
                                                             </i:Interaction.Triggers>
 
 
-                                                            <!-- Keep only the ListBoxItem focus and force the content to stretch full width. -->
+                                                            <!-- ListBoxItem owns focus; content stretches full width. -->
                                                             <ButtonEx.Template>
                                                                 <ControlTemplate TargetType="ButtonEx">
                                                                     <ContentPresenter HorizontalAlignment="Stretch"
@@ -784,8 +795,7 @@
                                                         HorizontalAlignment="Right">
                                                     <Border.Style>
                                                         <Style TargetType="Border">
-                                                            <!-- Hidden for the whole Top 10 / Last trophies view.
-                                                            Visible only in Per game mode. -->
+                                                            <!-- Visible only in Per game mode. -->
                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                             <Style.Triggers>
                                                                 <DataTrigger Binding="{Binding IsChecked, ElementName=FriendActivityModeToggle}" Value="True">
@@ -1240,7 +1250,7 @@
 
                                                         <ListView.ItemTemplate>
                                                             <DataTemplate>
-                                                                <!-- Click sets PA friend game scope, then opens FriendGameAchievementsWindow. -->
+                                                                <!-- Set PA game scope, then open friend achievements. -->
                                                                 <ButtonEx Tag="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendGameAchievementsWindow]}"
                                                                           Height="148"
                                                                           Margin="0,0,0,0"
@@ -1255,7 +1265,7 @@
                                                                           Focusable="True">
 
                                                                     <i:Interaction.Triggers>
-                                                                        <!-- Only on card click: set friend-game scope, then open the custom friend-game detail view. -->
+                                                                        <!-- Friend card opens the scoped achievement detail view. -->
                                                                         <i:EventTrigger EventName="Click">
                                                                             <i:InvokeCommandAction Command="{Binding SetDynamicFriendScopeGameCommand}"/>
                                                                             <i:InvokeCommandAction Command="{Binding Tag, RelativeSource={RelativeSource AncestorType=ButtonEx}}"/>
@@ -1366,7 +1376,7 @@
                                                                                                    HorizontalAlignment="Center"
                                                                                                    VerticalAlignment="Center"/>
 
-                                                                                        <!-- Keep this test binding in case PA exposes a cover later -->
+                                                                                        <!-- Keep PA cover test binding. -->
                                                                                         <Image Source="{Binding CoverImagePath}"
                                                                                                Stretch="UniformToFill"
                                                                                                RenderOptions.BitmapScalingMode="Fant"/>
@@ -1433,9 +1443,7 @@
                                                                                     <ColumnDefinition Width="Auto"/>
                                                                                 </Grid.ColumnDefinitions>
 
-                                                                                <!-- progression + total.
-                                                                                Keep the percentage visible.
-                                                                                Show platinum only when completed, before the percent/total texts. -->
+                                                                                <!-- Show platinum before percent/total when completed. -->
                                                                                 <Grid Grid.Column="0"
                                                                                       VerticalAlignment="Center"
                                                                                       HorizontalAlignment="Right">
@@ -2073,7 +2081,7 @@
                             </Grid>
                         </Border>
 
-                        <!-- Friend-game trophy totals: DynamicFriendAchievementsFilterOptions returns 0 here. -->
+                        <!-- Friend-game trophy totals use PA game scope. -->
                         <ItemsControl ItemsSource="{PluginSettings Plugin=PlayniteAchievements, Path=DynamicFriendGameSummaries}"
                                       Visibility="Visible"
                                       VerticalAlignment="Top"

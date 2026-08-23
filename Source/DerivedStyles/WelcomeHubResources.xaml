@@ -1,4 +1,4 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -93,6 +93,9 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="IsHitTestVisible" Value="False"/>
     </Style>
+
+    <!-- Voile commun des artworks du Hub. -->
+    <SolidColorBrush x:Key="HubCardImageDimBrush" Color="#52000000"/>
 
     <!-- Conteneur image en haut de la carte -->
     <Style x:Key="HubCardImageContainerStyle" TargetType="Border">
@@ -206,8 +209,8 @@
 
     <!-- Achievement Memory -->
     <DataTemplate x:Key="HubAchievementMemoryItemTemplate">
-        <ButtonEx Width="660"
-                  Height="348"
+        <ButtonEx Width="700"
+                  Height="370"
                   Focusable="True"
                   FocusVisualStyle="{x:Null}"
                   Command="{PluginSettings Plugin=AnikiHelper, Path=OpenGameDetailsCommand}"
@@ -233,11 +236,11 @@
                         <!-- Game background -->
                         <Image Source="{Binding GameBackgroundPath}"
                                Stretch="UniformToFill"
-                               Opacity="0.82"
+                               Opacity="1"
                                RenderOptions.BitmapScalingMode="Fant"/>
 
-                        <!-- Dark overlay -->
-                        <Border Background="#44000000"/>
+                        <!-- Shared Hub artwork dim -->
+                        <Border Background="{DynamicResource HubCardImageDimBrush}" IsHitTestVisible="False"/>
 
                         <!-- Top game title area -->
                         <Border VerticalAlignment="Top"
@@ -263,7 +266,7 @@
                                        TextWrapping="Wrap"
                                        TextTrimming="CharacterEllipsis"
                                        HorizontalAlignment="Left"
-                                       MaxWidth="540"
+                                       MaxWidth="600"
                                        MaxHeight="58"/>
 
                             <StackPanel Orientation="Horizontal"
@@ -418,7 +421,7 @@
                                 Height="83"
                                 CornerRadius="0,0,20,20"
                                 Background="{DynamicResource HubCardBottomBackgroundBrush}"
-                                Opacity="0.80" />
+                                Opacity="0.82" />
 
 
                         <!-- Bottom trophy banner -->
@@ -488,8 +491,8 @@
 
     <!-- Screenshot -->
     <DataTemplate x:Key="HubLatestCaptureItemTemplate">
-        <ButtonEx Width="660"
-                  Height="348"
+        <ButtonEx Width="700"
+                  Height="370"
                   Focusable="True"
                   FocusVisualStyle="{x:Null}"
                   Command="{PluginSettings Plugin=AnikiHelper, Path=OpenScreenshotsForMediaItemCommand}"
@@ -553,9 +556,13 @@
                                            Opacity="0.62"
                                            TextAlignment="Center"
                                            TextTrimming="CharacterEllipsis"
-                                           MaxWidth="560"/>
+                                           MaxWidth="620"/>
                             </StackPanel>
                         </Grid>
+
+                        <Border Background="{DynamicResource HubCardImageDimBrush}"
+                                IsHitTestVisible="False"
+                                Panel.ZIndex="10"/>
 
                         <Rectangle x:Name="HubVideoDim"
                                    Fill="#46000000"
@@ -617,7 +624,7 @@
                                 Height="74"
                                 CornerRadius="0,0,20,20"
                                 Background="{DynamicResource HubCardBottomBackgroundBrush}"
-                                Opacity="0.80" />
+                                Opacity="0.82" />
 
                         <!-- Bottom banner -->
                         <Border VerticalAlignment="Bottom"

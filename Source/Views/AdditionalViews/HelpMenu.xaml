@@ -14,7 +14,7 @@
                 <ControlTemplate TargetType="ContentControl">
 
                     <Grid KeyboardNavigation.TabNavigation="Contained"
-                          FocusManager.FocusedElement="{Binding ElementName=WhatNewButton}"
+                          FocusManager.FocusedElement="{Binding ElementName=HelpGuideButton}"
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch"
                           KeyboardNavigation.DirectionalNavigation="Contained"
@@ -245,21 +245,9 @@
                                             KeyboardNavigation.DirectionalNavigation="Contained"
                                             KeyboardNavigation.ControlTabNavigation="Contained">
 
-                                    <ButtonEx x:Name="WhatNewButton"
+                                    <ButtonEx x:Name="HelpGuideButton"
                                               FocusVisualStyle="{x:Null}"
                                               pbeh:FocusBahaviors.FocusBinding="True"
-                                              Style="{StaticResource HelpPanelButtonStyle}"
-                                              Tag="&#xE789;"
-                                              Content="{DynamicResource LOCWhatsNew}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWhatsNewCommand}"/>
-
-                                    <ButtonEx x:Name="FirstSetupButton"
-                                              Style="{StaticResource HelpPanelButtonStyle}"
-                                              Tag="&#xE713;"
-                                              Content="{DynamicResource LOCFirstSetupRelaunch}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenFirstSetupCommand}"/>
-
-                                    <ButtonEx x:Name="HelpGuideButton"
                                               Style="{StaticResource HelpPanelButtonStyle}"
                                               Tag="&#xE82D;"
                                               Content="{DynamicResource LOCUserGuide}"
@@ -288,22 +276,6 @@
                                               Tag="&#xE8CC;"
                                               Content="{DynamicResource LOCExternalClients}"
                                               Command="{PluginSettings Plugin=AnikiHelper, Path=OpenExternalClientsCommand}"/>
-
-                                    <ButtonEx x:Name="GamepadTesterButton"
-                                              Tag="&#xE950;"
-                                              Content="Gamepad Tester"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[GamepadTesterWindowStyle|GamepadTester_ButtonMap]}">
-                                        <ButtonEx.Style>
-                                            <Style TargetType="ButtonEx" BasedOn="{StaticResource HelpPanelButtonStyle}">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginStatus Plugin=GamepadTester_518dc982-32b5-4493-b32d-1f71de2fe4ad, Status=Installed}" Value="True">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </ButtonEx.Style>
-                                    </ButtonEx>
 
                                     <ButtonEx x:Name="AboutMeButton"
                                               Style="{StaticResource HelpPanelButtonStyle}"

@@ -76,7 +76,7 @@
 
 
                         <!-- ========================================================= -->
-                        <!-- CARD BUTTON STYLE                                          -->
+                        <!-- CARD BUTTON STYLE -->
                         <!-- ========================================================= -->
                         <Style x:Key="SteamStoreCardButtonStyle" TargetType="ButtonEx" BasedOn="{StaticResource SteamStoreFocusZoomButtonBaseStyle}">
                             <Setter Property="Background" Value="Transparent"/>
@@ -827,7 +827,7 @@
                         </Style>
 
                         <!-- ========================================================= -->
-                        <!-- SECTION TITLE STYLE                                        -->
+                        <!-- SECTION TITLE STYLE -->
                         <!-- ========================================================= -->
                         <Style x:Key="SteamStoreSectionTitleStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
                             <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
@@ -844,7 +844,7 @@
 
 
                         <!-- ========================================================= -->
-                        <!-- STORE HERO BUTTON STYLE                                   -->
+                        <!-- STORE HERO BUTTON STYLE -->
                         <!-- ========================================================= -->
                         <Style x:Key="SteamStoreHeroButtonStyle" TargetType="ButtonEx" BasedOn="{StaticResource SteamStoreFocusZoomButtonBaseStyle}">
                             <Setter Property="Focusable" Value="True"/>
@@ -1147,6 +1147,14 @@
                                                 <Setter Property="Background" Value="{DynamicResource StoreViewImage149}"/>
                                                 <Setter Property="Opacity" Value="0.1"/>
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="151">
+                                                <Setter Property="Background" Value="{DynamicResource StoreViewImage151}"/>
+                                                <Setter Property="Opacity" Value="0.1"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="152">
+                                                <Setter Property="Background" Value="{DynamicResource StoreViewImage152}"/>
+                                                <Setter Property="Opacity" Value="0.4"/>
+                                            </DataTrigger>
 
                                             <!-- Rare / Lucky Mode background override -->
                                             <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="True">
@@ -1186,8 +1194,7 @@
                                         <Setter Property="Visibility" Value="Collapsed"/>
 
                                         <Style.Triggers>
-                                            <!-- Show loading only during the first load, when no Store data is available yet.
-                                            Section changes and background refreshes must not hide the Store. -->
+                                            <!-- Show loading only on the first empty Store load. -->
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreLoading}" Value="True"/>
@@ -1485,8 +1492,7 @@
                                 <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Visible"/>
                                     <Style.Triggers>
-                                        <!-- Hide content only for the first load when no Store data exists yet.
-                                        Do not collapse content on section change or background refresh. -->
+                                        <!-- Hide Store content only for the first empty load. -->
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreLoading}" Value="True"/>
@@ -1504,7 +1510,7 @@
                             </Grid.Style>
 
                             <!-- ===================================================== -->
-                            <!-- TOP BAR                                                -->
+                            <!-- TOP BAR -->
                             <!-- ===================================================== -->
                             <Grid Grid.Row="0"
                                   Height="86"
@@ -1685,7 +1691,7 @@
                                 </Grid>
                             </Grid>
                             <!-- ===================================================== -->
-                            <!-- STORE CONTENT                                 -->
+                            <!-- STORE CONTENT -->
                             <!-- ===================================================== -->
                             <Grid Grid.Row="1"
                                   Margin="54,54,0,54"
@@ -1724,7 +1730,7 @@
 
                                             <Grid ClipToBounds="True">
 
-                                                <!-- Transparent preset layer: keeps the selected color identity without hiding the artwork -->
+                                                <!-- Transparent preset layer over Store artwork. -->
                                                 <Border Background="{DynamicResource OverlayMenu}"
                                                         Opacity="1"
                                                         BorderBrush="{DynamicResource MenuBorderBrush}"
@@ -1751,7 +1757,7 @@
                                                     </Image.OpacityMask>
                                                 </Image>
 
-                                                <!-- Transparent preset layer: keeps the selected color identity without hiding the artwork -->
+                                                <!-- Transparent preset layer over Store artwork. -->
                                                 <Border BorderBrush="{DynamicResource MenuBorderBrush}"
                                                         BorderThickness="1"
                                                         CornerRadius="24"
@@ -1937,7 +1943,7 @@
                                                             </Border>
                                                         </StackPanel>
                                                     </StackPanel>
-                                                    <!-- Steam auth required message displayed inside the Spotlight / hero card -->
+                                                    <!-- Steam auth message inside Spotlight Hero. -->
                                                     <Grid Panel.ZIndex="80"
                                                           Margin="-46,-38,-46,-38"
                                                           HorizontalAlignment="Stretch"
@@ -2093,7 +2099,7 @@
                                 </Grid>
                             </Grid>
                             <!-- ===================================================== -->
-                            <!-- BOTTOM PROMPTS                                          -->
+                            <!-- BOTTOM PROMPTS -->
                             <!-- ===================================================== -->
                             <Grid Grid.Row="2"
                                   HorizontalAlignment="Stretch"

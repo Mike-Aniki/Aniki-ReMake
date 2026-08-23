@@ -23,7 +23,7 @@
                                   Height="40"
                                   Margin="0,0,5,0">
 
-                                <!-- Playnite changes InputHint automatically when Swap Play/Details is enabled -->
+                                <!-- InputHint follows Playnite's X/A swap. -->
                                 <ContentControl x:Name="InputHintIcon"
                                                 Width="40"
                                                 Height="40"
@@ -53,8 +53,7 @@
 
                     <ControlTemplate.Triggers>
 
-                        <!-- If InputHint is null, use the old Tag-based image system.
-                        If InputHint is set, it wins. This lets Playnite's native swap update icons. -->
+                        <!-- InputHint first, Tag fallback; Playnite swap still works. -->
                         <Trigger Property="InputHint" Value="{x:Null}">
                             <Setter TargetName="InputHintIcon" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="IconImg" Property="Visibility" Value="Visible" />
@@ -122,7 +121,7 @@
         </Setter>
 
         <Style.Triggers>
-            <!-- Semantic tags for Play / Details. Useful if the button is not managed by Playnite code. -->
+            <!-- Play / Details fallback tags. -->
             <Trigger Property="Tag" Value="PlayAction">
                 <Setter Property="InputHint" Value="{DynamicResource ButtonPromptX}" />
             </Trigger>
@@ -154,7 +153,7 @@
                 <Setter Property="InputHint" Value="{DynamicResource ButtonPromptB}" />
             </Trigger>
 
-            <!-- Native A/B swap. Also works for simple Tag="A" / Tag="B" buttons. -->
+            <!-- Native A/B swap with Tag fallback. -->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="A" />
@@ -210,7 +209,7 @@
                                   Height="40"
                                   Margin="0,0,5,0">
 
-                                <!-- Playnite changes InputHint automatically when Swap Play/Details is enabled -->
+                                <!-- InputHint follows Playnite's X/A swap. -->
                                 <ContentControl x:Name="InputHintIcon"
                                                 Width="40"
                                                 Height="40"
@@ -240,8 +239,7 @@
 
                     <ControlTemplate.Triggers>
 
-                        <!-- If InputHint is null, use the old Tag-based image system.
-                        If InputHint is set, it wins. This lets Playnite's native swap update icons. -->
+                        <!-- InputHint first, Tag fallback; Playnite swap still works. -->
                         <Trigger Property="InputHint" Value="{x:Null}">
                             <Setter TargetName="InputHintIcon" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="IconImg" Property="Visibility" Value="Visible" />
@@ -309,7 +307,7 @@
         </Setter>
 
         <Style.Triggers>
-            <!-- Semantic tags for Play / Details. Useful if the button is not managed by Playnite code. -->
+            <!-- Play / Details fallback tags. -->
             <Trigger Property="Tag" Value="PlayAction">
                 <Setter Property="InputHint" Value="{DynamicResource ButtonPromptX}" />
             </Trigger>
@@ -341,7 +339,7 @@
                 <Setter Property="InputHint" Value="{DynamicResource ButtonPromptB}" />
             </Trigger>
 
-            <!-- Native A/B swap. Also works for simple Tag="A" / Tag="B" buttons. -->
+            <!-- Native A/B swap with Tag fallback. -->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="A" />
@@ -553,8 +551,7 @@
 
                     <ControlTemplate.Triggers>
 
-                        <!-- If InputHint is null, use the old Tag-based image system.
-                        If InputHint is set, it wins. This lets Playnite's native swap update icons. -->
+                        <!-- InputHint first, Tag fallback; Playnite swap still works. -->
                         <Trigger Property="InputHint" Value="{x:Null}">
                             <Setter TargetName="InputHintIcon" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="IconImg" Property="Visibility" Value="Visible" />
@@ -603,7 +600,7 @@
         </Setter>
 
         <Style.Triggers>
-            <!-- Semantic tags for Play / Details. Useful if the button is not managed by Playnite code. -->
+            <!-- Play / Details fallback tags. -->
             <Trigger Property="Tag" Value="PlayAction">
                 <Setter Property="InputHint" Value="{DynamicResource ButtonPromptX}" />
             </Trigger>
@@ -635,7 +632,7 @@
                 <Setter Property="InputHint" Value="{DynamicResource ButtonPromptB}" />
             </Trigger>
 
-            <!-- Native A/B swap. Also works for simple Tag="A" / Tag="B" buttons. -->
+            <!-- Native A/B swap with Tag fallback. -->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="A" />
@@ -672,8 +669,7 @@
     </Style>
 
 
-    <!-- Native Playnite prompt resources overridden with Aniki custom images.
-    Playnite sets ButtonEx.InputHint to these resources and updates them when X/A is swapped. -->
+    <!-- Use Aniki images for native Playnite prompts. -->
     <DataTemplate x:Key="ButtonPromptA">
         <Image MaxWidth="40" MaxHeight="40" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" Source="{DynamicResource ImageButtonA-Switch}" />
     </DataTemplate>
