@@ -1,0 +1,24 @@
+name: Validate Optional Media Catalog
+
+on:
+  push:
+    paths:
+      - media-catalog.json
+      - scripts/validate_media_catalog.py
+      - .github/workflows/validate-media-catalog.yml
+  pull_request:
+    paths:
+      - media-catalog.json
+      - scripts/validate_media_catalog.py
+      - .github/workflows/validate-media-catalog.yml
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate media catalog
+        run: python3 scripts/validate_media_catalog.py
