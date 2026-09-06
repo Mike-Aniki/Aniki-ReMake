@@ -4469,7 +4469,7 @@
                         </Grid>
 
 
-                        <MediaElement x:Name="CloseViewSound" Source="{ThemeFile 'audio/HomeHubClose.wav'}" Visibility="Collapsed" Volume="{Settings Fullscreen.InterfaceVolume}" IsMuted="False">
+                        <MediaElement x:Name="CloseViewSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackHomeHubClosePath}" Visibility="Collapsed" Volume="{Settings Fullscreen.InterfaceVolume}" IsMuted="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -9178,6 +9178,14 @@
                                                 <Setter Property="Tag" Value="True"/>
                                             </MultiDataTrigger>
 
+                                            <!-- ScreenSaver soundtrack has priority over UPS, except Radio Mode. -->
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled, FallbackValue=False}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Tag" Value="True"/>
+                                            </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </ContentControl.Style>
@@ -9225,9 +9233,37 @@
                         <!-- Sound -->
 
 
+                        <!-- ScreenSaver ambient soundtrack. Theme/UPS music is paused while this is active. -->
+                        <MediaElement x:Name="ScreenSaverOST"
+                                      Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackScreenSaverOstPath}"
+                                      Volume="{Settings Fullscreen.BackgroundVolume}"
+                                      MediaElementBehaviors.Repeat="True">
+                            <MediaElement.Style>
+                                <Style TargetType="MediaElement">
+                                    <Setter Property="LoadedBehavior" Value="Manual"/>
+                                    <Setter Property="UnloadedBehavior" Value="Close"/>
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled, FallbackValue=False}" Value="False"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.EnterActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
+                                            </MultiDataTrigger.EnterActions>
+                                            <MultiDataTrigger.ExitActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeOutPause}"/>
+                                            </MultiDataTrigger.ExitActions>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </MediaElement.Style>
+                        </MediaElement>
+
                         <!-- ========================================================== MUSIQUE DES FENÊTRES SECONDAIRES — MODE NORMAL ========================================================== -->
 
-                        <MediaElement x:Name="SecondaryViewsOSTNormal" Source="{ThemeFile 'audio/SecondaryViewsOST.mp3'}" Volume="{Settings Fullscreen.BackgroundVolume}" MediaElementBehaviors.Repeat="True">
+                        <MediaElement x:Name="SecondaryViewsOSTNormal" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackSecondaryViewsOstPath}" Volume="{Settings Fullscreen.BackgroundVolume}" MediaElementBehaviors.Repeat="True">
 
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
@@ -9252,7 +9288,9 @@
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="False"/>
 
                                             
-                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/></MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
                                             </MultiDataTrigger.EnterActions>
@@ -9307,7 +9345,9 @@
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle1}" Value="True"/>
 
                                             
-                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/></MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
                                             </MultiDataTrigger.EnterActions>
@@ -9361,7 +9401,9 @@
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle2}" Value="True"/>
 
                                             
-                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/></MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
                                             </MultiDataTrigger.EnterActions>
@@ -9390,7 +9432,7 @@
 
 
                         <!-- Normal login OST -->
-                        <MediaElement x:Name="AcceuilOpen" Source="{ThemeFile 'audio/LoginOST.mp3'}" MediaElementBehaviors.Repeat="True" Volume="{Settings Fullscreen.BackgroundVolume}">
+                        <MediaElement x:Name="AcceuilOpen" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackLoginOstPath}" MediaElementBehaviors.Repeat="True" Volume="{Settings Fullscreen.BackgroundVolume}">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -9405,6 +9447,7 @@
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AcceuilOrNot]}" Value="True"/>
                                                 <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="True"/>
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="False"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="LoadedBehavior" Value="Play"/>
                                         </MultiDataTrigger>
@@ -9425,6 +9468,9 @@
                                             <Setter Property="LoadedBehavior" Value="Close"/>
                                         </DataTrigger>
 
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="True">
+                                            <Setter Property="LoadedBehavior" Value="Pause"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </MediaElement.Style>
@@ -9447,6 +9493,7 @@
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AcceuilOrNot]}" Value="True"/>
                                                 <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="True"/>
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle1}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="LoadedBehavior" Value="Play"/>
                                         </MultiDataTrigger>
@@ -9467,6 +9514,9 @@
                                             <Setter Property="LoadedBehavior" Value="Close"/>
                                         </DataTrigger>
 
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="True">
+                                            <Setter Property="LoadedBehavior" Value="Pause"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </MediaElement.Style>
@@ -9489,6 +9539,7 @@
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AcceuilOrNot]}" Value="True"/>
                                                 <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="True"/>
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle2}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="LoadedBehavior" Value="Play"/>
                                         </MultiDataTrigger>
@@ -9509,6 +9560,9 @@
                                             <Setter Property="LoadedBehavior" Value="Close"/>
                                         </DataTrigger>
 
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="True">
+                                            <Setter Property="LoadedBehavior" Value="Pause"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </MediaElement.Style>
@@ -9579,7 +9633,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="WrongColumnsSound" Source="{ThemeFile 'audio/Warning.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="WrongColumnsSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackWarningPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -9603,7 +9657,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="GlobalMessagePanelSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="GlobalMessagePanelSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackNotiPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -9627,7 +9681,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="AnikiHelperUpdateWarningPanelSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="AnikiHelperUpdateWarningPanelSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackNotiPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -9651,7 +9705,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="SteamFriendsToastPanelSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="SteamFriendsToastPanelSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackNotiPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -9675,7 +9729,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="AnikiHelperMessageSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="AnikiHelperMessageSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackNotiPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -9699,7 +9753,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="SessionSummaryPanelSound" Source="{ThemeFile 'audio/SessionSummary.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="SessionSummaryPanelSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackSessionSummaryPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -9723,7 +9777,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="SystemMessageSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="SystemMessageSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackNotiPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -9749,7 +9803,7 @@
 
                         <MediaElement x:Name="OpenViewSound" LoadedBehavior="Manual" UnloadedBehavior="Close" Visibility="Collapsed" Volume="{Settings Fullscreen.InterfaceVolume}" IsMuted="False"/>
 
-                        <MediaElement x:Name="CloseGameSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="CloseGameSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackNotiPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -9776,7 +9830,7 @@
                         <MediaElement x:Name="ConnexionClick" Volume="{Settings Fullscreen.InterfaceVolume}" LoadedBehavior="Manual" UnloadedBehavior="Close" MediaElementBehaviors.Repeat="False"/>
 
                         <!-- Normal Hub OST -->
-                        <MediaElement x:Name="WelcomeOpen" Source="{ThemeFile 'audio/HubOST.mp3'}" MediaElementBehaviors.Repeat="True" Volume="{Settings Fullscreen.BackgroundVolume}">
+                        <MediaElement x:Name="WelcomeOpen" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackHubOstPath}" MediaElementBehaviors.Repeat="True" Volume="{Settings Fullscreen.BackgroundVolume}">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -9794,7 +9848,9 @@
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="False"/>
                                                 <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled, FallbackValue=False}" Value="False"/>
                                             
-                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/></MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
                                             </MultiDataTrigger.EnterActions>
@@ -9858,7 +9914,9 @@
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle1}" Value="True"/>
                                                 <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled, FallbackValue=False}" Value="False"/>
                                             
-                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/></MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
                                             </MultiDataTrigger.EnterActions>
@@ -9913,7 +9971,9 @@
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle2}" Value="True"/>
                                                 <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled, FallbackValue=False}" Value="False"/>
                                             
-                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/></MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
                                             </MultiDataTrigger.EnterActions>

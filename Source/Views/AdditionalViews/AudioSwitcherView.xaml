@@ -1,4 +1,4 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:pc="clr-namespace:Playnite.Controls;assembly=Playnite" xmlns:pbeh="clr-namespace:Playnite.Behaviors;assembly=Playnite" mc:Ignorable="d">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:pc="clr-namespace:Playnite.Controls;assembly=Playnite" xmlns:pbeh="clr-namespace:Playnite.Behaviors;assembly=Playnite" mc:Ignorable="d">
 
     <!-- Audio Switcher v9: eager-loaded System / Media pages. -->
     <Style x:Key="AudioSwitcherWindowStyle" TargetType="ContentControl">
@@ -500,7 +500,7 @@
                                                 </Border>
 
                                                 <!-- Mute / unmute: clean action row. -->
-                                                <ButtonEx Grid.Row="2" Height="68" Style="{StaticResource AudioSwitcherPremiumButtonStyle}" Command="{PluginSettings Plugin=AudioSwitcher, Path=ToggleMuteCommand}" KeyboardNavigation.TabIndex="4" Margin="4,0,4,26">
+                                                <ButtonEx x:Name="AudioSwitcherMuteButton" Grid.Row="2" Height="68" Style="{StaticResource AudioSwitcherPremiumButtonStyle}" Command="{PluginSettings Plugin=AudioSwitcher, Path=ToggleMuteCommand}" KeyboardNavigation.TabIndex="4" Margin="4,0,4,26">
 
                                                     <Grid VerticalAlignment="Center">
                                                         <Grid.ColumnDefinitions>
@@ -644,11 +644,30 @@
                                                             <TextBlock Grid.Column="1" Text="{DynamicResource LOCCurrent}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextHighlightBrush}" Opacity="0.82" VerticalAlignment="Top"/>
                                                         </Grid>
 
-                                                        <Border Grid.Row="1" Height="198" Background="Transparent" ClipToBounds="True">
+                                                        <Border Grid.Row="1"
+                                                                Height="198"
+                                                                Background="Transparent"
+                                                                ClipToBounds="True"
+                                                                KeyboardNavigation.DirectionalNavigation="Continue"
+                                                                KeyboardNavigation.TabNavigation="Continue">
 
-                                                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True" Focusable="False" Height="198">
+                                                            <!-- Pixel scrolling avoids the logical-scroll focus trap that can occur
+                                                                 when controller focus moves through a clipped StackPanel. -->
+                                                            <ScrollViewer VerticalScrollBarVisibility="Hidden"
+                                                                          HorizontalScrollBarVisibility="Disabled"
+                                                                          CanContentScroll="False"
+                                                                          Focusable="False"
+                                                                          IsTabStop="False"
+                                                                          Height="198"
+                                                                          KeyboardNavigation.DirectionalNavigation="Continue"
+                                                                          KeyboardNavigation.TabNavigation="Continue">
 
-                                                                <ItemsControl ItemsSource="{PluginSettings Plugin=AudioSwitcher, Path=Devices}" Focusable="False" KeyboardNavigation.DirectionalNavigation="Continue" KeyboardNavigation.TabNavigation="Continue">
+                                                                <ItemsControl x:Name="AudioSwitcherDeviceList"
+                                                                              ItemsSource="{PluginSettings Plugin=AudioSwitcher, Path=Devices}"
+                                                                              Focusable="False"
+                                                                              IsTabStop="False"
+                                                                              KeyboardNavigation.DirectionalNavigation="Continue"
+                                                                              KeyboardNavigation.TabNavigation="Continue">
 
                                                                     <ItemsControl.ItemsPanel>
                                                                         <ItemsPanelTemplate>
@@ -658,12 +677,18 @@
 
                                                                     <ItemsControl.ItemTemplate>
                                                                         <DataTemplate>
-                                                                            <ButtonEx Style="{StaticResource AudioSwitcherPremiumButtonStyle}" Height="62" KeyboardNavigation.TabIndex="5" Command="{PluginSettings Plugin=AudioSwitcher, Path=SetDeviceCommand}" CommandParameter="{Binding Id}">
+                                                                            <ButtonEx Style="{StaticResource AudioSwitcherPremiumButtonStyle}"
+                                                                                      Height="62"
+                                                                                      KeyboardNavigation.TabIndex="5"
+                                                                                      Tag="{Binding Id}"
+                                                                                      Command="{PluginSettings Plugin=AudioSwitcher, Path=SetDeviceCommand}"
+                                                                                      CommandParameter="{Binding Id}">
 
                                                                                 <Grid VerticalAlignment="Center">
                                                                                     <Grid.ColumnDefinitions>
                                                                                         <ColumnDefinition Width="46"/>
                                                                                         <ColumnDefinition Width="*"/>
+                                                                                        <ColumnDefinition Width="Auto"/>
                                                                                         <ColumnDefinition Width="Auto"/>
                                                                                     </Grid.ColumnDefinitions>
 
@@ -675,7 +700,45 @@
                                                                                         <TextBlock Text="{Binding WindowsName}" FontSize="11" Style="{DynamicResource TextBlockBaseStyle}" Opacity="0.52" Margin="0,2,0,0" TextTrimming="CharacterEllipsis"/>
                                                                                     </StackPanel>
 
-                                                                                    <Border Grid.Column="2" Width="10" Height="10" CornerRadius="5" Background="{DynamicResource TextHighlightBrush}" VerticalAlignment="Center" Margin="0,0,12,0">
+                                                                                    <!-- BatteryLabel is already display-ready
+                                                                                         (percentage + charging marker when reported).
+                                                                                         Hide it completely for devices without battery data. -->
+                                                                                    <TextBlock Grid.Column="2"
+                                                                                               Text="{Binding BatteryLabel}"
+                                                                                               FontSize="12"
+                                                                                               FontWeight="SemiBold"
+                                                                                               Opacity="0.72"
+                                                                                               VerticalAlignment="Center"
+                                                                                               Margin="8,0,12,0">
+                                                                                        <TextBlock.Style>
+                                                                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                                <Style.Triggers>
+                                                                                                    <DataTrigger Binding="{Binding HasBattery}" Value="True">
+                                                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                                                    </DataTrigger>
+                                                                                                </Style.Triggers>
+                                                                                            </Style>
+                                                                                        </TextBlock.Style>
+                                                                                    </TextBlock>
+
+                                                                                    <Border Grid.Column="3"
+                                                                                            Width="10"
+                                                                                            Height="10"
+                                                                                            CornerRadius="5"
+                                                                                            Background="{DynamicResource TextHighlightBrush}"
+                                                                                            VerticalAlignment="Center"
+                                                                                            Margin="0,0,12,0">
+                                                                                        <Border.Style>
+                                                                                            <Style TargetType="Border">
+                                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                                <Style.Triggers>
+                                                                                                    <DataTrigger Binding="{Binding IsCurrent}" Value="True">
+                                                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                                                    </DataTrigger>
+                                                                                                </Style.Triggers>
+                                                                                            </Style>
+                                                                                        </Border.Style>
                                                                                     </Border>
                                                                                 </Grid>
                                                                             </ButtonEx>

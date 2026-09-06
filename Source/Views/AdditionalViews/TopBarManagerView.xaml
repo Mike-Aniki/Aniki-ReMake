@@ -1,0 +1,818 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    mc:Ignorable="d">
+
+    <Style x:Key="TopBarManagerWindowStyle" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid Background="Transparent"
+                          KeyboardNavigation.TabNavigation="Cycle"
+                          KeyboardNavigation.DirectionalNavigation="Cycle"
+                          KeyboardNavigation.ControlTabNavigation="Cycle"
+                          FocusManager.FocusedElement="{Binding ElementName=TopBarManagerFirstButton}">
+
+                        <Grid.Resources>
+                            <Style x:Key="TopBarManagerRowButtonStyle" TargetType="ButtonEx">
+                                <Setter Property="Height" Value="72"/>
+                                <Setter Property="Margin" Value="0,0,0,8"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Focusable" Value="True"/>
+                                <Setter Property="IsTabStop" Value="True"/>
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ButtonEx">
+                                            <Grid Background="{TemplateBinding Background}" ClipToBounds="True" SnapsToDevicePixels="True">
+                                                <Border x:Name="RowBase"
+                                                        Margin="0"
+                                                        CornerRadius="12"
+                                                        Background="#12000000"
+                                                        BorderBrush="#14FFFFFF"
+                                                        BorderThickness="1"/>
+                                                <Border x:Name="AccentBar"
+                                                        Width="4"
+                                                        Margin="0,12,0,12"
+                                                        HorizontalAlignment="Left"
+                                                        CornerRadius="4"
+                                                        Background="{DynamicResource AccentBrush}"
+                                                        Opacity="0"/>
+                                                <Border x:Name="MainBackground"
+                                                        Margin="0"
+                                                        CornerRadius="12"
+                                                        Background="{DynamicResource ButtonBackgroundFocus}"
+                                                        Visibility="Collapsed"/>
+                                                <Border x:Name="MainBorder"
+                                                        Margin="0"
+                                                        BorderThickness="2"
+                                                        CornerRadius="12"
+                                                        BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                        Visibility="Collapsed"/>
+                                                <Border x:Name="FlashMenuBorder"
+                                                        Margin="0"
+                                                        CornerRadius="12"
+                                                        Style="{DynamicResource AnimatedFlashMenu}"
+                                                        Tag="False"
+                                                        Visibility="Collapsed"/>
+                                                <ContentPresenter Margin="18,0,14,0"
+                                                                  HorizontalAlignment="Stretch"
+                                                                  VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Opacity" Value="0.35"/>
+                                                </Trigger>
+                                                <Trigger Property="IsFocused" Value="True">
+                                                    <Setter TargetName="MainBackground" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="MainBorder" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="FlashMenuBorder" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="FlashMenuBorder" Property="Tag" Value="True"/>
+                                                    <Setter TargetName="AccentBar" Property="Opacity" Value="1"/>
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="MainBackground" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="MainBorder" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="FlashMenuBorder" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="FlashMenuBorder" Property="Tag" Value="True"/>
+                                                    <Setter TargetName="AccentBar" Property="Opacity" Value="1"/>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Opacity" Value="0.85"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+
+                            <Style x:Key="TopBarManagerPinButtonStyle" TargetType="ButtonEx">
+                                <Setter Property="Width" Value="58"/>
+                                <Setter Property="Height" Value="58"/>
+                                <Setter Property="Focusable" Value="True"/>
+                                <Setter Property="IsTabStop" Value="True"/>
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TextDetailBrush}"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Opacity" Value="0.98"/>
+                                <Setter Property="Tag" Value="Unpinned"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ButtonEx">
+                                            <Grid Width="58" Height="58" SnapsToDevicePixels="True">
+                                                <Border x:Name="PinBackground"
+                                                        CornerRadius="18"
+                                                        Background="#12000000"
+                                                        BorderBrush="#24FFFFFF"
+                                                        BorderThickness="1"/>
+                                                <Border x:Name="PinGlassTop"
+                                                        Margin="1,1,1,0"
+                                                        Height="20"
+                                                        VerticalAlignment="Top"
+                                                        CornerRadius="17,17,10,10"
+                                                        Opacity="0.10"
+                                                        IsHitTestVisible="False">
+                                                    <Border.Background>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                            <GradientStop Color="#96FFFFFF" Offset="0"/>
+                                                            <GradientStop Color="#00FFFFFF" Offset="1"/>
+                                                        </LinearGradientBrush>
+                                                    </Border.Background>
+                                                </Border>
+                                                <Border x:Name="PinInnerStroke"
+                                                        Margin="3"
+                                                        CornerRadius="15"
+                                                        BorderBrush="#12FFFFFF"
+                                                        BorderThickness="1"
+                                                        IsHitTestVisible="False"/>
+
+                                                <Grid Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Ellipse x:Name="StateCircle"
+                                                             Fill="#16000000"
+                                                             Stroke="#34FFFFFF"
+                                                             StrokeThickness="1.2"/>
+                                                    <TextBlock x:Name="StateGlyph"
+                                                               Text="+"
+                                                               FontFamily="{DynamicResource FontMain}"
+                                                               FontSize="15"
+                                                               FontWeight="Bold"
+                                                               Foreground="{TemplateBinding Foreground}"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"
+                                                               Margin="0,-1,0,0"/>
+                                                </Grid>
+
+                                                <Border x:Name="PinFocus"
+                                                        CornerRadius="18"
+                                                        BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                        BorderThickness="2"
+                                                        Visibility="Collapsed"/>
+                                                <Border x:Name="PinFlash"
+                                                        CornerRadius="18"
+                                                        Style="{DynamicResource AnimatedFlashMenu}"
+                                                        Tag="False"
+                                                        Visibility="Collapsed"/>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsFocused" Value="True">
+                                                    <Setter TargetName="PinFocus" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="PinFlash" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="PinFlash" Property="Tag" Value="True"/>
+                                                    <Setter TargetName="PinBackground" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                    <Setter TargetName="PinBackground" Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}"/>
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="PinFocus" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="PinBackground" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                    <Setter TargetName="PinBackground" Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}"/>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter Property="Opacity" Value="0.88"/>
+                                                </Trigger>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Opacity" Value="0.35"/>
+                                                </Trigger>
+                                                <Trigger Property="Tag" Value="Pinned">
+                                                    <Setter TargetName="PinBackground" Property="Background" Value="#18000000"/>
+                                                    <Setter TargetName="PinBackground" Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}"/>
+                                                    <Setter TargetName="PinGlassTop" Property="Opacity" Value="0.16"/>
+                                                    <Setter TargetName="PinInnerStroke" Property="BorderBrush" Value="#1EFFFFFF"/>
+                                                    <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                                                    <Setter TargetName="StateCircle" Property="Fill" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                    <Setter TargetName="StateCircle" Property="Stroke" Value="#90FFFFFF"/>
+                                                    <Setter TargetName="StateGlyph" Property="Text" Value="✓"/>
+                                                    <Setter TargetName="StateGlyph" Property="Foreground" Value="#FF101214"/>
+                                                    <Setter TargetName="StateGlyph" Property="FontSize" Value="13"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+
+                            <Style x:Key="TopBarManagerFooterButtonStyle" TargetType="ButtonEx">
+                                <Setter Property="Height" Value="40"/>
+                                <Setter Property="Padding" Value="14,0"/>
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                                <Setter Property="Background" Value="#16000000"/>
+                                <Setter Property="BorderBrush" Value="#20FFFFFF"/>
+                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ButtonEx">
+                                            <Grid>
+                                                <Border x:Name="Bg"
+                                                        Background="{TemplateBinding Background}"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                                        CornerRadius="10"/>
+                                                <Border x:Name="Focus"
+                                                        BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                        BorderThickness="2"
+                                                        CornerRadius="10"
+                                                        Visibility="Collapsed"
+                                                        IsHitTestVisible="False"/>
+                                                <ContentPresenter HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"
+                                                                  Margin="{TemplateBinding Padding}"/>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                                    <Setter TargetName="Focus" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="Bg" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Focus" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="Bg" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Grid.Resources>
+
+                        <Border Background="#22000000"/>
+
+                        <Grid x:Name="TopBarManagerPanel"
+                              Width="592"
+                              Height="948"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Top"
+                              Margin="0,18,36,0"
+                              Opacity="0"
+                              RenderTransformOrigin="1,0">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
+                                    <TranslateTransform X="18" Y="0"/>
+                                </TransformGroup>
+                            </Grid.RenderTransform>
+                            <Grid.Triggers>
+                                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="TopBarManagerPanel"
+                                                             Storyboard.TargetProperty="Opacity"
+                                                             From="0" To="1" Duration="0:0:0.18"/>
+                                            <DoubleAnimation Storyboard.TargetName="TopBarManagerPanel"
+                                                             Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                                             From="0.98" To="1" Duration="0:0:0.20">
+                                                <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <DoubleAnimation Storyboard.TargetName="TopBarManagerPanel"
+                                                             Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                                                             From="0.98" To="1" Duration="0:0:0.20">
+                                                <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <DoubleAnimation Storyboard.TargetName="TopBarManagerPanel"
+                                                             Storyboard.TargetProperty="RenderTransform.(TransformGroup.Children)[1].(TranslateTransform.X)"
+                                                             From="18" To="0" Duration="0:0:0.20">
+                                                <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Grid.Triggers>
+
+                            <Border CornerRadius="20"
+                                    Background="{DynamicResource TopBar}"
+                                    BorderBrush="#22FFFFFF"
+                                    BorderThickness="1">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="24" ShadowDepth="0" Opacity="0.34" Color="#000000"/>
+                                </Border.Effect>
+                            </Border>
+                            <Border CornerRadius="20"
+                                    BorderBrush="{DynamicResource MenuBorderBrush}"
+                                    BorderThickness="1.2"
+                                    Margin="1"/>
+                            <Border Margin="2"
+                                    Height="48"
+                                    VerticalAlignment="Top"
+                                    CornerRadius="19,19,12,12"
+                                    Opacity="0.16"
+                                    IsHitTestVisible="False">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#72FFFFFF" Offset="0"/>
+                                        <GradientStop Color="#00FFFFFF" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+
+                            <Grid Margin="20,18,20,18">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="22"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="14"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="{DynamicResource LOCShortcutButtonsHeader}"
+                                                   FontFamily="{DynamicResource FontMain}"
+                                                   FontSize="22"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource TextBrush}"/>
+                                        <TextBlock Text="Open a feature on the left or pin it on the right. Maximum 4 pinned shortcuts."
+                                                   FontFamily="{DynamicResource FontMain}"
+                                                   FontSize="12"
+                                                   Foreground="{DynamicResource TextDetailBrush}"
+                                                   Opacity="0.86"
+                                                   Margin="0,3,0,0"/>
+                                    </StackPanel>
+                                    <Border Grid.Column="1"
+                                            Height="38"
+                                            Padding="14,0"
+                                            CornerRadius="19"
+                                            Background="#18000000"
+                                            BorderBrush="#1EFFFFFF"
+                                            BorderThickness="1"
+                                            VerticalAlignment="Center">
+                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=Options[TopBarPinnedCountText]}"
+                                                   FontFamily="{DynamicResource FontMain}"
+                                                   FontSize="17"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource TextBrush}"
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+                                </Grid>
+
+                                <ScrollViewer Grid.Row="2"
+                                              VerticalScrollBarVisibility="Hidden"
+                                              HorizontalScrollBarVisibility="Disabled"
+                                              Focusable="False">
+                                    <StackPanel>
+
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="72"/></Grid.ColumnDefinitions>
+                                            <ButtonEx x:Name="TopBarManagerFirstButton" Grid.Column="0"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenTopBarFeatureCommand}" CommandParameter="achievements">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarManagerRowButtonStyle}">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="True">
+                                                                <Setter Property="IsEnabled" Value="True"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions><ColumnDefinition Width="46"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="&#xE903;" FontFamily="{DynamicResource FontIcomoon}" FontSize="23" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="1" Text="{DynamicResource LOCAchievements}" FontFamily="{DynamicResource FontMain}" FontSize="18.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                                    <Border Grid.Column="2"
+                                                            Width="24"
+                                                            Height="24"
+                                                            Margin="10,0,2,0"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            CornerRadius="12"
+                                                            Background="#18000000"
+                                                            BorderBrush="{DynamicResource MenuBorderBrush}"
+                                                            BorderThickness="1">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowAchievementsButton]}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="&#xE718;"
+                                                                   FontFamily="{DynamicResource FontIcons}"
+                                                                   FontSize="12"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   Foreground="{DynamicResource TextBrush}"
+                                                                   Margin="0,-1,0,0"/>
+                                                    </Border>
+                                                </Grid>
+                                            </ButtonEx>
+                                            <ButtonEx Grid.Column="1" HorizontalAlignment="Right"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}"
+                                                      CommandParameter="ShowAchievementsButton">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarManagerPinButtonStyle}">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginStatus Plugin=PlayniteAchievements, Status=Installed}" Value="True">
+                                                                <Setter Property="IsEnabled" Value="True"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowAchievementsButton]}" Value="True">
+                                                                <Setter Property="Tag" Value="Pinned"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+                                        </Grid>
+
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="72"/></Grid.ColumnDefinitions>
+                                            <ButtonEx Grid.Column="0" Style="{StaticResource TopBarManagerRowButtonStyle}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenTopBarFeatureCommand}" CommandParameter="friends">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions><ColumnDefinition Width="46"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="&#xE716;" FontFamily="{DynamicResource FontIcons}" FontSize="23" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="1" Text="{DynamicResource LOCSteamFriendsTitle}" FontFamily="{DynamicResource FontMain}" FontSize="18.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                                    <Border Grid.Column="2"
+                                                            Width="24"
+                                                            Height="24"
+                                                            Margin="10,0,2,0"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            CornerRadius="12"
+                                                            Background="#18000000"
+                                                            BorderBrush="{DynamicResource MenuBorderBrush}"
+                                                            BorderThickness="1">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowFriendsButton]}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="&#xE718;"
+                                                                   FontFamily="{DynamicResource FontIcons}"
+                                                                   FontSize="12"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   Foreground="{DynamicResource TextBrush}"
+                                                                   Margin="0,-1,0,0"/>
+                                                    </Border>
+                                                </Grid>
+                                            </ButtonEx>
+                                            <ButtonEx Grid.Column="1" HorizontalAlignment="Right" Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}" CommandParameter="ShowFriendsButton">
+                                                <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarManagerPinButtonStyle}"><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowFriendsButton]}" Value="True"><Setter Property="Tag" Value="Pinned"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            </ButtonEx>
+                                        </Grid>
+
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="72"/></Grid.ColumnDefinitions>
+                                            <ButtonEx Grid.Column="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenTopBarFeatureCommand}" CommandParameter="music-player">
+                                                <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarManagerRowButtonStyle}"><Setter Property="IsEnabled" Value="False"/><Style.Triggers><DataTrigger Binding="{PluginStatus Plugin=UniPlaySong.a1b2c3d4-e5f6-7890-abcd-ef1234567890, Status=Installed}" Value="True"><Setter Property="IsEnabled" Value="True"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions><ColumnDefinition Width="46"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="&#xE8D6;" FontFamily="{DynamicResource FontIcons}" FontSize="23" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="1" Text="Music Player" FontFamily="{DynamicResource FontMain}" FontSize="18.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                                    <Border Grid.Column="2"
+                                                            Width="24"
+                                                            Height="24"
+                                                            Margin="10,0,2,0"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            CornerRadius="12"
+                                                            Background="#18000000"
+                                                            BorderBrush="{DynamicResource MenuBorderBrush}"
+                                                            BorderThickness="1">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowMusicPlayerButton]}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="&#xE718;"
+                                                                   FontFamily="{DynamicResource FontIcons}"
+                                                                   FontSize="12"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   Foreground="{DynamicResource TextBrush}"
+                                                                   Margin="0,-1,0,0"/>
+                                                    </Border>
+                                                </Grid>
+                                            </ButtonEx>
+                                            <ButtonEx Grid.Column="1" HorizontalAlignment="Right" Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}" CommandParameter="ShowMusicPlayerButton">
+                                                <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarManagerPinButtonStyle}"><Setter Property="IsEnabled" Value="False"/><Style.Triggers><DataTrigger Binding="{PluginStatus Plugin=UniPlaySong.a1b2c3d4-e5f6-7890-abcd-ef1234567890, Status=Installed}" Value="True"><Setter Property="IsEnabled" Value="True"/></DataTrigger><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowMusicPlayerButton]}" Value="True"><Setter Property="Tag" Value="Pinned"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            </ButtonEx>
+                                        </Grid>
+
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="72"/></Grid.ColumnDefinitions>
+                                            <ButtonEx Grid.Column="0"
+                                                      Style="{StaticResource TopBarManagerRowButtonStyle}"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenTopBarFeatureCommand}" CommandParameter="web-browser">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions><ColumnDefinition Width="46"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="&#xE774;" FontFamily="{DynamicResource FontIcons}" FontSize="23" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="1" Text="Aniki Web Browser" FontFamily="{DynamicResource FontMain}" FontSize="18.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                                    <Border Grid.Column="2"
+                                                            Width="24"
+                                                            Height="24"
+                                                            Margin="10,0,2,0"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            CornerRadius="12"
+                                                            Background="#18000000"
+                                                            BorderBrush="{DynamicResource MenuBorderBrush}"
+                                                            BorderThickness="1">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowWebBrowserButton]}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="&#xE718;"
+                                                                   FontFamily="{DynamicResource FontIcons}"
+                                                                   FontSize="12"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   Foreground="{DynamicResource TextBrush}"
+                                                                   Margin="0,-1,0,0"/>
+                                                    </Border>
+                                                </Grid>
+                                            </ButtonEx>
+                                            <ButtonEx Grid.Column="1" HorizontalAlignment="Right" Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}" CommandParameter="ShowWebBrowserButton">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarManagerPinButtonStyle}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowWebBrowserButton]}" Value="True">
+                                                                <Setter Property="Tag" Value="Pinned"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+                                        </Grid>
+
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="72"/></Grid.ColumnDefinitions>
+                                            <ButtonEx Grid.Column="0"
+                                                      Style="{StaticResource TopBarManagerRowButtonStyle}"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenTopBarFeatureCommand}" CommandParameter="media-gallery">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions><ColumnDefinition Width="46"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="&#xE91B;" FontFamily="{DynamicResource FontIcons}" FontSize="23" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="1" Text="Capture Gallery" FontFamily="{DynamicResource FontMain}" FontSize="18.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                                    <Border Grid.Column="2"
+                                                            Width="24"
+                                                            Height="24"
+                                                            Margin="10,0,2,0"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            CornerRadius="12"
+                                                            Background="#18000000"
+                                                            BorderBrush="{DynamicResource MenuBorderBrush}"
+                                                            BorderThickness="1">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowMediaGalleryButton]}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="&#xE718;"
+                                                                   FontFamily="{DynamicResource FontIcons}"
+                                                                   FontSize="12"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   Foreground="{DynamicResource TextBrush}"
+                                                                   Margin="0,-1,0,0"/>
+                                                    </Border>
+                                                </Grid>
+                                            </ButtonEx>
+                                            <ButtonEx Grid.Column="1" HorizontalAlignment="Right" Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}" CommandParameter="ShowMediaGalleryButton">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarManagerPinButtonStyle}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowMediaGalleryButton]}" Value="True">
+                                                                <Setter Property="Tag" Value="Pinned"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+                                        </Grid>
+
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="72"/></Grid.ColumnDefinitions>
+                                            <ButtonEx Grid.Column="0"
+                                                      Style="{StaticResource TopBarManagerRowButtonStyle}"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenTopBarFeatureCommand}" CommandParameter="video-player">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions><ColumnDefinition Width="46"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="&#xE714;" FontFamily="{DynamicResource FontIcons}" FontSize="23" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="1" Text="Aniki Media Center" FontFamily="{DynamicResource FontMain}" FontSize="18.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                                    <Border Grid.Column="2"
+                                                            Width="24"
+                                                            Height="24"
+                                                            Margin="10,0,2,0"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            CornerRadius="12"
+                                                            Background="#18000000"
+                                                            BorderBrush="{DynamicResource MenuBorderBrush}"
+                                                            BorderThickness="1">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowVideoPlayerButton]}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="&#xE718;"
+                                                                   FontFamily="{DynamicResource FontIcons}"
+                                                                   FontSize="12"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   Foreground="{DynamicResource TextBrush}"
+                                                                   Margin="0,-1,0,0"/>
+                                                    </Border>
+                                                </Grid>
+                                            </ButtonEx>
+                                            <ButtonEx Grid.Column="1" HorizontalAlignment="Right" Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}" CommandParameter="ShowVideoPlayerButton">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarManagerPinButtonStyle}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowVideoPlayerButton]}" Value="True">
+                                                                <Setter Property="Tag" Value="Pinned"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+                                        </Grid>
+
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="72"/></Grid.ColumnDefinitions>
+                                            <ButtonEx Grid.Column="0"
+                                                      Style="{StaticResource TopBarManagerRowButtonStyle}"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenTopBarFeatureCommand}" CommandParameter="software-tools">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions><ColumnDefinition Width="46"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="&#xECAA;" FontFamily="{DynamicResource FontIcons}" FontSize="23" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="1" Text="{DynamicResource LOCSoftwareTools}" FontFamily="{DynamicResource FontMain}" FontSize="18.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                                    <Border Grid.Column="2"
+                                                            Width="24"
+                                                            Height="24"
+                                                            Margin="10,0,2,0"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            CornerRadius="12"
+                                                            Background="#18000000"
+                                                            BorderBrush="{DynamicResource MenuBorderBrush}"
+                                                            BorderThickness="1">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowSoftwareToolsButton]}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="&#xE718;"
+                                                                   FontFamily="{DynamicResource FontIcons}"
+                                                                   FontSize="12"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   Foreground="{DynamicResource TextBrush}"
+                                                                   Margin="0,-1,0,0"/>
+                                                    </Border>
+                                                </Grid>
+                                            </ButtonEx>
+                                            <ButtonEx Grid.Column="1" HorizontalAlignment="Right" Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}" CommandParameter="ShowSoftwareToolsButton">
+                                                <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarManagerPinButtonStyle}"><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowSoftwareToolsButton]}" Value="True"><Setter Property="Tag" Value="Pinned"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            </ButtonEx>
+                                        </Grid>
+
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="72"/></Grid.ColumnDefinitions>
+                                            <ButtonEx Grid.Column="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenTopBarFeatureCommand}" CommandParameter="audio-switcher">
+                                                <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarManagerRowButtonStyle}"><Setter Property="IsEnabled" Value="False"/><Style.Triggers><DataTrigger Binding="{PluginStatus Plugin=PlayniteAudioSwitcher_708b6ec4-bf96-4c0d-bd9d-fe0aa04d6bf1, Status=Installed}" Value="True"><Setter Property="IsEnabled" Value="True"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions><ColumnDefinition Width="46"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="&#xE995;" FontFamily="{DynamicResource FontIcons}" FontSize="23" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="1" Text="{DynamicResource LOCAudioSwitcher}" FontFamily="{DynamicResource FontMain}" FontSize="18.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                                    <Border Grid.Column="2"
+                                                            Width="24"
+                                                            Height="24"
+                                                            Margin="10,0,2,0"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            CornerRadius="12"
+                                                            Background="#18000000"
+                                                            BorderBrush="{DynamicResource MenuBorderBrush}"
+                                                            BorderThickness="1">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowAudioSwitcherButton]}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="&#xE718;"
+                                                                   FontFamily="{DynamicResource FontIcons}"
+                                                                   FontSize="12"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   Foreground="{DynamicResource TextBrush}"
+                                                                   Margin="0,-1,0,0"/>
+                                                    </Border>
+                                                </Grid>
+                                            </ButtonEx>
+                                            <ButtonEx Grid.Column="1" HorizontalAlignment="Right" Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}" CommandParameter="ShowAudioSwitcherButton">
+                                                <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarManagerPinButtonStyle}"><Setter Property="IsEnabled" Value="False"/><Style.Triggers><DataTrigger Binding="{PluginStatus Plugin=PlayniteAudioSwitcher_708b6ec4-bf96-4c0d-bd9d-fe0aa04d6bf1, Status=Installed}" Value="True"><Setter Property="IsEnabled" Value="True"/></DataTrigger><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowAudioSwitcherButton]}" Value="True"><Setter Property="Tag" Value="Pinned"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            </ButtonEx>
+                                        </Grid>
+
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="72"/></Grid.ColumnDefinitions>
+                                            <ButtonEx Grid.Column="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenTopBarFeatureCommand}" CommandParameter="controller-manager">
+                                                <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarManagerRowButtonStyle}"><Setter Property="IsEnabled" Value="False"/><Style.Triggers><DataTrigger Binding="{PluginStatus Plugin=ControllerSessionManager_6f3e7a21-98f4-4f2b-92ad-3fc0e6e941dc, Status=Installed}" Value="True"><Setter Property="IsEnabled" Value="True"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions><ColumnDefinition Width="46"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="&#xE7FC;" FontFamily="{DynamicResource FontIcons}" FontSize="23" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="1" Text="Controller Manager" FontFamily="{DynamicResource FontMain}" FontSize="18.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                                    <Border Grid.Column="2"
+                                                            Width="24"
+                                                            Height="24"
+                                                            Margin="10,0,2,0"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            CornerRadius="12"
+                                                            Background="#18000000"
+                                                            BorderBrush="{DynamicResource MenuBorderBrush}"
+                                                            BorderThickness="1">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowControllerManagerButton]}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="&#xE718;"
+                                                                   FontFamily="{DynamicResource FontIcons}"
+                                                                   FontSize="12"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   Foreground="{DynamicResource TextBrush}"
+                                                                   Margin="0,-1,0,0"/>
+                                                    </Border>
+                                                </Grid>
+                                            </ButtonEx>
+                                            <ButtonEx Grid.Column="1" HorizontalAlignment="Right" Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}" CommandParameter="ShowControllerManagerButton">
+                                                <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarManagerPinButtonStyle}"><Setter Property="IsEnabled" Value="False"/><Style.Triggers><DataTrigger Binding="{PluginStatus Plugin=ControllerSessionManager_6f3e7a21-98f4-4f2b-92ad-3fc0e6e941dc, Status=Installed}" Value="True"><Setter Property="IsEnabled" Value="True"/></DataTrigger><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowControllerManagerButton]}" Value="True"><Setter Property="Tag" Value="Pinned"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            </ButtonEx>
+                                        </Grid>
+
+                                    </StackPanel>
+                                </ScrollViewer>
+
+                                <Grid Grid.Row="4">
+                                    <ButtonEx HorizontalAlignment="Right"
+                                              Style="{DynamicResource ButtonBottomMenuDark}"
+                                              Tag="B"
+                                              Command="{Binding CloseCommand}"
+                                              Content="{DynamicResource LOCBackLabel}"/>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

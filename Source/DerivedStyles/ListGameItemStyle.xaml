@@ -1,11 +1,10 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     mc:Ignorable="d">
 
-    <!-- Style de l'item. Le focus visuel est maintenant dessine dans ListGameItemTemplate.xaml
-         afin de pouvoir suivre la largeur reelle de PART_ImageCover. -->
+    <!-- Définition du style pour les éléments de la liste de jeux -->
     <Style x:Key="ListGameItemStyle" TargetType="ListBoxItem">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Focusable" Value="True" />
@@ -18,6 +17,77 @@
                     <ControlTemplate.Resources>
                         <CubicEase x:Key="EaseOutSoft" EasingMode="EaseOut"/>
                         <QuadraticEase x:Key="EaseOutFast" EasingMode="EaseOut"/>
+
+                        <DataTemplate x:Key="FocusedCoverBorderTemplate">
+                            <Border CornerRadius="{DynamicResource Corner}"
+                                    Tag="True"
+                                    Visibility="Visible"
+                                    Opacity="1"
+                                    IsHitTestVisible="False"
+                                    SnapsToDevicePixels="True">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderThickness" Value="3.5"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+
+                                        <Style.Triggers>
+                                            <!-- Animated border: instantiated only for the focused cover. -->
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="True"/>
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Visibility}" Value="Visible"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AnimatedBorderCover]}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PerformanceMode]}" Value="False"/>
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="True"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <MultiDataTrigger.Setters>
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource AnimatedFocusGameBorderBrush}"/>
+                                                </MultiDataTrigger.Setters>
+                                                <MultiDataTrigger.EnterActions>
+                                                    <BeginStoryboard x:Name="StartAnimatedCoverBorder" HandoffBehavior="SnapshotAndReplace">
+                                                        <Storyboard Timeline.DesiredFrameRate="30">
+                                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                             From="0"
+                                                                             To="1"
+                                                                             Duration="0:0:0.22">
+                                                                <DoubleAnimation.EasingFunction>
+                                                                    <SineEase EasingMode="EaseOut"/>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
+                                                            <DoubleAnimation Storyboard.TargetProperty="(Border.BorderBrush).(Brush.RelativeTransform).(RotateTransform.Angle)"
+                                                                             From="0"
+                                                                             To="360"
+                                                                             Duration="0:0:8"
+                                                                             RepeatBehavior="Forever"/>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </MultiDataTrigger.EnterActions>
+                                                <MultiDataTrigger.ExitActions>
+                                                    <RemoveStoryboard BeginStoryboardName="StartAnimatedCoverBorder"/>
+                                                </MultiDataTrigger.ExitActions>
+                                            </MultiDataTrigger>
+
+                                            <!-- 100% achievement border is now queried only for the focused cover. -->
+                                            <DataTrigger Binding="{PluginSettings Plugin=PlayniteAchievements, Path=Percent}" Value="100">
+                                                <Setter Property="BorderThickness" Value="4"/>
+                                                <Setter Property="BorderBrush">
+                                                    <Setter.Value>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                            <GradientStop Color="#C0E8FF" Offset="0"/>
+                                                            <GradientStop Color="#202040" Offset="0.5"/>
+                                                            <GradientStop Color="#00E6FF" Offset="1"/>
+                                                            <LinearGradientBrush.RelativeTransform>
+                                                                <RotateTransform CenterX="0.5" CenterY="0.5" Angle="0"/>
+                                                            </LinearGradientBrush.RelativeTransform>
+                                                        </LinearGradientBrush>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+                        </DataTemplate>
 
                         <Storyboard x:Key="SB_ToNone">
                             <DoubleAnimation Storyboard.TargetName="ScaleTransform"
@@ -108,23 +178,94 @@
                                 Margin="0"
                                 BorderThickness="0"
                                 Background="#7000" />
+
+                        <!-- Éléments visuels pour le focus -->
+                        <Grid x:Name="MainGrid">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Margin" Value="-3,-3,-3,-3" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBanner]}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PlatformBannerOverlay]}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Margin" Value="-3,-13,-3,-23"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+
+                            <!-- Step 4G: lazy focus border.
+                                 Non-focused covers no longer instantiate the border/animated brush
+                                 or the PlayniteAchievements Percent binding. -->
+                            <ContentControl x:Name="MainBorderHost"
+                                            Content="{Binding}"
+                                            IsHitTestVisible="False"
+                                            HorizontalContentAlignment="Stretch"
+                                            VerticalContentAlignment="Stretch">
+                                <ContentControl.Style>
+                                    <Style TargetType="ContentControl">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Setter Property="ContentTemplate" Value="{x:Null}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsFocused}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Setter Property="ContentTemplate" Value="{StaticResource FocusedCoverBorderTemplate}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ContentControl.Style>
+                            </ContentControl>
+                        </Grid>
+
+                        <TextBlock x:Name="InstallFont" Visibility="Collapsed"
+                                   Opacity="0"
+                                   FontSize="26" Foreground="White"
+                                   VerticalAlignment="Top" HorizontalAlignment="Right"
+                                   TextAlignment="Center" Margin="12,25">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <!-- Default: uninstalled/download icon -->
+                                    <Setter Property="Text" Value="&#xef08;"/>
+                                    <Setter Property="FontFamily" Value="{StaticResource FontIcoFont}"/>
+                                    <!-- GG.deals entries are wishlist items, not installable library games. -->
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Game.Source.Name}" Value="GG.deals Wishlist">
+                                            <Setter Property="Text" Value="&#xE7BF;"/>
+                                            <Setter Property="FontFamily" Value="{StaticResource FontIcons}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <!-- Le contour de focus est gere dans ListGameItemTemplate.xaml.
-                             On conserve ici le ZIndex et les animations de zoom. -->
+                        <!-- Focus -->
                         <Trigger Property="IsFocused" Value="True">
                             <Setter Property="Canvas.ZIndex" Value="90" />
                         </Trigger>
-
+                        <Trigger Property="IsFocused" Value="False">
+                            <Setter Property="Opacity" Value="0.9" TargetName="InstallFont" />
+                        </Trigger>
+                        <!-- Sélection -->
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" TargetName="GameTitleBackground" />
                         </Trigger>
-
+                        <!-- Survole de la souris -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Visibility" Value="Collapsed" TargetName="GameTitleBackground" />
                         </Trigger>
-
+                        <!-- Affichage de l'icône d'installation -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsInstalled}" Value="False" />
+                                <Condition Binding="{Settings Fullscreen.DarkenUninstalledGamesGrid}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" Value="Visible" TargetName="InstallFont" />
+                            <Setter Property="Opacity" Value="1" TargetName="InstallFont" />
+                        </MultiDataTrigger>
                         <!-- Etat 1 : Focus + Hover -->
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>

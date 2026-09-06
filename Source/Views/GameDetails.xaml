@@ -2967,7 +2967,7 @@
 
                         <!-- Sound -->
 
-                        <MediaElement x:Name="CloseGameSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
+                        <MediaElement x:Name="CloseGameSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackNotiPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -2982,7 +2982,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="EnterGameDetailsChime" Source="{ThemeFile 'audio/EnterGameDetails.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
+                        <MediaElement x:Name="EnterGameDetailsChime" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackEnterGameDetailsPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -2996,7 +2996,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="ExitGameDetailsChime" Source="{ThemeFile 'audio/ExitGameDetails.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
+                        <MediaElement x:Name="ExitGameDetailsChime" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackExitGameDetailsPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False" >
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -3049,7 +3049,7 @@
                         </TextBlock>
 
                         <MediaElement x:Name="OpenViewSound"
-                                      Source="{ThemeFile 'audio/OpenAdditionalView.wav'}"
+                                      Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackOpenAdditionalViewPath}"
                                       LoadedBehavior="Manual"
                                       UnloadedBehavior="Close"
                                       Visibility="Collapsed"
@@ -3068,6 +3068,7 @@
                                                 <Condition Binding="{Binding ElementName=MusicTrigger, Path=Opacity}" Value="1"/>
                                                 <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
                                                 <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="False"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard>
@@ -3091,6 +3092,7 @@
                                                 <Condition Binding="{Binding ElementName=MusicTrigger, Path=Opacity}" Value="1"/>
                                                 <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="False"/>
                                                 <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="False"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard>
@@ -3119,6 +3121,9 @@
                                         </DataTrigger>
                                         <DataTrigger Binding="{SettingsBinding Fullscreen.IsMusicMuted}" Value="True">
                                             <Setter Property="MediaElement.Source" Value="" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="True">
+                                            <Setter Property="LoadedBehavior" Value="Pause"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -3354,10 +3359,13 @@
                                                MaxWidth="1500">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[LogoTrophy]}" Value="True">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[LogoTrophy]}" Value="False">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ElementName=LogoImage, Path=Source}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -3375,37 +3383,29 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </StackPanel.Style>
-                                        <TextBlock Name="LogoPath" Tag="{DynamicResource ExtraMetadataPath}" Visibility="Collapsed">
-                                            <TextBlock.Style>
-                                                <Style TargetType="TextBlock">
-                                                    <Setter Property="Text">
-                                                        <Setter.Value>
-                                                            <MultiBinding StringFormat="{}{0}{1}{2}{3}">
-                                                                <Binding RelativeSource="{RelativeSource Self}" Path="Tag" />
-                                                                <Binding Source="\ExtraMetadata\games\"/>
-                                                                <Binding Path="SelectedGame.Id"/>
-                                                                <Binding Source="\logo.png" />
-                                                            </MultiBinding>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </Style>
-                                            </TextBlock.Style>
+                                        <TextBlock x:Name="LogoPath" Tag="{Api Paths.ConfigurationPath}" Visibility="Collapsed">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0}\ExtraMetadata\games\{1}\logo.png">
+                                                    <Binding RelativeSource="{RelativeSource Self}" Path="Tag"/>
+                                                    <Binding Path="SelectedGame.Id"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
                                         </TextBlock>
-                                        <Image Name="LogoImage" Width="450" MaxHeight="125" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant"
-                                               VerticalAlignment="Top" HorizontalAlignment="Center"
-                                               Tag="{DynamicResource UseAbsoluteExtraMetadataPath}" >
+
+                                        <Image x:Name="LogoImage"
+                                               Width="450"
+                                               MaxHeight="125"
+                                               Stretch="Uniform"
+                                               RenderOptions.BitmapScalingMode="Fant"
+                                               VerticalAlignment="Top"
+                                               HorizontalAlignment="Center">
                                             <Image.Style>
                                                 <Style TargetType="Image">
-                                                    <Setter Property="Source" Value="{Binding ElementName=LogoPath, Path=Text}"/>
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Setter Property="Source" Value="{Binding ElementName=LogoPath, Path=Text, Converter={StaticResource ImageStringToImageConverter}}"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="">
-                                                            <Setter Property="Source" Value="{Binding ElementName=LogoPath, Path=Text, Converter={StaticResource ImageStringToImageConverter}}"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="false">
+                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Source}" Value="{x:Null}">
                                                             <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsLogoAvailable}" Value="False">
-                                                            <Setter Property="ItemsControl.Visibility" Value="Collapsed" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
@@ -3913,6 +3913,8 @@
                                                   VerticalAlignment="Stretch"
                                                   Background="Transparent"
                                                   BorderThickness="0"
+                                                  Focusable="True"
+                                                  IsTabStop="True"
                                                   FocusVisualStyle="{x:Null}"
                                                   Command="{PluginSettings Plugin=AnikiHelper, Path=OpenAchievementActionsCommand}"
                                                   CommandParameter="{Binding}">
@@ -4424,6 +4426,7 @@
                                 <ListView x:Name="DynamicAchievementList"
                                           Margin="10,60,0,10"
                                           ItemContainerStyle="{StaticResource AchievementListItemContainerStyle}"
+                                          SelectedIndex="0"
                                           ItemsSource="{PluginSettings Plugin=PlayniteAchievements, Path=DynamicAchievements}">
                                     <ListView.Style>
                                         <Style TargetType="ListView" BasedOn="{StaticResource AchievementListBaseStyle}">
@@ -4712,6 +4715,550 @@
 
                             </Grid>
                         </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Achievement action menu -->
+    <Style x:Key="AchievementActionsWindowStyle" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid Background="#AA000000"
+                          KeyboardNavigation.DirectionalNavigation="Cycle"
+                          KeyboardNavigation.TabNavigation="Cycle"
+                          KeyboardNavigation.ControlTabNavigation="Cycle">
+
+                        <Grid.Resources>
+                            <Style x:Key="AchievementActionButtonStyle"
+                                   BasedOn="{StaticResource {x:Type ButtonEx}}"
+                                   TargetType="ButtonEx">
+                                <Setter Property="Height" Value="72"/>
+                                <Setter Property="Width" Value="660"/>
+                                <Setter Property="Margin" Value="0,0,0,14"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="FontSize" Value="20"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid Background="Transparent">
+                                                <Border x:Name="Base"
+                                                        Background="#0DFFFFFF"
+                                                        BorderBrush="#20FFFFFF"
+                                                        BorderThickness="1"
+                                                        CornerRadius="{DynamicResource Corner}"/>
+                                                <Border x:Name="FocusFill"
+                                                        Background="{DynamicResource ButtonBackgroundFocus}"
+                                                        CornerRadius="{DynamicResource Corner}"
+                                                        Visibility="Collapsed"/>
+                                                <Border x:Name="FocusBorder"
+                                                        BorderBrush="{DynamicResource FocusGameBorderBrush}"
+                                                        BorderThickness="3"
+                                                        CornerRadius="{DynamicResource Corner}"
+                                                        Visibility="Collapsed"/>
+
+                                                <ContentPresenter Margin="28,0,24,0"
+                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                            </Grid>
+
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsFocused" Value="True">
+                                                    <Setter TargetName="FocusFill" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible"/>
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="FocusFill" Property="Visibility" Value="Visible"/>
+                                                    <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible"/>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Setter TargetName="FocusFill" Property="Opacity" Value="0.72"/>
+                                                </Trigger>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Opacity" Value="0.35"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Grid.Resources>
+
+                        <Grid Width="820"
+                              MaxHeight="930"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center">
+
+                            <!-- cheap shadow, no live blur -->
+                            <Border Margin="12,14,0,0"
+                                    Background="#70000000"
+                                    CornerRadius="{DynamicResource Corner}"
+                                    IsHitTestVisible="False"/>
+
+                            <Border Padding="42,34,42,28"
+                                    Background="{DynamicResource BackgroundMenu}"
+                                    BorderBrush="{DynamicResource MenuBorderBrush}"
+                                    BorderThickness="2"
+                                    CornerRadius="{DynamicResource Corner}"
+                                    DataContext="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementActionItem}">
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Border Width="180"
+                                            Height="3"
+                                            Margin="0,-34,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Top"
+                                            Background="{DynamicResource FocusGameBorderBrush}"
+                                            CornerRadius="0,0,3,3"/>
+
+                                    <!-- Header -->
+                                    <StackPanel Grid.Row="0"
+                                                HorizontalAlignment="Center">
+                                        <TextBlock Text="{DynamicResource LOC_PA_AchievementActions}"
+                                                   HorizontalAlignment="Center"
+                                                   TextAlignment="Center"
+                                                   FontSize="34"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource TextHighlightBrush}"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"/>
+
+                                        <TextBlock Text="{Binding Name}"
+                                                   Margin="0,10,0,0"
+                                                   MaxWidth="690"
+                                                   HorizontalAlignment="Center"
+                                                   TextAlignment="Center"
+                                                   TextWrapping="Wrap"
+                                                   TextTrimming="WordEllipsis"
+                                                   FontSize="23"
+                                                   FontWeight="SemiBold"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"/>
+
+                                        <TextBlock Text="{Binding Description}"
+                                                   Margin="0,5,0,0"
+                                                   MaxWidth="690"
+                                                   MaxHeight="58"
+                                                   HorizontalAlignment="Center"
+                                                   TextAlignment="Center"
+                                                   TextWrapping="Wrap"
+                                                   TextTrimming="WordEllipsis"
+                                                   FontSize="18"
+                                                   Opacity="0.78"
+                                                   Style="{DynamicResource TextBlockBaseStyle}"/>
+                                    </StackPanel>
+
+                                    <Border Grid.Row="1"
+                                            Height="1"
+                                            Margin="0,22,0,20"
+                                            Background="#28FFFFFF"/>
+
+                                    <!-- Real focusable actions -->
+                                    <ScrollViewer Grid.Row="2"
+                                                  MaxHeight="610"
+                                                  VerticalScrollBarVisibility="Auto"
+                                                  HorizontalScrollBarVisibility="Disabled"
+                                                  Focusable="False"
+                                                  IsTabStop="False">
+                                        <StackPanel>
+
+                                            <ButtonEx x:Name="AchievementGoalActionButton"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleSelectedAchievementGoalCommand}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx"
+                                                           BasedOn="{StaticResource AchievementActionButtonStyle}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementUnlocked}"
+                                                                         Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+
+                                                <StackPanel Orientation="Horizontal"
+                                                            VerticalAlignment="Center">
+                                                    <TextBlock Text="&#xE718;"
+                                                               Width="32"
+                                                               Margin="0,0,14,0"
+                                                               FontFamily="{DynamicResource FontIcons}"
+                                                               FontSize="24"
+                                                               Foreground="{DynamicResource TextBrush}"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"/>
+
+                                                    <TextBlock FontSize="20"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{DynamicResource TextBrush}"
+                                                               VerticalAlignment="Center">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock"
+                                                                   BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                                <Setter Property="Text"
+                                                                        Value="{DynamicResource LOC_PA_PinAchievement}"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementIsGoal}"
+                                                                                 Value="True">
+                                                                        <Setter Property="Text"
+                                                                                Value="{DynamicResource LOC_PA_UnpinAchievement}"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </ButtonEx>
+
+                                            <ButtonEx Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleSelectedAchievementCapstoneCommand}">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx"
+                                                           BasedOn="{StaticResource AchievementActionButtonStyle}"/>
+                                                </ButtonEx.Style>
+
+                                                <StackPanel Orientation="Horizontal"
+                                                            VerticalAlignment="Center">
+                                                    <TextBlock Text="&#xE903;"
+                                                               Width="32"
+                                                               Margin="0,0,14,0"
+                                                               FontFamily="{DynamicResource FontIcomoon}"
+                                                               FontSize="24"
+                                                               Foreground="{DynamicResource TextBrush}"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"/>
+
+                                                    <TextBlock FontSize="20"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{DynamicResource TextBrush}"
+                                                               VerticalAlignment="Center">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock"
+                                                                   BasedOn="{StaticResource TextBlockBaseStyle}">
+                                                                <Setter Property="Text"
+                                                                        Value="{DynamicResource LOC_PA_SetCapstone}"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementIsCapstone}"
+                                                                                 Value="True">
+                                                                        <Setter Property="Text"
+                                                                                Value="{DynamicResource LOC_PA_RemoveCapstone}"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                            </ButtonEx>
+
+                                            <!-- Capture section -->
+                                            <Border Height="1"
+                                                    Margin="0,8,0,20"
+                                                    Background="#28FFFFFF">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasCleanCapture}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasNotificationCapture}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasFramedCapture}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasVideoCapture}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                            </Border>
+
+                                            <ButtonEx Command="{PluginSettings Plugin=AnikiHelper, Path=OpenSelectedAchievementCaptureCommand}"
+                                                      CommandParameter="Clean">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource AchievementActionButtonStyle}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasCleanCapture}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <TextBlock Text="&#xE91B;"
+                                                               Width="32"
+                                                               Margin="0,0,14,0"
+                                                               FontFamily="{DynamicResource FontIcons}"
+                                                               FontSize="24"
+                                                               Foreground="{DynamicResource TextBrush}"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{DynamicResource LOC_PA_ViewScreenshot}"
+                                                               FontSize="20"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{DynamicResource TextBrush}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </ButtonEx>
+
+                                            <ButtonEx Command="{PluginSettings Plugin=AnikiHelper, Path=OpenSelectedAchievementCaptureCommand}"
+                                                      CommandParameter="Notification">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource AchievementActionButtonStyle}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasNotificationCapture}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <TextBlock Text="&#xE722;"
+                                                               Width="32"
+                                                               Margin="0,0,14,0"
+                                                               FontFamily="{DynamicResource FontIcons}"
+                                                               FontSize="24"
+                                                               Foreground="{DynamicResource TextBrush}"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{DynamicResource LOC_PA_ViewNotificationScreenshot}"
+                                                               FontSize="20"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{DynamicResource TextBrush}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </ButtonEx>
+
+                                            <ButtonEx Command="{PluginSettings Plugin=AnikiHelper, Path=OpenSelectedAchievementCaptureCommand}"
+                                                      CommandParameter="Framed">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource AchievementActionButtonStyle}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasFramedCapture}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <TextBlock Text="&#xE91B;"
+                                                               Width="32"
+                                                               Margin="0,0,14,0"
+                                                               FontFamily="{DynamicResource FontIcons}"
+                                                               FontSize="24"
+                                                               Foreground="{DynamicResource TextBrush}"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{DynamicResource LOC_PA_ViewFramedScreenshot}"
+                                                               FontSize="20"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{DynamicResource TextBrush}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </ButtonEx>
+
+                                            <ButtonEx Command="{PluginSettings Plugin=AnikiHelper, Path=OpenSelectedAchievementCaptureCommand}"
+                                                      CommandParameter="Video">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource AchievementActionButtonStyle}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasVideoCapture}" Value="True">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                    <TextBlock Text="&#xE714;"
+                                                               Width="32"
+                                                               Margin="0,0,14,0"
+                                                               FontFamily="{DynamicResource FontIcons}"
+                                                               FontSize="24"
+                                                               Foreground="{DynamicResource TextBrush}"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{DynamicResource LOC_PA_ViewVideo}"
+                                                               FontSize="20"
+                                                               FontWeight="SemiBold"
+                                                               Foreground="{DynamicResource TextBrush}"
+                                                               Style="{DynamicResource TextBlockBaseStyle}"
+                                                               VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </ButtonEx>
+                                        </StackPanel>
+                                    </ScrollViewer>
+
+                                    <Grid Grid.Row="3"
+                                          Height="58"
+                                          Margin="0,18,0,-8">
+                                        <StackPanel Orientation="Horizontal"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Center">
+                                            <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                                      Tag="CancelAction"
+                                                      Content="{DynamicResource LOCBackLabel}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Achievement viewer -->
+    <Style x:Key="AchievementCaptureViewerWindowStyle" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Grid Background="#FF05070A">
+
+                        <Image Source="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementCapturePath}"
+                               Margin="0"
+                               Stretch="Uniform"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Stretch"
+                               RenderOptions.BitmapScalingMode="HighQuality">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementCaptureIsVideo}"
+                                                     Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+
+                        <MediaElement Source="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementCapturePath}"
+                                      LoadedBehavior="Play"
+                                      UnloadedBehavior="Stop"
+                                      Stretch="Uniform"
+                                      Volume="1"
+                                      Margin="0">
+                            <MediaElement.Style>
+                                <Style TargetType="MediaElement">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementCaptureIsVideo}"
+                                                     Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </MediaElement.Style>
+                        </MediaElement>
+
+                        <!-- Video-only cinematic bottom fade. -->
+                        <Border Height="170"
+                                VerticalAlignment="Bottom"
+                                IsHitTestVisible="False">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementCaptureIsVideo}"
+                                                     Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#00000000" Offset="0"/>
+                                    <GradientStop Color="#B8000000" Offset="0.62"/>
+                                    <GradientStop Color="#F0000000" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <!-- Video-only info overlay with trophy icon. -->
+                        <Grid VerticalAlignment="Bottom"
+                              HorizontalAlignment="Left"
+                              Margin="34,0,260,28">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementCaptureIsVideo}"
+                                                     Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="16"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0"
+                                    Width="66"
+                                    Height="66"
+                                    CornerRadius="12"
+                                    Background="#22000000"
+                                    BorderBrush="#22FFFFFF"
+                                    BorderThickness="1"
+                                    ClipToBounds="True"
+                                    VerticalAlignment="Bottom">
+                                <Image Source="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementActionItem.Icon}"
+                                       Stretch="UniformToFill"
+                                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="2"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Bottom">
+                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementName}"
+                                           FontSize="22"
+                                           FontWeight="SemiBold"
+                                           TextTrimming="CharacterEllipsis"
+                                           Style="{DynamicResource TextBlockBaseStyle}"/>
+                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementDescription}"
+                                           Margin="0,4,0,0"
+                                           FontSize="16"
+                                           Opacity="0.72"
+                                           TextTrimming="CharacterEllipsis"
+                                           Style="{DynamicResource TextBlockBaseStyle}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Margin="0,0,28,24">
+                            <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                      Tag="CancelAction"
+                                      Content="{DynamicResource LOCBackLabel}"/>
+                        </StackPanel>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -6669,552 +7216,5 @@
     </Style>
 
 
-
-    <!-- ================================================================= -->
-    <!-- Achievement action menu -->
-    <!-- A on an achievement opens this centered, controller-first modal. -->
-    <!-- ================================================================= -->
-    <Style x:Key="AchievementActionsWindowStyle" TargetType="ContentControl">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ContentControl">
-                    <Grid Background="#AA000000"
-                          KeyboardNavigation.DirectionalNavigation="Cycle"
-                          KeyboardNavigation.TabNavigation="Cycle"
-                          KeyboardNavigation.ControlTabNavigation="Cycle">
-
-                        <Grid.Resources>
-                            <Style x:Key="AchievementActionButtonStyle"
-                                   BasedOn="{StaticResource {x:Type ButtonEx}}"
-                                   TargetType="ButtonEx">
-                                <Setter Property="Height" Value="72"/>
-                                <Setter Property="Width" Value="660"/>
-                                <Setter Property="Margin" Value="0,0,0,14"/>
-                                <Setter Property="Padding" Value="0"/>
-                                <Setter Property="FontSize" Value="20"/>
-                                <Setter Property="FontWeight" Value="SemiBold"/>
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
-                                <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Grid Background="Transparent">
-                                                <Border x:Name="Base"
-                                                        Background="#0DFFFFFF"
-                                                        BorderBrush="#20FFFFFF"
-                                                        BorderThickness="1"
-                                                        CornerRadius="{DynamicResource Corner}"/>
-                                                <Border x:Name="FocusFill"
-                                                        Background="{DynamicResource ButtonBackgroundFocus}"
-                                                        CornerRadius="{DynamicResource Corner}"
-                                                        Visibility="Collapsed"/>
-                                                <Border x:Name="FocusBorder"
-                                                        BorderBrush="{DynamicResource FocusGameBorderBrush}"
-                                                        BorderThickness="3"
-                                                        CornerRadius="{DynamicResource Corner}"
-                                                        Visibility="Collapsed"/>
-
-                                                <ContentPresenter Margin="28,0,24,0"
-                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                            </Grid>
-
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsFocused" Value="True">
-                                                    <Setter TargetName="FocusFill" Property="Visibility" Value="Visible"/>
-                                                    <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible"/>
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="FocusFill" Property="Visibility" Value="Visible"/>
-                                                    <Setter TargetName="FocusBorder" Property="Visibility" Value="Visible"/>
-                                                </Trigger>
-                                                <Trigger Property="IsPressed" Value="True">
-                                                    <Setter TargetName="FocusFill" Property="Opacity" Value="0.72"/>
-                                                </Trigger>
-                                                <Trigger Property="IsEnabled" Value="False">
-                                                    <Setter Property="Opacity" Value="0.35"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Grid.Resources>
-
-                        <Grid Width="820"
-                              MaxHeight="930"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center">
-
-                            <!-- cheap shadow, no live blur -->
-                            <Border Margin="12,14,0,0"
-                                    Background="#70000000"
-                                    CornerRadius="{DynamicResource Corner}"
-                                    IsHitTestVisible="False"/>
-
-                            <Border Padding="42,34,42,28"
-                                    Background="{DynamicResource BackgroundMenu}"
-                                    BorderBrush="{DynamicResource MenuBorderBrush}"
-                                    BorderThickness="2"
-                                    CornerRadius="{DynamicResource Corner}"
-                                    DataContext="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementActionItem}">
-
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-
-                                    <Border Width="180"
-                                            Height="3"
-                                            Margin="0,-34,0,0"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Top"
-                                            Background="{DynamicResource FocusGameBorderBrush}"
-                                            CornerRadius="0,0,3,3"/>
-
-                                    <!-- Header -->
-                                    <StackPanel Grid.Row="0"
-                                                HorizontalAlignment="Center">
-                                        <TextBlock Text="{DynamicResource LOC_PA_AchievementActions}"
-                                                   HorizontalAlignment="Center"
-                                                   TextAlignment="Center"
-                                                   FontSize="34"
-                                                   FontWeight="SemiBold"
-                                                   Foreground="{DynamicResource TextHighlightBrush}"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"/>
-
-                                        <TextBlock Text="{Binding Name}"
-                                                   Margin="0,10,0,0"
-                                                   MaxWidth="690"
-                                                   HorizontalAlignment="Center"
-                                                   TextAlignment="Center"
-                                                   TextWrapping="Wrap"
-                                                   TextTrimming="WordEllipsis"
-                                                   FontSize="23"
-                                                   FontWeight="SemiBold"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"/>
-
-                                        <TextBlock Text="{Binding Description}"
-                                                   Margin="0,5,0,0"
-                                                   MaxWidth="690"
-                                                   MaxHeight="58"
-                                                   HorizontalAlignment="Center"
-                                                   TextAlignment="Center"
-                                                   TextWrapping="Wrap"
-                                                   TextTrimming="WordEllipsis"
-                                                   FontSize="18"
-                                                   Opacity="0.78"
-                                                   Style="{DynamicResource TextBlockBaseStyle}"/>
-                                    </StackPanel>
-
-                                    <Border Grid.Row="1"
-                                            Height="1"
-                                            Margin="0,22,0,20"
-                                            Background="#28FFFFFF"/>
-
-                                    <!-- Real focusable actions -->
-                                    <ScrollViewer Grid.Row="2"
-                                                  MaxHeight="610"
-                                                  VerticalScrollBarVisibility="Auto"
-                                                  HorizontalScrollBarVisibility="Disabled"
-                                                  Focusable="False"
-                                                  IsTabStop="False">
-                                        <StackPanel>
-
-                                            <ButtonEx x:Name="AchievementGoalActionButton"
-                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleSelectedAchievementGoalCommand}">
-                                                <ButtonEx.Style>
-                                                    <Style TargetType="ButtonEx"
-                                                           BasedOn="{StaticResource AchievementActionButtonStyle}">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementUnlocked}"
-                                                                         Value="True">
-                                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </ButtonEx.Style>
-
-                                                <StackPanel Orientation="Horizontal"
-                                                            VerticalAlignment="Center">
-                                                    <TextBlock Text="&#xE718;"
-                                                               Width="32"
-                                                               Margin="0,0,14,0"
-                                                               FontFamily="{DynamicResource FontIcons}"
-                                                               FontSize="24"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-
-                                                    <TextBlock FontSize="20"
-                                                               FontWeight="SemiBold"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               VerticalAlignment="Center">
-                                                        <TextBlock.Style>
-                                                            <Style TargetType="TextBlock"
-                                                                   BasedOn="{StaticResource TextBlockBaseStyle}">
-                                                                <Setter Property="Text"
-                                                                        Value="{DynamicResource LOC_PA_PinAchievement}"/>
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementIsGoal}"
-                                                                                 Value="True">
-                                                                        <Setter Property="Text"
-                                                                                Value="{DynamicResource LOC_PA_UnpinAchievement}"/>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </TextBlock.Style>
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </ButtonEx>
-
-                                            <ButtonEx Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleSelectedAchievementCapstoneCommand}">
-                                                <ButtonEx.Style>
-                                                    <Style TargetType="ButtonEx"
-                                                           BasedOn="{StaticResource AchievementActionButtonStyle}"/>
-                                                </ButtonEx.Style>
-
-                                                <StackPanel Orientation="Horizontal"
-                                                            VerticalAlignment="Center">
-                                                    <TextBlock Text="&#xE903;"
-                                                               Width="32"
-                                                               Margin="0,0,14,0"
-                                                               FontFamily="{DynamicResource FontIcomoon}"
-                                                               FontSize="24"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-
-                                                    <TextBlock FontSize="20"
-                                                               FontWeight="SemiBold"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               VerticalAlignment="Center">
-                                                        <TextBlock.Style>
-                                                            <Style TargetType="TextBlock"
-                                                                   BasedOn="{StaticResource TextBlockBaseStyle}">
-                                                                <Setter Property="Text"
-                                                                        Value="{DynamicResource LOC_PA_SetCapstone}"/>
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementIsCapstone}"
-                                                                                 Value="True">
-                                                                        <Setter Property="Text"
-                                                                                Value="{DynamicResource LOC_PA_RemoveCapstone}"/>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </TextBlock.Style>
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </ButtonEx>
-
-                                            <!-- Capture section -->
-                                            <Border Height="1"
-                                                    Margin="0,8,0,20"
-                                                    Background="#28FFFFFF">
-                                                <Border.Style>
-                                                    <Style TargetType="Border">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasCleanCapture}" Value="True">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasNotificationCapture}" Value="True">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasFramedCapture}" Value="True">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasVideoCapture}" Value="True">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Border.Style>
-                                            </Border>
-
-                                            <ButtonEx Command="{PluginSettings Plugin=AnikiHelper, Path=OpenSelectedAchievementCaptureCommand}"
-                                                      CommandParameter="Clean">
-                                                <ButtonEx.Style>
-                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource AchievementActionButtonStyle}">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasCleanCapture}" Value="True">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </ButtonEx.Style>
-                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <TextBlock Text="&#xE91B;"
-                                                               Width="32"
-                                                               Margin="0,0,14,0"
-                                                               FontFamily="{DynamicResource FontIcons}"
-                                                               FontSize="24"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{DynamicResource LOC_PA_ViewScreenshot}"
-                                                               FontSize="20"
-                                                               FontWeight="SemiBold"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                                               VerticalAlignment="Center"/>
-                                                </StackPanel>
-                                            </ButtonEx>
-
-                                            <ButtonEx Command="{PluginSettings Plugin=AnikiHelper, Path=OpenSelectedAchievementCaptureCommand}"
-                                                      CommandParameter="Notification">
-                                                <ButtonEx.Style>
-                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource AchievementActionButtonStyle}">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasNotificationCapture}" Value="True">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </ButtonEx.Style>
-                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <TextBlock Text="&#xE722;"
-                                                               Width="32"
-                                                               Margin="0,0,14,0"
-                                                               FontFamily="{DynamicResource FontIcons}"
-                                                               FontSize="24"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{DynamicResource LOC_PA_ViewNotificationScreenshot}"
-                                                               FontSize="20"
-                                                               FontWeight="SemiBold"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                                               VerticalAlignment="Center"/>
-                                                </StackPanel>
-                                            </ButtonEx>
-
-                                            <ButtonEx Command="{PluginSettings Plugin=AnikiHelper, Path=OpenSelectedAchievementCaptureCommand}"
-                                                      CommandParameter="Framed">
-                                                <ButtonEx.Style>
-                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource AchievementActionButtonStyle}">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasFramedCapture}" Value="True">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </ButtonEx.Style>
-                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <TextBlock Text="&#xE91B;"
-                                                               Width="32"
-                                                               Margin="0,0,14,0"
-                                                               FontFamily="{DynamicResource FontIcons}"
-                                                               FontSize="24"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{DynamicResource LOC_PA_ViewFramedScreenshot}"
-                                                               FontSize="20"
-                                                               FontWeight="SemiBold"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                                               VerticalAlignment="Center"/>
-                                                </StackPanel>
-                                            </ButtonEx>
-
-                                            <ButtonEx Command="{PluginSettings Plugin=AnikiHelper, Path=OpenSelectedAchievementCaptureCommand}"
-                                                      CommandParameter="Video">
-                                                <ButtonEx.Style>
-                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource AchievementActionButtonStyle}">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementHasVideoCapture}" Value="True">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </ButtonEx.Style>
-                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <TextBlock Text="&#xE714;"
-                                                               Width="32"
-                                                               Margin="0,0,14,0"
-                                                               FontFamily="{DynamicResource FontIcons}"
-                                                               FontSize="24"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{DynamicResource LOC_PA_ViewVideo}"
-                                                               FontSize="20"
-                                                               FontWeight="SemiBold"
-                                                               Foreground="{DynamicResource TextBrush}"
-                                                               Style="{DynamicResource TextBlockBaseStyle}"
-                                                               VerticalAlignment="Center"/>
-                                                </StackPanel>
-                                            </ButtonEx>
-                                        </StackPanel>
-                                    </ScrollViewer>
-
-                                    <Grid Grid.Row="3"
-                                          Height="58"
-                                          Margin="0,18,0,-8">
-                                        <StackPanel Orientation="Horizontal"
-                                                    HorizontalAlignment="Right"
-                                                    VerticalAlignment="Center">
-                                            <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                                      Tag="CancelAction"
-                                                      Content="{DynamicResource LOCBackLabel}"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </Grid>
-                            </Border>
-                        </Grid>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Achievement viewer: clean screenshots, overlay for video. -->
-    <Style x:Key="AchievementCaptureViewerWindowStyle" TargetType="ContentControl">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ContentControl">
-                    <Grid Background="#FF05070A">
-
-                        <Image Source="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementCapturePath}"
-                               Margin="0"
-                               Stretch="Uniform"
-                               HorizontalAlignment="Stretch"
-                               VerticalAlignment="Stretch"
-                               RenderOptions.BitmapScalingMode="HighQuality">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementCaptureIsVideo}"
-                                                     Value="True">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-
-                        <MediaElement Source="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementCapturePath}"
-                                      LoadedBehavior="Play"
-                                      UnloadedBehavior="Stop"
-                                      Stretch="Uniform"
-                                      Volume="1"
-                                      Margin="0">
-                            <MediaElement.Style>
-                                <Style TargetType="MediaElement">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementCaptureIsVideo}"
-                                                     Value="True">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </MediaElement.Style>
-                        </MediaElement>
-
-                        <!-- Video-only cinematic bottom fade. -->
-                        <Border Height="170"
-                                VerticalAlignment="Bottom"
-                                IsHitTestVisible="False">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementCaptureIsVideo}"
-                                                     Value="True">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Color="#00000000" Offset="0"/>
-                                    <GradientStop Color="#B8000000" Offset="0.62"/>
-                                    <GradientStop Color="#F0000000" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Border.Background>
-                        </Border>
-
-                        <!-- Video-only info overlay with trophy icon. -->
-                        <Grid VerticalAlignment="Bottom"
-                              HorizontalAlignment="Left"
-                              Margin="34,0,260,28">
-                            <Grid.Style>
-                                <Style TargetType="Grid">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementCaptureIsVideo}"
-                                                     Value="True">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Grid.Style>
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="16"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Border Grid.Column="0"
-                                    Width="66"
-                                    Height="66"
-                                    CornerRadius="12"
-                                    Background="#22000000"
-                                    BorderBrush="#22FFFFFF"
-                                    BorderThickness="1"
-                                    ClipToBounds="True"
-                                    VerticalAlignment="Bottom">
-                                <Image Source="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementActionItem.Icon}"
-                                       Stretch="UniformToFill"
-                                       RenderOptions.BitmapScalingMode="HighQuality"/>
-                            </Border>
-
-                            <StackPanel Grid.Column="2"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Bottom">
-                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementName}"
-                                           FontSize="22"
-                                           FontWeight="SemiBold"
-                                           TextTrimming="CharacterEllipsis"
-                                           Style="{DynamicResource TextBlockBaseStyle}"/>
-                                <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedAchievementDescription}"
-                                           Margin="0,4,0,0"
-                                           FontSize="16"
-                                           Opacity="0.72"
-                                           TextTrimming="CharacterEllipsis"
-                                           Style="{DynamicResource TextBlockBaseStyle}"/>
-                            </StackPanel>
-                        </Grid>
-
-                        <StackPanel Orientation="Horizontal"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Bottom"
-                                    Margin="0,0,28,24">
-                            <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
-                                      Tag="CancelAction"
-                                      Content="{DynamicResource LOCBackLabel}"/>
-                        </StackPanel>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
 </ResourceDictionary>

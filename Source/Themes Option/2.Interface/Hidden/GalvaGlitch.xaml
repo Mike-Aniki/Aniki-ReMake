@@ -1,0 +1,175 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Galva Easter egg: intentionally wrong-looking color accents. -->
+    <Color x:Key="Accent">#FFFF1744</Color>
+    <Color x:Key="GlowFocusColor">#FF00E5FF</Color>
+    <Color x:Key="SelectionLightColor">#FFFFF500</Color>
+    <Color x:Key="FocusPrimaryColor">#FFFF1744</Color>
+    <Color x:Key="FocusSecondaryColor">#FF00E5FF</Color>
+    <Color x:Key="GameFocus_Left">#FFFF1744</Color>
+    <Color x:Key="GameFocus_Right">#FF00E5FF</Color>
+    <Color x:Key="TextHighlight">#FFFFF500</Color>
+    <Color x:Key="ProgressLight">#FFFF1744</Color>
+
+    <DataTemplate x:Key="GalvaGlitchOverlayTemplate">
+        <Grid x:Name="GlitchRoot" Background="Transparent" ClipToBounds="True" IsHitTestVisible="False">
+            <Grid.RenderTransform>
+                <TranslateTransform X="0" Y="0"/>
+            </Grid.RenderTransform>
+
+            <!-- Very light CRT texture; visible enough to feel wrong without making the UI unreadable. -->
+            <Rectangle Opacity="0.055" IsHitTestVisible="False">
+                <Rectangle.Fill>
+                    <DrawingBrush TileMode="Tile" Viewport="0,0,1,6" ViewportUnits="Absolute" Stretch="None">
+                        <DrawingBrush.Drawing>
+                            <GeometryDrawing Brush="#66FFFFFF">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry Rect="0,0,1,1"/>
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <Rectangle x:Name="ColdFlash" Fill="#FF00E5FF" Opacity="0"/>
+            <Rectangle x:Name="HotFlash" Fill="#FFFF1744" Opacity="0"/>
+
+            <Border x:Name="SliceA" Height="11" VerticalAlignment="Top" Margin="0,155,0,0" Background="#A6FF1744" Opacity="0">
+                <Border.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Border.RenderTransform>
+            </Border>
+
+            <Border x:Name="SliceB" Height="7" VerticalAlignment="Top" Margin="0,360,0,0" Background="#A600E5FF" Opacity="0">
+                <Border.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Border.RenderTransform>
+            </Border>
+
+            <Border x:Name="SliceC" Height="16" VerticalAlignment="Bottom" Margin="0,0,0,205" Background="#8CFFF500" Opacity="0">
+                <Border.RenderTransform>
+                    <TranslateTransform X="0"/>
+                </Border.RenderTransform>
+            </Border>
+
+            <Grid x:Name="ErrorBadge" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="34,28,0,0" Opacity="0">
+                <Border Background="#E6101010" BorderBrush="#FFFF1744" BorderThickness="1" Padding="12,6" CornerRadius="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="GALVA.EXE" FontFamily="Consolas" FontWeight="Bold" FontSize="17" Foreground="#FFFFF500"/>
+                        <TextBlock Text="  //  UI DESYNC" FontFamily="Consolas" FontSize="17" Foreground="#FF00E5FF"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <TextBlock x:Name="ErrorText"
+                       Text="ERR_FOCUS_NOT_FOUND"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Bottom"
+                       Margin="0,0,38,28"
+                       FontFamily="Consolas"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Foreground="#FFFF1744"
+                       Opacity="0"/>
+
+            <Grid.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever" Duration="0:0:7">
+
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ColdFlash" Storyboard.TargetProperty="Opacity">
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.69" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.70" Value="0.055"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.75" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:4.94" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:4.95" Value="0.035"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:5.00" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:7" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="HotFlash" Storyboard.TargetProperty="Opacity">
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.73" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.74" Value="0.035"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.79" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:7" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SliceA" Storyboard.TargetProperty="Opacity">
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.67" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.68" Value="0.75"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.78" Value="0.18"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.84" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:7" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SliceA" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)">
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.68" Value="-80"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.72" Value="55"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.78" Value="-20"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.84" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SliceB" Storyboard.TargetProperty="Opacity">
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:4.93" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:4.94" Value="0.72"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:5.05" Value="0.15"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:5.10" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:7" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SliceB" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)">
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:4.94" Value="70"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:4.99" Value="-45"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:5.05" Value="25"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:5.10" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SliceC" Storyboard.TargetProperty="Opacity">
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:2.82" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:2.83" Value="0.42"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:2.91" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:7" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SliceC" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)">
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:2.83" Value="-35"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:2.88" Value="45"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:2.91" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ErrorBadge" Storyboard.TargetProperty="Opacity">
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.71" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.72" Value="0.92"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.84" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:7" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ErrorText" Storyboard.TargetProperty="Opacity">
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:4.96" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:4.97" Value="0.9"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:5.08" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:7" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="GlitchRoot" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)">
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.70" Value="-2"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.76" Value="2"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:1.84" Value="0"/>
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:7" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Grid.Triggers>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

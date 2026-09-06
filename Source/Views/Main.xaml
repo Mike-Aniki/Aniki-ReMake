@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+﻿<?xml version='1.0' encoding='UTF-8'?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:p="clr-namespace:Playnite;assembly=Playnite" xmlns:commands="clr-namespace:Playnite.Commands;assembly=Playnite" xmlns:pbeh="clr-namespace:Playnite.Behaviors;assembly=Playnite" xmlns:ctrl="clr-namespace:Playnite.FullscreenApp.Controls;assembly=Playnite.FullscreenApp" xmlns:pin="clr-namespace:Playnite.Input;assembly=Playnite" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:prism="clr-namespace:Prism.Interactivity;assembly=Prism.Wpf" xmlns:Behaviors="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors" xmlns:BehaviorsCore="clr-namespace:Microsoft.Xaml.Behaviors.Core;assembly=Microsoft.Xaml.Behaviors" xmlns:BehaviorsMedia="clr-namespace:Microsoft.Xaml.Behaviors.Media;assembly=Microsoft.Xaml.Behaviors" xmlns:fullscreen="clr-namespace:Playnite.FullscreenApp.Controls;assembly=Playnite.FullscreenApp" xmlns:playnite="clr-namespace:Playnite;assembly=Playnite" xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:media="clr-namespace:System.Windows.Controls;assembly=PresentationFramework" mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
@@ -11,6 +11,7 @@
         <ResourceDictionary Source="{ThemeFile 'Views/AdditionalViews/PlayniteAchievementMainView.xaml'}"/>
         <ResourceDictionary Source="{ThemeFile 'Views/AdditionalViews/ProfilView.xaml'}"/>
         <ResourceDictionary Source="{ThemeFile 'Views/AdditionalViews/QuickOptionsView.xaml'}"/>
+        <ResourceDictionary Source="{ThemeFile 'Views/AdditionalViews/TopBarManagerView.xaml'}"/>
         <ResourceDictionary Source="{ThemeFile 'Views/AdditionalViews/NewsView.xaml'}"/>
         <ResourceDictionary Source="{ThemeFile 'Views/AdditionalViews/NowPlayingView.xaml'}"/>
         <ResourceDictionary Source="{ThemeFile 'Views/AdditionalViews/GameNewsView.xaml'}"/>
@@ -31,11 +32,14 @@
         <ResourceDictionary Source="{ThemeFile 'Views/AdditionalViews/LastCapturesViewOverlay.xaml'}"/>
         <ResourceDictionary Source="{ThemeFile 'Views/AdditionalViews/AppsViewOverlay.xaml'}"/>
         <ResourceDictionary Source="{ThemeFile 'Views/AdditionalViews/AchievementsViewOverlay.xaml'}"/>
+        <ResourceDictionary Source="{ThemeFile 'Views/AdditionalViews/ControllerManagerView.xaml'}"/>
         <ResourceDictionary Source="{ThemeFile 'Views/AdditionalViews/GamepadTesterView.xaml'}"/>
         <ResourceDictionary Source="{ThemeFile 'PlayniteAchievements/AchievementToast.xaml'}"/>
         <ResourceDictionary Source="{ThemeFile 'PlayniteAchievements/ScreenshotFrame.xaml'}"/>
 
     </ResourceDictionary.MergedDictionaries>
+
+    <sys:Double x:Key="AnikiPerfZero">0</sys:Double>
 
     <!-- Fondu d’entrée de la piste. -->
     <Storyboard x:Key="ThemeMusicFadeIn" FillBehavior="HoldEnd">
@@ -602,6 +606,10 @@
                                                 <Setter Property="Background" Value="{DynamicResource WelcomeImage152}"/>
                                                 <Setter Property="Opacity" Value="0.4"/>
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="153">
+                                                <Setter Property="Background" Value="{DynamicResource WelcomeImage153}"/>
+                                                <Setter Property="Opacity" Value="0.4"/>
+                                            </DataTrigger>
 
                                             <!-- Rare / Lucky Mode background override -->
                                             <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="True">
@@ -633,8 +641,12 @@
                             </Grid.ColumnDefinitions>
 
 
-                            <Grid x:Name="HubTopBarBackground" VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" Height="80" Panel.ZIndex="1" FocusVisualStyle="{x:Null}">
-
+                            <Grid x:Name="HubTopBarBackground" VerticalAlignment="Top" HorizontalAlignment="Stretch" Grid.Row="0" Height="80" Panel.ZIndex="1" FocusVisualStyle="{x:Null}" RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <!-- Binding keeps this Freezable mutable so the Style storyboard can animate Y. -->
+                                    <TranslateTransform X="0"
+                                                        Y="{Binding RelativeSource={RelativeSource Self}, Path=X}"/>
+                                </Grid.RenderTransform>
 
                                 <Grid.Style>
                                     <Style TargetType="Grid">
@@ -655,11 +667,11 @@
                                                 <MultiDataTrigger.EnterActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <ThicknessAnimation Storyboard.TargetProperty="Margin" To="0,-120,0,0" Duration="0:0:0.45">
-                                                                <ThicknessAnimation.EasingFunction>
+                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" To="-120" Duration="0:0:0.45">
+                                                                <DoubleAnimation.EasingFunction>
                                                                     <SineEase EasingMode="EaseIn"/>
-                                                                </ThicknessAnimation.EasingFunction>
-                                                            </ThicknessAnimation>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
 
                                                             <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.20"/>
                                                         </Storyboard>
@@ -669,11 +681,11 @@
                                                 <MultiDataTrigger.ExitActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <ThicknessAnimation Storyboard.TargetProperty="Margin" To="0,0,0,0" Duration="0:0:0.45">
-                                                                <ThicknessAnimation.EasingFunction>
+                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" To="0" Duration="0:0:0.45">
+                                                                <DoubleAnimation.EasingFunction>
                                                                     <SineEase EasingMode="EaseOut"/>
-                                                                </ThicknessAnimation.EasingFunction>
-                                                            </ThicknessAnimation>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
 
                                                             <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.9" Duration="0:0:0.25"/>
                                                         </Storyboard>
@@ -722,9 +734,11 @@
 
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="450"/>
+                                        <!-- Keep symmetric side reservations so the center actions stay truly centered. -->
+                                        <!-- Symmetric 500px side reservations keep the center actions aligned while giving them more room. -->
+                                        <ColumnDefinition Width="500"/>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="450"/>
+                                        <ColumnDefinition Width="500"/>
                                     </Grid.ColumnDefinitions>
 
                                     <!-- Avatar Left -->
@@ -864,7 +878,9 @@
 
                                             <CheckBoxEx x:Name="CloseWelcomeButton" Content="{DynamicResource LOCLibrary}" Style="{StaticResource WelcomeHubQuickButtonStyleCheckBoxEx}" MinWidth="120" Margin="8,0" Padding="20,8" FocusVisualStyle="{x:Null}" IsChecked="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Command="{PluginSettings Plugin=AnikiHelper, Path=CloseWelcomeHubCommand}"/>
 
-                                            <ButtonEx x:Name="PlayerProfileButton" MinWidth="120" Margin="8,0" Padding="20,8" Content="{DynamicResource LOCProfile}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[PlayerProfileWindowStyle|MostPlayedCard|SecondaryMusic]}" Focusable="True">
+
+
+                                            <ButtonEx x:Name="CapturesButton" Content="{DynamicResource LOCScreenshots}" MinWidth="120" Margin="8,0" Padding="20,8" Style="{StaticResource WelcomeHubQuickButtonStyle}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenMediaGalleryGamesWindowCommand}" Focusable="True">
                                                 <ButtonEx.Triggers>
                                                     <EventTrigger RoutedEvent="ButtonBase.Click">
                                                         <StopStoryboard BeginStoryboardName="OpenViewSoundStoryboard"/>
@@ -875,19 +891,13 @@
                                                         </BeginStoryboard>
                                                     </EventTrigger>
                                                 </ButtonEx.Triggers>
-                                                <Button.Style>
-                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource WelcomeHubQuickButtonStyle}">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginStatus Plugin=AnikiHelper_96a983a3-3f13-4dce-a474-4052b718bb52, Status=Installed}" Value="True">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Button.Style>
                                             </ButtonEx>
 
-                                            <ButtonEx x:Name="Media" Content="{DynamicResource LOCMedia}" MinWidth="120" Margin="8,0" Padding="20,8" Style="{StaticResource WelcomeHubQuickButtonStyle}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenMediaGalleryGamesWindowCommand}" Focusable="True">
+                                            <ButtonEx x:Name="MediaCenterButton" Content="{DynamicResource LOCMedia}" MinWidth="120" Margin="8,0" Padding="20,8"
+                                                      Style="{StaticResource WelcomeHubQuickButtonStyle}"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessFeatureCommand}"
+                                                      CommandParameter="builtin:video-player"
+                                                      Focusable="True">
                                                 <ButtonEx.Triggers>
                                                     <EventTrigger RoutedEvent="ButtonBase.Click">
                                                         <StopStoryboard BeginStoryboardName="OpenViewSoundStoryboard"/>
@@ -923,30 +933,8 @@
                                                 </Button.Style>
                                             </ButtonEx>
 
-                                            <ButtonEx x:Name="NewsButton" MinWidth="120" Margin="8,0" Padding="20,8" Content="{DynamicResource LOCNewsTab}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[LastUpdatesWindowStyle|SecondaryMusic]}" Focusable="True">
-                                                <ButtonEx.Style>
-                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource WelcomeHubQuickButtonStyle}">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{PluginStatus Plugin=AnikiHelper_96a983a3-3f13-4dce-a474-4052b718bb52, Status=Installed}" Value="True">
-                                                                <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </ButtonEx.Style>
-                                                <ButtonEx.Triggers>
-                                                    <EventTrigger RoutedEvent="ButtonBase.Click">
-                                                        <StopStoryboard BeginStoryboardName="OpenViewSoundStoryboard"/>
-                                                        <BeginStoryboard Name="OpenViewSoundStoryboard">
-                                                            <Storyboard FillBehavior="Stop">
-                                                                <MediaTimeline Storyboard.TargetName="OpenViewSound" Source="{ThemeFile 'audio/ChangeDisplay.wav'}" FillBehavior="Stop"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
-                                                </ButtonEx.Triggers>
-                                            </ButtonEx>
 
-                                            <ButtonEx x:Name="WebViewButton2" Content="{DynamicResource LOCWeb}" MinWidth="120" Margin="8,0" Padding="20,8" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWebBrowserHomeCommand}" Style="{DynamicResource WelcomeHubQuickButtonStyle}" Grid.Column="8"/>
+
 
                                             <CheckBoxEx x:Name="ButtonPowerHub" Content="{DynamicResource LOCPower}" Style="{StaticResource WelcomeHubQuickButtonStyleCheckBoxEx}" MinWidth="120" Margin="8,0" Padding="20,8" Visibility="Collapsed" Focusable="False" IsTabStop="False" FocusVisualStyle="{x:Null}" IsChecked="{Binding ElementName=ButtonPower, Path=IsChecked, Mode=TwoWay}"/>
 
@@ -957,6 +945,12 @@
                                     <!-- Button Right -->
                                     <Grid x:Name="HubRightTopButtons" Grid.Row="0" Grid.Column="2" Margin="0,0,20,5" Effect="{StaticResource SoftTextShadow}" HorizontalAlignment="Right">
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
@@ -1111,7 +1105,7 @@
 
                                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
 
-                                                <TextBlock Text="&#xED0D;" FontSize="20" VerticalAlignment="Center" FontFamily="{StaticResource FontIcoFont}" Foreground="{DynamicResource TextBrush}"/>
+                                                <TextBlock Text="&#xE716;" FontSize="20" VerticalAlignment="Center" FontFamily="{DynamicResource FontIcons}" Foreground="{DynamicResource TextBrush}"/>
 
                                                 <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OnlineCount, FallbackValue=0}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="20" FontWeight="SemiBold" Margin="2,0,0,2" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
 
@@ -1147,48 +1141,47 @@
                                                 </EventTrigger>
                                             </ButtonEx.Triggers>
 
-                                            <TextBlock Text="&#xF0EE;" FontFamily="{DynamicResource FontIcons}" FontSize="26" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock Text="&#xE8D6;" FontFamily="{DynamicResource FontIcons}" FontSize="23" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </ButtonEx>
 
-                                        <ButtonEx x:Name="AudioBatteryIndicator2" Grid.Column="4" VerticalAlignment="Center" Margin="0,0,7,0" Height="40" MinWidth="64" Padding="8,0" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[AudioSwitcherWindowStyle|FocusFirst|RefocusAfterClick]}">
-                                            <ButtonEx.Style>
-                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                    <Style.Triggers>
-                                                        <MultiDataTrigger>
-                                                            <MultiDataTrigger.Conditions>
-                                                                <Condition Binding="{PluginStatus Plugin=PlayniteAudioSwitcher_708b6ec4-bf96-4c0d-bd9d-fe0aa04d6bf1, Status=Installed}" Value="True"/>
-                                                                <Condition Binding="{PluginSettings Plugin=AudioSwitcher, Path=HasCurrentDeviceBattery}" Value="True"/>
-                                                            </MultiDataTrigger.Conditions>
-                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                        </MultiDataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </ButtonEx.Style>
 
-                                            <ButtonEx.Triggers>
-                                                <EventTrigger RoutedEvent="ButtonBase.Click">
-                                                    <BeginStoryboard>
-                                                        <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OpenViewSound" Storyboard.TargetProperty="LoadedBehavior">
-                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
-                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                        </Storyboard>
-                                                    </BeginStoryboard>
-                                                </EventTrigger>
-                                            </ButtonEx.Triggers>
-
-                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                <Viewbox Width="19" Height="19" Margin="0,0,6,0">
-                                                    <Path Data="{PluginSettings Plugin=AudioSwitcher, Path=CurrentDeviceIconGeometry}" Stretch="Uniform" Fill="{DynamicResource TextBrush}"/>
-                                                </Viewbox>
-
-                                                <TextBlock Text="{PluginSettings Plugin=AudioSwitcher, Path=CurrentDeviceBatteryLabel}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                                            </StackPanel>
+                                        <!-- PINNABLE TOP BAR SHORTCUTS -->
+                                        <ButtonEx x:Name="TopBarWebBrowserButton2" Grid.Column="4" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWebBrowserCommand}">
+                                            <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowWebBrowserButton]}" Value="True"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            <TextBlock Text="&#xE774;" FontFamily="{DynamicResource FontIcons}" FontSize="24" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </ButtonEx>
 
-                                        <ButtonEx x:Name="QuickMenu2" Grid.Column="5" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" Padding="0" Margin="0,0,7,0" MinWidth="60" Height="40" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[ControlCenterWindowStyle|FocusFirst]}">
+                                        <ButtonEx x:Name="TopBarMediaGalleryButton2" Grid.Column="5" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessFeatureCommand}" CommandParameter="builtin:media-gallery">
+                                            <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowMediaGalleryButton]}" Value="True"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            <TextBlock Text="&#xE91B;" FontFamily="{DynamicResource FontIcons}" FontSize="24" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
+                                        <ButtonEx x:Name="TopBarVideoPlayerButton2" Grid.Column="6" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessFeatureCommand}" CommandParameter="builtin:video-player">
+                                            <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowVideoPlayerButton]}" Value="True"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            <TextBlock Text="&#xE714;" FontFamily="{DynamicResource FontIcons}" FontSize="24" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
+                                        <ButtonEx x:Name="TopBarSoftwareToolsButton2" Grid.Column="7" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessSoftwareToolsCommand}">
+                                            <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowSoftwareToolsButton]}" Value="True"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            <TextBlock Text="&#xECAA;" FontFamily="{DynamicResource FontIcons}" FontSize="24" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
+                                        <ButtonEx x:Name="TopBarAudioSwitcherButton2" Grid.Column="8" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessAudioSwitcherCommand}">
+                                            <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><MultiDataTrigger><MultiDataTrigger.Conditions><Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowAudioSwitcherButton]}" Value="True"/><Condition Binding="{PluginStatus Plugin=PlayniteAudioSwitcher_708b6ec4-bf96-4c0d-bd9d-fe0aa04d6bf1, Status=Installed}" Value="True"/></MultiDataTrigger.Conditions><Setter Property="Visibility" Value="Visible"/></MultiDataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            <TextBlock Text="&#xE995;" FontFamily="{DynamicResource FontIcons}" FontSize="24" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
+                                        <ButtonEx x:Name="TopBarControllerManagerButton2" Grid.Column="9" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[ControllerManagerWindowStyle|ControllerManagerTesterButton]}">
+                                            <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><MultiDataTrigger><MultiDataTrigger.Conditions><Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowControllerManagerButton]}" Value="True"/><Condition Binding="{PluginStatus Plugin=ControllerSessionManager_6f3e7a21-98f4-4f2b-92ad-3fc0e6e941dc, Status=Installed}" Value="True"/></MultiDataTrigger.Conditions><Setter Property="Visibility" Value="Visible"/></MultiDataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            <TextBlock Text="&#xE7FC;" FontFamily="{DynamicResource FontIcons}" FontSize="24" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
+                                        <!-- MORE / TOP BAR CUSTOMIZATION -->
+                                        <ButtonEx x:Name="TopBarMoreButton2" Grid.Column="10" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[TopBarManagerWindowStyle|TopBarManagerFirstButton|NoDim]}" Style="{StaticResource TopBarIndicatorButtonStyle}">
+                                            <TextBlock Text="&#xE712;" FontFamily="{DynamicResource FontIcons}" FontSize="25" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
+                                        <ButtonEx x:Name="QuickMenu2" Grid.Column="11" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" Padding="0" Margin="0,0,7,0" MinWidth="60" Height="40" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[ControlCenterWindowStyle|FocusFirst]}">
 
                                             <ButtonEx.Style>
                                                 <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
@@ -2351,7 +2344,7 @@
                                                                                 <Border CornerRadius="0,0,20,20" Background="{DynamicResource HubCardBottomBackgroundBrush}" Opacity="0.85"/>
                                                                                 <Border CornerRadius="0,0,20,20" Padding="18,12" SnapsToDevicePixels="True" BorderBrush="{DynamicResource HubCardBottomBorderBrush}" BorderThickness="0,2,0,0">
                                                                                     <StackPanel>
-                                                                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SessionGameName}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardTitleBrush}" FontSize="24" FontWeight="SemiBold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                                                                        <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SessionGameName}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="24" FontWeight="SemiBold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
 
                                                                                         <TextBlock Margin="0,2,0,0" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="16" Opacity="0.75" TextTrimming="CharacterEllipsis">
                                                                                             <Run Text="{DynamicResource LOCLastSessionDuration}"/>
@@ -2512,7 +2505,7 @@
                                                                             <Border Grid.Row="1" CornerRadius="0,0,20,20" Background="{DynamicResource HubCardBottomBackgroundBrush}" Opacity="0.85"/>
                                                                             <Border Grid.Row="1" CornerRadius="0,0,20,20" Padding="18,12" SnapsToDevicePixels="True" BorderBrush="{DynamicResource HubCardBottomBorderBrush}" BorderThickness="0,2,0,0">
                                                                                 <StackPanel>
-                                                                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=HubMostPlayedName}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardTitleBrush}" FontSize="24" FontWeight="SemiBold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                                                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=HubMostPlayedName}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="24" FontWeight="SemiBold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
 
                                                                                     <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=HubMostPlayedPlaytime}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="16" Margin="0,2,0,0" Opacity="0.75" TextTrimming="CharacterEllipsis">
 
@@ -2623,7 +2616,7 @@
                                                                             <Border Grid.Row="1" CornerRadius="0,0,20,20" Background="{DynamicResource HubCardBottomBackgroundBrush}" Opacity="0.85"/>
                                                                             <Border Grid.Row="1" CornerRadius="0,0,20,20" Padding="18,12" SnapsToDevicePixels="True" BorderBrush="{DynamicResource HubCardBottomBorderBrush}" BorderThickness="0,2,0,0">
                                                                                 <StackPanel>
-                                                                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=HubRecentAddedName}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardTitleBrush}" FontSize="24" FontWeight="SemiBold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                                                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=HubRecentAddedName}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="24" FontWeight="SemiBold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
 
                                                                                     <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=HubRecentAddedDate}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="16" Margin="0,2,0,0" Opacity="0.75" TextTrimming="CharacterEllipsis">
                                                                                         <TextBlock.Style>
@@ -2738,7 +2731,7 @@
                                                                             <Border Grid.Row="1" CornerRadius="0,0,20,20" Background="{DynamicResource HubCardBottomBackgroundBrush}" Opacity="0.85"/>
                                                                             <Border Grid.Row="1" CornerRadius="0,0,20,20" Padding="18,12" SnapsToDevicePixels="True" BorderBrush="{DynamicResource HubCardBottomBorderBrush}" BorderThickness="0,2,0,0">
                                                                                 <StackPanel>
-                                                                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=HubNeverPlayedName}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardTitleBrush}" FontSize="24" FontWeight="SemiBold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                                                                    <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=HubNeverPlayedName}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="24" FontWeight="SemiBold" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
 
                                                                                     <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=HubNeverPlayedDate}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="16" Margin="0,2,0,0" Opacity="0.75" TextTrimming="CharacterEllipsis">
                                                                                         <TextBlock.Style>
@@ -3507,7 +3500,7 @@
                                                                                         </Grid>
 
                                                                                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                                                                            <TextBlock Text="{Binding title}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardTitleBrush}" FontSize="24" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                                                                                            <TextBlock Text="{Binding title}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="24" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
 
                                                                                             <TextBlock Text="{Binding subtitle}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="17" Opacity="0.82" Margin="0,4,0,0" TextTrimming="CharacterEllipsis"/>
                                                                                         </StackPanel>
@@ -3679,7 +3672,7 @@
 
                                                         </StackPanel>
 
-                                                        <ItemsControl Grid.Row="1" ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreUpcoming}" AlternationCount="20" HorizontalAlignment="Center" VerticalAlignment="Top" FocusVisualStyle="{x:Null}" Focusable="False" KeyboardNavigation.TabNavigation="Continue" KeyboardNavigation.DirectionalNavigation="Continue">
+                                                        <ItemsControl Grid.Row="1" ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreUpcomingHub}" AlternationCount="20" HorizontalAlignment="Center" VerticalAlignment="Top" FocusVisualStyle="{x:Null}" Focusable="False" KeyboardNavigation.TabNavigation="Continue" KeyboardNavigation.DirectionalNavigation="Continue">
 
                                                             <ItemsControl.ItemsPanel>
                                                                 <ItemsPanelTemplate>
@@ -3983,7 +3976,7 @@
 
                                                         </StackPanel>
 
-                                                        <ItemsControl Grid.Row="1" ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDeals}" AlternationCount="20" HorizontalAlignment="Center" VerticalAlignment="Top" FocusVisualStyle="{x:Null}" Focusable="False" KeyboardNavigation.TabNavigation="Continue" KeyboardNavigation.DirectionalNavigation="Continue">
+                                                        <ItemsControl Grid.Row="1" ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=SteamStoreDealsHub}" AlternationCount="20" HorizontalAlignment="Center" VerticalAlignment="Top" FocusVisualStyle="{x:Null}" Focusable="False" KeyboardNavigation.TabNavigation="Continue" KeyboardNavigation.DirectionalNavigation="Continue">
 
                                                             <ItemsControl.ItemsPanel>
                                                                 <ItemsPanelTemplate>
@@ -4291,7 +4284,7 @@
                                                                                 <Border Grid.Row="1" CornerRadius="0,0,20,20" Background="{DynamicResource HubCardBottomBackgroundBrush}" Opacity="0.85"/>
                                                                                 <Border Grid.Row="1" CornerRadius="0,0,20,20" Padding="18,12" SnapsToDevicePixels="True" BorderBrush="{DynamicResource HubCardBottomBorderBrush}" BorderThickness="0,2,0,0">
                                                                                     <StackPanel>
-                                                                                        <TextBlock Text="{Binding Name}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardTitleBrush}" FontSize="24" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                                                                                        <TextBlock Text="{Binding Name}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="24" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
                                                                                         <TextBlock Text="{Binding SourceName, StringFormat=Based on {0}}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="16" Opacity="0.75" TextTrimming="CharacterEllipsis"/>
                                                                                     </StackPanel>
                                                                                 </Border>
@@ -4534,7 +4527,7 @@
                                                                                             <ColumnDefinition Width="Auto"/>
                                                                                         </Grid.ColumnDefinitions>
                                                                                         <StackPanel Grid.Column="0">
-                                                                                            <TextBlock Text="{Binding Name}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardTitleBrush}" FontSize="24" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                                                                                            <TextBlock Text="{Binding Name}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="24" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
                                                                                             <TextBlock Text="{Binding ReleaseDateDisplay}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="16" Opacity="0.75" TextTrimming="CharacterEllipsis"/>
                                                                                         </StackPanel>
                                                                                         <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="18,0,0,0">
@@ -4819,7 +4812,7 @@
                                                                                                 </TextBlock.Style>
                                                                                             </TextBlock>
                                                                                         </Grid>
-                                                                                        <TextBlock Grid.Row="1" Text="{Binding DisplayTitle}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardTitleBrush}" FontSize="21" FontWeight="SemiBold" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
+                                                                                        <TextBlock Grid.Row="1" Text="{Binding DisplayTitle}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="21" FontWeight="SemiBold" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
                                                                                         <TextBlock Grid.Row="2" Text="{Binding DisplaySubtitle}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="14" FontWeight="Normal" Opacity="0.72" Margin="0,1,0,0" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
                                                                                     </Grid>
                                                                                 </Border>
@@ -5126,7 +5119,7 @@
                                                                                             </TextBlock>
                                                                                         </Grid>
 
-                                                                                        <TextBlock Grid.Column="2" Text="{Binding Name}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardTitleBrush}" FontSize="22" FontWeight="SemiBold" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
+                                                                                        <TextBlock Grid.Column="2" Text="{Binding Name}" Style="{DynamicResource TextBlockBaseStyle}" Foreground="{DynamicResource TextHubBannerCardBottomBrush}" FontSize="22" FontWeight="SemiBold" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
                                                                                     </Grid>
                                                                                 </Border>
                                                                             </Grid>
@@ -5597,7 +5590,7 @@
                         </Grid>
 
 
-                        <MediaElement x:Name="CloseViewSound" Source="{ThemeFile 'audio/HomeHubClose.wav'}" Visibility="Collapsed" Volume="{Settings Fullscreen.InterfaceVolume}" IsMuted="False">
+                        <MediaElement x:Name="CloseViewSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackHomeHubClosePath}" Visibility="Collapsed" Volume="{Settings Fullscreen.InterfaceVolume}" IsMuted="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -5663,7 +5656,10 @@
                 <!-- Définition du modèle de contrôle -->
                 <ControlTemplate TargetType="{x:Type Main}">
                     <!-- Contenu du contrôle -->
-                    <Grid x:Name="PART_MainHost" d:DesignWidth="{StaticResource DesignWidth}" d:DesignHeight="{StaticResource DesignHeight}" d:DataContext="{x:Static DesignMainViewModel.DesignIntance}">
+                    <Grid x:Name="PART_MainHost" d:DesignWidth="{StaticResource DesignWidth}" d:DesignHeight="{StaticResource DesignHeight}" d:DataContext="{x:Static DesignMainViewModel.DesignIntance}" RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <TranslateTransform X="0" Y="0"/>
+                        </Grid.RenderTransform>
                         <Grid.Resources>
                             <p:BindingProxy x:Key="MAIN_Commands" Data="{Binding}"/>
                             <p:BindingProxy x:Key="ANIKIHELPER_Commands" Data="{Binding Content, ElementName=AnikiHelper_ControllerCommands}"/>
@@ -6950,6 +6946,12 @@
 
 
                             <Border SnapsToDevicePixels="True" UseLayoutRounding="True">
+                                <Border.RenderTransform>
+                                    <!-- Step 3B: render-only movement instead of animating Margin/layout.
+                                    The zero Binding keeps this Freezable mutable for the Storyboard. -->
+                                    <TranslateTransform X="{Binding Source={StaticResource AnikiPerfZero}}"
+                                                        Y="1300"/>
+                                </Border.RenderTransform>
                                 <Border.Style>
                                     <Style TargetType="Border">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -6959,7 +6961,7 @@
                                         <Setter Property="Grid.Row" Value="0"/>
                                         <Setter Property="Grid.RowSpan" Value="5"/>
                                         <Setter Property="Grid.ColumnSpan" Value="3"/>
-                                        <Setter Property="Margin" Value="0,1300,0,0"/>
+                                        <Setter Property="Margin" Value="0"/>
 
                                         <Style.Triggers>
 
@@ -6979,11 +6981,15 @@
                                                 <MultiDataTrigger.EnterActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <ThicknessAnimation Storyboard.TargetProperty="Margin" To="0,0,0,0" BeginTime="0:0:0" Duration="0:0:1.35">
-                                                                <ThicknessAnimation.EasingFunction>
+                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                                                             From="1300"
+                                                                             To="0"
+                                                                             BeginTime="0:0:0"
+                                                                             Duration="0:0:1.35">
+                                                                <DoubleAnimation.EasingFunction>
                                                                     <CubicEase EasingMode="EaseOut"/>
-                                                                </ThicknessAnimation.EasingFunction>
-                                                            </ThicknessAnimation>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
                                                             <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1.35">
                                                                 <DoubleAnimation.EasingFunction>
                                                                     <CubicEase EasingMode="EaseOut"/>
@@ -6995,11 +7001,14 @@
                                                 <MultiDataTrigger.ExitActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,0,0,0" Duration="0:0:1.35">
-                                                                <ThicknessAnimation.EasingFunction>
+                                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
+                                                                             From="0"
+                                                                             To="1300"
+                                                                             Duration="0:0:1.35">
+                                                                <DoubleAnimation.EasingFunction>
                                                                     <CubicEase EasingMode="EaseInOut"/>
-                                                                </ThicknessAnimation.EasingFunction>
-                                                            </ThicknessAnimation>
+                                                                </DoubleAnimation.EasingFunction>
+                                                            </DoubleAnimation>
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </MultiDataTrigger.ExitActions>
@@ -7197,6 +7206,12 @@
                                 </Grid>
 
                                 <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <!-- Library needs a little more room when every center action is visible. -->
+                                        <ColumnDefinition Width="500"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="500"/>
+                                    </Grid.ColumnDefinitions>
 
 
                                     <!-- Avatar Left -->
@@ -7373,7 +7388,6 @@
 
                                                 <ButtonEx x:Name="PART_ButtonSearch" Content="{DynamicResource LOCSearchLabel}" MinWidth="120" Margin="8,0" Padding="20,8" Style="{DynamicResource WelcomeHubQuickButtonStyle}" Grid.Column="7"/>
 
-                                                <ButtonEx x:Name="WebViewButton" Content="{DynamicResource LOCWeb}" MinWidth="120" Margin="8,0" Padding="20,8" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWebBrowserHomeCommand}" Style="{DynamicResource WelcomeHubQuickButtonStyle}" Grid.Column="8"/>
 
                                                 <ButtonEx x:Name="ToolsCommand" Content="{DynamicResource LOCMenuTools}" MinWidth="120" Margin="8,0" Padding="20,8" Command="{Binding Data.MainMenu.OpenToolsCommand, Source={StaticResource ANIKIHELPER_Commands}}">
                                                     <ButtonEx.Style>
@@ -7430,6 +7444,12 @@
                                             </Style>
                                         </Grid.Style>
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
@@ -7621,7 +7641,7 @@
 
                                                 <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=OnlineCount, FallbackValue=0}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="20" FontWeight="SemiBold" Margin="0,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
 
-                                                <TextBlock Text="&#xED0D;" FontSize="20" VerticalAlignment="Center" FontFamily="{StaticResource FontIcoFont}" Foreground="{DynamicResource TextBrush}"/>
+                                                <TextBlock Text="&#xE716;" FontSize="20" VerticalAlignment="Center" FontFamily="{DynamicResource FontIcons}" Foreground="{DynamicResource TextBrush}"/>
                                             </StackPanel>
                                         </ButtonEx>
 
@@ -7653,51 +7673,48 @@
                                                 </EventTrigger>
                                             </ButtonEx.Triggers>
 
-                                            <TextBlock Text="&#xF0EE;" FontFamily="{DynamicResource FontIcons}" FontSize="26" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </ButtonEx>
-
-                                        <!-- Overlay -->
-                                        <ButtonEx x:Name="AudioBatteryIndicator" Grid.Column="6" Height="40" MinWidth="64" Margin="0,0,7,0" Padding="8,0" Focusable="True" IsTabStop="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[AudioSwitcherWindowStyle|FocusFirst|RefocusAfterClick]}">
-                                            <ButtonEx.Style>
-                                                <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                    <Style.Triggers>
-                                                        <MultiDataTrigger>
-                                                            <MultiDataTrigger.Conditions>
-                                                                <Condition Binding="{PluginStatus Plugin=PlayniteAudioSwitcher_708b6ec4-bf96-4c0d-bd9d-fe0aa04d6bf1, Status=Installed}" Value="True"/>
-                                                                <Condition Binding="{PluginSettings Plugin=AudioSwitcher, Path=HasCurrentDeviceBattery}" Value="True"/>
-                                                            </MultiDataTrigger.Conditions>
-                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                        </MultiDataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </ButtonEx.Style>
-
-                                            <ButtonEx.Triggers>
-                                                <EventTrigger RoutedEvent="ButtonBase.Click">
-                                                    <BeginStoryboard>
-                                                        <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="OpenViewSound" Storyboard.TargetProperty="LoadedBehavior">
-                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static MediaState.Stop}"/>
-                                                                <DiscreteObjectKeyFrame KeyTime="0:0:0.01" Value="{x:Static MediaState.Play}"/>
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                        </Storyboard>
-                                                    </BeginStoryboard>
-                                                </EventTrigger>
-                                            </ButtonEx.Triggers>
-
-                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                <Viewbox Width="19" Height="19" Margin="0,0,6,0">
-                                                    <Path Data="{PluginSettings Plugin=AudioSwitcher, Path=CurrentDeviceIconGeometry}" Stretch="Uniform" Fill="{DynamicResource TextBrush}"/>
-                                                </Viewbox>
-
-                                                <TextBlock Text="{PluginSettings Plugin=AudioSwitcher, Path=CurrentDeviceBatteryLabel}" Style="{DynamicResource TextBlockBaseStyle}" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                                            </StackPanel>
+                                            <TextBlock Text="&#xE8D6;" FontFamily="{DynamicResource FontIcons}" FontSize="23" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </ButtonEx>
 
 
                                         <!-- QUICK SETTINGS / SYSTEM STATUS -->
-                                        <ButtonEx x:Name="QuickMenu" Grid.Column="7" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" Padding="0" Margin="0,0,7,0" MinWidth="60" Height="40" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[ControlCenterWindowStyle|FocusFirst]}">
+                                        <!-- PINNABLE TOP BAR SHORTCUTS -->
+                                        <ButtonEx x:Name="TopBarWebBrowserButton" Grid.Column="6" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWebBrowserCommand}">
+                                            <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowWebBrowserButton]}" Value="True"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            <TextBlock Text="&#xE774;" FontFamily="{DynamicResource FontIcons}" FontSize="24" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
+                                        <ButtonEx x:Name="TopBarMediaGalleryButton" Grid.Column="7" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessFeatureCommand}" CommandParameter="builtin:media-gallery">
+                                            <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowMediaGalleryButton]}" Value="True"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            <TextBlock Text="&#xE91B;" FontFamily="{DynamicResource FontIcons}" FontSize="24" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
+                                        <ButtonEx x:Name="TopBarVideoPlayerButton" Grid.Column="8" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessFeatureCommand}" CommandParameter="builtin:video-player">
+                                            <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowVideoPlayerButton]}" Value="True"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            <TextBlock Text="&#xE714;" FontFamily="{DynamicResource FontIcons}" FontSize="24" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
+                                        <ButtonEx x:Name="TopBarSoftwareToolsButton" Grid.Column="9" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessSoftwareToolsCommand}">
+                                            <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowSoftwareToolsButton]}" Value="True"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            <TextBlock Text="&#xECAA;" FontFamily="{DynamicResource FontIcons}" FontSize="24" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
+                                        <ButtonEx x:Name="TopBarAudioSwitcherButton" Grid.Column="10" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessAudioSwitcherCommand}">
+                                            <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><MultiDataTrigger><MultiDataTrigger.Conditions><Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowAudioSwitcherButton]}" Value="True"/><Condition Binding="{PluginStatus Plugin=PlayniteAudioSwitcher_708b6ec4-bf96-4c0d-bd9d-fe0aa04d6bf1, Status=Installed}" Value="True"/></MultiDataTrigger.Conditions><Setter Property="Visibility" Value="Visible"/></MultiDataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            <TextBlock Text="&#xE995;" FontFamily="{DynamicResource FontIcons}" FontSize="24" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
+                                        <ButtonEx x:Name="TopBarControllerManagerButton" Grid.Column="11" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[ControllerManagerWindowStyle|ControllerManagerTesterButton]}">
+                                            <ButtonEx.Style><Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><MultiDataTrigger><MultiDataTrigger.Conditions><Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowControllerManagerButton]}" Value="True"/><Condition Binding="{PluginStatus Plugin=ControllerSessionManager_6f3e7a21-98f4-4f2b-92ad-3fc0e6e941dc, Status=Installed}" Value="True"/></MultiDataTrigger.Conditions><Setter Property="Visibility" Value="Visible"/></MultiDataTrigger></Style.Triggers></Style></ButtonEx.Style>
+                                            <TextBlock Text="&#xE7FC;" FontFamily="{DynamicResource FontIcons}" FontSize="24" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
+                                        <!-- MORE / TOP BAR CUSTOMIZATION -->
+                                        <ButtonEx x:Name="TopBarMoreButton" Grid.Column="12" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[TopBarManagerWindowStyle|TopBarManagerFirstButton|NoDim]}" Style="{StaticResource TopBarIndicatorButtonStyle}">
+                                            <TextBlock Text="&#xE712;" FontFamily="{DynamicResource FontIcons}" FontSize="25" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </ButtonEx>
+
+                                        <ButtonEx x:Name="QuickMenu" Grid.Column="13" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" Padding="0" Margin="0,0,7,0" MinWidth="60" Height="40" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[ControlCenterWindowStyle|FocusFirst]}">
 
                                             <ButtonEx.Style>
                                                 <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
@@ -8174,7 +8191,7 @@
                                     </Grid.Style>
                                     <!-- No Background Changer -->
 
-                                    <FadeImage x:Name="ControlRoot" SourceUpdateDelay="200" RenderTransformOrigin="0.5,1">
+                                    <FadeImage x:Name="ControlRoot" SourceUpdateDelay="150" RenderTransformOrigin="0.5,1">
                                         <FadeImage.Style>
                                             <Style TargetType="FadeImage">
                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -8197,14 +8214,7 @@
                                                     <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PerformanceMode]}" Value="True">
                                                         <Setter Property="AnimationEnabled" Value="False"/>
                                                     </DataTrigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{PluginStatus Plugin=playnite-backgroundchanger-plugin, Status=Installed}" Value="True"/>
-                                                            <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=EnableBackgroundImage}" Value="True"/>
-                                                            <Condition Binding="{Binding ElementName=BackgroundChanger_PluginBackgroundImage, Path=Visibility}" Value="Visible"/>
-                                                        </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                    </MultiDataTrigger>
+
 
                                                     <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[SteamBanner]}" Value="True">
                                                         <Setter Property="Stretch" Value="Uniform"/>
@@ -8221,6 +8231,9 @@
                                                             <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PerformanceMode]}" Value="False"/>
 
                                                             <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[SteamBanner]}" Value="False"/>
+
+                                                            <!-- Do not spend composition time on background animation while rapidly browsing games. -->
+                                                            <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsFastNavigating, FallbackValue=False}" Value="False"/>
 
                                                             <!-- L’animation fonctionne uniquement lorsque Playnite est actif -->
                                                             <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="True"/>
@@ -8306,6 +8319,8 @@
                                                             <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[PerformanceMode]}" Value="False"/>
                                                             <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[SteamBanner]}" Value="False"/>
                                                             <Condition Binding="{PluginSettings Plugin=BackgroundChanger, Path=BackgroundIsVideo}" Value="False"/>
+                                                            <!-- Skip BackgroundChanger zoom while rapidly browsing games. -->
+                                                            <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsFastNavigating, FallbackValue=False}" Value="False"/>
                                                             <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=Visibility}" Value="Visible"/>
                                                             <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="True"/>
                                                         </MultiDataTrigger.Conditions>
@@ -8338,7 +8353,7 @@
 
 
                                     <!-- ImageRotater Background : image / GIF / vidéo -->
-                                    <ContentControl x:Name="ImageRotater_Background" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="3" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" IsHitTestVisible="False" Panel.ZIndex="0"/>
+                                    <ContentControl x:Name="ImageRotater_Background" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="3" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Focusable="False" IsHitTestVisible="False" Panel.ZIndex="0"/>
 
                                 </Grid>
 
@@ -8619,6 +8634,10 @@
                                                         <Setter Property="Background" Value="{DynamicResource MainBackgroundImage152}"/>
 
                                                     </DataTrigger>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="153">
+                                                        <Setter Property="Background" Value="{DynamicResource MainBackgroundImage153}"/>
+
+                                                    </DataTrigger>
 
                                                     <!-- Rare / Lucky Mode background override -->
                                                     <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="True">
@@ -8649,6 +8668,41 @@
                                         </FadeImage.Style>
                                     </FadeImage>
                                 </Grid>
+
+                                <!-- Main View media card background tint -->
+                                <Border x:Name="MainViewMediaCardBackgroundOverlay"
+                                        Grid.Row="0" Grid.RowSpan="5" Grid.ColumnSpan="3"
+                                        Opacity="0.58"
+                                        IsHitTestVisible="False"
+                                        Panel.ZIndex="0">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="{DynamicResource OverlayMenu_Mid}"/>
+                                    </Border.Background>
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[MediaCardOnMainView]}" Value="True"/>
+                                                        <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
+                                                        <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                </Border>
+
+                                <!-- Light dark veil over the Theme Color tint. Keeps the theme hue while slightly darkening the background. -->
+                                <Border x:Name="MainViewMediaCardDarkOverlay"
+                                        Grid.Row="0" Grid.RowSpan="5" Grid.ColumnSpan="3"
+                                        Background="Black"
+                                        Opacity="0.12"
+                                        Visibility="{Binding ElementName=MainViewMediaCardBackgroundOverlay, Path=Visibility}"
+                                        IsHitTestVisible="False"
+                                        Panel.ZIndex="0"/>
 
                                 <!-- Shadow Background -->
                                 <Grid x:Name="ShadowBackground" Grid.Row="0" Grid.RowSpan="5" Grid.ColumnSpan="3" Panel.ZIndex="1">
@@ -8717,6 +8771,7 @@
                                                             <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
                                                             <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="True"/>
                                                             <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnMainView]}" Value="True"/>
+                                                            <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerCardOnMainView]}" Value="False"/>
                                                             <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
                                                             <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
                                                             <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Opacity}" Value="1"/>
@@ -8759,6 +8814,7 @@
                                                             <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
                                                             <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="True"/>
                                                             <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnMainView]}" Value="True"/>
+                                                            <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerCardOnMainView]}" Value="False"/>
                                                             <Condition Binding="{Binding ElementName=PART_ViewHost, Path=ActualWidth}" Value="1728"/>
                                                             <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
                                                             <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
@@ -9296,7 +9352,7 @@
                                     </Grid>
                                 </Grid>
 
-                                <ListBoxEx x:Name="PART_ListGameItems" Panel.ZIndex="0" Background="Transparent" BorderThickness="0" FocusVisualStyle="{x:Null}" Focusable="True" ClipToBounds="False" ScrollViewer.CanContentScroll="True" ScrollViewer.IsDeferredScrollingEnabled="False" KeyboardNavigation.DirectionalNavigation="Once" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <ListBoxEx x:Name="PART_ListGameItems" Panel.ZIndex="0" Background="Transparent" BorderThickness="0" FocusVisualStyle="{x:Null}" ClipToBounds="False" ScrollViewer.CanContentScroll="True" ScrollViewer.IsDeferredScrollingEnabled="False" KeyboardNavigation.DirectionalNavigation="Once" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
 
                                     <ListBoxEx.Style>
@@ -10194,7 +10250,10 @@
                                     </Style>
                                 </Border.Style>
 
-                                <FadeImage Source="{Binding SelectedGame.BackgroundImage}" RenderOptions.BitmapScalingMode="LowQuality" Visibility="Visible">
+                                <FadeImage Source="{Binding SelectedGame.BackgroundImage}"
+                                           SourceUpdateDelay="150"
+                                           RenderOptions.BitmapScalingMode="LowQuality"
+                                           Visibility="Visible">
                                     <FadeImage.Style>
                                         <Style TargetType="FadeImage">
                                             <Setter Property="Stretch" Value="UniformToFill"/>
@@ -10883,6 +10942,9 @@
                                                                     <DataTrigger Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible">
                                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                                     </DataTrigger>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[SourceLogoOnMainScreen]}" Value="False">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                    </DataTrigger>
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </StackPanel.Style>
@@ -11309,8 +11371,171 @@
                                 </StackPanel>
                             </Grid>
 
+                            <!-- Main View media card mask: same technique as DetailedHeroMask in the Details panel. -->
+                            <Border x:Name="TrailerCardMask"
+                                    Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="5"
+                                    Width="780" Height="439"
+                                    HorizontalAlignment="Right" VerticalAlignment="Top"
+                                    Margin="0,175,120,0"
+                                    CornerRadius="{DynamicResource Corner}"
+                                    Background="Black"
+                                    IsHitTestVisible="False"
+                                    Panel.ZIndex="-12">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[MediaCardOnMainView]}" Value="True"/>
+                                                    <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
+                                                    <Condition Binding="{Binding ElementName=DetailedListView, Path=IsVisible}" Value="False"/>
+                                                    <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[MediaCardOnMainView]}" Value="True"/>
+                                                    <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp1610"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Width" Value="720"/>
+                                                <Setter Property="Height" Value="405"/>
+                                                <Setter Property="Margin" Value="0,160,80,0"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+
+                            <!-- Main View media card image: always visible; Trailer mode draws video over it when available. -->
+                            <Border x:Name="TrailerCardFallback" ClipToBounds="True"
+                                    Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="5"
+                                    Width="780" Height="439"
+                                    HorizontalAlignment="Right" VerticalAlignment="Top"
+                                    Margin="0,175,120,0"
+                                    CornerRadius="{DynamicResource Corner}"
+                                    BorderBrush="Transparent" BorderThickness="0"
+                                    Background="Black"
+                                    IsHitTestVisible="False"
+                                    Panel.ZIndex="-11">
+                                <!-- Hard rounded clip applied to the bitmap itself. -->
+                                <Border.Clip>
+                                    <RectangleGeometry Rect="0,0,780,439" RadiusX="{Binding ElementName=TrailerCardMask, Path=CornerRadius.TopLeft}" RadiusY="{Binding ElementName=TrailerCardMask, Path=CornerRadius.TopLeft}"/>
+                                </Border.Clip>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[MediaCardOnMainView]}" Value="True"/>
+                                                    <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
+                                                    <Condition Binding="{Binding ElementName=DetailedListView, Path=IsVisible}" Value="False"/>
+                                                    <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[MediaCardOnMainView]}" Value="True"/>
+                                                    <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp1610"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Width" Value="720"/>
+                                                <Setter Property="Height" Value="405"/>
+                                                <Setter Property="Margin" Value="0,160,80,0"/>
+                                                <Setter Property="Clip">
+                                                    <Setter.Value>
+                                                        <RectangleGeometry Rect="0,0,720,405" RadiusX="{Binding ElementName=TrailerCardMask, Path=CornerRadius.TopLeft}" RadiusY="{Binding ElementName=TrailerCardMask, Path=CornerRadius.TopLeft}"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <!-- Source is assigned directly by Aniki Helper after selection settles.
+                                Do not bind another FadeImage to DisplayBackgroundImageObject here: that
+                                interferes with BackgroundChanger's own background crossfade. -->
+                                <Image x:Name="TrailerCardFallbackImage"
+                                       Stretch="UniformToFill"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
+                                       RenderOptions.BitmapScalingMode="Fant"
+                                       IsHitTestVisible="False">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <!-- Background-only card: show the Helper-provided bitmap normally. -->
+                                            <Setter Property="Opacity" Value="1"/>
+                                            <Style.Triggers>
+                                                <!-- Trailer card: stay black while EML resolves/starts the trailer. -->
+                                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerCardOnMainView]}" Value="True">
+                                                    <Setter Property="Opacity" Value="0"/>
+                                                </DataTrigger>
+
+                                                <!-- Only reveal the fallback once selection has settled AND EML confirms
+                                                that the selected game has no trailer. This prevents the background
+                                                from flashing briefly before a valid trailer starts. -->
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerCardOnMainView]}" Value="True"/>
+                                                        <Condition Binding="{Binding ElementName=Trigger, Path=Opacity}" Value="1"/>
+                                                        <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="False"/>
+                                                        <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed"/>
+                                                        <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Opacity" Value="1"/>
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </Border>
+
+                            <!-- Main View media card outline. -->
+                            <Border x:Name="TrailerCardStroke"
+                                    Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="5"
+                                    Width="780" Height="439"
+                                    HorizontalAlignment="Right" VerticalAlignment="Top"
+                                    Margin="0,175,120,0"
+                                    CornerRadius="{DynamicResource Corner}"
+                                    BorderBrush="{DynamicResource MenuBorderBrush}" BorderThickness="2"
+                                    Background="Transparent"
+                                    IsHitTestVisible="False"
+                                    Panel.ZIndex="-8"
+                                    SnapsToDevicePixels="True">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[MediaCardOnMainView]}" Value="True"/>
+                                                    <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
+                                                    <Condition Binding="{Binding ElementName=DetailedListView, Path=IsVisible}" Value="False"/>
+                                                    <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[MediaCardOnMainView]}" Value="True"/>
+                                                    <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp1610"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Width" Value="720"/>
+                                                <Setter Property="Height" Value="405"/>
+                                                <Setter Property="Margin" Value="0,160,80,0"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+
                             <!-- Trailer -->
-                            <Border x:Name="TrailerContainer" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="5" Background="Black">
+                            <Border x:Name="TrailerContainer" ClipToBounds="True" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="0" Grid.RowSpan="5" Background="Black">
                                 <Border.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -11371,12 +11596,56 @@
                                                 <Setter Property="Margin" Value="0,-250,0,0"/>
                                             </MultiDataTrigger>
 
+                                            <!-- Main View trailer card layout -->
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerCardOnMainView]}" Value="True"/>
+                                                    <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
+                                                    <Condition Binding="{Binding ElementName=DetailedListView, Path=IsVisible}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Width" Value="780"/>
+                                                <Setter Property="Height" Value="439"/>
+                                                <Setter Property="HorizontalAlignment" Value="Right"/>
+                                                <Setter Property="VerticalAlignment" Value="Top"/>
+                                                <Setter Property="Margin" Value="0,175,120,0"/>
+                                                <Setter Property="Panel.ZIndex" Value="-10"/>
+                                                <Setter Property="CornerRadius" Value="{DynamicResource Corner}"/>
+                                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="OpacityMask" Value="{x:Null}"/>
+                                                <Setter Property="Clip">
+                                                    <Setter.Value>
+                                                        <RectangleGeometry Rect="0,0,780,439" RadiusX="{Binding ElementName=TrailerCardMask, Path=CornerRadius.TopLeft}" RadiusY="{Binding ElementName=TrailerCardMask, Path=CornerRadius.TopLeft}"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                            </MultiDataTrigger>
+
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerCardOnMainView]}" Value="True"/>
+                                                    <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
+                                                    <Condition Binding="{Binding ElementName=DetailedListView, Path=IsVisible}" Value="False"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=AspectRatio}" Value="dsp1610"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Width" Value="720"/>
+                                                <Setter Property="Height" Value="405"/>
+                                                <Setter Property="Margin" Value="0,160,80,0"/>
+                                                <Setter Property="Clip">
+                                                    <Setter.Value>
+                                                        <RectangleGeometry Rect="0,0,720,405" RadiusX="{Binding ElementName=TrailerCardMask, Path=CornerRadius.TopLeft}" RadiusY="{Binding ElementName=TrailerCardMask, Path=CornerRadius.TopLeft}"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </MultiDataTrigger>
+
 
 
 
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
+                                                    <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
                                                     <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnMainView]}" Value="True"/>
                                                 </MultiDataTrigger.Conditions>
                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -11384,7 +11653,18 @@
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
+                                                    <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerCardOnMainView]}" Value="True"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </MultiDataTrigger>
+                                            <!-- Background layout keeps the original soft fade. -->
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
+                                                    <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
                                                     <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnMainView]}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerCardOnMainView]}" Value="False"/>
                                                     <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
                                                     <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
                                                     <Condition Binding="{Binding ElementName=ExtraMetadataLoader_VideoLoaderControl_NoControls_Sound, Path=Opacity}" Value="1"/>
@@ -11409,6 +11689,25 @@
                                                 </MultiDataTrigger.ExitActions>
                                             </MultiDataTrigger>
 
+                                            <!-- Card layout appears immediately as soon as EML starts the new trailer. -->
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
+                                                    <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerCardOnMainView]}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Opacity" Value="1"/>
+                                            </MultiDataTrigger>
+
+                                            <!-- Hard off outside Horizontal: the card and its video surface are removed. -->
+                                            <DataTrigger Binding="{Settings Fullscreen.HorizontalLayout}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Setter Property="Opacity" Value="0"/>
+                                                <Setter Property="Clip" Value="{x:Null}"/>
+                                            </DataTrigger>
+
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
@@ -11419,6 +11718,7 @@
                                             <Setter Property="HorizontalAlignment" Value="Center"/>
                                             <Setter Property="Opacity" Value="0"/>
                                             <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Setter Property="IsEnabled" Value="True"/>
                                             <Setter Property="Background" Value="Black"/>
                                             <Setter Property="ContentControl.OpacityMask">
                                                 <Setter.Value>
@@ -11438,7 +11738,17 @@
                                                 </MultiDataTrigger>
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerCardOnMainView]}" Value="True"/>
+                                                        <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
+                                                        <Condition Binding="{Binding ElementName=DetailedListView, Path=IsVisible}" Value="False"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                    <Setter Property="ContentControl.OpacityMask" Value="{x:Null}"/>
+                                                </MultiDataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
                                                         <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="True"/>
+                                                        <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
                                                         <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
                                                         <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnMainView]}" Value="True"/>
                                                         <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
@@ -11447,8 +11757,21 @@
                                                 </MultiDataTrigger>
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="True"/>
+                                                        <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
                                                         <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
+                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerCardOnMainView]}" Value="True"/>
+                                                        <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="ItemsControl.Visibility" Value="Visible"/>
+                                                </MultiDataTrigger>
+                                                <!-- Background layout keeps the original one-second video fade. -->
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
+                                                        <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
                                                         <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnMainView]}" Value="True"/>
+                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerCardOnMainView]}" Value="False"/>
                                                         <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
                                                         <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
                                                     </MultiDataTrigger.Conditions>
@@ -11467,6 +11790,18 @@
                                                         </BeginStoryboard>
                                                     </MultiDataTrigger.ExitActions>
                                                 </MultiDataTrigger>
+
+                                                <!-- Card layout: no extra XAML fade/delay. -->
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding ElementName=TrailerTrigger, Path=Opacity}" Value="1"/>
+                                                        <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
+                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerCardOnMainView]}" Value="True"/>
+                                                        <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=NewContextVideoAvailable}" Value="True"/>
+                                                        <Condition Binding="{PluginSettings Plugin=ExtraMetadataLoader, Path=IsVideoPlaying}" Value="True"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Opacity" Value="1"/>
+                                                </MultiDataTrigger>
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
                                                         <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnMainView]}" Value="True"/>
@@ -11476,6 +11811,13 @@
                                                 </MultiDataTrigger>
                                                 <DataTrigger Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Visible">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+
+                                                <!-- Hard off in List/Vertical. Collapsing + disabling removes the player from active UI processing. -->
+                                                <DataTrigger Binding="{Settings Fullscreen.HorizontalLayout}" Value="False">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Setter Property="Opacity" Value="0"/>
+                                                    <Setter Property="IsEnabled" Value="False"/>
                                                 </DataTrigger>
 
                                             </Style.Triggers>
@@ -12046,6 +12388,11 @@
                                         <ItemsControlEx.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid HorizontalAlignment="Right" VerticalAlignment="Top">
+                                                    <Grid.RenderTransform>
+                                                        <!-- Step 3C: render-only slide for the age-rating icon. -->
+                                                        <TranslateTransform X="{Binding Source={StaticResource AnikiPerfZero}}"
+                                                                            Y="0"/>
+                                                    </Grid.RenderTransform>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="auto"/>
                                                     </Grid.ColumnDefinitions>
@@ -12076,7 +12423,13 @@
                                                             <BeginStoryboard>
                                                                 <Storyboard>
                                                                     <DoubleAnimation Storyboard.TargetProperty="Opacity" BeginTime="0:0:3" Duration="0:0:1.5" To="0.9"/>
-                                                                    <ThicknessAnimation Storyboard.TargetProperty="Margin" BeginTime="0:0:3" Duration="0:0:2" From="0,0,-300,0" To="0,0,0,0" AccelerationRatio="0.5" DecelerationRatio="0.5"/>
+                                                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)"
+                                                                                     BeginTime="0:0:3"
+                                                                                     Duration="0:0:2"
+                                                                                     From="300"
+                                                                                     To="0"
+                                                                                     AccelerationRatio="0.5"
+                                                                                     DecelerationRatio="0.5"/>
                                                                 </Storyboard>
                                                             </BeginStoryboard>
                                                         </MultiDataTrigger.ExitActions>
@@ -12396,9 +12749,11 @@
                                                 </TextBlock.Text>
                                             </TextBlock>
 
-                                            <Image x:Name="MainLogoImage" Source="{Binding ElementName=MainLogoPath, Path=Text, Converter={StaticResource ImageStringToImageConverter}}" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Image x:Name="MainLogoImage" Stretch="Uniform" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                 <Image.Style>
                                                     <Style TargetType="Image">
+                                                        <!-- Load the actual logo only when navigation has settled. -->
+                                                        <Setter Property="Source" Value="{Binding ElementName=MainLogoPath, Path=Text, Converter={StaticResource ImageStringToImageConverter}}"/>
                                                         <!-- Taille par défaut : vue horizontale -->
                                                         <Setter Property="MaxWidth" Value="600"/>
                                                         <Setter Property="MaxHeight" Value="280"/>
@@ -12415,6 +12770,8 @@
 
                                                             <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper,                                                                          Path=IsFastNavigating,                                                                          FallbackValue=False}" Value="True">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <!-- Important: don't decode/convert every logo crossed during a fast scroll. -->
+                                                                <Setter Property="Source" Value="{x:Null}"/>
                                                             </DataTrigger>
 
                                                             <MultiDataTrigger>
@@ -12452,6 +12809,9 @@
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding ElementName=MainLogoImage, Path=Source}" Value="{x:Null}">
                                                                 <Setter Property="Visibility" Value="Visible"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsFastNavigating, FallbackValue=False}" Value="True">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
@@ -12513,6 +12873,20 @@
                                             </StackPanel.Style>
 
                                             <Grid MaxHeight="200" Width="600" HorizontalAlignment="Left" KeyboardNavigation.IsTabStop="False" KeyboardNavigation.TabNavigation="None" KeyboardNavigation.ControlTabNavigation="None" KeyboardNavigation.DirectionalNavigation="None" Focusable="False" FocusVisualStyle="{x:Null}">
+                                                <Grid.Resources>
+                                                    <DataTemplate x:Key="MainDescriptionLazyTemplate">
+                                                        <HtmlTextView HtmlText="{Binding SelectedGame.Description}"
+                                                                      MaxHeight="200"
+                                                                      Focusable="False"
+                                                                      IsTabStop="False"
+                                                                      IsHitTestVisible="False"
+                                                                      HtmlFontSize="18"
+                                                                      HtmlFontFamily="Bahnschrift SemiBold, Bahnschrift, Segoe UI Variable Display Semibold, Segoe UI Semibold, Segoe UI"
+                                                                      HtmlForeground="{DynamicResource TextColor}"
+                                                                      LinkForeground="{DynamicResource GlyphColor}"
+                                                                      FocusVisualStyle="{x:Null}"/>
+                                                    </DataTemplate>
+                                                </Grid.Resources>
                                                 <Grid.OpacityMask>
                                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                                         <GradientStop Color="#FFFFFFFF" Offset="0"/>
@@ -12520,7 +12894,30 @@
                                                         <GradientStop Color="#00FFFFFF" Offset="1"/>
                                                     </LinearGradientBrush>
                                                 </Grid.OpacityMask>
-                                                <HtmlTextView HtmlText="{Binding SelectedGame.Description}" MaxHeight="200" Focusable="False" IsTabStop="False" IsHitTestVisible="False" HtmlFontSize="18" HtmlFontFamily="Bahnschrift SemiBold, Bahnschrift, Segoe UI Variable Display Semibold, Segoe UI Semibold, Segoe UI" HtmlForeground="{DynamicResource TextColor}" LinkForeground="{DynamicResource GlyphColor}" FocusVisualStyle="{x:Null}"/>
+
+                                                <ContentControl Content="{Binding}"
+                                                                HorizontalContentAlignment="Stretch"
+                                                                VerticalContentAlignment="Stretch"
+                                                                IsHitTestVisible="False">
+                                                    <ContentControl.Style>
+                                                        <Style TargetType="ContentControl">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Setter Property="ContentTemplate" Value="{x:Null}"/>
+                                                            <Style.Triggers>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[MainDesc]}" Value="True"/>
+                                                                        <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsFastNavigating, FallbackValue=False}" Value="False"/>
+                                                                        <Condition Binding="{Binding ElementName=ChangeViewButton, Path=IsChecked}" Value="True"/>
+                                                                        <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                    <Setter Property="ContentTemplate" Value="{StaticResource MainDescriptionLazyTemplate}"/>
+                                                                </MultiDataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ContentControl.Style>
+                                                </ContentControl>
                                             </Grid>
                                         </StackPanel>
 
@@ -12887,10 +13284,13 @@
                                         <Setter Property="Visibility" Value="Hidden"/>
                                         <Setter Property="Opacity" Value="0"/>
                                         <Style.Triggers>
-                                            <!-- Main trailer stays available with cover micro-trailers. -->
+                                            <!-- Background trailer keeps the original delayed trigger. -->
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
                                                     <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerOnMainView]}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerCardOnMainView]}" Value="False"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsFastNavigating, FallbackValue=False}" Value="False"/>
                                                     <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed"/>
                                                     <Condition Binding="{Binding ElementName=AcceuilSettings, Path=Visibility}" Value="Collapsed"/>
                                                     <Condition Binding="{Binding ElementName=Trigger, Path=Opacity}" Value="1"/>
@@ -12909,6 +13309,18 @@
                                                         </Storyboard>
                                                     </BeginStoryboard>
                                                 </MultiDataTrigger.ExitActions>
+                                            </MultiDataTrigger>
+
+                                            <!-- Card layout bypasses the background-trailer delay so the card is always present while browsing. -->
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Settings Fullscreen.HorizontalLayout}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[TrailerCardOnMainView]}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsFastNavigating, FallbackValue=False}" Value="False"/>
+                                                    <Condition Binding="{Binding ElementName=PART_ElemGameDetails, Path=Visibility}" Value="Collapsed"/>
+                                                    <Condition Binding="{Binding ElementName=AcceuilSettings, Path=Visibility}" Value="Collapsed"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Opacity" Value="1"/>
                                             </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -13002,7 +13414,7 @@
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{PluginStatus Plugin=AnikiHelper_96a983a3-3f13-4dce-a474-4052b718bb52, Status=Installed}" Value="True"/>
-                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=MinimalVersion[1.6.0]}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=MinimalVersion[1.6.5]}" Value="True"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </MultiDataTrigger>
@@ -14006,6 +14418,9 @@
                                                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="152">
                                                             <Setter Property="Background" Value="{DynamicResource LoginImage152}"/>
                                                         </DataTrigger>
+                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Tag}" Value="153">
+                                                            <Setter Property="Background" Value="{DynamicResource LoginImage153}"/>
+                                                        </DataTrigger>
 
 
                                                         <!-- Rare / Lucky Mode background override -->
@@ -14195,7 +14610,7 @@
                                 </Grid>
 
                                 <!-- FOOTER -->
-                                <TextBlock Text="Aniki ReMake v3.5.0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,22,18" FontSize="16" Opacity="0.30" Foreground="White" Style="{DynamicResource TextBlockBaseStyle}"/>
+                                <TextBlock Text="Aniki ReMake v3.5.5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,22,18" FontSize="16" Opacity="0.30" Foreground="White" Style="{DynamicResource TextBlockBaseStyle}"/>
                             </Grid>
 
 
@@ -14801,6 +15216,14 @@
                                                 <Setter Property="Tag" Value="True"/>
                                             </MultiDataTrigger>
 
+                                            <!-- ScreenSaver soundtrack has priority over UPS, except Radio Mode. -->
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled, FallbackValue=False}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Tag" Value="True"/>
+                                            </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </ContentControl.Style>
@@ -14848,9 +15271,37 @@
                         <!-- Sound -->
 
 
+                        <!-- ScreenSaver ambient soundtrack. Theme/UPS music is paused while this is active. -->
+                        <MediaElement x:Name="ScreenSaverOST"
+                                      Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackScreenSaverOstPath}"
+                                      Volume="{Settings Fullscreen.BackgroundVolume}"
+                                      MediaElementBehaviors.Repeat="True">
+                            <MediaElement.Style>
+                                <Style TargetType="MediaElement">
+                                    <Setter Property="LoadedBehavior" Value="Manual"/>
+                                    <Setter Property="UnloadedBehavior" Value="Close"/>
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled, FallbackValue=False}" Value="False"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <MultiDataTrigger.EnterActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
+                                            </MultiDataTrigger.EnterActions>
+                                            <MultiDataTrigger.ExitActions>
+                                                <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeOutPause}"/>
+                                            </MultiDataTrigger.ExitActions>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </MediaElement.Style>
+                        </MediaElement>
+
                         <!-- ========================================================== MUSIQUE DES FENÊTRES SECONDAIRES — MODE NORMAL ========================================================== -->
 
-                        <MediaElement x:Name="SecondaryViewsOSTNormal" Source="{ThemeFile 'audio/SecondaryViewsOST.mp3'}" Volume="{Settings Fullscreen.BackgroundVolume}" MediaElementBehaviors.Repeat="True">
+                        <MediaElement x:Name="SecondaryViewsOSTNormal" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackSecondaryViewsOstPath}" Volume="{Settings Fullscreen.BackgroundVolume}" MediaElementBehaviors.Repeat="True">
 
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
@@ -14876,6 +15327,7 @@
 
 
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
@@ -14932,6 +15384,7 @@
 
 
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
@@ -14987,6 +15440,7 @@
 
 
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
@@ -15016,7 +15470,7 @@
 
 
                         <!-- Normal login OST -->
-                        <MediaElement x:Name="AcceuilOpen" Source="{ThemeFile 'audio/LoginOST.mp3'}" MediaElementBehaviors.Repeat="True" Volume="{Settings Fullscreen.BackgroundVolume}">
+                        <MediaElement x:Name="AcceuilOpen" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackLoginOstPath}" MediaElementBehaviors.Repeat="True" Volume="{Settings Fullscreen.BackgroundVolume}">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -15031,6 +15485,7 @@
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AcceuilOrNot]}" Value="True"/>
                                                 <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="True"/>
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyDay}" Value="False"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="LoadedBehavior" Value="Play"/>
                                         </MultiDataTrigger>
@@ -15051,6 +15506,9 @@
                                             <Setter Property="LoadedBehavior" Value="Close"/>
                                         </DataTrigger>
 
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="True">
+                                            <Setter Property="LoadedBehavior" Value="Pause"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </MediaElement.Style>
@@ -15073,6 +15531,7 @@
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AcceuilOrNot]}" Value="True"/>
                                                 <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="True"/>
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle1}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="LoadedBehavior" Value="Play"/>
                                         </MultiDataTrigger>
@@ -15093,6 +15552,9 @@
                                             <Setter Property="LoadedBehavior" Value="Close"/>
                                         </DataTrigger>
 
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="True">
+                                            <Setter Property="LoadedBehavior" Value="Pause"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </MediaElement.Style>
@@ -15115,6 +15577,7 @@
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[AcceuilOrNot]}" Value="True"/>
                                                 <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=IsActive}" Value="True"/>
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsLuckyStyle2}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="LoadedBehavior" Value="Play"/>
                                         </MultiDataTrigger>
@@ -15135,6 +15598,9 @@
                                             <Setter Property="LoadedBehavior" Value="Close"/>
                                         </DataTrigger>
 
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="True">
+                                            <Setter Property="LoadedBehavior" Value="Pause"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </MediaElement.Style>
@@ -15205,7 +15671,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="WrongColumnsSound" Source="{ThemeFile 'audio/Warning.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="WrongColumnsSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackWarningPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -15229,7 +15695,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="GlobalMessagePanelSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="GlobalMessagePanelSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackNotiPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -15253,7 +15719,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="AnikiHelperUpdateWarningPanelSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="AnikiHelperUpdateWarningPanelSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackNotiPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -15277,7 +15743,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="SteamFriendsToastPanelSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="SteamFriendsToastPanelSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackNotiPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -15301,7 +15767,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="AnikiHelperMessageSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="AnikiHelperMessageSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackNotiPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -15325,7 +15791,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="SessionSummaryPanelSound" Source="{ThemeFile 'audio/SessionSummary.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="SessionSummaryPanelSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackSessionSummaryPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -15349,7 +15815,7 @@
                             </MediaElement.Style>
                         </MediaElement>
 
-                        <MediaElement x:Name="SystemMessageSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="SystemMessageSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackNotiPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -15375,7 +15841,7 @@
 
                         <MediaElement x:Name="OpenViewSound" LoadedBehavior="Manual" UnloadedBehavior="Close" Visibility="Collapsed" Volume="{Settings Fullscreen.InterfaceVolume}" IsMuted="False"/>
 
-                        <MediaElement x:Name="CloseGameSound" Source="{ThemeFile 'audio/Noti.wav'}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
+                        <MediaElement x:Name="CloseGameSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackNotiPath}" Volume="{Settings Fullscreen.InterfaceVolume}" MediaElementBehaviors.Repeat="False">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -15402,7 +15868,7 @@
                         <MediaElement x:Name="ConnexionClick" Volume="{Settings Fullscreen.InterfaceVolume}" LoadedBehavior="Manual" UnloadedBehavior="Close" MediaElementBehaviors.Repeat="False"/>
 
                         <!-- Normal Hub OST -->
-                        <MediaElement x:Name="WelcomeOpen" Source="{ThemeFile 'audio/HubOST.mp3'}" MediaElementBehaviors.Repeat="True" Volume="{Settings Fullscreen.BackgroundVolume}">
+                        <MediaElement x:Name="WelcomeOpen" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackHubOstPath}" MediaElementBehaviors.Repeat="True" Volume="{Settings Fullscreen.BackgroundVolume}">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
                                     <Setter Property="LoadedBehavior" Value="Manual"/>
@@ -15421,6 +15887,7 @@
                                                 <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled, FallbackValue=False}" Value="False"/>
 
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
@@ -15486,6 +15953,7 @@
                                                 <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled, FallbackValue=False}" Value="False"/>
 
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
@@ -15542,6 +16010,7 @@
                                                 <Condition Binding="{PluginSettings Plugin=UniPlaySong, Path=RadioModeEnabled, FallbackValue=False}" Value="False"/>
 
                                                 <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayniteApplicationActive}" Value="True"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsScreenSaverAmbientMusicActive}" Value="False"/>
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.EnterActions>
                                                 <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource ThemeMusicFadeIn}"/>
@@ -15587,6 +16056,8 @@
                                 </Style>
                             </MediaElement.Style>
                         </MediaElement>
+
+
 
 
                         <Canvas x:Name="AnikiFocusedCoverOverlayLayer" Panel.ZIndex="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsHitTestVisible="False" ClipToBounds="False" Visibility="Collapsed">
@@ -15639,7 +16110,6 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
-
 
                         <DataTrigger Binding="{Settings Fullscreen.HorizontalLayout}" Value="True">
                             <Setter TargetName="ToggleViewButton" Property="IsChecked" Value="{Binding ElementName=ChangeViewButton, Path=IsChecked, Mode=TwoWay}"/>
