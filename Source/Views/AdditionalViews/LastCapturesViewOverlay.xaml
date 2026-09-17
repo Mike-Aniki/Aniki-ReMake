@@ -10,13 +10,33 @@
                     <Grid Width="1920"
                           Height="1080"
                           Background="Transparent"
-                          Focusable="False">
+                          Focusable="False"
+                          Opacity="0">
+
+                        
+
+                        <Grid.Triggers>
+                            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         From="0"
+                                                         To="1"
+                                                         Duration="0:0:0.68">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Grid.Triggers>
 
                         <!-- Strong modal dim behind the captures panel -->
                         <Rectangle IsHitTestVisible="False" Fill="#96000000"/>
 
                         <Border Width="1200"
-                                Height="760"
+                                Height="700"
                                 Padding="42,32"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
@@ -106,8 +126,10 @@
 
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
+                                                <!-- Keep the whole card 16:9. Metadata is drawn as a compact
+                                                     overlay instead of increasing the card height. -->
                                                 <ButtonEx Width="340"
-                                                          Height="342"
+                                                          Height="191.25"
                                                           Margin="14,0"
                                                           Padding="0"
                                                           FocusVisualStyle="{x:Null}"
@@ -124,26 +146,35 @@
                                                             <Setter Property="Template">
                                                                 <Setter.Value>
                                                                     <ControlTemplate TargetType="ButtonEx">
-                                                                        <Border x:Name="CaptureCard"
-                                                                                CornerRadius="22"
-                                                                                Background="#0C000000"
-                                                                                BorderBrush="#24FFFFFF"
-                                                                                BorderThickness="1"
-                                                                                ClipToBounds="True">
-                                                                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                                                                        </Border>
+                                                                        <Grid>
+                                                                            <!-- Base card/content. -->
+                                                                            <Border x:Name="CaptureCard"
+                                                                                    CornerRadius="22"
+                                                                                    Background="#0C000000"
+                                                                                    BorderBrush="#24FFFFFF"
+                                                                                    BorderThickness="1"
+                                                                                    ClipToBounds="True">
+                                                                                <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                                                            </Border>
+
+                                                                            <!-- Dedicated focus layer rendered above the image and metadata. -->
+                                                                            <Border x:Name="FocusBorder"
+                                                                                    Panel.ZIndex="100"
+                                                                                    CornerRadius="22"
+                                                                                    BorderBrush="Transparent"
+                                                                                    BorderThickness="3"
+                                                                                    Background="Transparent"
+                                                                                    IsHitTestVisible="False"/>
+                                                                        </Grid>
                                                                         <ControlTemplate.Triggers>
                                                                             <Trigger Property="IsMouseOver" Value="True">
-                                                                                <Setter TargetName="CaptureCard" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
-                                                                                <Setter TargetName="CaptureCard" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                                <Setter TargetName="FocusBorder" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
                                                                             </Trigger>
                                                                             <Trigger Property="IsFocused" Value="True">
-                                                                                <Setter TargetName="CaptureCard" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
-                                                                                <Setter TargetName="CaptureCard" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                                <Setter TargetName="FocusBorder" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
                                                                             </Trigger>
                                                                             <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                                                                                <Setter TargetName="CaptureCard" Property="Background" Value="{DynamicResource ButtonBackgroundFocus}"/>
-                                                                                <Setter TargetName="CaptureCard" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
+                                                                                <Setter TargetName="FocusBorder" Property="BorderBrush" Value="{DynamicResource FocusGameBorderBrush}"/>
                                                                             </Trigger>
                                                                         </ControlTemplate.Triggers>
                                                                     </ControlTemplate>
@@ -152,106 +183,104 @@
                                                         </Style>
                                                     </ButtonEx.Style>
 
-                                                    <Grid>
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="210"/>
-                                                            <RowDefinition Height="*"/>
-                                                        </Grid.RowDefinitions>
+                                                    <Grid ClipToBounds="True">
+                                                        <!-- Full-card 16:9 capture -->
+                                                        <Border x:Name="CaptureFullMask"
+                                                                CornerRadius="21"
+                                                                Background="Black"/>
 
-                                                        <Grid Grid.Row="0" Background="#18000000" ClipToBounds="True">
-                                                            <!-- Rounded image mask, so thumbnails respect the card radius -->
-                                                            <Border x:Name="CaptureThumbMask"
-                                                                    CornerRadius="22,22,0,0"
-                                                                    Background="Black"/>
+                                                        <Grid>
+                                                            <Grid.OpacityMask>
+                                                                <VisualBrush Visual="{Binding ElementName=CaptureFullMask}"/>
+                                                            </Grid.OpacityMask>
 
-                                                            <Grid>
-                                                                <Grid.OpacityMask>
-                                                                    <VisualBrush Visual="{Binding ElementName=CaptureThumbMask}"/>
-                                                                </Grid.OpacityMask>
+                                                            <TextBlock Text="&#xE91B;"
+                                                                       FontFamily="{DynamicResource FontIcons}"
+                                                                       FontSize="38"
+                                                                       Foreground="{DynamicResource TextDetailBrush}"
+                                                                       Opacity="0.45"
+                                                                       HorizontalAlignment="Center"
+                                                                       VerticalAlignment="Center"/>
 
-                                                                <TextBlock Text="&#xE91B;"
-                                                                           FontFamily="{DynamicResource FontIcons}"
-                                                                           FontSize="38"
-                                                                           Foreground="{DynamicResource TextDetailBrush}"
-                                                                           Opacity="0.45"
-                                                                           HorizontalAlignment="Center"
-                                                                           VerticalAlignment="Center"/>
-
-                                                                <Image Source="{Binding DisplayThumbnailPath}"
-                                                                       Stretch="UniformToFill"
-                                                                       RenderOptions.BitmapScalingMode="Fant"/>
-                                                            </Grid>
-
-                                                            <Border HorizontalAlignment="Right"
-                                                                    VerticalAlignment="Top"
-                                                                    Margin="0,14,14,0"
-                                                                    Padding="9,5"
-                                                                    CornerRadius="11"
-                                                                    Background="#AA000000"
-                                                                    BorderBrush="#35FFFFFF"
-                                                                    BorderThickness="1">
-                                                                <TextBlock FontFamily="{DynamicResource FontMain}"
-                                                                           FontSize="13"
-                                                                           FontWeight="Bold"
-                                                                           Foreground="{DynamicResource TextHighlightBrush}">
-                                                                    <TextBlock.Style>
-                                                                        <Style TargetType="TextBlock">
-                                                                            <Setter Property="Text" Value="{DynamicResource LOCImage}"/>
-                                                                            <Style.Triggers>
-                                                                                <DataTrigger Binding="{Binding IsVideo}" Value="True">
-                                                                                    <Setter Property="Text" Value="{DynamicResource Video}"/>
-                                                                                    <Setter Property="Foreground" Value="{DynamicResource TextHighlightBrush}"/>
-                                                                                </DataTrigger>
-                                                                            </Style.Triggers>
-                                                                        </Style>
-                                                                    </TextBlock.Style>
-                                                                </TextBlock>
-                                                            </Border>
+                                                            <Image Source="{Binding DisplayThumbnailPath}"
+                                                                   Stretch="UniformToFill"
+                                                                   RenderOptions.BitmapScalingMode="Fant"/>
                                                         </Grid>
 
-                                                        <Grid Grid.Row="1" Margin="20,16,20,16">
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="Auto"/>
-                                                                <RowDefinition Height="Auto"/>
-                                                                <RowDefinition Height="*"/>
-                                                                <RowDefinition Height="Auto"/>
-                                                            </Grid.RowDefinitions>
-
-                                                            <TextBlock Grid.Row="0"
-                                                                       Text="{Binding GameName}"
-                                                                       Style="{DynamicResource TextBlockBaseStyle}"
-                                                                       FontSize="20"
+                                                        <!-- Image / video badge -->
+                                                        <Border HorizontalAlignment="Right"
+                                                                VerticalAlignment="Top"
+                                                                Margin="0,11,11,0"
+                                                                Padding="8,4"
+                                                                CornerRadius="10"
+                                                                Background="#B8000000"
+                                                                BorderBrush="#35FFFFFF"
+                                                                BorderThickness="1">
+                                                            <TextBlock FontFamily="{DynamicResource FontMain}"
+                                                                       FontSize="12"
                                                                        FontWeight="Bold"
-                                                                       TextTrimming="CharacterEllipsis"/>
+                                                                       Foreground="{DynamicResource TextHighlightBrush}">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="TextBlock">
+                                                                        <Setter Property="Text" Value="{DynamicResource LOCImage}"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding IsVideo}" Value="True">
+                                                                                <Setter Property="Text" Value="{DynamicResource Video}"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                            </TextBlock>
+                                                        </Border>
 
-                                                            <TextBlock Grid.Row="1"
-                                                                       Text="{Binding CaptureDateString}"
-                                                                       Margin="0,4,0,0"
-                                                                       Style="{DynamicResource TextBlockBaseStyle}"
-                                                                       FontSize="14"
-                                                                       Opacity="0.72"
-                                                                       TextTrimming="CharacterEllipsis"/>
-
-                                                            <Grid Grid.Row="3">
+                                                        <!-- Compact metadata band kept inside the 16:9 card. -->
+                                                        <Border Height="58"
+                                                                VerticalAlignment="Bottom"
+                                                                Background="#D40A0E14"
+                                                                Padding="13,5">
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                </Grid.RowDefinitions>
                                                                 <Grid.ColumnDefinitions>
                                                                     <ColumnDefinition Width="*"/>
                                                                     <ColumnDefinition Width="Auto"/>
                                                                 </Grid.ColumnDefinitions>
 
-                                                                <TextBlock Text="{Binding SourceProvider}"
+                                                                <TextBlock Grid.Row="0" Grid.Column="0"
+                                                                           Text="{Binding GameName}"
                                                                            Style="{DynamicResource TextBlockBaseStyle}"
-                                                                           FontSize="13"
-                                                                           Opacity="0.55"
+                                                                           FontSize="16"
+                                                                           FontWeight="Bold"
                                                                            TextTrimming="CharacterEllipsis"/>
 
-                                                                <TextBlock Grid.Column="1"
+                                                                <TextBlock Grid.Row="0" Grid.Column="1"
                                                                            Text="{Binding FileSizeString}"
                                                                            Style="{DynamicResource TextBlockBaseStyle}"
-                                                                           FontSize="13"
+                                                                           FontSize="10"
+                                                                           Opacity="0.62"
+                                                                           Margin="10,2,0,0"
+                                                                           VerticalAlignment="Top"/>
+
+                                                                <TextBlock Grid.Row="1" Grid.Column="0"
+                                                                           Text="{Binding CaptureDateString}"
+                                                                           Margin="0,3,0,0"
+                                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                                           FontSize="11"
+                                                                           Opacity="0.72"
+                                                                           TextTrimming="CharacterEllipsis"/>
+
+                                                                <TextBlock Grid.Row="1" Grid.Column="1"
+                                                                           Text="{Binding SourceProvider}"
+                                                                           Margin="10,3,0,0"
+                                                                           MaxWidth="120"
+                                                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                                                           FontSize="10"
                                                                            Opacity="0.55"
-                                                                           Margin="10,0,0,0"/>
+                                                                           TextTrimming="CharacterEllipsis"/>
                                                             </Grid>
-                                                        </Grid>
+                                                        </Border>
                                                     </Grid>
                                                 </ButtonEx>
                                             </DataTemplate>

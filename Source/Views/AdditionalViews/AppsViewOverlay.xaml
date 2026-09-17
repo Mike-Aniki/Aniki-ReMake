@@ -10,7 +10,25 @@
                     <Grid Width="1920"
                           Height="1080"
                           Background="Transparent"
-                          Focusable="False">
+                          Focusable="False"
+                          Opacity="0">
+
+                        <Grid.Triggers>
+                            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         From="0"
+                                                         To="1"
+                                                         Duration="0:0:0.68">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Grid.Triggers>
 
                         <Rectangle IsHitTestVisible="False" Fill="#96000000"/>
 

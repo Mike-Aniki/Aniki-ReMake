@@ -326,15 +326,50 @@
 
                             </Grid>
 
+                            <!-- Friend Profile loading -->
+                            <StackPanel VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Panel.ZIndex="20">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsFriendProfileOpen}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsFriendProfileLoading}" Value="True"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+
+                                <TextBlock Text="{DynamicResource LOCFriendProfileLoading}"
+                                           Style="{DynamicResource TextBlockBaseStyle}"
+                                           FontSize="34"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"/>
+
+                                <ProgressBar Width="360"
+                                             Height="6"
+                                             Margin="0,18,0,0"
+                                             IsIndeterminate="True"/>
+                            </StackPanel>
+
                             <!-- Friend Profile -->
                             <Grid x:Name="FriendProfilePage" Width="1300" Height="930" VerticalAlignment="Center" Margin="20,30,20,30" FocusManager.FocusedElement="{Binding ElementName=FriendProfileBackButton}">
                                 <Grid.Style>
                                     <Style TargetType="Grid">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsFriendProfileOpen}" Value="True">
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsFriendProfileOpen}" Value="True"/>
+                                                    <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=IsFriendProfileLoading}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
                                                 <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
+                                            </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Grid.Style>
@@ -765,24 +800,6 @@
                                                         </ItemsControl.ItemTemplate>
                                                     </ItemsControl>
 
-                                                    <!-- Loading -->
-                                                    <TextBlock Grid.RowSpan="5"
-                                                               Text="{DynamicResource LOCFriendProfileLoading}"
-                                                               FontSize="28"
-                                                               Opacity="0.90"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center">
-                                                        <TextBlock.Style>
-                                                            <Style TargetType="TextBlock" BasedOn="{StaticResource TextBlockBaseStyle}">
-                                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsFriendProfileLoading}" Value="True">
-                                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </TextBlock.Style>
-                                                    </TextBlock>
                                                 </Grid>
                                             </Border>
                                         </Grid>

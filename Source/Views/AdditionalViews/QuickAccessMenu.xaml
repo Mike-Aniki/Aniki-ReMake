@@ -1269,19 +1269,19 @@
                                               Tag="&#xE77B;"
                                               FocusVisualStyle="{x:Null}"
                                               Content="{DynamicResource LOCProfile}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[PlayerProfileWindowStyle|MostPlayedCard|SecondaryMusic]}"/>
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[PlayerProfileWindowStyle|MostPlayedCard|SecondaryMusic|AdditionalViewSound]}"/>
 
                                     <ButtonEx x:Name="QuickNotificationButton"
                                               Style="{StaticResource QuickAccessButtonStyle}"
                                               FocusVisualStyle="{x:Null}"
                                               Tag="&#xEA8F;"
                                               Content="{DynamicResource LOCNotifications}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[QuickAccessNotificationWindowStyle]}"/>
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[QuickAccessNotificationWindowStyle|OpenPanelSound]}"/>
 
                                     <ButtonEx x:Name="QuickFriendsButton"
                                               Tag="&#xE716;"
                                               Content="{DynamicResource LOCSteamFriendsTitle}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle|SecondaryMusic]}">
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle|SecondaryMusic|AdditionalViewSound]}">
                                         <ButtonEx.Style>
                                             <Style TargetType="ButtonEx" BasedOn="{StaticResource QuickAccessButtonStyle}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -1297,7 +1297,7 @@
                                     <ButtonEx x:Name="QuickAchievementsButton_PA"
                                               Tag="&#xe903;"
                                               Content="{DynamicResource LOCAchievements}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton|SecondaryMusic]}">
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton|SecondaryMusic|AdditionalViewSound]}">
                                         <ButtonEx.Style>
                                             <Style TargetType="ButtonEx" BasedOn="{StaticResource QuickAccessButtonStyle3}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -1314,13 +1314,13 @@
                                               Style="{StaticResource QuickAccessButtonStyle2}"
                                               Tag="&#xefa6;"
                                               Content="{DynamicResource LOCNewsTab}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[LastUpdatesWindowStyle|SecondaryMusic]}"/>
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[LastUpdatesWindowStyle|SecondaryMusic|AdditionalViewSound]}"/>
 
                                     <ButtonEx x:Name="QuickStoreButton"
                                               Style="{StaticResource QuickAccessButtonStyle}"
                                               Tag="&#xE719;"
                                               Content="{DynamicResource LOCSteamStoreTitle}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[SteamStoreStyle|SecondaryMusic]}"/>
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[SteamStoreStyle|SecondaryMusic|AdditionalViewSound]}"/>
 
                                     <ButtonEx x:Name="QuickFeaturesButton"
                                               Style="{StaticResource QuickAccessButtonStyle}"
@@ -1345,7 +1345,7 @@
                                               Style="{StaticResource QuickAccessButtonStyle}"
                                               Tag="&#xE897;"
                                               Content="{DynamicResource LOCHelpAndRessource}"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[HelpWindowStyle]}"/>
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[HelpWindowStyle|AdditionalViewSound]}"/>
 
                                     <ButtonEx x:Name="QuickMenuButton"
                                               Style="{StaticResource QuickAccessButtonStyle}"
@@ -1412,6 +1412,12 @@
                                               Command="{PluginSettings Plugin=AnikiHelper, Path=OpenQuickAccessFeatureCommand}"
                                               CommandParameter="builtin:video-player"/>
 
+                                    <ButtonEx x:Name="FeatureCommunityPacksButton"
+                                              Style="{StaticResource QuickAccessButtonStyle}"
+                                              Tag="&#xE719;"
+                                              Content="{DynamicResource CommunityHub_Title}"
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenCommunityPacksHubCommand}"/>
+
                                     <ButtonEx x:Name="ExtraSoftwareToolsButton"
                                               Style="{StaticResource QuickAccessButtonStyle}"
                                               Tag="&#xECAA;"
@@ -1442,7 +1448,7 @@
                                     <ButtonEx x:Name="ExtraControllerManagerButton"
                                               Tag="&#xE7FC;"
                                               Content="Controller Manager"
-                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[ControllerManagerWindowStyleLeft|ControllerManagerTesterButton]}">
+                                              Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[ControllerManagerWindowStyleLeft|ControllerManagerTesterButton|AdditionalViewSound]}">
                                         <ButtonEx.Style>
                                             <Style TargetType="ButtonEx" BasedOn="{StaticResource QuickAccessButtonStyle}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -1570,10 +1576,13 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </StackPanel.Style>
-                                            <Viewbox Width="22" Height="22" Margin="0,0,5,0">
-                                                <Path Data="{PluginSettings Plugin=ControllerSessionManager, Path=PrimaryControllerIconGeometry, Converter={PluginConverter Plugin=ControllerSessionManager, Converter=IconGeometryConverter}}"
-                                                      Stretch="Uniform" Fill="#FFFFFFFF" Stroke="#FFFFFFFF" StrokeThickness="0.45" StrokeLineJoin="Round"/>
-                                            </Viewbox>
+                                            <ContentControl x:Name="ControllerSessionManager_ControllerIcon"
+                                                            Width="22"
+                                                            Height="22"
+                                                            Margin="0,0,5,0"
+                                                            Foreground="{DynamicResource TextBrush}"
+                                                            IsHitTestVisible="False"
+                                                            Focusable="False"/>
                                             <TextBlock Text="1" Foreground="#FFFFFFFF" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
                                             <TextBlock Text="{PluginSettings Plugin=ControllerSessionManager, Path=PrimaryControllerBatteryLabel}"
                                                        Foreground="{PluginSettings Plugin=ControllerSessionManager, Path=PrimaryControllerBatteryBrush}"

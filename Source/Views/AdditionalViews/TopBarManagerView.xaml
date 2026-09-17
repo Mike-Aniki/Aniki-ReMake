@@ -672,6 +672,58 @@
                                             <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="72"/></Grid.ColumnDefinitions>
                                             <ButtonEx Grid.Column="0"
                                                       Style="{StaticResource TopBarManagerRowButtonStyle}"
+                                                      Command="{PluginSettings Plugin=AnikiHelper, Path=OpenTopBarFeatureCommand}" CommandParameter="community-packs">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions><ColumnDefinition Width="46"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="&#xE719;" FontFamily="{DynamicResource FontIcons}" FontSize="23" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="1" Text="{DynamicResource CommunityHub_Title}" FontFamily="{DynamicResource FontMain}" FontSize="18.5" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                                    <Border Grid.Column="2"
+                                                            Width="24"
+                                                            Height="24"
+                                                            Margin="10,0,2,0"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            CornerRadius="12"
+                                                            Background="#18000000"
+                                                            BorderBrush="{DynamicResource MenuBorderBrush}"
+                                                            BorderThickness="1">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowCommunityPacksButton]}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="&#xE718;"
+                                                                   FontFamily="{DynamicResource FontIcons}"
+                                                                   FontSize="12"
+                                                                   HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   Foreground="{DynamicResource TextBrush}"
+                                                                   Margin="0,-1,0,0"/>
+                                                    </Border>
+                                                </Grid>
+                                            </ButtonEx>
+                                            <ButtonEx Grid.Column="1" HorizontalAlignment="Right" Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleAnikiThemeOptionCommand}" CommandParameter="ShowCommunityPacksButton">
+                                                <ButtonEx.Style>
+                                                    <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarManagerPinButtonStyle}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=Options[ShowCommunityPacksButton]}" Value="True">
+                                                                <Setter Property="Tag" Value="Pinned"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ButtonEx.Style>
+                                            </ButtonEx>
+                                        </Grid>
+
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="72"/></Grid.ColumnDefinitions>
+                                            <ButtonEx Grid.Column="0"
+                                                      Style="{StaticResource TopBarManagerRowButtonStyle}"
                                                       Command="{PluginSettings Plugin=AnikiHelper, Path=OpenTopBarFeatureCommand}" CommandParameter="software-tools">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions><ColumnDefinition Width="46"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>

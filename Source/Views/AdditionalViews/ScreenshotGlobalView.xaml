@@ -1,4 +1,4 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -415,6 +415,12 @@
                                     </ItemsPanelTemplate>
                                 </Setter.Value>
                             </Setter>
+
+                            <Style.Triggers>
+                                <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=MediaGalleryLoading}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
                         </Style>
 
                     </ControlTemplate.Resources>
@@ -431,10 +437,7 @@
                           VerticalAlignment="Stretch"
                           Opacity="0">
 
-
-                        <Grid.RenderTransform>
-                            <TranslateTransform Y="0"/>
-                        </Grid.RenderTransform>
+                        
 
                         <Grid.Triggers>
                             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
@@ -443,12 +446,7 @@
                                         <DoubleAnimation Storyboard.TargetProperty="Opacity"
                                                          From="0"
                                                          To="1"
-                                                         Duration="0:0:0.25"/>
-
-                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                                         From="24"
-                                                         To="0"
-                                                         Duration="0:0:0.35">
+                                                         Duration="0:0:0.68">
                                             <DoubleAnimation.EasingFunction>
                                                 <CubicEase EasingMode="EaseOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -458,6 +456,7 @@
                             </EventTrigger>
                         </Grid.Triggers>
 
+                        <!-- Capture Gallery is shown immediately; tiles still populate progressively. -->
 
                         <Grid IsHitTestVisible="False">
                             <Border Background="{DynamicResource SecondaryViewBackground}"/>
@@ -737,9 +736,13 @@
                                 <Style TargetType="Border">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=MediaGalleryGames.Count}" Value="0">
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=MediaGalleryGames.Count}" Value="0"/>
+                                                <Condition Binding="{PluginSettings Plugin=AnikiHelper, Path=MediaGalleryLoading}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
                                             <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
+                                        </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
@@ -796,8 +799,14 @@
                             </StackPanel>
                         </Border>
 
-                        <Grid>
+                        <!-- Capture Gallery intentionally has no transient loading indicator.
+                             The real page stays visible immediately. Its tile list binds to
+                             VisibleMediaGalleryGames, which is populated in small UI batches after
+                             the page has rendered so reopening the gallery never has to materialize
+                             every cover/card before Window.Show(). -->
 
+                        <!-- PAGE STRUCTURE: stays visible while the tile collection is being prepared. -->
+                        <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="220"/>
                                 <RowDefinition Height="*"/>
@@ -832,6 +841,16 @@
                                         <StackPanel Orientation="Horizontal"
                                                     Margin="0,10,0,0"
                                                     Effect="{DynamicResource SoftTextShadow}">
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=MediaGalleryLoading}" Value="True">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
 
                                             <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=MediaGalleryGames.Count}"
                                                        Style="{DynamicResource TextBlockDetailStyle}"
@@ -908,7 +927,7 @@
                                      VerticalAlignment="Stretch"
                                      Style="{StaticResource MediaGalleryTileListStyle}"
                                      ItemContainerStyle="{StaticResource MediaGalleryTileContainerStyle}"
-                                     ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=MediaGalleryGames}"
+                                     ItemsSource="{PluginSettings Plugin=AnikiHelper, Path=VisibleMediaGalleryGames}"
                                      SelectedIndex="0"
                                      SelectionMode="Single"
                                      pbeh:FocusBahaviors.FocusBinding="True"

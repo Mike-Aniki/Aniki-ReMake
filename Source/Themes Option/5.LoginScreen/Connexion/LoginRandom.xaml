@@ -382,6 +382,15 @@
     </ControlTemplate>
 
 
+    <!-- Community Login Pack selected by Aniki Helper's Random Login pool. -->
+    <ControlTemplate x:Key="VideoTpl_Community" TargetType="ContentControl">
+        <Grid>
+            <MediaElement Style="{StaticResource LoginVideoMediaStyle}"
+                          Source="{PluginSettings Plugin=AnikiHelper, Path=RandomLoginCommunityVideoPath}"/>
+        </Grid>
+    </ControlTemplate>
+
+
     <!-- ========= STYLE DE SÉLECTION ========= -->
     <Style x:Key="ConnexionVideo" TargetType="ContentControl">
         <Setter Property="Focusable" Value="False"/>
@@ -514,6 +523,10 @@
             </DataTrigger>
             <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=LoginRandomIndex}" Value="42">
                 <Setter Property="Template" Value="{StaticResource VideoTpl_42}"/>
+            </DataTrigger>
+            <!-- Keep this trigger last so a Community pick overrides the index-0 fallback. -->
+            <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsRandomLoginCommunityPack}" Value="True">
+                <Setter Property="Template" Value="{StaticResource VideoTpl_Community}"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>

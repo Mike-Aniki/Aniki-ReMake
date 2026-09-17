@@ -10,9 +10,9 @@
     <!-- Toast visual template -->
     <DataTemplate x:Key="PlayAch.Template.AchievementToast">
 
-        <Grid Width="610"
-              Height="104"
-              Margin="0,10,0,10"
+        <Grid Width="570"
+              Height="92"
+              Margin="0,15,10,0"
               SnapsToDevicePixels="True">
 
             <!-- Shadow -->
@@ -26,7 +26,7 @@
                     Background="{DynamicResource AnikiToastBackgroundGradient}"
                     BorderBrush="{DynamicResource AnikiToastBorderBrush}"
                     BorderThickness="1"
-                    Padding="10">
+                    Padding="8">
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -67,7 +67,7 @@
                             <Image RenderOptions.BitmapScalingMode="Fant">
                                 <Image.Style>
                                     <Style TargetType="Image">
-                                        <Setter Property="Source" Value="{Binding IconPath}"/>
+                                        <Setter Property="Source" Value="{Binding IconImage}"/>
                                         <Setter Property="Stretch" Value="UniformToFill"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsGameCompleted}" Value="True">
@@ -117,12 +117,11 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <!-- Friend premium header -->
+                        <!-- Friend header / progress header -->
                         <TextBlock Grid.Row="0"
-                                   Text="{DynamicResource LOCFriendUnlockedAchievement}"
-                                   Style="{DynamicResource AnikiToastTextBlockStyle}"
                                    Foreground="{DynamicResource AnikiToastSubTextBrush}"
                                    FontSize="11"
                                    FontWeight="Bold"
@@ -131,14 +130,25 @@
                                    TextWrapping="NoWrap"
                                    Margin="0,0,8,2">
                             <TextBlock.Style>
-                                <Style TargetType="TextBlock">
+                                <Style TargetType="TextBlock"
+                                       BasedOn="{StaticResource AnikiToastTextBlockStyle}">
+                                    <!-- Preserve the existing friend header by default. -->
+                                    <Setter Property="Text" Value="{DynamicResource LOCFriendUnlockedAchievement}"/>
                                     <Setter Property="Visibility" Value="Visible"/>
+
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding FriendAvatar}" Value="{x:Null}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
+
                                         <DataTrigger Binding="{Binding FriendAvatar}" Value="">
                                             <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+
+                                        <!-- Progress notifications need their own header. -->
+                                        <DataTrigger Binding="{Binding IsProgressUpdate}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Setter Property="Text" Value="{Binding HeaderText}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -199,27 +209,73 @@
                             <TextBlock Opacity="0.88"
                                        FontSize="14"
                                        FontWeight="SemiBold"
-                                       MaxHeight="40"
-                                       TextTrimming="CharacterEllipsis"
-                                       TextWrapping="Wrap">
+                                       TextTrimming="CharacterEllipsis">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock"
                                            BasedOn="{StaticResource AnikiToastTextBlockStyle}">
 
-                                        <Setter Property="Text"
-                                                Value="{Binding Description}"/>
+                                        <Setter Property="Text" Value="{Binding Description}"/>
+                                        <Setter Property="MaxHeight" Value="40"/>
+                                        <Setter Property="TextWrapping" Value="Wrap"/>
 
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsGameCompleted}"
-                                                         Value="True">
+                                            <DataTrigger Binding="{Binding IsGameCompleted}" Value="True">
+                                                <Setter Property="Text" Value="{DynamicResource LOCAnikiAllAchievementsUnlocked}"/>
+                                            </DataTrigger>
 
-                                                <Setter Property="Text"
-                                                        Value="{DynamicResource LOCAnikiAllAchievementsUnlocked}"/>
+                                            <!-- JDD keeps progress descriptions to one line. -->
+                                            <DataTrigger Binding="{Binding IsProgressUpdate}" Value="True">
+                                                <Setter Property="TextWrapping" Value="NoWrap"/>
+                                                <Setter Property="MaxHeight" Value="20"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+                        </Grid>
+
+                        <!-- Progress notification: bar + current progress -->
+                        <Grid Grid.Row="3"
+                              Margin="0,5,8,0">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsProgressUpdate}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0"
+                                    Height="6"
+                                    CornerRadius="3"
+                                    Background="#33FFFFFF"
+                                    ClipToBounds="True"
+                                    VerticalAlignment="Center"
+                                    Margin="0,0,10,0">
+                                <Border Background="{Binding AccentBrush}"
+                                        CornerRadius="3"
+                                        RenderTransformOrigin="0,0.5">
+                                    <Border.RenderTransform>
+                                        <ScaleTransform ScaleX="{Binding ProgressFraction}"/>
+                                    </Border.RenderTransform>
+                                </Border>
+                            </Border>
+
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding ProgressText}"
+                                       Style="{DynamicResource AnikiToastTextBlockStyle}"
+                                       Foreground="{DynamicResource AnikiToastSubTextBrush}"
+                                       FontSize="12"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"/>
                         </Grid>
                     </Grid>
 
@@ -244,6 +300,11 @@
 
                                         <!-- The separate completion notification also uses Platinum -->
                                         <DataTrigger Binding="{Binding IsGameCompleted}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+
+                                        <!-- Progress notifications intentionally hide rarity visuals. -->
+                                        <DataTrigger Binding="{Binding IsProgressUpdate}" Value="True">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
                                     </Style.Triggers>

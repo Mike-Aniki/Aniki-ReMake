@@ -307,18 +307,11 @@
 
                     </ControlTemplate.Resources>
 
-                    <Grid x:Name="PlayerProfileRoot"
-                          Tag="Page1"
-                          FocusManager.FocusedElement="{Binding ElementName=PlayerRecentAddedCard}"
-                          KeyboardNavigation.TabNavigation="Contained"
-                          KeyboardNavigation.DirectionalNavigation="Contained"
-                          KeyboardNavigation.ControlTabNavigation="Contained"
+                    <Grid x:Name="ProfileViewRoot"
                           Background="{DynamicResource SecondaryViewBackground}"
                           Opacity="0">
 
-                        <Grid.RenderTransform>
-                            <TranslateTransform Y="0"/>
-                        </Grid.RenderTransform>
+                        
 
                         <Grid.Triggers>
                             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
@@ -327,12 +320,7 @@
                                         <DoubleAnimation Storyboard.TargetProperty="Opacity"
                                                          From="0"
                                                          To="1"
-                                                         Duration="0:0:0.25"/>
-
-                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                                         From="24"
-                                                         To="0"
-                                                         Duration="0:0:0.35">
+                                                         Duration="0:0:0.68">
                                             <DoubleAnimation.EasingFunction>
                                                 <CubicEase EasingMode="EaseOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -341,6 +329,28 @@
                                 </BeginStoryboard>
                             </EventTrigger>
                         </Grid.Triggers>
+
+                        <!-- PROFILE CONTENT: hidden until the real profile statistics refresh is complete. -->
+                        <Grid x:Name="PlayerProfileRoot"
+                              Tag="Page1"
+                              FocusManager.FocusedElement="{Binding ElementName=PlayerRecentAddedCard}"
+                              KeyboardNavigation.TabNavigation="Contained"
+                              KeyboardNavigation.DirectionalNavigation="Contained"
+                              KeyboardNavigation.ControlTabNavigation="Contained"
+                              Background="{DynamicResource SecondaryViewBackground}">
+
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayerProfileLoading}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+
+                        
 
                         <Grid>
                             <Border>
@@ -3075,6 +3085,35 @@
                                           Content="{DynamicResource LOCBackLabel}" />
                             </StackPanel>
                         </Grid>
+                    </Grid>
+
+                    <!-- REAL PROFILE LOADING STATE -->
+                    <StackPanel VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Panel.ZIndex="100">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{PluginSettings Plugin=AnikiHelper, Path=IsPlayerProfileLoading}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+
+                        <TextBlock Text="{DynamicResource LOCLoading}"
+                                   Style="{StaticResource TextBlockBaseStyle}"
+                                   FontSize="34"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Center"/>
+
+                        <ProgressBar Width="360"
+                                     Height="6"
+                                     Margin="0,18,0,0"
+                                     IsIndeterminate="True"/>
+                    </StackPanel>
+
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

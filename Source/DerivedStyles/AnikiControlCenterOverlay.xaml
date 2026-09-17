@@ -203,12 +203,12 @@
             <Grid VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="26,0,0,27">
 
                 <!-- CONNECTED DEVICES STATUS (visual only) -->
-                <StackPanel 
-                            Orientation="Horizontal"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left"
-                            IsHitTestVisible="False"
-                            Focusable="False">
+                <StackPanel
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    IsHitTestVisible="False"
+                    Focusable="False">
 
                     <!-- Controller 1 -->
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,15,0">
@@ -222,10 +222,13 @@
                                 </Style.Triggers>
                             </Style>
                         </StackPanel.Style>
-                        <Viewbox Width="22" Height="22" Margin="0,0,5,0">
-                            <Path Data="{PluginSettings Plugin=ControllerSessionManager, Path=PrimaryControllerIconGeometry, Converter={PluginConverter Plugin=ControllerSessionManager, Converter=IconGeometryConverter}}"
-                                  Stretch="Uniform" Fill="#FFFFFFFF" Stroke="#FFFFFFFF" StrokeThickness="0.45" StrokeLineJoin="Round"/>
-                        </Viewbox>
+                        <ContentControl x:Name="ControllerSessionManager_ControllerIcon"
+                                        Width="22"
+                                        Height="22"
+                                        Margin="0,0,5,0"
+                                        Foreground="{DynamicResource TextBrush}"
+                                        IsHitTestVisible="False"
+                                        Focusable="False"/>
                         <TextBlock Text="1" Foreground="#FFFFFFFF" FontSize="13" FontWeight="Bold" VerticalAlignment="Center"/>
                         <TextBlock Text="{PluginSettings Plugin=ControllerSessionManager, Path=PrimaryControllerBatteryLabel}"
                                    Foreground="{PluginSettings Plugin=ControllerSessionManager, Path=PrimaryControllerBatteryBrush}"
@@ -312,13 +315,13 @@
                         </StackPanel.Style>
                         <Viewbox Width="19" Height="19" Margin="0,0,5,0">
                             <Path Data="{PluginSettings Plugin=AudioSwitcher, Path=BatteryIndicatorIconGeometry}"
-                                                      Stretch="Uniform"
-                                                      Stroke="{DynamicResource TextBrush}"
-                                                      StrokeThickness="2"
-                                                      StrokeStartLineCap="Round"
-                                                      StrokeEndLineCap="Round"
-                                                      StrokeLineJoin="Round"
-                                                      Fill="Transparent"/>
+                                  Stretch="Uniform"
+                                  Stroke="{DynamicResource TextBrush}"
+                                  StrokeThickness="2"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"
+                                  StrokeLineJoin="Round"
+                                  Fill="Transparent"/>
                         </Viewbox>
                         <TextBlock Text="{PluginSettings Plugin=AudioSwitcher, Path=BatteryIndicatorLabel}"
                                    Style="{DynamicResource TextBlockBaseStyle}" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center"/>

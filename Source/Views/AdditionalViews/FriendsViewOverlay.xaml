@@ -10,7 +10,25 @@
                     <Grid Width="1920"
                           Height="1080"
                           Background="Transparent"
-                          Focusable="False">
+                          Focusable="False"
+                          Opacity="0">
+
+                        <Grid.Triggers>
+                            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         From="0"
+                                                         To="1"
+                                                         Duration="0:0:0.68">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Grid.Triggers>
 
                         <!-- Strong modal dim behind the friends panel -->
                         <Rectangle IsHitTestVisible="False" Fill="#96000000"/>
@@ -148,7 +166,6 @@
                                                                   VerticalContentAlignment="Stretch"
                                                                   Focusable="True"
                                                                   IsTabStop="True"
-                                                                  Command="{PluginSettings Plugin=AnikiHelper, Path=OpenFriendProfileWindowCommand}"
                                                                   CommandParameter="{Binding steamid}">
                                                             <ButtonEx.Style>
                                                                 <Style TargetType="ButtonEx">
@@ -369,6 +386,78 @@
                             </Grid>
                         </Border>
                     </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!-- Lightweight friend action menu used only inside the in-game overlay. -->
+    <Style x:Key="FriendsActionOverlayStyle" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Border Background="#AA000000"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            FocusManager.FocusedElement="{Binding ElementName=FriendActionSendMessageButton}">
+                        <Grid FocusManager.IsFocusScope="True"
+                              FocusManager.FocusedElement="{Binding ElementName=FriendActionSendMessageButton}">
+
+                            <Border Width="560"
+                                    Padding="34"
+                                    CornerRadius="26"
+                                    Background="{DynamicResource OverlayMenu}"
+                                    BorderBrush="{DynamicResource MenuBorderBrush}"
+                                    BorderThickness="1.5"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal"
+                                                HorizontalAlignment="Center"
+                                                Margin="0,0,0,28">
+
+                                        <Border Width="64"
+                                                Height="64"
+                                                CornerRadius="14"
+                                                Background="#22FFFFFF"
+                                                BorderBrush="#28FFFFFF"
+                                                BorderThickness="1"
+                                                Margin="0,0,16,0">
+                                            <Image Source="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendForActions.avatar}"
+                                                   Stretch="UniformToFill"/>
+                                        </Border>
+
+                                        <StackPanel VerticalAlignment="Center">
+                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendForActions.name}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="28"
+                                                       FontWeight="SemiBold"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       MaxWidth="360"/>
+
+                                            <TextBlock Text="{PluginSettings Plugin=AnikiHelper, Path=SelectedFriendForActions.stateLoc}"
+                                                       Style="{DynamicResource TextBlockBaseStyle}"
+                                                       FontSize="18"
+                                                       Opacity="0.65"
+                                                       Margin="0,4,0,0"/>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <ButtonEx x:Name="FriendActionSendMessageButton"
+                                              Style="{DynamicResource ButtonBottomMenuDark}"
+                                              Tag="ChatAction"
+                                              Content="{DynamicResource LOCSteamOpenChat}"
+                                              Margin="0,0,0,12"/>
+
+                                    <ButtonEx Style="{DynamicResource ButtonBottomMenuDark}"
+                                              Tag="CancelAction"
+                                              Content="{DynamicResource LOCBackLabel}"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

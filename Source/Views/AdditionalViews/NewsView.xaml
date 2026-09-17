@@ -27,11 +27,10 @@
                             <pin:GameControllerInputBinding Button="LeftShoulder"
                                                             Command="{Binding Command, ElementName=NewsPreviousTabShortcutButton}" />
                         </Grid.InputBindings>
-                        <Grid.RenderTransform>
-                            <TranslateTransform Y="0"/>
-                        </Grid.RenderTransform>
 
-                        <!-- petite anim entrÃ©e -->
+
+
+
                         <Grid.Triggers>
                             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                                 <BeginStoryboard>
@@ -39,12 +38,7 @@
                                         <DoubleAnimation Storyboard.TargetProperty="Opacity"
                                                          From="0"
                                                          To="1"
-                                                         Duration="0:0:0.25"/>
-
-                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                                         From="24"
-                                                         To="0"
-                                                         Duration="0:0:0.35">
+                                                         Duration="0:0:0.68">
                                             <DoubleAnimation.EasingFunction>
                                                 <CubicEase EasingMode="EaseOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -88,7 +82,7 @@
                                         IsChecked="False" />
 
                         <!-- Hidden command hosts for LB/RB. Keeping PluginSettings on real controls
-                             avoids reusing a non-shareable markup expression inside the ControlTemplate InputBindings. -->
+                        avoids reusing a non-shareable markup expression inside the ControlTemplate InputBindings. -->
                         <ButtonEx x:Name="NewsPreviousTabShortcutButton"
                                   Visibility="Collapsed"
                                   Focusable="False"

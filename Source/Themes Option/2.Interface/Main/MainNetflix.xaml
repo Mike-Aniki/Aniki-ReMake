@@ -750,7 +750,7 @@
                                     <!-- Avatar Left -->
                                     <Grid Grid.Column="0" Grid.Row="0" Margin="20,0,0,5" Effect="{StaticResource SoftTextShadow}" HorizontalAlignment="Left" VerticalAlignment="Center">
 
-                                        <ButtonEx x:Name="QuickAccessButton2" Grid.ColumnSpan="3" MinWidth="50" Height="60" Padding="10,0,10,0" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[QuickAccessWindowStyle|FocusFirst]}">
+                                        <ButtonEx x:Name="QuickAccessButton2" Grid.ColumnSpan="3" MinWidth="50" Height="60" Padding="10,0,10,0" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[QuickAccessWindowStyle|FocusFirst|OpenPanelSound]}">
 
                                             <ButtonEx.Style>
                                                 <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
@@ -884,17 +884,8 @@
 
                                             <CheckBoxEx x:Name="CloseWelcomeButton" Content="{DynamicResource LOCLibrary}" Style="{StaticResource WelcomeHubQuickButtonStyleCheckBoxEx}" MinWidth="120" Margin="8,0" Padding="20,8" FocusVisualStyle="{x:Null}" IsChecked="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Command="{PluginSettings Plugin=AnikiHelper, Path=CloseWelcomeHubCommand}"/>
 
-                                            <ButtonEx x:Name="PlayerProfileButton" MinWidth="120" Margin="8,0" Padding="20,8" Content="{DynamicResource LOCProfile}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[PlayerProfileWindowStyle|MostPlayedCard|SecondaryMusic]}" Focusable="True">
-                                                <ButtonEx.Triggers>
-                                                    <EventTrigger RoutedEvent="ButtonBase.Click">
-                                                        <StopStoryboard BeginStoryboardName="OpenViewSoundStoryboard"/>
-                                                        <BeginStoryboard Name="OpenViewSoundStoryboard">
-                                                            <Storyboard FillBehavior="Stop">
-                                                                <MediaTimeline Storyboard.TargetName="OpenViewSound" Source="{ThemeFile 'audio/ChangeDisplay.wav'}" FillBehavior="Stop"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
-                                                </ButtonEx.Triggers>
+                                            <ButtonEx x:Name="PlayerProfileButton" MinWidth="120" Margin="8,0" Padding="20,8" Content="{DynamicResource LOCProfile}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[PlayerProfileWindowStyle|MostPlayedCard|SecondaryMusic|AdditionalViewSound]}" Focusable="True">
+
                                                 <Button.Style>
                                                     <Style TargetType="ButtonEx" BasedOn="{StaticResource WelcomeHubQuickButtonStyle}">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -908,29 +899,10 @@
                                             </ButtonEx>
 
                                             <ButtonEx x:Name="Media" Content="{DynamicResource LOCMedia}" MinWidth="120" Margin="8,0" Padding="20,8" Style="{StaticResource WelcomeHubQuickButtonStyle}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenMediaGalleryGamesWindowCommand}" Focusable="True">
-                                                <ButtonEx.Triggers>
-                                                    <EventTrigger RoutedEvent="ButtonBase.Click">
-                                                        <StopStoryboard BeginStoryboardName="OpenViewSoundStoryboard"/>
-                                                        <BeginStoryboard Name="OpenViewSoundStoryboard">
-                                                            <Storyboard FillBehavior="Stop">
-                                                                <MediaTimeline Storyboard.TargetName="OpenViewSound" Source="{ThemeFile 'audio/ChangeDisplay.wav'}" FillBehavior="Stop"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
-                                                </ButtonEx.Triggers>
                                             </ButtonEx>
 
-                                            <ButtonEx x:Name="SteamStoreButton" MinWidth="120" Margin="8,0" Padding="20,8" Content="{DynamicResource LOCStoreButton}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[SteamStoreStyle|FocusFirst|SecondaryMusic]}" Focusable="True">
-                                                <ButtonEx.Triggers>
-                                                    <EventTrigger RoutedEvent="ButtonBase.Click">
-                                                        <StopStoryboard BeginStoryboardName="OpenViewSoundStoryboard"/>
-                                                        <BeginStoryboard Name="OpenViewSoundStoryboard">
-                                                            <Storyboard FillBehavior="Stop">
-                                                                <MediaTimeline Storyboard.TargetName="OpenViewSound" Source="{ThemeFile 'audio/ChangeDisplay.wav'}" FillBehavior="Stop"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
-                                                </ButtonEx.Triggers>
+                                            <ButtonEx x:Name="SteamStoreButton" MinWidth="120" Margin="8,0" Padding="20,8" Content="{DynamicResource LOCStoreButton}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[SteamStoreStyle|FocusFirst|SecondaryMusic|AdditionalViewSound]}" Focusable="True">
+
                                                 <Button.Style>
                                                     <Style TargetType="ButtonEx" BasedOn="{StaticResource WelcomeHubQuickButtonStyle}">
                                                         <Setter Property="Visibility" Value="Visible"/>
@@ -943,7 +915,7 @@
                                                 </Button.Style>
                                             </ButtonEx>
 
-                                            <ButtonEx x:Name="NewsButton" MinWidth="120" Margin="8,0" Padding="20,8" Content="{DynamicResource LOCNewsTab}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[LastUpdatesWindowStyle|SecondaryMusic]}" Focusable="True">
+                                            <ButtonEx x:Name="NewsButton" MinWidth="120" Margin="8,0" Padding="20,8" Content="{DynamicResource LOCNewsTab}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[LastUpdatesWindowStyle|SecondaryMusic|AdditionalViewSound]}" Focusable="True">
                                                 <ButtonEx.Style>
                                                     <Style TargetType="ButtonEx" BasedOn="{StaticResource WelcomeHubQuickButtonStyle}">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -954,16 +926,7 @@
                                                         </Style.Triggers>
                                                     </Style>
                                                 </ButtonEx.Style>
-                                                <ButtonEx.Triggers>
-                                                    <EventTrigger RoutedEvent="ButtonBase.Click">
-                                                        <StopStoryboard BeginStoryboardName="OpenViewSoundStoryboard"/>
-                                                        <BeginStoryboard Name="OpenViewSoundStoryboard">
-                                                            <Storyboard FillBehavior="Stop">
-                                                                <MediaTimeline Storyboard.TargetName="OpenViewSound" Source="{ThemeFile 'audio/ChangeDisplay.wav'}" FillBehavior="Stop"/>
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </EventTrigger>
-                                                </ButtonEx.Triggers>
+
                                             </ButtonEx>
 
                                             <ButtonEx x:Name="WebViewButton2" Content="{DynamicResource LOCWeb}" MinWidth="120" Margin="8,0" Padding="20,8" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWebBrowserHomeCommand}" Style="{DynamicResource WelcomeHubQuickButtonStyle}" Grid.Column="8"/>
@@ -1009,7 +972,7 @@
                                         </ButtonEx>
 
                                         <!-- TROPHY : PLAYNITE ACHIEVEMENTS -->
-                                        <CheckBoxEx x:Name="TopBarTrophy_PA2" Grid.Column="1" Margin="0,0,7,0" VerticalAlignment="Center" Height="40" MinWidth="50" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton|SecondaryMusic]}">
+                                        <CheckBoxEx x:Name="TopBarTrophy_PA2" Grid.Column="1" Margin="0,0,7,0" VerticalAlignment="Center" Height="40" MinWidth="50" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton|SecondaryMusic|AdditionalViewSound]}">
                                             <CheckBoxEx.Style>
                                                 <Style TargetType="CheckBoxEx" BasedOn="{StaticResource TopBarAchievementButtonStyle}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -1093,7 +1056,7 @@
                                         </CheckBoxEx>
 
                                         <!-- FRIENDS -->
-                                        <ButtonEx x:Name="FriendButton2" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle|SecondaryMusic]}">
+                                        <ButtonEx x:Name="FriendButton2" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle|SecondaryMusic|AdditionalViewSound]}">
 
                                             <ButtonEx.Style>
                                                 <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
@@ -1139,7 +1102,7 @@
                                             </StackPanel>
                                         </ButtonEx>
 
-                                        <ButtonEx Content="PlayerMusicButton2" Grid.Column="3" VerticalAlignment="Center" Margin="0,0,7,0" Height="40" MinWidth="50" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[MusicPlayerWindowStyle|FocusFirst]}">
+                                        <ButtonEx Content="PlayerMusicButton2" Grid.Column="3" VerticalAlignment="Center" Margin="0,0,7,0" Height="40" MinWidth="50" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[MusicPlayerWindowStyle|FocusFirst|AdditionalViewSound]}">
                                             <ButtonEx.Style>
                                                 <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -1170,7 +1133,7 @@
                                             <TextBlock Text="" FontFamily="{DynamicResource FontIcons}" FontSize="26" Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </ButtonEx>
 
-                                        <ButtonEx x:Name="AudioBatteryIndicator2" Grid.Column="4" VerticalAlignment="Center" Margin="0,0,7,0" Height="40" MinWidth="64" Padding="8,0" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[AudioSwitcherWindowStyle|FocusFirst|RefocusAfterClick]}">
+                                        <ButtonEx x:Name="AudioBatteryIndicator2" Grid.Column="4" VerticalAlignment="Center" Margin="0,0,7,0" Height="40" MinWidth="64" Padding="8,0" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[AudioSwitcherWindowStyle|FocusFirst|RefocusAfterClick|OpenPanelSound]}">
                                             <ButtonEx.Style>
                                                 <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -1208,7 +1171,7 @@
                                             </StackPanel>
                                         </ButtonEx>
 
-                                        <ButtonEx x:Name="QuickMenu2" Grid.Column="5" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" Padding="0" Margin="0,0,7,0" MinWidth="60" Height="40" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[ControlCenterWindowStyle|FocusFirst]}">
+                                        <ButtonEx x:Name="QuickMenu2" Grid.Column="5" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" Padding="0" Margin="0,0,7,0" MinWidth="60" Height="40" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[ControlCenterWindowStyle|FocusFirst|OpenPanelSound]}">
 
                                             <ButtonEx.Style>
                                                 <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
@@ -1408,7 +1371,7 @@
                                                                 <TranslateTransform x:Name="HubTopProfileSummaryShift" Y="0"/>
                                                             </Grid.RenderTransform>
 
-                                                            <ButtonEx x:Name="ProfileCard" pbeh:FocusBahaviors.OnVisibilityFocus="True" Height="280" Focusable="True" FocusVisualStyle="{x:Null}" Style="{StaticResource HubCardFocusButtonStyle}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[PlayerProfileWindowStyle|MostPlayedCard|SecondaryMusic]}">
+                                                            <ButtonEx x:Name="ProfileCard" pbeh:FocusBahaviors.OnVisibilityFocus="True" Height="280" Focusable="True" FocusVisualStyle="{x:Null}" Style="{StaticResource HubCardFocusButtonStyle}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[PlayerProfileWindowStyle|MostPlayedCard|SecondaryMusic|AdditionalViewSound]}">
 
                                                                 <Border CornerRadius="20" Style="{DynamicResource HubCardBorderStyle}">
                                                                     <Grid ClipToBounds="True">
@@ -1763,7 +1726,7 @@
                                                                 </Grid>
 
                                                                 <!-- Carte From Your Library -->
-                                                                <ButtonEx x:Name="HeroCard" Grid.Row="1" Height="400" Width="720" HorizontalAlignment="Center" Focusable="True" FocusVisualStyle="{x:Null}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[LastUpdatesWindowStyle|SecondaryMusic]}" Style="{DynamicResource HubCardFocusButtonStyle}">
+                                                                <ButtonEx x:Name="HeroCard" Grid.Row="1" Height="400" Width="720" HorizontalAlignment="Center" Focusable="True" FocusVisualStyle="{x:Null}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[LastUpdatesWindowStyle|SecondaryMusic|AdditionalViewSound]}" Style="{DynamicResource HubCardFocusButtonStyle}">
 
                                                                     <Border CornerRadius="24" Style="{DynamicResource HubCardBorderStyle}">
                                                                         <Grid>
@@ -1938,7 +1901,7 @@
                                                                     <TextBlock Grid.Column="0" Style="{DynamicResource TextBlockBaseStyle}" Text="{DynamicResource LOCActu}" Foreground="{DynamicResource TextHubBannerCardTitleBrush}" FontSize="32" FontWeight="Bold"/>
                                                                 </Grid>
 
-                                                                <ButtonEx x:Name="LatestNewsCard" Grid.Row="1" Height="400" Width="720" HorizontalAlignment="Center" Focusable="True" FocusVisualStyle="{x:Null}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[LastUpdatesWindowStyle|SecondaryMusic]}" Style="{DynamicResource HubCardFocusButtonStyle}">
+                                                                <ButtonEx x:Name="LatestNewsCard" Grid.Row="1" Height="400" Width="720" HorizontalAlignment="Center" Focusable="True" FocusVisualStyle="{x:Null}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[LastUpdatesWindowStyle|SecondaryMusic|AdditionalViewSound]}" Style="{DynamicResource HubCardFocusButtonStyle}">
 
 
 
@@ -2976,7 +2939,7 @@
 
                                                             <ItemsControl.ItemTemplate>
                                                                 <DataTemplate>
-                                                                    <ButtonEx Width="720" Height="350" Focusable="True" FocusVisualStyle="{x:Null}" Style="{StaticResource HubCardFocusButtonStyle}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle|SecondaryMusic]}">
+                                                                    <ButtonEx Width="720" Height="350" Focusable="True" FocusVisualStyle="{x:Null}" Style="{StaticResource HubCardFocusButtonStyle}" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle|SecondaryMusic|AdditionalViewSound]}">
 
                                                                         <Border CornerRadius="20" Style="{DynamicResource HubCardBorderStyle}">
                                                                             <Grid>
@@ -4469,19 +4432,6 @@
                         </Grid>
 
 
-                        <MediaElement x:Name="CloseViewSound" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackHomeHubClosePath}" Visibility="Collapsed" Volume="{Settings Fullscreen.InterfaceVolume}" IsMuted="False">
-                            <MediaElement.Style>
-                                <Style TargetType="MediaElement">
-                                    <Setter Property="LoadedBehavior" Value="Manual"/>
-                                    <Setter Property="UnloadedBehavior" Value="Close"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=CloseWelcomeButton, Path=IsChecked}" Value="True">
-                                            <Setter Property="LoadedBehavior" Value="Play"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </MediaElement.Style>
-                        </MediaElement>
                         <MediaElement x:Name="OpenViewSound" LoadedBehavior="Manual" UnloadedBehavior="Stop" Visibility="Collapsed" Volume="{Settings Fullscreen.InterfaceVolume}" IsMuted="False"/>
 
                     </Grid>
@@ -4593,7 +4543,7 @@
                                 <pin:GameControllerInputBinding Button="Start" Command="{Binding Data.ControllerHoldCommand, Source={StaticResource ANIKIHELPER_Commands}}">
                                     <pin:GameControllerInputBinding.CommandParameter>
                                         <x:Array Type="{x:Type Button}">
-                                            <Button Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[QuickAccessWindowStyle|FocusFirst]}"/>
+                                            <Button Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[QuickAccessWindowStyle|FocusFirst|OpenPanelSound]}"/>
 
                                             <Button Command="{PluginSettings Plugin=AnikiHelper, Path=OpenPlayniteSettingsCommand}"/>
                                         </x:Array>
@@ -4611,7 +4561,7 @@
                                             <Button Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleWelcomeHubCommand}"/>
 
                                             <!-- Long press Select/View = Quick Options -->
-                                            <Button Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[ControlCenterWindowStyle|FocusFirst]}"/>
+                                            <Button Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[ControlCenterWindowStyle|FocusFirst|OpenPanelSound]}"/>
 
                                         </x:Array>
                                     </pin:GameControllerInputBinding.CommandParameter>
@@ -4669,7 +4619,7 @@
                                             <Button Command="{PluginSettings Plugin=AnikiHelper, Path=CloseHubToLibraryCommand}"/>
 
                                             <!-- Long press Back/View/Touchpad = Control Center -->
-                                            <Button Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[ControlCenterWindowStyle|FocusFirst]}"/>
+                                            <Button Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[ControlCenterWindowStyle|FocusFirst|OpenPanelSound]}"/>
 
                                         </x:Array>
                                     </pin:GameControllerInputBinding.CommandParameter>
@@ -4678,7 +4628,7 @@
                                 <pin:GameControllerInputBinding Button="Start" Command="{Binding Data.ControllerHoldCommand, Source={StaticResource ANIKIHELPER_Commands}}">
                                     <pin:GameControllerInputBinding.CommandParameter>
                                         <x:Array Type="{x:Type Button}">
-                                            <Button Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[QuickAccessWindowStyle|FocusFirst]}"/>
+                                            <Button Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[QuickAccessWindowStyle|FocusFirst|OpenPanelSound]}"/>
 
                                             <Button Command="{PluginSettings Plugin=AnikiHelper, Path=OpenPlayniteSettingsCommand}"/>
                                         </x:Array>
@@ -5965,7 +5915,7 @@
 
                                     <Grid Grid.Column="0" Effect="{StaticResource SoftTextShadow}" Grid.Row="0" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
 
-                                        <ButtonEx x:Name="QuickAccessButton" Grid.ColumnSpan="3" MinWidth="50" Height="60" Padding="10,0,10,0" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[QuickAccessWindowStyle|FocusFirst]}">
+                                        <ButtonEx x:Name="QuickAccessButton" Grid.ColumnSpan="3" MinWidth="50" Height="60" Padding="10,0,10,0" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[QuickAccessWindowStyle|FocusFirst|OpenPanelSound]}">
 
                                             <ButtonEx.Style>
                                                 <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
@@ -6106,18 +6056,7 @@
 
                                                 <ButtonEx x:Name="PART_ButtonMainMenu" Content="{DynamicResource LOCMainMenu}" MinWidth="120" Margin="8,0" Padding="20,8" Visibility="Collapsed" Style="{StaticResource WelcomeHubQuickButtonStyle}" Command="{Binding OpenMainMenuCommand}" Focusable="False"/>
 
-                                                <CheckBoxEx x:Name="WelcomeHubButton" Content="{DynamicResource LOCHub}" Style="{DynamicResource WelcomeHubQuickButtonStyleCheckBoxEx}" MinWidth="120" Margin="8,0" Padding="20,8" FocusVisualStyle="{x:Null}" Grid.Column="7" IsChecked="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleWelcomeHubCommand}">
-                                                    <CheckBoxEx.Triggers>
-                                                        <EventTrigger RoutedEvent="ButtonBase.Click">
-                                                            <StopStoryboard BeginStoryboardName="OpenViewSoundStoryboard"/>
-                                                            <BeginStoryboard Name="OpenViewSoundStoryboard">
-                                                                <Storyboard FillBehavior="Stop">
-                                                                    <MediaTimeline Storyboard.TargetName="OpenViewSound" Source="{ThemeFile 'audio/OpenAdditionalView.wav'}" FillBehavior="Stop"/>
-                                                                </Storyboard>
-                                                            </BeginStoryboard>
-                                                        </EventTrigger>
-                                                    </CheckBoxEx.Triggers>
-                                                </CheckBoxEx>
+                                                <CheckBoxEx x:Name="WelcomeHubButton" Content="{DynamicResource LOCHub}" Style="{DynamicResource WelcomeHubQuickButtonStyleCheckBoxEx}" MinWidth="120" Margin="8,0" Padding="20,8" FocusVisualStyle="{x:Null}" Grid.Column="7" IsChecked="{PluginSettings Plugin=AnikiHelper, Path=IsWelcomeHubOpen}" Command="{PluginSettings Plugin=AnikiHelper, Path=ToggleWelcomeHubCommand}"/>
 
                                                 <ButtonEx x:Name="PART_ButtonSearch" Content="{DynamicResource LOCSearchLabel}" MinWidth="120" Margin="8,0" Padding="20,8" Style="{DynamicResource WelcomeHubQuickButtonStyle}" Grid.Column="7"/>
 
@@ -6192,7 +6131,7 @@
                                         <CheckBoxEx x:Name="LockScreen" Visibility="Collapsed" Focusable="False" IsTabStop="False" IsChecked="False" Command="{Binding Data.ChangeProperty, Source={StaticResource ANIKIHELPER_Commands}}" CommandParameter="[Setter ElementName=Acceuil, Property=IsChecked, Value=False]"/>
 
 
-                                        <ButtonEx x:Name="HiddenOpenAchievementsButton" Width="1" Height="1" Opacity="0" Focusable="False" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton|SecondaryMusic]}"/>
+                                        <ButtonEx x:Name="HiddenOpenAchievementsButton" Width="1" Height="1" Opacity="0" Focusable="False" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton|SecondaryMusic|AdditionalViewSound]}"/>
 
 
 
@@ -6246,7 +6185,7 @@
 
 
                                         <!-- TROPHY : PLAYNITE ACHIEVEMENTS -->
-                                        <CheckBoxEx x:Name="TopBarTrophy_PA" Grid.Column="3" Margin="0,0,7,0" VerticalAlignment="Center" Height="40" MinWidth="50" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton|SecondaryMusic]}">
+                                        <CheckBoxEx x:Name="TopBarTrophy_PA" Grid.Column="3" Margin="0,0,7,0" VerticalAlignment="Center" Height="40" MinWidth="50" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[AchievementsWindow|SortButton|SecondaryMusic|AdditionalViewSound]}">
                                             <CheckBoxEx.Style>
                                                 <Style TargetType="CheckBoxEx" BasedOn="{StaticResource TopBarAchievementButtonStyle}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -6330,7 +6269,7 @@
                                         </CheckBoxEx>
 
                                         <!-- FRIENDS -->
-                                        <ButtonEx x:Name="FriendButton" Grid.Column="4" VerticalAlignment="Center" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle|SecondaryMusic]}">
+                                        <ButtonEx x:Name="FriendButton" Grid.Column="4" VerticalAlignment="Center" Margin="0,0,7,0" Height="40" MinWidth="50" Padding="0" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[FriendsStyle|SecondaryMusic|AdditionalViewSound]}">
                                             <ButtonEx.Style>
                                                 <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -6373,7 +6312,7 @@
                                             </StackPanel>
                                         </ButtonEx>
 
-                                        <ButtonEx Content="PlayerMusicButton2" Grid.Column="5" VerticalAlignment="Center" Margin="0,0,7,0" Height="40" MinWidth="50" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[MusicPlayerWindowStyle|FocusFirst]}">
+                                        <ButtonEx Content="PlayerMusicButton2" Grid.Column="5" VerticalAlignment="Center" Margin="0,0,7,0" Height="40" MinWidth="50" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[MusicPlayerWindowStyle|FocusFirst|AdditionalViewSound]}">
                                             <ButtonEx.Style>
                                                 <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -6405,7 +6344,7 @@
                                         </ButtonEx>
 
                                         <!-- Overlay -->
-                                        <ButtonEx x:Name="AudioBatteryIndicator" Grid.Column="6" Height="40" MinWidth="64" Margin="0,0,7,0" Padding="8,0" Focusable="True" IsTabStop="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[AudioSwitcherWindowStyle|FocusFirst|RefocusAfterClick]}">
+                                        <ButtonEx x:Name="AudioBatteryIndicator" Grid.Column="6" Height="40" MinWidth="64" Margin="0,0,7,0" Padding="8,0" Focusable="True" IsTabStop="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenChildWindow[AudioSwitcherWindowStyle|FocusFirst|RefocusAfterClick|OpenPanelSound]}">
                                             <ButtonEx.Style>
                                                 <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -6445,7 +6384,7 @@
 
 
                                         <!-- QUICK SETTINGS / SYSTEM STATUS -->
-                                        <ButtonEx x:Name="QuickMenu" Grid.Column="7" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" Padding="0" Margin="0,0,7,0" MinWidth="60" Height="40" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[ControlCenterWindowStyle|FocusFirst]}">
+                                        <ButtonEx x:Name="QuickMenu" Grid.Column="7" VerticalAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" Padding="0" Margin="0,0,7,0" MinWidth="60" Height="40" Focusable="True" Command="{PluginSettings Plugin=AnikiHelper, Path=OpenWindow[ControlCenterWindowStyle|FocusFirst|OpenPanelSound]}">
 
                                             <ButtonEx.Style>
                                                 <Style TargetType="ButtonEx" BasedOn="{StaticResource TopBarIndicatorButtonStyle}">
@@ -8579,18 +8518,7 @@
                             <StackPanel KeyboardNavigation.TabNavigation="Contained" KeyboardNavigation.ControlTabNavigation="Contained" KeyboardNavigation.DirectionalNavigation="Contained" Margin="0,0,0,370" VerticalAlignment="Bottom" HorizontalAlignment="Center" Opacity="0">
 
                                 <ToggleButtonEx x:Name="Acceuil" Focusable="True" pbeh:FocusBahaviors.OnVisibilityFocus="True" VerticalAlignment="Center" Margin="20,0,20,0" Width="280" Style="{DynamicResource AcceuilChangeToggle}" Command="{Binding Data.ChangeProperty, Source={StaticResource ANIKIHELPER_Commands}}" CommandParameter="[Setter ElementName=LockScreen, Property=IsChecked, Value=False]">
-
-                                    <ToggleButtonEx.Triggers>
-                                        <EventTrigger RoutedEvent="ToggleButton.Checked">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <MediaTimeline Source="{ThemeFile 'audio/Connexion.mp3'}" Storyboard.TargetName="ConnexionClick"/>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                    </ToggleButtonEx.Triggers>
-
-                                    <ToggleButtonEx.Content>
+<ToggleButtonEx.Content>
                                         <Grid>
                                             <Border RenderOptions.BitmapScalingMode="Fant" CornerRadius="{DynamicResource Corner}" VerticalAlignment="Center" HorizontalAlignment="Center" ClipToBounds="True">
                                                 <Border.Style>
@@ -9826,10 +9754,7 @@
                                 </Style>
                             </MediaElement.Style>
                         </MediaElement>
-
-                        <MediaElement x:Name="ConnexionClick" Volume="{Settings Fullscreen.InterfaceVolume}" LoadedBehavior="Manual" UnloadedBehavior="Close" MediaElementBehaviors.Repeat="False"/>
-
-                        <!-- Normal Hub OST -->
+<!-- Normal Hub OST -->
                         <MediaElement x:Name="WelcomeOpen" Source="{PluginSettings Plugin=AnikiHelper, Path=SoundPackHubOstPath}" MediaElementBehaviors.Repeat="True" Volume="{Settings Fullscreen.BackgroundVolume}">
                             <MediaElement.Style>
                                 <Style TargetType="MediaElement">
