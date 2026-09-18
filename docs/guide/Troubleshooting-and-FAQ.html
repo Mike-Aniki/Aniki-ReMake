@@ -880,36 +880,119 @@ body.left-collapsed .nav-home-divider{
 </ol>
 <hr/>
 <h1 id="no-playnite-videos-work-at-all">No Playnite videos work at all</h1>
-<p>If trailers, login videos and other Playnite video features all fail, check Windows media support.</p>
-<p>This is especially relevant on:</p>
+
+<p>If <strong>all videos in Playnite</strong> fail to play — for example trailers, login videos and other video backgrounds — the problem is usually related to Windows media playback rather than Aniki ReMake itself.</p>
+
+<p>Follow the checks below in order.</p>
+
+<h2 id="check-your-windows-edition">1. Check your Windows edition</h2>
+
+<p>Open:</p>
+
+<p><code>Settings → System → About → Windows specifications</code></p>
+
+<p>Look at <strong>Edition</strong>.</p>
+
+<h3>Windows N editions</h3>
+
+<p>If your edition contains an <strong>N</strong>, such as:</p>
+
 <ul>
-<li>Windows <strong>N</strong> editions;</li>
-<li>stripped/custom Windows builds;</li>
-<li>systems where normal Windows media components were removed.</li>
+<li>Windows 10 Pro N</li>
+<li>Windows 11 Pro N</li>
+<li>Windows 10 Home N</li>
 </ul>
-<p>Microsoft's official instructions are here:</p>
+
+<p>Windows does not include some of the media technologies required for normal video playback.</p>
+
+<p>Install Microsoft's official <strong>Media Feature Pack</strong>:</p>
+
 <p><a href="https://support.microsoft.com/en-us/windows/media-feature-pack-for-windows-n-8622b390-4ce6-43c9-9b42-549e5328e407" rel="noopener noreferrer" target="_blank">Media Feature Pack for Windows N — Microsoft Support</a></p>
-<h2 id="windows-11-n">Windows 11 N</h2>
-<ol>
-<li>Open <strong>Windows Settings</strong>.</li>
-<li>Open <strong>Apps</strong>.</li>
-<li>Open <strong>Optional features</strong>.</li>
-<li>Select <strong>View features</strong> next to <strong>Add an optional feature</strong>.</li>
-<li>Search for <strong>Media Feature Pack</strong>.</li>
-<li>Install it.</li>
-<li>Restart Windows.</li>
-</ol>
-<h2 id="windows-10-n">Windows 10 N</h2>
-<ol>
-<li>Open <strong>Windows Settings</strong>.</li>
-<li>Open <strong>Apps → Apps &amp; features</strong>.</li>
-<li>Open <strong>Optional features</strong>.</li>
-<li>Select <strong>Add a feature</strong>.</li>
-<li>Search for <strong>Media Feature Pack</strong>.</li>
-<li>Install it.</li>
-<li>Restart Windows.</li>
-</ol>
-<p>If you are <strong>not</strong> using an N edition, do not install random codec packs just because one trailer fails. First check whether other Playnite videos work normally.</p>
+
+<p>After installation, <strong>restart Windows</strong> and test Playnite again.</p>
+
+<h3>Normal Windows editions</h3>
+
+<p>If you are using a normal edition such as <strong>Windows 10 Pro</strong> or <strong>Windows 11 Pro</strong>, you should <strong>not</strong> need the Media Feature Pack. The required media components are normally included with Windows.</p>
+
+<h2 id="check-windows-media-features">2. Check Windows Media Features</h2>
+
+<p>Press <strong>Win + R</strong>, enter:</p>
+
+<p><code>optionalfeatures</code></p>
+
+<p>On Windows 10, check that:</p>
+
+<ul>
+<li><strong>Media Features</strong> is enabled;</li>
+<li><strong>Windows Media Player</strong> is enabled if it is listed.</li>
+</ul>
+
+<p>If you enable anything, restart Windows before testing Playnite again.</p>
+
+<p>If Media Features or Windows Media Player are unexpectedly missing, or Windows refuses to install them, your Windows media components may have been removed, modified or corrupted.</p>
+
+<h2 id="test-with-windows-player">3. Test the video outside Playnite</h2>
+
+<p>Try opening the same MP4 video using a <strong>Windows media application</strong>, such as Movies &amp; TV or Windows Media Player.</p>
+
+<div class="note">
+<p><strong>Important:</strong> VLC is not a reliable test for this problem because VLC includes its own video codecs. A video working in VLC does not necessarily mean that Windows or Playnite can decode it.</p>
+</div>
+
+<p>If the video also fails with Windows media applications, the issue is most likely related to Windows or its codecs.</p>
+
+<h2 id="check-video-codec">4. Check the video codec</h2>
+
+<p>An <code>.mp4</code> file is only a container. The video inside can use different codecs.</p>
+
+<p>In VLC:</p>
+
+<p><code>Tools → Codec Information</code></p>
+
+<p>For best compatibility with Playnite, <strong>H.264 / AVC in an MP4 container</strong> is recommended.</p>
+
+<p>Videos encoded using codecs such as <strong>AV1</strong>, <strong>VP9</strong> or <strong>HEVC / H.265</strong> may not work correctly depending on the Windows configuration and installed codecs.</p>
+
+<p>If only one or a few trailers fail, try another trailer or convert the video to <strong>H.264 / AVC</strong> before troubleshooting Windows itself.</p>
+
+<h2 id="repair-windows-media-components">5. Repair Windows components</h2>
+
+<p>If Windows Media Player is missing, refuses to install, or Windows media playback appears broken, open <strong>Command Prompt / Terminal as Administrator</strong> and run:</p>
+
+<p><code>DISM /Online /Cleanup-Image /RestoreHealth</code></p>
+
+<p>Wait for it to finish, then run:</p>
+
+<p><code>sfc /scannow</code></p>
+
+<p>Restart Windows afterward and test again.</p>
+
+<p>If you are using a modified or debloated Windows build, some required media components may have been intentionally removed.</p>
+
+<h2 id="k-lite-codec-pack">6. K-Lite / codec troubleshooting</h2>
+
+<p>If the Windows media components are installed correctly but videos still refuse to play, a codec issue may be involved.</p>
+
+<p>You can try installing <strong>K-Lite Codec Pack Standard</strong>, restart Windows and test Playnite again.</p>
+
+<p>If K-Lite is already installed and MP4 videos still do not play, Extra Metadata Loader's troubleshooting documentation recommends opening <strong>Codec Tweak Tool</strong> and testing the Media Foundation settings for MP4 playback.</p>
+
+<p>Try the <strong>32-bit</strong> Media Foundation MP4 setting first. If that does not help, you can also test the 64-bit setting.</p>
+
+<p><a href="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Extra-Metadata-Loader" rel="noopener noreferrer" target="_blank">Extra Metadata Loader — Video troubleshooting</a></p>
+
+<h2 id="video-troubleshooting-summary">Quick diagnosis</h2>
+
+<ul>
+<li><strong>Only one trailer fails:</strong> check the video's codec first.</li>
+<li><strong>All trailers fail but other Aniki videos work:</strong> check Extra Metadata Loader and the trailer files.</li>
+<li><strong>No Playnite videos work at all:</strong> check Windows media components.</li>
+<li><strong>Windows N:</strong> install Media Feature Pack.</li>
+<li><strong>Normal Windows + Windows Media Player missing/broken:</strong> repair Windows with DISM and SFC.</li>
+<li><strong>Video works in VLC only:</strong> Windows may still be missing the codec or media component required by Playnite.</li>
+</ul>
+
 <hr/>
 <h1 id="howlongtobeat-text-is-cut">HowLongToBeat text is cut</h1>
 <p>If you use the HowLongToBeat add-on and long values such as hours + minutes are clipped in a compact Aniki layout:</p>
