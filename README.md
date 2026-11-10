@@ -224,9 +224,13 @@ If you enjoy the theme and want to support its continued development, you can bu
 
 ### 🎮 Join the ANIKI ReMake Supporters Discord
 
+</div>
+
 As a thank you, **every Ko-fi supporter gets access to our private Discord community**, whether you make a one-time contribution.
 
 Connect with other supporters, follow development progress, get sneak peeks of upcoming features, share ideas, and help shape the future of ANIKI ReMake.
+
+
 
 **How to join:**
 
@@ -236,7 +240,7 @@ Connect with other supporters, follow development progress, get sneak peeks of u
 
 **ANIKI ReMake remains completely free for everyone.** Supporting the project is entirely optional and greatly appreciated. ❤️
 
-</div>
+
 
 ---
 
