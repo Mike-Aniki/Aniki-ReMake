@@ -230,9 +230,9 @@ Connect with other supporters, follow development progress, get sneak peeks of u
 
 **How to join:**
 
-1. Support the project on Ko-fi.
-2. Connect your Discord account through Ko-fi.
-3. Claim your Supporter role and join the community!
+- Support the project on Ko-fi.
+- Connect your Discord account through Ko-fi.
+- Claim your Supporter role and join the community!
 
 **ANIKI ReMake remains completely free for everyone.** Supporting the project is entirely optional and greatly appreciated. ❤️
 
