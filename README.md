@@ -206,19 +206,35 @@ When requesting help, please describe the issue, how to reproduce it, and includ
 
 ---
 
-<h2 align="center">Support the Project</h2>
+<h2 align="center">❤️ Support the Project</h2>
 
 <div align="center">
 
-Aniki ReMake is a personal project developed and maintained during my free time.
+Aniki ReMake is a free project developed and maintained during my spare time.
 
-If you enjoy using it and want to support its continued development, you can buy me a coffee on Ko-fi.
+If you enjoy the theme and want to support its continued development, you can buy me a coffee on Ko-fi!
 
 <br><br>
 
 <a href="https://ko-fi.com/W7W1Y9DRB">
   <img height="36" src="https://storage.ko-fi.com/cdn/kofi5.png?v=3" alt="Support Aniki ReMake on Ko-fi">
 </a>
+
+<br><br>
+
+### 🎮 Join the ANIKI ReMake Supporters Discord
+
+As a thank you, **every Ko-fi supporter gets access to our private Discord community**, whether you make a one-time contribution.
+
+Connect with other supporters, follow development progress, get sneak peeks of upcoming features, share ideas, and help shape the future of ANIKI ReMake.
+
+**How to join:**
+
+1. Support the project on Ko-fi.
+2. Connect your Discord account through Ko-fi.
+3. Claim your Supporter role and join the community!
+
+**ANIKI ReMake remains completely free for everyone.** Supporting the project is entirely optional and greatly appreciated. ❤️
 
 </div>
 
